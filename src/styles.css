@@ -1,1 +1,309 @@
 /* You can add global styles to this file, and also import other style files */
+/*Estilo del body*/
+body {
+    background: #F9F9F9;
+  }
+  
+  .form-signin {
+    width: 100%;
+  }
+
+  .form-signin .btn {
+    font-size: 80%;
+    border-radius: 5rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    padding: 1rem;
+  }
+  
+  .form-signup .btn {
+    font-size: 80%;
+    border-radius: 5rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    padding: 1rem;
+
+  }
+/*Correcion de un bug de witdh de bootstrap*/
+  .row{
+    margin:auto;
+  }
+
+  
+  .form-label-group {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .form-label-group input {
+    height: auto;
+    border-radius: 2rem;
+  }
+
+  .cajaTextoRegistrarse{
+    text-align: center;
+  }
+  .tagRegistrarse{
+      margin-top: 15px;
+      font-size: 15px;
+  }
+
+
+/*Estilo para la cabecera*/
+.cabecera{
+    display: block;
+    padding: 10px;
+    background-color: #F9F9F9;
+    margin-bottom: 5px;
+}
+
+/*Color principal de la pÃ¡gina*/
+.color{
+    background-color: #007bff;
+}
+
+/*Estilo para el botÃ³n de la cabecera de log-out*/
+.botonCabecera{
+    margin-top: -7px;
+    margin-right: 12px;
+}
+
+/*Estilo para el logo de AiDraif*/
+.logoCabecera{
+    height: 55px; 
+    width: 110px;
+    margin-left: 20px;
+}
+
+/*Estilo para el div en el que estÃ¡ el imput de bÃºsqueda */
+.caja-busqueda{
+    margin-top: 8px;
+}
+
+/*Estilo para el div que contiene el botÃ³n de log out*/
+.caja-logout{
+    margin-top: 10px;
+    height: 30px;
+}
+
+.formIdioma{
+    margin-top: 12px;
+    margin-bottom: -5px;
+}
+
+
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    font-size: 15px;
+    border: 1px solid;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-left:30px;
+    margin-top:10px;
+    margin-bottom: 10px;
+
+}
+  
+  
+
+
+
+
+/*Contiene estilo del div de las opciones del menu*/
+.fila-opcion{
+    padding-top: 15px;
+    margin-right: 30px;
+    margin-left: 10px;
+}
+/*Contiene el estilo de los iconos del menÃº*/
+.icono-opcion{
+    font-size: 18px;
+    margin-right: 15px;
+    margin-left: 15px;
+    margin-top: 3px;
+}
+/*Contiene el estilo del div donde se encuentra la ruta*/
+.contenedor-ruta{
+    padding-top: 12px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #CBCBCB;
+}
+
+/*Contiene el estilo de los enlaces de la ruta*/
+.ruta
+{
+text-decoration:none;
+color: black;
+font-size: 18px;
+margin-right: 6px;
+}
+
+/*Contiene el estilo de los iconos de flecha de la ruta*/
+.ruta2
+{
+text-decoration:none;
+margin-top: 7px;
+color: black;
+font-size: 13px;
+margin-right: 6px;
+}
+
+/*Contiene el estilo de los enlaces de la ruta cuando el cursor pasa por ecima*/
+.ruta:hover 
+{
+    text-decoration:none;
+    color: #0E70DA;
+}
+
+/*Contiene el estilo del tÃ­tulo del tipo de archivo (carpeta o fichero)*/
+.tipo-archivo{
+    font-size: 17px;
+    margin: 10px;
+    margin-top: 20px;
+    padding-left: 10px;
+}
+/*Estilo de la tarjeta de la carpeta*/
+.carpeta{
+    width: 15rem;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+}
+/*Estilo de la tarjeta de la carpeta cuando se pasa el cursor por encima*/
+.carpeta:hover{
+    background-color: #E3F0FF;
+}
+
+/*Contienen los estilos de las tarjetas de carpeta y de archivos*/
+.card-signin {
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-signin .card-title {
+    margin-bottom: 2rem;
+    font-weight: 300;
+    font-size: 1.5rem;
+  }
+  
+  .card-signin .card-body {
+    padding: 2rem;
+  }
+  /**/
+
+/*Contiene el estilo para los iconos de las tarjetas de carpetas*/
+.icono-imagen2{
+    font-size: 30px;
+    margin-right: 30px;
+    margin-left: 15px;
+    margin-top:6px;
+    color: black;
+}
+
+/*Contiene el estilo del texto de la tarjeta de carpetas*/
+.texto-tarjeta{
+    padding-top: 10px;
+    color:black;
+    font-size: 14px;
+}
+
+/*Contiene el estilo para los enlaces de las tarjetas de carpetas cuando se pasa el cursor por encima*/
+.enlace_carpeta:hover{
+    text-decoration: none;
+}
+
+/*Estilo para la caja que contiene el nombre del archivo cuando se pasa el cursor por encima*/
+.caja-nombre-archivo:hover{
+    background-color: #E3F0FF;
+}
+
+/*Estilo para el contendor que tiene el la imagen del tipo de archvio*/
+.img-caja{
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+/*Nombre del archivo*/
+.fichero{
+    width: 10rem; 
+    margin-right: 10px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+}
+/*Estilo que tiene la imagen del tipo de archvio*/
+.icono-archivo{
+    font-size: 100px;
+}
+
+.card-title{
+    padding-top:10px;
+}
+
+
+/*Estilo para las opciones del menu*/
+.opcion{
+    text-decoration:none;
+    color: white;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 30px;
+
+}
+
+.error{
+    color: red;
+}
+
+.registro {
+    margin-top: 80px;
+    padding: 10px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #CBCBCB;
+}
+
+.form-registro{
+    background-color: #999999;
+    border-radius: 15px;
+    height: 550px;
+    width: 350px;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    align-self: center;
+}
+
+/*Estilo del footer*/
+footer{
+    background-color: white;
+}
+
+/*estilo del enlace de las ocpiones del modal de cada fichero*/
+.enlace-opcion-fichero{
+    margin: 20px;
+    font-size: 35px;
+    text-decoration:none;
+    color: black;
+
+}
+
+.enlace-opcion-fichero:hover{
+
+    text-decoration:none;
+    color: #0E70DA;
+
+}
+
+.contenedor-opciones-fichero{
+    text-align: center;
+    padding: 20px;
+}
+
