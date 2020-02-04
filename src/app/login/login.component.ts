@@ -37,14 +37,13 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.formUser.username, this.formUser.password)
       .subscribe(
         response=>{
+          console.log(response);
           this.loginNotification = "";
           this.loginService.setLoggedUser(this.formUser.username, this.formUser.password);
-          this.router.navigateByUrl("/carpeta/"+this.formUser.username);
-
         },
         error=>{
           console.log(error);
-          this.loginNotification = "Las credenciales no pueden ser vacías o son incorrectas";
+          this.loginNotification = error;
         }
       );
   }

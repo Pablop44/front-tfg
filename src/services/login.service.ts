@@ -23,10 +23,9 @@ export class LoginService {
 
   login(username, password){
 
-    return this.http.get(this.restUrl+"/user/login", {
+    return this.http.get(this.restUrl+"/user/login.json", {
       responseType:'text',
       headers: new HttpHeaders({
-        
         'Authorization': 'Basic ' + btoa(username+':'+password)
       })
     });
