@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/User';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { headersToString } from 'selenium-webdriver/http';
 import {Router} from "@angular/router"
 
 @Injectable({
@@ -31,36 +30,6 @@ export class LoginService {
     });
     
   }
-
-  /*
-  login(username, password){
-
-    const httpOptions = {
-      headers: new HttpHeaders({ 
-        'Content-Type': 'application/json',
-      })
-    };
-    const userToSend : User = {
-      id: null,
-      username: username,
-      password: password,
-      email: null,
-      nombre: null,
-      apellidos: null,
-      telefono: null,
-      poblacion: null,
-      cargo: null,
-      especialidad: null,
-      cuenta: null
-      
-    }
-
-    console.log(userToSend);
-
-    return this.http.post(this.restUrl+"/user/login", userToSend, httpOptions);
-
-  }
-  */
 
   setLoggedUser(username, password){
     console.log(username);
