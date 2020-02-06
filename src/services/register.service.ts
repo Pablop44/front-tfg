@@ -31,12 +31,13 @@ export class RegisterService {
       poblacion: poblacion,
       cargo: null,
       especialidad: null,
-      cuenta: null, 
+      cuenta: null,
+      
     }
 
     console.log(userToSend);
 
-    return this.http.post(this.restUrl+"/user/add.json", userToSend, httpOptions);
+    return this.http.post(this.restUrl+"/user/register.json", userToSend, httpOptions);
 
   }
 }

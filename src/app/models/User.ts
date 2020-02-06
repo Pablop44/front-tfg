@@ -14,3 +14,5 @@ export class User{
         cuenta: number;
     
     }
+
+    
