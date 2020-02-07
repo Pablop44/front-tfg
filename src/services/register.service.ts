@@ -37,7 +37,7 @@ export class RegisterService {
 
     console.log(userToSend);
 
-    return this.http.post(this.restUrl+"/user/register.json", userToSend, httpOptions);
+    return this.http.post(this.restUrl+"/user/register.json", JSON.stringify(userToSend), httpOptions);
 
   }
 }
