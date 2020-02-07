@@ -34,11 +34,12 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(){
-    this.registerService.registro(this.formRegistro.username, this.formRegistro.password, this.formRegistro.email, this.formRegistro.nombre, this.formRegistro.apellidos, this.formRegistro.telefono, this.formRegistro.poblacion)
+    this.registerService.registro(this.formRegistro.username, this.formRegistro.password,  this.formRegistro.nombre, this.formRegistro.email, this.formRegistro.apellidos, this.formRegistro.telefono, this.formRegistro.poblacion)
       .subscribe(
         response=>{
           this.loginNotification = "";
           console.log(response);
+          this.router.navigateByUrl("/login");
         },
         error=>{
           console.log(error);
