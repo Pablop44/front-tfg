@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl("/dashboardHome");
         },
         error=>{
-          this.loginNotification = "Las credenciales no pueden ser vacías o son incorrectas";
+          this.loginNotification = "error al entrar en la aplicacion";
         }
       );
   }
