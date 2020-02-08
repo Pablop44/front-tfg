@@ -10,10 +10,13 @@
         <a mat-button [routerLink]="'/consultas'"> Consultas </a>
         <a mat-button [routerLink]="'/medicamentos'"> Medicamentos </a>
         <a mat-button [routerLink]="'/enfermedades'"> Enfermedades </a>
+        
+      </div>
+      <div *ngIf="loginService.isLogged" style="margin-left:auto; margin-right:0;">
         <button mat-button (click)='logout()'> Desconectarse </button>
       </div>
 
-      <div *ngIf="!loginService.isLogged" >
+      <div *ngIf="!loginService.isLogged" style="margin-left:auto; margin-right:0;">
         <button mat-button (click)='login()'> Iniciar Sesión </button>
       </div>
         
