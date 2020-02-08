@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material';
+import { LoginService } from 'src/services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,15 @@ import { MatSidenav } from '@angular/material';
 
 export class AppComponent {
   title = 'front-tfg';
+  loginService:LoginService;
+
+  constructor(loginService:LoginService, private router : Router) { 
+    this.loginService = loginService;
+  }
+
+  logout(){
+    this.loginService.logout();
+  }
 }
 
 

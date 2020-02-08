@@ -57,7 +57,7 @@ export class LoginService {
     this.isLogged = false;
     localStorage.removeItem("username");
     localStorage.removeItem("password");
-    this.router.navigate(['/login'])
+    this.router.navigate(['/login']);
   }
 
   registro(username, password, nombre, apellidos, email, telefono, poblacion, cargo, especialidad, cuenta){

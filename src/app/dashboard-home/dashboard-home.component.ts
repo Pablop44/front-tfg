@@ -51,8 +51,12 @@ export class DashboardHomeComponent {
     }
 
   ngOnInit() {
-    this.consultas();
-    this.usuarios();
+    if(this.loginService.isLogged){
+      this.consultas();
+      this.usuarios();
+    }else{
+      this.router.navigateByUrl("/login");
+    }
   }
   
   consultas(){
