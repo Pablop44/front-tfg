@@ -1,28 +1,97 @@
 <div class="grid-container">
   <h1 class="mat-h1">Pagina Príncipal</h1>
   <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
+    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
       <div [ngSwitch]="card.title">
 
           <div *ngSwitchCase="'Consultas'">
             <mat-card class="dashboard-card">
               <mat-card-header>
                 <mat-card-title>
-                  {{todasConsultas[0].id}}
+                  {{card.title}}
                   <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu" xPosition="before">
-                    <button mat-menu-item>Expand</button>
-                    <button mat-menu-item>Remove</button>
+                    <button mat-menu-item>Ver Todas las Consultas</button>
                   </mat-menu>
                 </mat-card-title>
               </mat-card-header>
+
               <mat-card-content class="dashboard-card-content">
-                <div>{{card.cuerpo}}</div>
+               
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Id Consulta</th>
+                      <th scope="col">Lugar</th>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Motivo</th>
+                      <th scope="col">Medico</th>
+                      <th scope="col">Paciente</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                      <tr *ngFor="let item of todasConsultas">
+                      <th scope="row">{{item.id}}</th>
+                      <td>{{item.lugar}}</td>
+                      <td>{{item.fecha}}</td>
+                      <td>{{item.motivo}}</td>
+                      <td>{{item.medico}}</td>
+                      <td>{{item.paciente}}</td>
+                      </tr>
+                   
+                  </tbody>
+                </table>
+                   
               </mat-card-content>
             </mat-card>
         </div>
+
+        <div *ngSwitchCase="'Usuarios'">
+          <mat-card class="dashboard-card">
+            <mat-card-header>
+              <mat-card-title>
+                {{card.title}}
+                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                  <button mat-menu-item>Expand</button>
+                  <button mat-menu-item>Remove</button>
+                </mat-menu>
+              </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content class="dashboard-card-content">
+             
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Id Consulta</th>
+                    <th scope="col">Lugar</th>
+                    <th scope="col">Motivo</th>
+                    <th scope="col">Medico</th>
+                    <th scope="col">Paciente</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                    <tr *ngFor="let item of todasConsultas">
+                    <th scope="row">{{item.id}}</th>
+                    <td>{{item.lugar}}</td>
+                    <td>{{item.motivo}}</td>
+                    <td>{{item.medico}}</td>
+                    <td>{{item.paciente}}</td>
+                    </tr>
+                 
+                </tbody>
+              </table>
+                 
+            </mat-card-content>
+          </mat-card>
+      </div>
 
       </div>
     </mat-grid-tile>
