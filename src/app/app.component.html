@@ -2,16 +2,23 @@
     <mat-toolbar-row>
       <h1>SSEC</h1>
       <span class="menu-spacer"></span>
-      <div>
-        <a mat-button [routerLink]="'/user'"> </a>
+      <a mat-button > </a>
+      <div *ngIf="loginService.isLogged" >
+       
         <a mat-button [routerLink]="'/user'"> Usuarios </a>
         <a mat-button [routerLink]="'/fichas'"> Fichas </a>
         <a mat-button [routerLink]="'/consultas'"> Consultas </a>
         <a mat-button [routerLink]="'/medicamentos'"> Medicamentos </a>
         <a mat-button [routerLink]="'/enfermedades'"> Enfermedades </a>
         <button mat-button (click)='logout()'> Desconectarse </button>
-  
       </div>
+
+      <div *ngIf="!loginService.isLogged" >
+        <button mat-button (click)='login()'> Iniciar Sesión </button>
+      </div>
+        
+  
+      
     </mat-toolbar-row>
   </mat-toolbar>
 
