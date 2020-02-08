@@ -19,7 +19,7 @@ export class DashboardHomeComponent {
     map(({ matches }) => {
       if (matches) {
         return [
-          { title: 'Consultas', cols: 1, rows: 1, cuerpo: 'cuerpo1'},
+          { title: 'Consultas', cols: 1, rows: 1, cuerpo: this.todasConsultas},
           { title: 'Usuarios', cols: 1, rows: 1, cuerpo: 'cuerpo2' },
           { title: 'Medicamentos', cols: 1, rows: 1, cuerpo: 'cuerpo3' },
           { title: 'Fichas', cols: 1, rows: 1, cuerpo: 'cuerpo4' }
@@ -27,7 +27,7 @@ export class DashboardHomeComponent {
       }
 
       return [
-        { title: 'Consultas', cols: 2, rows: 1, cuerpo: 'cuerpo1' },
+        { title: 'Consultas', cols: 2, rows: 1, cuerpo: this.todasConsultas },
         { title: 'Usuarios', cols: 1, rows: 2, cuerpo: 'cuerpo2' },
         { title: 'Medicamentos', cols: 1, rows: 2, cuerpo: 'cuerpo3' },
         { title: 'Fichas', cols: 2, rows: 2, cuerpo: 'cuerpo4' },
@@ -43,8 +43,7 @@ export class DashboardHomeComponent {
     }
 
   ngOnInit() {
-    
-  
+    this.consultas();
   }
   
   consultas(){
@@ -54,10 +53,12 @@ export class DashboardHomeComponent {
           console.log(response);
           this.todasConsultas = response;
         },
-        error => {console.log(error);}
+        error => {
+          console.log(error);
+        }
       );
   }
-  
+
 }
   
 

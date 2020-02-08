@@ -10,7 +10,7 @@ import { Form, FormGroup } from '@angular/forms';
 })
 export class ConsultaService {
 
-  private restUrl = 'http://localhost:8765'; 
+  private restUrl = 'http://localhost:8765/consulta'; 
 
   constructor(private httpClient: HttpClient, private loginService : LoginService) { }
 
