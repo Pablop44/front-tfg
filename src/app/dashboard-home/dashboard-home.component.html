@@ -20,10 +20,11 @@
 
               <mat-card-content class="dashboard-card-content">
                
+              <div class="table-wrapper-scroll-y my-custom-scrollbar">
                 <table class="table">
                   <thead>
                     <tr>
-                      <th scope="col">Id Consulta</th>
+                      <th scope="col">Número Consulta</th>
                       <th scope="col">Lugar</th>
                       <th scope="col">Fecha</th>
                       <th scope="col">Motivo</th>
@@ -44,6 +45,7 @@
                    
                   </tbody>
                 </table>
+              </div>
                    
               </mat-card-content>
             </mat-card>
@@ -58,36 +60,35 @@
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu" xPosition="before">
-                  <button mat-menu-item>Expand</button>
-                  <button mat-menu-item>Remove</button>
+                  <button mat-menu-item>Ver todos los usuarios</button>
                 </mat-menu>
               </mat-card-title>
             </mat-card-header>
 
             <mat-card-content class="dashboard-card-content">
              
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Id Consulta</th>
-                    <th scope="col">Lugar</th>
-                    <th scope="col">Motivo</th>
-                    <th scope="col">Medico</th>
-                    <th scope="col">Paciente</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                    <tr *ngFor="let item of todasConsultas">
-                    <th scope="row">{{item.id}}</th>
-                    <td>{{item.lugar}}</td>
-                    <td>{{item.motivo}}</td>
-                    <td>{{item.medico}}</td>
-                    <td>{{item.paciente}}</td>
+              <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Nombre Apellidos</th>
+                      <th scope="col">Usuario</th>
+                      <th scope="col">Rol</th>
+                      <th scope="col">Estado Cuenta</th>
                     </tr>
-                 
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+
+                      <tr *ngFor="let item of todosUsuarios">
+                      <th scope="row">{{item.nombre}} {{item.apellidos}}</th>
+                      <td>{{item.username}}</td>
+                      <td>{{item.rol}}</td>
+                      <td>{{item.estado}}</td>
+                      </tr>
+                  
+                  </tbody>
+                </table>
+              </div>
                  
             </mat-card-content>
           </mat-card>

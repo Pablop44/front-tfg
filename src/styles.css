@@ -3,7 +3,18 @@
 body {
     background: #F9F9F9;
   }
-  
+
+
+  .my-custom-scrollbar {
+    position: relative;
+    height: 248px;
+    overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+    display: block;
+    }
+
+
   .form-signin {
     width: 100%;
   }
