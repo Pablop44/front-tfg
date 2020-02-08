@@ -1,38 +1,17 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<header>
-  <!--Elemento div que cotiene el header de la página web-->
-  <div class="cabecera color">
-      <div class="row">
-
-          <!--3 columnas para el logo-->
-          <div class="col-lg-3">
-              Imagen Cabecera
-          </div>
-
-          <!--6 columnas para la barra de búsqueda-->
-          <div class="col-lg-6 caja-busqueda">    
-          </div>
-
-          <!--3 columnas para el botón de log out y el de cambio de idioma-->
-          <div class="col-lg-3">
-              <div class="float-right row">
-                    <div class="caja-logout">
-                    </div>
-              </div>    
-          </div>
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h1>SSEC</h1>
+      <span class="menu-spacer"></span>
+      <div>
+        <a mat-button [routerLink]="'/accounts'"> Accounts </a>
+        <a mat-button [routerLink]="'/create-account'"> Create Account </a>
+        <a mat-button [routerLink]="'/contacts'"> Contacts </a>
+        <a mat-button [routerLink]="'/create-contact'"> Create Contact </a>
+        <a mat-button [routerLink]="'/activities'"> Activities </a>
+        <a mat-button [routerLink]="'/create-activity'"> Create Activity </a>
+  
       </div>
-  </div>
-</header>
-
-
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
 <router-outlet></router-outlet>
-
-<footer class="page-footer font-small blue fixed-bottom">
-
-	<!-- Copyright -->
-	<div class="footer-copyright text-center py-3">© 2019 Copyright:
-		<a href="#"> Pablo Pazos Domínguez | Víctor Busto Mejuto</a>
-	</div>
-	<!-- Copyright -->
-
-</footer>
