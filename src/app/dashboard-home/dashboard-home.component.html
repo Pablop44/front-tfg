@@ -28,8 +28,8 @@
                       <th scope="col">Lugar</th>
                       <th scope="col">Fecha</th>
                       <th scope="col">Motivo</th>
-                      <th scope="col">Medico</th>
-                      <th scope="col">Paciente</th>
+                      <th scope="col">Medico (Número Colegiado)</th>
+                      <th scope="col">Paciente (DNI)</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -39,8 +39,8 @@
                       <td>{{item.lugar}}</td>
                       <td>{{item.fecha}}</td>
                       <td>{{item.motivo}}</td>
-                      <td>{{item.medico}}</td>
-                      <td>{{item.paciente}}</td>
+                      <td>{{item.medico}} ({{item.colegiado}})</td>
+                      <td>{{item.paciente}} ({{item.dniPaciente}})</td>
                       </tr>
                    
                   </tbody>
@@ -71,6 +71,7 @@
                 <table class="table">
                   <thead>
                     <tr>
+                      <th scope="col">DNI</th>
                       <th scope="col">Nombre Apellidos</th>
                       <th scope="col">Usuario</th>
                       <th scope="col">Rol</th>
@@ -80,6 +81,7 @@
                   <tbody>
 
                       <tr *ngFor="let item of todosUsuarios">
+                        <th scope="row">{{item.dni}}</th>
                       <th scope="row">{{item.nombre}} {{item.apellidos}}</th>
                       <td>{{item.username}}</td>
                       <td>{{item.rol}}</td>
