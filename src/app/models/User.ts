@@ -2,6 +2,7 @@ export class User{
     constructor(){
     }    
         id: number;
+        dni: string;
         username: string;
         password: string;
         email: string;
@@ -9,6 +10,7 @@ export class User{
         apellidos:string;
         telefono: string;
         poblacion: string;
+        colegiado: number;
         cargo: string;
         especialidad: string;
         cuenta: number;

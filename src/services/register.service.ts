@@ -14,7 +14,7 @@ export class RegisterService {
 
   }
 
-  registro(username, password, nombre, email, apellidos, telefono, poblacion){
+  registro(dni, username, password, nombre, email, apellidos, telefono, poblacion, colegiado){
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
@@ -22,6 +22,7 @@ export class RegisterService {
     };
     const userToSend : User = {
       id: null,
+      dni: dni,
       username: username,
       password: password,
       email: email,
@@ -29,6 +30,7 @@ export class RegisterService {
       apellidos: apellidos,
       telefono: telefono,
       poblacion: poblacion,
+      colegiado: colegiado,
       cargo: null,
       especialidad: null,
       cuenta: null,

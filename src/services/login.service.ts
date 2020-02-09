@@ -59,34 +59,6 @@ export class LoginService {
     localStorage.removeItem("password");
     return this.http.get(this.restUrl+"/user/logout.json");
   }
-
-  registro(username, password, nombre, apellidos, email, telefono, poblacion, cargo, especialidad, cuenta){
-    const httpOptions = {
-      headers: new HttpHeaders({ 
-        'Content-Type': 'application/json',
-      })
-    };
-    const userToSend : User = {
-      id: null,
-      username: username,
-      password: password,
-      email: email,
-      nombre: nombre,
-      apellidos: apellidos,
-      telefono: telefono,
-      poblacion: poblacion,
-      cargo: cargo,
-      especialidad: especialidad,
-      cuenta: cuenta
-      
-    }
-  
-
-    console.log(userToSend);
-
-    return this.http.post(this.restUrl+"/user", userToSend, httpOptions);
-
-  }
   
 }
 

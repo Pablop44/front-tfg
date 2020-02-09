@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
   cadenas: any = [];
   formRegistro:User ={
     id: null,
+    dni:null,
     username:null,
     password:null,
     email:null,
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit {
     apellidos:null,
     telefono:null,
     poblacion:null,
+    colegiado:null,
     cargo:null,
     especialidad:null,
     cuenta:null,
@@ -34,7 +36,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(){
-    this.registerService.registro(this.formRegistro.username, this.formRegistro.password,  this.formRegistro.nombre, this.formRegistro.email, this.formRegistro.apellidos, this.formRegistro.telefono, this.formRegistro.poblacion)
+    this.registerService.registro(this.formRegistro.dni, this.formRegistro.username, this.formRegistro.password,  this.formRegistro.nombre, this.formRegistro.email, this.formRegistro.apellidos, this.formRegistro.telefono, this.formRegistro.poblacion, this.formRegistro.colegiado)
       .subscribe(
         response=>{
           this.loginNotification = "";

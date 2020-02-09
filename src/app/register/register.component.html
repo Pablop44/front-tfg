@@ -7,6 +7,9 @@
 						<h5 i18n class="card-title text-center">Pre-Registro</h5>
 						<form class="form-signin" (ngSubmit)="onSubmit()" #loginForm="ngForm">
 								<div class="form-label-group">
+									<input type="text" id="dni" name="dni" class="form-control" placeholder="DNI" [(ngModel)]="formRegistro.dni" required autofocus>	
+								</div>
+								<div class="form-label-group">
 									<input type="text" id="username" name="username" class="form-control" placeholder="Usuario" [(ngModel)]="formRegistro.username" required autofocus>	
 								</div>
 								<div class="form-label-group">
@@ -26,7 +29,10 @@
                                 </div>
                                 <div class="form-label-group">
 									<input type="text" id="poblacion" name="poblacion" class="form-control" placeholder="Poblacion" [(ngModel)]="formRegistro.poblacion"  required>
-                                </div>
+								</div>
+								<div class="form-label-group">
+									<input type="text" id="colegiado" name="colegiado" class="form-control" placeholder="Número Colegiado" [(ngModel)]="formRegistro.colegiado" required autofocus>	
+								</div>
                                 <div class="form-label-group">
 									Es necesario que el administrador valide la cuenta para poder acceder a la aplicación
                                 </div>

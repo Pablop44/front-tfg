@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   cadenas: any = [];
   formUser:User ={
     id: null,
+    dni: null,
     username:null,
     password:null,
     email:null,
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
     apellidos:null,
     telefono:null,
     poblacion:null,
+    colegiado:null,
     cargo:null,
     especialidad:null,
     cuenta:null,
