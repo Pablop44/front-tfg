@@ -4,26 +4,22 @@
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body">
-            <h5 class="card-title text-center">Log In</h5>
+            <mat-card-title>Iniciar Sesión</mat-card-title>
             
             <form class="form-signin" (ngSubmit)="onSubmit()" #loginForm="ngForm">
-              <div class="form-label-group">
-                <input type="text" id="username" name="username" class="form-control" placeholder="Usuario" [(ngModel)]="formUser.username" required autofocus>
-              </div>
-              <div class="form-label-group">
-                <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" [(ngModel)]="formUser.password" required>
-              </div>
-              <div class="custom-control custom-checkbox mb-3">
-                <input type="checkbox" class="custom-control-input" id="customCheck1">
-              </div>
-              <button i18n type="submit" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Log In</button>
-            </form>
-            <div class="cajaTextoRegistrarse">
-              <label i18n class="tagRegistrarse">¿Aun no estás registrado?</label>
-            </div>
-
-            <form class="form-signup" action='../Controllers/Register_Controller.php' method='post'>
-                <a i18n href="/registro" class="btn btn-lg btn-primary btn-block text-uppercase form-signup">Registrate aquí</a>
+              <br>
+              <mat-form-field class="example-full-width">
+                <mat-label>Nombre de Usuario</mat-label>
+                <input matInput id="username" name="username" placeholder="Usuario" [(ngModel)]="formUser.username" required  >
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Contraseña</mat-label>
+                <input matInput id="password" name="password" placeholder="Contraseña" [(ngModel)]="formUser.password" required >
+              </mat-form-field>
+              <br>
+              <br>
+              <button mat-raised-button type="submit" color="primary">Iniciar Sesión</button>
+              <a mat-raised-button href="/registro" style="float:right" color="primary">Registrarse</a>
             </form>
             <p *ngIf="loginNotification!=''">Error: {{loginNotification}} </p>
           </div>
