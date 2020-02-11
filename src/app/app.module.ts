@@ -54,6 +54,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { DashboardHomeComponent } from './dashboard-home/dashboard-home.componen
     LoginComponent,
     RegisterComponent,
     NavComponent,
-    DashboardHomeComponent
+    DashboardHomeComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
