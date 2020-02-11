@@ -23,3 +23,22 @@
   .formularioFilter{
     margin-top: 10px;
   }
+
+  table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 50%;
+  }
+  
+  td, th {
+    width: 25%;
+    text-align: center;
+  }
+
+  td{
+    text-align: left;
+  }
+  

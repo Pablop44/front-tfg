@@ -24,43 +24,21 @@
                         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
                     </mat-form-field>
                       
-                      <div class="mat-elevation-z8">
-                        <table mat-table [dataSource]="dataSource" matSort>
-                      
-                          <!-- ID Column -->
-                          <ng-container matColumnDef="id">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-                          </ng-container>
-                      
-                          <!-- Progress Column -->
-                          <ng-container matColumnDef="progress">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-                            <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-                          </ng-container>
-                      
-                          <!-- Name Column -->
-                          <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-                          </ng-container>
-                      
-                          <!-- Color Column -->
-                          <ng-container matColumnDef="color">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-                            <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
-                          </ng-container>
-                      
-                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                          <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-                          </tr>
-                        </table>
-                      
-                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-                      </div> 
+                    
                     </mat-tab>
 
-                    <mat-tab label="Medicos"> 
+                   
+
+                    <mat-tab label="Medicos">
+                        <mat-form-field class="formularioFilter">
+                            <mat-label>Filtrar</mat-label>
+                            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
+                        </mat-form-field>          
+                    </mat-tab>
+
+
+
+                    <mat-tab label="Pacientes"> 
                         <mat-form-field class="formularioFilter">
                             <mat-label>Filtrar</mat-label>
                             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
@@ -76,21 +54,15 @@
                               </ng-container>
                           
                               <!-- Progress Column -->
-                              <ng-container matColumnDef="progress">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-                                <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
+                              <ng-container matColumnDef="dni">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> DNI </th>
+                                <td mat-cell *matCellDef="let row"> {{row.dni}} </td>
                               </ng-container>
                           
                               <!-- Name Column -->
-                              <ng-container matColumnDef="name">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-                              </ng-container>
-                          
-                              <!-- Color Column -->
-                              <ng-container matColumnDef="color">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-                                <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
+                              <ng-container matColumnDef="nombre">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                                <td mat-cell *matCellDef="let row"> {{row.nombre}} {{row.apellidos}}</td>
                               </ng-container>
                           
                               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -102,47 +74,6 @@
                           </div>
                     </mat-tab>
 
-                    <mat-tab label="Pacientes">
-                        <mat-form-field class="formularioFilter">
-                            <mat-label>Filtrar</mat-label>
-                            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
-                        </mat-form-field>
-                          
-                          <div class="mat-elevation-z8">
-                            <table mat-table [dataSource]="dataSource" matSort>
-                          
-                              <!-- ID Column -->
-                              <ng-container matColumnDef="id">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                                <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-                              </ng-container>
-                          
-                              <!-- Progress Column -->
-                              <ng-container matColumnDef="progress">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-                                <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-                              </ng-container>
-                          
-                              <!-- Name Column -->
-                              <ng-container matColumnDef="name">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-                              </ng-container>
-                          
-                              <!-- Color Column -->
-                              <ng-container matColumnDef="color">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-                                <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
-                              </ng-container>
-                          
-                              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                              <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-                              </tr>
-                            </table>
-                          
-                            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-                          </div>
-                    </mat-tab>
                 </mat-tab-group>
 
 
