@@ -1,15 +1,15 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <h1>SSEC</h1>
+      <button mat-button [routerLink]="'/dashboardHome'"><h1>SSEC</h1></button>
       <span class="menu-spacer"></span>
       <a mat-button > </a>
       <div *ngIf="loginService.isLogged" >
        
-        <a mat-button [routerLink]="'/users'"> Usuarios </a>
-        <a mat-button [routerLink]="'/fichas'"> Fichas </a>
-        <a mat-button [routerLink]="'/consultas'"> Consultas </a>
-        <a mat-button [routerLink]="'/medicamentos'"> Medicamentos </a>
-        <a mat-button [routerLink]="'/enfermedades'"> Enfermedades </a>
+        <button mat-button [routerLink]="'/users'"> Usuarios </button>
+        <button mat-button [routerLink]="'/fichas'"> Fichas </button>
+        <button mat-button [routerLink]="'/consultas'"> Consultas </button>
+        <button mat-button [routerLink]="'/medicamentos'"> Medicamentos </button>
+        <button mat-button [routerLink]="'/enfermedades'"> Enfermedades </button>
         
       </div>
       <div *ngIf="loginService.isLogged" style="margin-left:auto; margin-right:0;">
