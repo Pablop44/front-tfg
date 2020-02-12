@@ -7,10 +7,14 @@
                 <mat-card-title>
                   {{card.title}}
                   <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                    <mat-icon>more_vert</mat-icon>
+                    <i class="material-icons">
+                      person_add
+                      </i>
                   </button>
                   <mat-menu #menu="matMenu" xPosition="before">
-                    <a href="/users" mat-menu-item>Ver todos los usuarios</a>
+                    <a mat-menu-item (click)="openDialog()">Añadir un Paciente</a>
+                    <a mat-menu-item (click)="openDialog()">Añadir un Médico</a>
+                    <a mat-menu-item (click)="openDialog()">Añadir un Administrador</a>
                   </mat-menu>
                 </mat-card-title>
               </mat-card-header>

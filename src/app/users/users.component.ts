@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject} from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { UserService } from 'src/services/user.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export class UserData {
     dni: string;
@@ -29,8 +30,28 @@ export class UserData {
     this.estado = estado;
     this.colegiado = colegiado;
     this.especialidad = especialidad
+  } 
+}
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
+
+@Component({
+  selector: 'dialogoAnadirPaciente',
+  templateUrl: 'dialogoAnadirPaciente.html',
+})
+export class DialogoAnadirPaciente {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoAnadirPaciente>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
-    
+
 }
 
 
@@ -84,13 +105,24 @@ export class UsersComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver, consultaService:ConsultaService,
     private router : Router,
-    loginService:LoginService, userService:UserService) {
+    loginService:LoginService, userService:UserService, public dialog: MatDialog) {
       this.loginService = loginService;
       this.userService = userService;
     }
 
     ngOnInit() {   
       this.usuarios();
+    }
+
+    openDialog(): void {
+      const dialogRef = this.dialog.open(DialogoAnadirPaciente, {
+        width: '300px',
+        data: {name: "hola", animal: "hola"}
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
     }
   
     applyFilter(event: Event) {
