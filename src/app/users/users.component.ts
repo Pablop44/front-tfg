@@ -37,15 +37,23 @@ export class UserData {
 })
 export class UsersComponent implements OnInit {
 
-  todasConsultas: any = [];
-  pacientes: any = [];
   loginService: LoginService;
   userService:UserService;
   users : UserData[] = [];
+  administradores : UserData[] = [];
+  medicos : UserData[] = [];
   public dataSource: any;
-  public pageSize = 5;
+  public dataSource2: any;
+  public dataSource3: any;
+  public pageSize = 10;
+  public pageSize2 = 10;
+  public pageSize3 = 10;
   public currentPage = 0;
-  public totalSize = 0;
+  public currentPage2 = 0;
+  public currentPage3 = 0;
+  public totalSizePacientes = 0;
+  public totalSizeMedicos = 0;
+  public totalSizeAdministradores = 0;
     
   displayedColumns: string[] = ['id', 'dni', 'nombre'];
 
@@ -77,16 +85,35 @@ export class UsersComponent implements OnInit {
 
     ngOnInit() {   
       this.usuarios();
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
     }
   
     applyFilter(event: Event) {
+      console.log(this.dataSource);
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
   
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
+      }
+    }
+
+    applyFilter2(event: Event) {
+      console.log(this.dataSource2);
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource2.filter = filterValue.trim().toLowerCase();
+  
+      if (this.dataSource2.paginator) {
+        this.dataSource2.paginator.firstPage();
+      }
+    }
+
+    applyFilter3(event: Event) {
+      console.log(this.dataSource3);
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource3.filter = filterValue.trim().toLowerCase();
+  
+      if (this.dataSource3.paginator) {
+        this.dataSource3.paginator.firstPage();
       }
     }
 
@@ -103,6 +130,32 @@ export class UsersComponent implements OnInit {
       this.dataSource = part;
     }
 
+    public handlePage2(e: any) {
+      this.currentPage2 = e.pageIndex2;
+      this.pageSize2 = e.pageSize2;
+      this.iterator2();
+    }
+
+    private iterator2() {
+      const end = (this.currentPage2 + 1) * this.pageSize2;
+      const start = this.currentPage2 * this.pageSize2;
+      const part = this.medicos.slice(start, end);
+      this.dataSource2 = part;
+    }
+
+    public handlePage3(e: any) {
+      this.currentPage3 = e.pageIndex3;
+      this.pageSize3 = e.pageSize3;
+      this.iterator3();
+    }
+
+    private iterator3() {
+      const end = (this.currentPage3 + 1) * this.pageSize3;
+      const start = this.currentPage3 * this.pageSize3;
+      const part = this.administradores.slice(start, end);
+      this.dataSource3 = part;
+    }
+
   usuarios(){
     if(this.loginService.isLogged){
       this.userService.todosUsuarios()
@@ -113,12 +166,29 @@ export class UsersComponent implements OnInit {
               if (response[i]['rol'] == "paciente") {
                 const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['id'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado']);
                 this.users.push(newUserData);
-            }
+              }else if(response[i]['rol'] == "medico"){
+                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['id'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado']);
+                this.medicos.push(newUserData);
+              }else{
+                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['id'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado']);
+                this.administradores.push(newUserData);
+              }
+
             console.log(this.users);
             this.dataSource = new MatTableDataSource<UserData>(this.users);
             this.dataSource.paginator = this.paginator;
-            this.totalSize = this.users.length;
-            this.iterator();
+            this.totalSizePacientes = this.users.length;
+            this.dataSource.sort = this.sort;
+
+            this.dataSource2 = new MatTableDataSource<UserData>(this.medicos);
+            this.dataSource2.paginator = this.paginator;
+            this.totalSizeMedicos= this.medicos.length;
+            this.dataSource2.sort = this.sort;
+
+            this.dataSource3 = new MatTableDataSource<UserData>(this.administradores);
+            this.dataSource3.paginator = this.paginator;
+            this.totalSizeAdministradores = this.administradores.length;
+            this.dataSource3.sort = this.sort;
           }
           console.log(this.dataSource);
         },
