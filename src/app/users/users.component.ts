@@ -42,7 +42,10 @@ export class UsersComponent implements OnInit {
   loginService: LoginService;
   userService:UserService;
   users : UserData[] = [];
-  dataSource: MatTableDataSource<UserData>;
+  public dataSource: any;
+  public pageSize = 5;
+  public currentPage = 0;
+  public totalSize = 0;
     
   displayedColumns: string[] = ['id', 'dni', 'nombre'];
 
@@ -72,7 +75,7 @@ export class UsersComponent implements OnInit {
       this.userService = userService;
     }
 
-    ngOnInit() {
+    ngOnInit() {   
       this.usuarios();
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -85,6 +88,19 @@ export class UsersComponent implements OnInit {
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
       }
+    }
+
+    public handlePage(e: any) {
+      this.currentPage = e.pageIndex;
+      this.pageSize = e.pageSize;
+      this.iterator();
+    }
+
+    private iterator() {
+      const end = (this.currentPage + 1) * this.pageSize;
+      const start = this.currentPage * this.pageSize;
+      const part = this.users.slice(start, end);
+      this.dataSource = part;
     }
 
   usuarios(){
@@ -100,6 +116,9 @@ export class UsersComponent implements OnInit {
             }
             console.log(this.users);
             this.dataSource = new MatTableDataSource<UserData>(this.users);
+            this.dataSource.paginator = this.paginator;
+            this.totalSize = this.users.length;
+            this.iterator();
           }
           console.log(this.dataSource);
         },
