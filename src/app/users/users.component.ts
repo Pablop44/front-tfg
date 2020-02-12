@@ -10,21 +10,25 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 
 export class UserData {
-    id: number;
     dni: string;
     username: string;
     email: string;
+    telefono: string;
     nombre:string;
     apellidos:string;
     estado:string;
-  constructor(id, dni, username, email, nombre, apellidos, estado){
-    this.id = id
+    colegiado:string;
+    especialidad: string;
+  constructor(dni, username, email,telefono, nombre, apellidos, estado, colegiado,especialidad){
     this.dni = dni;
     this.username = username;
     this.email = email;
+    this.telefono = telefono;
     this.nombre = nombre;
     this.apellidos = apellidos;
     this.estado = estado;
+    this.colegiado = colegiado;
+    this.especialidad = especialidad
   }
     
 }
@@ -55,7 +59,9 @@ export class UsersComponent implements OnInit {
   public totalSizeMedicos = 0;
   public totalSizeAdministradores = 0;
     
-  displayedColumns: string[] = ['id', 'dni', 'nombre'];
+  displayedColumns: string[] = ['dni', 'nombre', 'email', 'telefono', 'estado','acciones'];
+  displayedColumns2: string[] = ['colegiado', 'dni', 'nombre', 'email', 'especialidad', 'telefono', 'estado',  'acciones'];
+  displayedColumns3: string[] = ['dni', 'nombre', 'email', 'telefono', 'estado', 'acciones'];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -164,13 +170,13 @@ export class UsersComponent implements OnInit {
           console.log(response);
           for (let i in response) {
               if (response[i]['rol'] == "paciente") {
-                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['id'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado']);
+                const newUserData = new UserData(response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
                 this.users.push(newUserData);
               }else if(response[i]['rol'] == "medico"){
-                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['id'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado']);
+                const newUserData = new UserData(response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
                 this.medicos.push(newUserData);
               }else{
-                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['id'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado']);
+                const newUserData = new UserData(response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
                 this.administradores.push(newUserData);
               }
 

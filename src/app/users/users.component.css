@@ -41,4 +41,41 @@
   td{
     text-align: left;
   }
-  
+
+  .mat-column-notes {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 15% !important;
+    width: 15% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+th.mat-header-cell {
+    color: black;
+    font-weight: bold;
+    word-wrap: break-word;
+    word-break:break-all;
+  }  
+
+  td.mat-cell {
+    word-wrap: break-word;
+    word-break:break-all;
+  }       
+
+table {
+    /* text-align: center !important; */
+    width: 100%;
+    /* table-layout: fixed; */
+    table-layout: fixed;
+    /* white-space: nowrap;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis; */
+  } 
