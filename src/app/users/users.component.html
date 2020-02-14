@@ -76,7 +76,7 @@
                           </tr>
                         </table>
                       
-                        <mat-paginator #paginator [pageSize]="pageSize3" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizeAministradores"
+                        <mat-paginator #paginator [pageSize]="pageSize3" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizeAdministradores"
                             [pageIndex]="currentPage3" (page)="pageEvent3 = handlePage3($event)">
                         </mat-paginator>
                       </div>
@@ -149,8 +149,8 @@
                       
                         </div>
                         <mat-paginator #paginator [pageSize]="pageSize2" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizeMedicos"
-                              [pageIndex]="currentPage2" (page)="pageEvent2 = handlePage2($event)">
-                          </mat-paginator>
+                                [pageIndex]="currentPage2" (page)="pageEvent = handlePage2($event)">
+                        </mat-paginator>
                   </mat-tab>
 
 

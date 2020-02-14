@@ -85,11 +85,7 @@ export class UsersComponent implements OnInit {
   displayedColumns3: string[] = ['dni', 'nombre', 'email', 'telefono', 'estado', 'acciones'];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatPaginator, {static: true}) paginator2: MatPaginator;
-  @ViewChild(MatPaginator, {static: true}) paginator3: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatSort, {static: true}) sort2: MatSort;
-  @ViewChild(MatSort, {static: true}) sort3: MatSort;
 
 
   /** Based on the screen size, switch from standard to one column per row */
@@ -130,7 +126,6 @@ export class UsersComponent implements OnInit {
     }
   
     applyFilter(event: Event) {
-      console.log(this.dataSource);
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
   
@@ -139,9 +134,8 @@ export class UsersComponent implements OnInit {
       }
     }
 
-    applyFilter2(event: Event) {
-      console.log(this.dataSource2);
-      const filterValue = (event.target as HTMLInputElement).value;
+    applyFilter2(event2: Event) {
+      const filterValue = (event2.target as HTMLInputElement).value;
       this.dataSource2.filter = filterValue.trim().toLowerCase();
   
       if (this.dataSource2.paginator) {
@@ -149,9 +143,8 @@ export class UsersComponent implements OnInit {
       }
     }
 
-    applyFilter3(event: Event) {
-      console.log(this.dataSource3);
-      const filterValue = (event.target as HTMLInputElement).value;
+    applyFilter3(event3: Event) {
+      const filterValue = (event3.target as HTMLInputElement).value;
       this.dataSource3.filter = filterValue.trim().toLowerCase();
   
       if (this.dataSource3.paginator) {
@@ -172,9 +165,9 @@ export class UsersComponent implements OnInit {
       this.dataSource = part;
     }
 
-    public handlePage2(e: any) {
-      this.currentPage2 = e.pageIndex2;
-      this.pageSize2 = e.pageSize2;
+    public handlePage2(e2: any) {
+      this.currentPage2 = e2.pageIndex;
+      this.pageSize2 = e2.pageSize;
       this.iterator2();
     }
 
@@ -186,9 +179,9 @@ export class UsersComponent implements OnInit {
       
     }
 
-    public handlePage3(e: any) {
-      this.currentPage3 = e.pageIndex3;
-      this.pageSize3 = e.pageSize3;
+    public handlePage3(e3: any) {
+      this.currentPage3 = e3.pageIndex;
+      this.pageSize3 = e3.pageSize;
       this.iterator3();
     }
 
@@ -197,7 +190,6 @@ export class UsersComponent implements OnInit {
       const start = this.currentPage3 * this.pageSize3;
       const part = this.administradores.slice(start, end);
       this.dataSource3 = part;
-      console.log(this.pageSize3);
     }
 
   usuarios(){
@@ -226,15 +218,15 @@ export class UsersComponent implements OnInit {
             this.iterator();
 
             this.dataSource2 = new MatTableDataSource<UserData>(this.medicos);
-            this.dataSource2.paginator2 = this.paginator2;
+            this.dataSource2.paginator = this.paginator;
             this.totalSizeMedicos= this.medicos.length;
-            this.dataSource2.sort2 = this.sort2;
+            this.dataSource2.sort = this.sort;
             this.iterator2();
 
             this.dataSource3 = new MatTableDataSource<UserData>(this.administradores);
-            this.dataSource3.paginator3 = this.paginator3;
+            this.dataSource3.paginator = this.paginator;
             this.totalSizeAdministradores = this.administradores.length;
-            this.dataSource3.sort3 = this.sort3;
+            this.dataSource3.sort = this.sort;
             this.iterator3();
           }
           console.log(this.dataSource);
