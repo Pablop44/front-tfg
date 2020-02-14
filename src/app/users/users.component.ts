@@ -1,16 +1,18 @@
-import { Component, OnInit, ViewChild, Inject} from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { ConsultaService } from 'src/services/consulta.service';
 import { LoginService } from 'src/services/login.service';
 import { UserService } from 'src/services/user.service';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Component, OnInit, ViewChild, Inject} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatTableDataSource} from '@angular/material/table';
+
 
 export class UserData {
+    id: number;
     dni: string;
     username: string;
     email: string;
@@ -20,7 +22,8 @@ export class UserData {
     estado:string;
     colegiado:string;
     especialidad: string;
-  constructor(dni, username, email,telefono, nombre, apellidos, estado, colegiado,especialidad){
+  constructor(id, dni, username, email,telefono, nombre, apellidos, estado, colegiado,especialidad){
+    this.id = id;
     this.dni = dni;
     this.username = username;
     this.email = email;
@@ -111,7 +114,9 @@ export class UsersComponent implements OnInit {
     }
 
     ngOnInit() {   
+      
       this.usuarios();
+      
     }
 
     openDialog(): void {
@@ -128,7 +133,6 @@ export class UsersComponent implements OnInit {
     applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
-  
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
       }
@@ -192,44 +196,66 @@ export class UsersComponent implements OnInit {
       this.dataSource3 = part;
     }
 
+    eliminarUsuario(user:UserData, rol){
+      
+      this.userService.eliminarUser(user.id)
+        .subscribe(
+          response =>{console.log(response)
+            if(rol == 'medico'){
+              this.medicos = this.medicos.filter(u => u !== user);
+              this.dataSource2 = this.dataSource2.filter(u => u !== user);
+            }else if(rol == 'paciente'){
+              this.users = this.users.filter(u => u !== user);
+              this.dataSource = this.dataSource.filter(u => u !== user);
+            }else{
+              this.administradores = this.administradores.filter(u => u !== user);
+              this.dataSource3 = this.dataSource3.filter(u => u !== user);
+            }
+            },
+          error => {console.log(error)}
+        );
+      
+      }
+
   usuarios(){
     if(this.loginService.isLogged){
       this.userService.todosUsuarios()
       .subscribe(
         response =>{
-          console.log(response);
           for (let i in response) {
               if (response[i]['rol'] == "paciente") {
-                const newUserData = new UserData(response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
+                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
                 this.users.push(newUserData);
               }else if(response[i]['rol'] == "medico"){
-                const newUserData = new UserData(response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
+                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
                 this.medicos.push(newUserData);
               }else{
-                const newUserData = new UserData(response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
+                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
                 this.administradores.push(newUserData);
               }
 
-            console.log(this.users);
             this.dataSource = new MatTableDataSource<UserData>(this.users);
-            this.dataSource.paginator = this.paginator;
-            this.totalSizePacientes = this.users.length;
-            this.dataSource.sort = this.sort;
-            this.iterator();
 
             this.dataSource2 = new MatTableDataSource<UserData>(this.medicos);
-            this.dataSource2.paginator = this.paginator;
-            this.totalSizeMedicos= this.medicos.length;
-            this.dataSource2.sort = this.sort;
-            this.iterator2();
 
             this.dataSource3 = new MatTableDataSource<UserData>(this.administradores);
-            this.dataSource3.paginator = this.paginator;
-            this.totalSizeAdministradores = this.administradores.length;
-            this.dataSource3.sort = this.sort;
-            this.iterator3();
+            
+            
           }
-          console.log(this.dataSource);
+          this.dataSource.paginator = this.paginator;
+          this.totalSizePacientes = this.users.length;
+          this.dataSource.sort = this.sort;
+
+          this.dataSource2.paginator = this.paginator;
+          this.totalSizeMedicos= this.medicos.length;
+          this.dataSource2.sort = this.sort;
+          
+          this.dataSource3.paginator = this.paginator;
+          this.totalSizeAdministradores = this.administradores.length;
+          this.dataSource3.sort = this.sort;
+          this.iterator();
+          this.iterator2();
+          this.iterator3();
         },
         error => {
           console.log(error);

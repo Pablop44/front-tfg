@@ -22,4 +22,12 @@ export class UserService {
       })
     });
   }
+
+  eliminarUser(id){
+    return this.http.delete(this.restUrl+"/user/delete/"+id+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
 }

@@ -7,7 +7,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { UsersComponent } from './users.component';
+import { UsersComponent, DialogoAnadirPaciente } from './users.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { AppComponent } from '../app.component';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -15,7 +18,7 @@ describe('UsersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UsersComponent],
+      declarations: [UsersComponent, DialogoAnadirPaciente],
       imports: [
         NoopAnimationsModule,
         LayoutModule,
@@ -24,7 +27,9 @@ describe('UsersComponent', () => {
         MatGridListModule,
         MatIconModule,
         MatMenuModule,
-      ]
+        MatPaginator,
+        MatSort,
+      ],
     }).compileComponents();
   }));
 

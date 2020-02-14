@@ -79,3 +79,14 @@ table {
     overflow-wrap: break-word;
     text-overflow: ellipsis; */
   } 
+
+  .mat-button.mat-small {
+    min-width: 1%;
+}
+button {
+  min-height: 23px !important;
+  min-width: 46px !important;
+  font-size: 5px !important;
+  margin-left: 1px;
+  line-height: 0px; 
+}
