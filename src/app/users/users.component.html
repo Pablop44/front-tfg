@@ -21,7 +21,7 @@
   
               <mat-card-content class="dashboard-card-content">
     
-                <mat-tab-group>
+                <mat-tab-group >
 
                   <mat-tab label="Administradores"> 
                     <mat-form-field class="formularioFilter">
@@ -29,8 +29,8 @@
                         <input matInput (keyup)="applyFilter3($event)" placeholder="Ex. Mia">
                     </mat-form-field>
                       
-                      <div class="mat-elevation-z8">
-                        <table mat-table [dataSource]="dataSource3" matSort>
+                      <div>
+                        <table  mat-table [dataSource]="dataSource3" matSort>
                       
                           <!-- Progress Column -->
                           <ng-container matColumnDef="dni">
@@ -76,7 +76,7 @@
                           </tr>
                         </table>
                       
-                        <mat-paginator #paginator [pageSize]="pageSize3" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" [length]="totalSizeAministradores"
+                        <mat-paginator #paginator [pageSize]="pageSize3" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizeAministradores"
                             [pageIndex]="currentPage3" (page)="pageEvent3 = handlePage3($event)">
                         </mat-paginator>
                       </div>
@@ -90,7 +90,7 @@
                           <input matInput (keyup)="applyFilter2($event)" placeholder="Ex. Mia">
                       </mat-form-field>
                         
-                        <div class="mat-elevation-z8">
+                        <div>
                           <table mat-table [dataSource]="dataSource2" matSort>
 
                             <ng-container matColumnDef="colegiado">
@@ -146,11 +146,11 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns2;">
                             </tr>
                           </table>
-                        
-                          <mat-paginator #paginator [pageSize]="pageSize2" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" [length]="totalSizeMedicos"
+                      
+                        </div>
+                        <mat-paginator #paginator [pageSize]="pageSize2" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizeMedicos"
                               [pageIndex]="currentPage2" (page)="pageEvent2 = handlePage2($event)">
                           </mat-paginator>
-                        </div>
                   </mat-tab>
 
 
@@ -207,7 +207,7 @@
                               </tr>
                             </table>
                           
-                            <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" [length]="totalSizePacientes"
+                            <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizePacientes"
                                 [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)">
                             </mat-paginator>
                           </div>

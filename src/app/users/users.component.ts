@@ -70,9 +70,9 @@ export class UsersComponent implements OnInit {
   public dataSource: any;
   public dataSource2: any;
   public dataSource3: any;
-  public pageSize = 10;
-  public pageSize2 = 10;
-  public pageSize3 = 10;
+  public pageSize = 15;
+  public pageSize2 = 15;
+  public pageSize3 = 15;
   public currentPage = 0;
   public currentPage2 = 0;
   public currentPage3 = 0;
@@ -85,7 +85,11 @@ export class UsersComponent implements OnInit {
   displayedColumns3: string[] = ['dni', 'nombre', 'email', 'telefono', 'estado', 'acciones'];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator2: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator3: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, {static: true}) sort2: MatSort;
+  @ViewChild(MatSort, {static: true}) sort3: MatSort;
 
 
   /** Based on the screen size, switch from standard to one column per row */
@@ -179,6 +183,7 @@ export class UsersComponent implements OnInit {
       const start = this.currentPage2 * this.pageSize2;
       const part = this.medicos.slice(start, end);
       this.dataSource2 = part;
+      
     }
 
     public handlePage3(e: any) {
@@ -192,6 +197,7 @@ export class UsersComponent implements OnInit {
       const start = this.currentPage3 * this.pageSize3;
       const part = this.administradores.slice(start, end);
       this.dataSource3 = part;
+      console.log(this.pageSize3);
     }
 
   usuarios(){
@@ -217,16 +223,19 @@ export class UsersComponent implements OnInit {
             this.dataSource.paginator = this.paginator;
             this.totalSizePacientes = this.users.length;
             this.dataSource.sort = this.sort;
+            this.iterator();
 
             this.dataSource2 = new MatTableDataSource<UserData>(this.medicos);
-            this.dataSource2.paginator = this.paginator;
+            this.dataSource2.paginator2 = this.paginator2;
             this.totalSizeMedicos= this.medicos.length;
-            this.dataSource2.sort = this.sort;
+            this.dataSource2.sort2 = this.sort2;
+            this.iterator2();
 
             this.dataSource3 = new MatTableDataSource<UserData>(this.administradores);
-            this.dataSource3.paginator = this.paginator;
+            this.dataSource3.paginator3 = this.paginator3;
             this.totalSizeAdministradores = this.administradores.length;
-            this.dataSource3.sort = this.sort;
+            this.dataSource3.sort3 = this.sort3;
+            this.iterator3();
           }
           console.log(this.dataSource);
         },
