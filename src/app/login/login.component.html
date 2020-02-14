@@ -19,7 +19,7 @@
               <br>
               <br>
               <button mat-raised-button type="submit" color="primary">Iniciar Sesión</button>
-              <a mat-raised-button href="/registro" style="float:right" color="primary">Registrarse</a>
+              <button mat-raised-button [routerLink]="'/registro'" style="float:right" color="primary">Registrarse</button>
             </form>
             <p *ngIf="loginNotification!=''">Error: {{loginNotification}} </p>
           </div>
