@@ -9,6 +9,7 @@ import {Component, OnInit, ViewChild, Inject} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { User } from 'src/app/models/User';
 
 
 export class UserData {
@@ -45,10 +46,43 @@ export interface DialogData {
   selector: 'dialogoAnadirPaciente',
   templateUrl: 'dialogoAnadirPaciente.html',
 })
+
 export class DialogoAnadirPaciente {
 
   constructor(
     public dialogRef: MatDialogRef<DialogoAnadirPaciente>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'dialogoAnadirMedico',
+  templateUrl: 'dialogoAnadirMedico.html',
+})
+export class DialogoAnadirMedico {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoAnadirMedico>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'dialogoAnadirAdministrador',
+  templateUrl: 'dialogoAnadirAdministrador.html',
+})
+export class DialogoAnadirAdministrador {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoAnadirAdministrador>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   onNoClick(): void {
@@ -82,6 +116,22 @@ export class UsersComponent implements OnInit {
   public totalSizePacientes = 0;
   public totalSizeMedicos = 0;
   public totalSizeAdministradores = 0;
+
+  formRegistroMedico:User ={
+    id: null,
+    dni:null,
+    username:null,
+    password:null,
+    email:null,
+    nombre:null,
+    apellidos:null,
+    telefono:null,
+    poblacion:null,
+    colegiado:null,
+    cargo:null,
+    especialidad:null,
+    cuenta:null,
+  };
     
   displayedColumns: string[] = ['dni', 'nombre', 'email', 'telefono', 'estado','acciones'];
   displayedColumns2: string[] = ['colegiado', 'dni', 'nombre', 'email', 'especialidad', 'telefono', 'estado',  'acciones'];
@@ -109,6 +159,7 @@ export class UsersComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver, consultaService:ConsultaService,
     private router : Router,
     loginService:LoginService, userService:UserService, public dialog: MatDialog) {
+      
       this.loginService = loginService;
       this.userService = userService;
     }
@@ -121,7 +172,42 @@ export class UsersComponent implements OnInit {
 
     openDialog(): void {
       const dialogRef = this.dialog.open(DialogoAnadirPaciente, {
-        width: '300px',
+        width: '400px',
+        data: {name: "hola", animal: "hola"}
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    }
+
+    openDialog2(): void {
+      const dialogMed = this.dialog.open(DialogoAnadirMedico, {
+        width: '400px',
+        data: {dni: null, username: null, password: null, email: null, nombre: null, apellidos: null, telefono: null, poblacion: null}
+      });
+  
+      dialogMed.afterClosed().subscribe(result => {
+        this.formRegistroMedico.id = null;
+        this.formRegistroMedico.email = result.email;
+        this.formRegistroMedico.username = result.username;
+        this.formRegistroMedico.cargo = result.cargo;
+        this.formRegistroMedico.dni = result.dni;
+        this.formRegistroMedico.apellidos = result.apellidos;
+        this.formRegistroMedico.nombre = result.nombre;
+        this.formRegistroMedico.password = result.password;
+        this.formRegistroMedico.poblacion = result.poblacion;
+        this.formRegistroMedico.telefono = result.telefono;
+        this.formRegistroMedico.colegiado = result.colegiado;
+        this.formRegistroMedico.especialidad = result.especialidad;
+        this.registrarMedico();
+      });
+      
+    }
+
+    openDialog3(): void {
+      const dialogRef = this.dialog.open(DialogoAnadirAdministrador, {
+        width: '400px',
         data: {name: "hola", animal: "hola"}
       });
   
@@ -262,5 +348,20 @@ export class UsersComponent implements OnInit {
         }
       );
     }
+  }
+
+  registrarMedico(){
+    this.userService.registroMedico(this.formRegistroMedico)
+      .subscribe(
+        response=>{
+          const newUserData = new UserData(null,response[0]['dni'],response[0]['username'], response[0]['email'],response[0]['telefono'],response[0]['nombre'], response[0]['apellidos'], response[0]['estado'], response[0]['colegiado'], response[0]['especialidad'])
+          this.medicos.push(newUserData);
+          console.log(response[0])
+          this.dataSource2.data = this.medicos;
+        },
+        error=>{
+          console.log(error);
+        }
+      );
   }
 }

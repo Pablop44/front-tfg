@@ -30,4 +30,17 @@ export class UserService {
       })
     });
   }
+
+  registroMedico(formResgistro){
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+    console.log(formResgistro);
+
+    return this.http.post(this.restUrl+"/user/registerMedico.json", JSON.stringify(formResgistro), httpOptions);
+
+  }
 }
