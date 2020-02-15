@@ -40,6 +40,7 @@ export class UserData {
 export interface DialogData {
   animal: string;
   name: string;
+  id: number;
 }
 
 @Component({
@@ -91,6 +92,21 @@ export class DialogoAnadirAdministrador {
 
 }
 
+@Component({
+  selector: 'dialogoEliminarUsuario',
+  templateUrl: 'dialogoEliminarUsuario.html',
+})
+export class DialogoEliminarUsuario {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoEliminarUsuario>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
 
 @Component({
   selector: 'app-users',
@@ -215,6 +231,20 @@ export class UsersComponent implements OnInit {
         console.log('The dialog was closed');
       });
     }
+
+    openDialog4(user:UserData, rol): void {
+      const dialogRef = this.dialog.open(DialogoEliminarUsuario, {
+        width: '400px',
+        data: {name: user.username, animal: rol, id: user.id, respuesta: "Si"}
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        if(result.respuesta == "Si"){
+          this.eliminarUsuario(user, rol);
+        }
+      });
+    }
   
     applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;
@@ -282,7 +312,7 @@ export class UsersComponent implements OnInit {
       this.dataSource3 = part;
     }
 
-    eliminarUsuario(user:UserData, rol){
+    eliminarUsuario(user, rol){
       
       this.userService.eliminarUser(user.id)
         .subscribe(

@@ -54,7 +54,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
-import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnadirAdministrador } from './users/users.component';
+import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnadirAdministrador, DialogoEliminarUsuario } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +65,7 @@ import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnad
     DashboardHomeComponent,
     UsersComponent,
     DialogoAnadirPaciente,
+    DialogoEliminarUsuario,
     DialogoAnadirAdministrador,
     DialogoAnadirMedico
   ],
@@ -169,7 +170,7 @@ import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnad
     PortalModule,
     ScrollingModule,
   ],
-  entryComponents: [ DialogoAnadirPaciente, DialogoAnadirAdministrador, DialogoAnadirMedico ],
+  entryComponents: [ DialogoAnadirPaciente, DialogoAnadirAdministrador, DialogoAnadirMedico, DialogoEliminarUsuario],
   providers: [],
   bootstrap: [AppComponent]
 })
