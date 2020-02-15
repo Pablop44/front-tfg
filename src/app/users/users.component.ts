@@ -10,7 +10,21 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { User } from 'src/app/models/User';
+import {MAT_SNACK_BAR_DATA} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
+@Component({
+  selector: 'notificacion',
+  templateUrl: 'notificacion.html',
+  styles: [`
+    .example-pizza-party {
+      color: hotpink;
+    }
+  `],
+})
+export class notificacionComponent {
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
+}
 
 export class UserData {
     id: number;
@@ -174,7 +188,7 @@ export class UsersComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver, consultaService:ConsultaService,
     private router : Router,
-    loginService:LoginService, userService:UserService, public dialog: MatDialog) {
+    loginService:LoginService, userService:UserService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
       
       this.loginService = loginService;
       this.userService = userService;
@@ -184,6 +198,12 @@ export class UsersComponent implements OnInit {
       
       this.usuarios();
       
+    }
+
+    openSnackBar(mensaje: String) {
+      this._snackBar.openFromComponent(notificacionComponent, {
+        duration: 4 * 1000, data: mensaje
+      });
     }
 
     openDialog(): void {
@@ -327,8 +347,10 @@ export class UsersComponent implements OnInit {
               this.administradores = this.administradores.filter(u => u !== user);
               this.dataSource3 = this.dataSource3.filter(u => u !== user);
             }
+            this.openSnackBar("Se ha eliminado el usuario: \""+user.username+"\" con rol \""+rol+"\"");
             },
-          error => {console.log(error)}
+          error => {console.log(error)
+            this.openSnackBar("No se ha podido eliminar el usuario:" +user.username);}
         );
       
       }
@@ -348,16 +370,15 @@ export class UsersComponent implements OnInit {
               }else{
                 const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
                 this.administradores.push(newUserData);
-              }
-
-            this.dataSource = new MatTableDataSource<UserData>(this.users);
-
-            this.dataSource2 = new MatTableDataSource<UserData>(this.medicos);
-
-            this.dataSource3 = new MatTableDataSource<UserData>(this.administradores);
-            
-            
+              } 
           }
+
+          this.dataSource = new MatTableDataSource<UserData>(this.users);
+
+          this.dataSource2 = new MatTableDataSource<UserData>(this.medicos);
+
+          this.dataSource3 = new MatTableDataSource<UserData>(this.administradores);
+
           this.dataSource.paginator = this.paginator;
           this.totalSizePacientes = this.users.length;
           this.dataSource.sort = this.sort;
@@ -384,12 +405,20 @@ export class UsersComponent implements OnInit {
     this.userService.registroMedico(this.formRegistroMedico)
       .subscribe(
         response=>{
-          const newUserData = new UserData(null,response[0]['dni'],response[0]['username'], response[0]['email'],response[0]['telefono'],response[0]['nombre'], response[0]['apellidos'], response[0]['estado'], response[0]['colegiado'], response[0]['especialidad'])
-          this.medicos.push(newUserData);
-          console.log(response[0])
-          this.dataSource2.data = this.medicos;
+          for (let i in response) {
+            const newUserData = new UserData(null,response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'])
+            this.medicos.push(newUserData);
+            console.log(response[i])
+            this.dataSource2 = new MatTableDataSource<UserData>(this.medicos);
+            this.dataSource2.paginator = this.paginator;
+            this.totalSizeMedicos= this.medicos.length;
+            this.dataSource2.sort = this.sort;
+            this.iterator2();
+            this.openSnackBar("Se ha añadido el usuario: \""+newUserData.username+"\" con rol de Médico");
+          }
         },
         error=>{
+          this.openSnackBar("No se ha podido añadir el usuario, intentelo");
           console.log(error);
         }
       );
