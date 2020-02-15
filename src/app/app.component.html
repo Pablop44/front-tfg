@@ -15,8 +15,7 @@
       </div>
       <div *ngIf="loginService.isLogged" style="margin-left:auto; margin-right:0;">
         <button mat-button (click)='logout()'> Cerrar Sesión </button>
-        <button mat-button (click)='profile()'> <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon">account_circle</mat-icon></button>
-       
+        <button mat-button (click)='profile()'> <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon">account_circle</mat-icon>  {{loginService.loggedUser.username}}</button>
       </div>
 
 

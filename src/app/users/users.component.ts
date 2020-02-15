@@ -235,7 +235,7 @@ export class UsersComponent implements OnInit {
     openDialog4(user:UserData, rol): void {
       const dialogRef = this.dialog.open(DialogoEliminarUsuario, {
         width: '400px',
-        data: {name: user.username, animal: rol, id: user.id, respuesta: "Si"}
+        data: {name: user.username, rol: rol, id: user.id, respuesta: "Si"}
       });
   
       dialogRef.afterClosed().subscribe(result => {

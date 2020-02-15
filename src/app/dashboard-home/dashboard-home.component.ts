@@ -66,8 +66,8 @@ export class DashboardHomeComponent {
 
       return [
         { title: 'Fichas', cols: 2, rows: 3, cuerpo: "hola"},
-        { title: 'Consultas', cols: 2, rows: 1, cuerpo: this.todasConsultas },
-        { title: 'Usuarios', cols: 1, rows: 1, cuerpo: this.todosUsuarios },
+        { title: 'Consultas', cols: 1, rows: 2, cuerpo: this.todasConsultas },
+        { title: 'Usuarios', cols: 1, rows: 2, cuerpo: this.todosUsuarios },
         { title: 'Medicamentos', cols: 1, rows: 2, cuerpo: 'cuerpo3' },
       ];
     })
@@ -129,6 +129,13 @@ export class DashboardHomeComponent {
         response =>{
           console.log(response);
           for (let i in response) {
+              if(response[i]['enfermedad'] == 'migranas'){
+                response[i]['enfermedad'] = "Migrañas";
+              }else if(response[i]['enfermedad'] == 'diabetes'){
+                response[i]['enfermedad'] = "Diabetes";
+              }else{
+                response[i]['enfermedad'] = "Asma";
+              }
                 const newFicha = new Ficha(response[i]['fechaCreacion'],response[i]['dniPaciente'], response[i]['nombrePaciente'],response[i]['dniMedico'],response[i]['nombreMedico'], response[i]['colegiado'], response[i]['enfermedad']);
                 this.fichasArray.push(newFicha);
           }

@@ -55,6 +55,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
 import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnadirAdministrador, DialogoEliminarUsuario } from './users/users.component';
+import { loginNotificacionComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnad
     DialogoAnadirPaciente,
     DialogoEliminarUsuario,
     DialogoAnadirAdministrador,
-    DialogoAnadirMedico
+    DialogoAnadirMedico,
+    loginNotificacionComponent,
   ],
   imports: [
     BrowserModule,
@@ -170,7 +172,7 @@ import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnad
     PortalModule,
     ScrollingModule,
   ],
-  entryComponents: [ DialogoAnadirPaciente, DialogoAnadirAdministrador, DialogoAnadirMedico, DialogoEliminarUsuario],
+  entryComponents: [ DialogoAnadirPaciente, DialogoAnadirAdministrador, DialogoAnadirMedico, DialogoEliminarUsuario, loginNotificacionComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

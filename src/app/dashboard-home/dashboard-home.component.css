@@ -55,12 +55,6 @@ tr.example-element-row:not(.example-expanded-row):active {
   height: 104px;
 }
 
-.example-element-symbol {
-  font-weight: bold;
-  font-size: 40px;
-  line-height: normal;
-}
-
 .example-element-description {
   padding: 16px;
   width: 33%;
@@ -69,6 +63,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-description-attribution {
   opacity: 0.5;
 }
+
 
 .botonDetalles{
   margin-left: 8px;

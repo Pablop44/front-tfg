@@ -11,7 +11,7 @@ body {
 
   .my-custom-scrollbar {
     position: relative;
-    height: 248px;
+    height: 600px;
     overflow: auto;
     }
     .table-wrapper-scroll-y {
@@ -21,9 +21,9 @@ body {
 
     .my-custom-scrollbar2 {
         position: relative;
-        height: 1000px;
+        height: 900px;
         overflow: auto;
-        }
+    }
 
 
   .form-signin {
@@ -330,6 +330,9 @@ footer{
     text-align: center;
     padding: 20px;
 }
+
+
+
 
 
 html, body { height: 100%; }
