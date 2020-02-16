@@ -9,6 +9,7 @@ import { FichaService } from 'src/services/ficha.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 export class Ficha {
+  id: number;
   fechaCreacion: string;
   dniPaciente: string;
   nombrePaciente: string;
@@ -16,7 +17,8 @@ export class Ficha {
   nombreMedico: string;
   colegiado: string;
   enfermedad: string
-  constructor(fechaCreacion, dniPaciente, nombrePaciente,dniMedico, nombreMedico, colegiado, enfermedad){
+  constructor(id, fechaCreacion, dniPaciente, nombrePaciente,dniMedico, nombreMedico, colegiado, enfermedad){
+    this.id = id;
     this.fechaCreacion = fechaCreacion;
     this.dniPaciente = dniPaciente;
     this.nombrePaciente = nombrePaciente;
@@ -42,7 +44,7 @@ export class Ficha {
 
 export class DashboardHomeComponent {
   dataSource;
-  columnsToDisplay = ['dniPaciente', 'dniMedico', 'enfermedad', 'fechaCreacion'];
+  columnsToDisplay = ['id','dniPaciente', 'dniMedico', 'enfermedad', 'fechaCreacion'];
   expandedElement: Ficha | null;
   fichasArray : Ficha[] = [];
   todasConsultas: any = [];
@@ -136,7 +138,7 @@ export class DashboardHomeComponent {
               }else{
                 response[i]['enfermedad'] = "Asma";
               }
-                const newFicha = new Ficha(response[i]['fechaCreacion'],response[i]['dniPaciente'], response[i]['nombrePaciente'],response[i]['dniMedico'],response[i]['nombreMedico'], response[i]['colegiado'], response[i]['enfermedad']);
+                const newFicha = new Ficha(response[i]['id'],response[i]['fechaCreacion'],response[i]['dniPaciente'], response[i]['nombrePaciente'],response[i]['dniMedico'],response[i]['nombreMedico'], response[i]['colegiado'], response[i]['enfermedad']);
                 this.fichasArray.push(newFicha);
           }
           this.dataSource = this.fichasArray;

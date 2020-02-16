@@ -167,9 +167,8 @@ export class UsersComponent implements OnInit {
   displayedColumns2: string[] = ['colegiado', 'dni', 'nombre', 'email', 'especialidad', 'telefono', 'estado',  'acciones'];
   displayedColumns3: string[] = ['dni', 'nombre', 'email', 'telefono', 'estado', 'acciones'];
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -189,13 +188,11 @@ export class UsersComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver, consultaService:ConsultaService,
     private router : Router,
     loginService:LoginService, userService:UserService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
-      
       this.loginService = loginService;
       this.userService = userService;
     }
 
     ngOnInit() {   
-      
       this.usuarios();
       
     }
@@ -284,6 +281,7 @@ export class UsersComponent implements OnInit {
     }
 
     applyFilter3(event3: Event) {
+      console.log(this.dataSource3.paginator);
       const filterValue = (event3.target as HTMLInputElement).value;
       this.dataSource3.filter = filterValue.trim().toLowerCase();
   
@@ -374,22 +372,27 @@ export class UsersComponent implements OnInit {
           }
 
           this.dataSource = new MatTableDataSource<UserData>(this.users);
-
+          this.dataSource.data = this.users;
+          this.totalSizePacientes = this.users.length;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          
           this.dataSource2 = new MatTableDataSource<UserData>(this.medicos);
+          this.totalSizeMedicos= this.medicos.length;
+          this.dataSource2.data = this.medicos;
+          this.dataSource2.paginator = this.paginator;
+          this.dataSource2.sort = this.sort;
 
           this.dataSource3 = new MatTableDataSource<UserData>(this.administradores);
-
-          this.dataSource.paginator = this.paginator;
-          this.totalSizePacientes = this.users.length;
-          this.dataSource.sort = this.sort;
-
-          this.dataSource2.paginator = this.paginator;
-          this.totalSizeMedicos= this.medicos.length;
-          this.dataSource2.sort = this.sort;
-          
-          this.dataSource3.paginator = this.paginator;
           this.totalSizeAdministradores = this.administradores.length;
+          this.dataSource3.data = this.administradores;
+          this.dataSource3.paginator = this.paginator;
           this.dataSource3.sort = this.sort;
+
+          
+
+          
+
           this.iterator();
           this.iterator2();
           this.iterator3();
