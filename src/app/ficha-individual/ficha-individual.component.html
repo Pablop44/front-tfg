@@ -1,0 +1,194 @@
+<div class="grid-container">
+    <h1 class="mat-h1">Pagina Príncipal</h1>
+    <mat-grid-list cols="2" rowHeight="370px">
+      <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
+        <div [ngSwitch]="card.title">
+  
+          <div *ngSwitchCase="'Datos del Historial'">
+            <mat-card class="dashboard-card">
+              <mat-card-header>
+                <mat-card-title>
+                  Datos del Historial
+                  <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <a [routerLink]="'/fichas'" mat-menu-item>Añadir Consulta</a>
+                  </mat-menu>
+                </mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content>
+                
+              </mat-card-content>
+            </mat-card>
+        </div>
+  
+  
+          <div *ngSwitchCase="'Datos del Médico'">
+            <mat-card class="dashboard-card">
+              <mat-card-header>
+                <mat-card-title>
+                  {{card.title}}
+                  <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <a [routerLink]="'/users'" mat-menu-item>Ver todos los usuarios</a>
+                  </mat-menu>
+                </mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="dashboard-card-content">
+               
+                <mat-list>
+                    <h3 mat-subheader>
+                        <mat-icon mat-list-icon style="margin-right: 10px;">
+                            <i class="material-icons">
+                                person
+                                </i>
+                          </mat-icon>
+                          Datos Personales
+                    </h3>
+                    <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">Nombre de Usuario</h4>
+                        <p mat-line> pablop44</p>
+                      </mat-list-item>
+                    <mat-list-item >
+                      <h4 mat-line style="font-weight: bold;">Nombre y Apellidos</h4>
+                      <p mat-line> Pablo Pazos Domínguez</p>
+                    </mat-list-item>
+                    <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">DNI</h4>
+                        <p mat-line>17463632P</p>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <h3 mat-subheader>
+                        <mat-icon mat-list-icon style="margin-right: 10px;">
+                            <i class="material-icons">
+                                work
+                                </i>
+                          </mat-icon>
+                          Datos Profesionales
+                    </h3>
+                    <mat-list-item >
+                      <h3 mat-line style="font-weight: bold;">Número de Colegiado</h3>
+                      <p mat-line> 343242341 </p>
+                    </mat-list-item>
+                    <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">Especialidad</h4>
+                        <p mat-line>Asma</p>
+                      </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <h3 mat-subheader>
+                        <mat-icon mat-list-icon style="margin-right: 10px;">
+                            <i class="material-icons">
+                              contact_mail
+                              </i>
+                          </mat-icon>
+                          Datos de Contacto
+                    </h3>
+                    <mat-list-item >
+                      <h4 mat-line style="font-weight: bold;">Email</h4>
+                      <p mat-line> ppd20101@gmail.com </p>
+                    </mat-list-item>
+                    <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">Teléfono</h4>
+                        <p mat-line>689664381</p>
+                      </mat-list-item>
+                  </mat-list>
+                   
+              </mat-card-content>
+                </mat-card>
+            </div>
+
+            <div *ngSwitchCase="'Datos del Paciente'">
+                <mat-card class="dashboard-card">
+                  <mat-card-header>
+                    <mat-card-title>
+                      {{card.title}}
+                      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu" xPosition="before">
+                        <a [routerLink]="'/consultas'" mat-menu-item>Ver todos los consultas</a>
+                      </mat-menu>
+                    </mat-card-title>
+                  </mat-card-header>
+    
+                  <mat-card-content class="dashboard-card-content">
+  
+                      <mat-list>
+                          <h3 mat-subheader>
+                              <mat-icon mat-list-icon style="margin-right: 10px;">
+                                  <i class="material-icons">
+                                      person
+                                      </i>
+                                </mat-icon>
+                                Datos Personales
+                          </h3>
+                          <mat-list-item >
+                            <h4 mat-line style="font-weight: bold;">Nombre de Usuario</h4>
+                            <p mat-line> pablop44</p>
+                          </mat-list-item>
+                          <mat-list-item >
+                            <h4 mat-line style="font-weight: bold;">Nombre y Apellidos</h4>
+                            <p mat-line> Pablo Pazos Domínguez</p>
+                          </mat-list-item>
+                          <mat-list-item >
+                            <h4 mat-line style="font-weight: bold;">DNI</h4>
+                            <p mat-line>17463632P</p>
+                          </mat-list-item>
+                          <mat-list-item >
+                            <h4 mat-line style="font-weight: bold;">Población</h4>
+                            <p mat-line >Ponteareas</p>
+                          </mat-list-item>
+                          <mat-divider></mat-divider>
+                          <h3 mat-subheader>
+                              <mat-icon mat-list-icon style="margin-right: 10px;">
+                                  <i class="material-icons">
+                                    contact_mail
+                                    </i>
+                                </mat-icon>
+                                Datos de Contacto
+                          </h3>
+                          <mat-list-item >
+                            <h4 mat-line style="font-weight: bold;">Email</h4>
+                            <a mat-line href = "mailto: ppd20101@gmail.com">ppd20101@gmail.com</a>
+                          </mat-list-item>
+                          <mat-list-item >
+                            <h4 mat-line style="font-weight: bold;">Teléfono</h4>
+                            <p mat-line>689664381</p>
+                          </mat-list-item>
+                        </mat-list>
+                       
+                  </mat-card-content>
+                </mat-card>
+            </div>
+
+            <div *ngSwitchCase="'Consultas'">
+                <mat-card class="dashboard-card">
+                  <mat-card-header>
+                    <mat-card-title>
+                      {{card.title}}
+                      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu" xPosition="before">
+                        <a [routerLink]="'/users'" mat-menu-item>Ver todos los usuarios</a>
+                      </mat-menu>
+                    </mat-card-title>
+                  </mat-card-header>
+      
+                  <mat-card-content class="dashboard-card-content">
+                   
+                       
+                  </mat-card-content>
+                    </mat-card>
+                </div>
+        
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  
