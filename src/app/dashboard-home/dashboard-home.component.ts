@@ -11,18 +11,18 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 export class Ficha {
   id: number;
   fechaCreacion: string;
-  dniPaciente: string;
+  Paciente: string;
   nombrePaciente: string;
-  dniMedico: string;
+  Medico: string;
   nombreMedico: string;
   colegiado: string;
   enfermedad: string
-  constructor(id, fechaCreacion, dniPaciente, nombrePaciente,dniMedico, nombreMedico, colegiado, enfermedad){
+  constructor(id, fechaCreacion, Paciente, nombrePaciente, Medico, nombreMedico, colegiado, enfermedad){
     this.id = id;
     this.fechaCreacion = fechaCreacion;
-    this.dniPaciente = dniPaciente;
+    this.Paciente = Paciente;
     this.nombrePaciente = nombrePaciente;
-    this.dniMedico = dniMedico;
+    this.Medico = Medico;
     this.nombreMedico = nombreMedico;
     this.colegiado = colegiado;
     this.enfermedad = enfermedad;
@@ -44,7 +44,7 @@ export class Ficha {
 
 export class DashboardHomeComponent {
   dataSource;
-  columnsToDisplay = ['id','dniPaciente', 'dniMedico', 'enfermedad', 'fechaCreacion'];
+  columnsToDisplay = ['id' ,'Paciente', 'Medico', 'enfermedad', 'fechaCreacion'];
   expandedElement: Ficha | null;
   fichasArray : Ficha[] = [];
   todasConsultas: any = [];
@@ -138,7 +138,8 @@ export class DashboardHomeComponent {
               }else{
                 response[i]['enfermedad'] = "Asma";
               }
-                const newFicha = new Ficha(response[i]['id'],response[i]['fechaCreacion'],response[i]['dniPaciente'], response[i]['nombrePaciente'],response[i]['dniMedico'],response[i]['nombreMedico'], response[i]['colegiado'], response[i]['enfermedad']);
+
+                const newFicha = new Ficha(response[i]['id'],response[i]['fechaCreacion'],response[i]['dniPaciente']+" ("+response[i]['nombrePaciente']+")", response[i]['nombrePaciente'],response[i]['dniMedico']+" ("+response[i]['nombrePaciente']+") "+response[i]['colegiado'],response[i]['nombreMedico'], response[i]['colegiado'], response[i]['enfermedad']);
                 this.fichasArray.push(newFicha);
           }
           this.dataSource = this.fichasArray;

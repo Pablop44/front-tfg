@@ -33,15 +33,15 @@
                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                       <div class="example-element-description">
                           Ver el Historial clínico en detalle
-                        <button class="botonDetalles" mat-stroked-button color="primary">Historial 1</button>
+                        <button class="botonDetalles" mat-stroked-button color="primary">Historial Número {{element.id}}</button>
                       </div>
                       <div class="example-element-description">
                         Ver el Médico
-                      <button class="botonDetalles" mat-stroked-button color="primary">Medico 1</button>
+                      <button class="botonDetalles" mat-stroked-button color="primary">Medico {{element.Medico}}</button>
                     </div>
                     <div class="example-element-description">
                       Ver el Paciente
-                    <button class="botonDetalles" mat-stroked-button color="primary">Paciente 1</button>
+                    <button class="botonDetalles" mat-stroked-button color="primary">Paciente {{element.Paciente}}</button>
                   </div>
                     </div>
                   </td>
