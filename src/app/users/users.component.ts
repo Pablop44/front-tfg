@@ -194,7 +194,6 @@ export class UsersComponent implements OnInit {
 
     ngOnInit() {   
       this.usuarios();
-      
     }
 
     openSnackBar(mensaje: String) {
@@ -300,7 +299,7 @@ export class UsersComponent implements OnInit {
       const end = (this.currentPage + 1) * this.pageSize;
       const start = this.currentPage * this.pageSize;
       const part = this.users.slice(start, end);
-      this.dataSource = part;
+      this.dataSource.data = part;
     }
 
     public handlePage2(e2: any) {
@@ -313,7 +312,7 @@ export class UsersComponent implements OnInit {
       const end = (this.currentPage2 + 1) * this.pageSize2;
       const start = this.currentPage2 * this.pageSize2;
       const part = this.medicos.slice(start, end);
-      this.dataSource2 = part;
+      this.dataSource2.data = part;
       
     }
 
@@ -327,7 +326,7 @@ export class UsersComponent implements OnInit {
       const end = (this.currentPage3 + 1) * this.pageSize3;
       const start = this.currentPage3 * this.pageSize3;
       const part = this.administradores.slice(start, end);
-      this.dataSource3 = part;
+      this.dataSource3.data = part;
     }
 
     eliminarUsuario(user, rol){
