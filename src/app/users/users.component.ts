@@ -193,7 +193,7 @@ export class UsersComponent implements OnInit {
     }
 
     ngOnInit() {   
-      this.usuarios();
+      this.usuarios(1);
     }
 
     openSnackBar(mensaje: String) {
@@ -336,13 +336,13 @@ export class UsersComponent implements OnInit {
           response =>{console.log(response)
             if(rol == 'medico'){
               this.medicos = this.medicos.filter(u => u !== user);
-              this.dataSource2 = this.dataSource2.filter(u => u !== user);
+              this.dataSource2.data = this.dataSource2.data.filter(u => u !== user);
             }else if(rol == 'paciente'){
               this.users = this.users.filter(u => u !== user);
-              this.dataSource = this.dataSource.filter(u => u !== user);
+              this.dataSource.data = this.dataSource.data.filter(u => u !== user);
             }else{
               this.administradores = this.administradores.filter(u => u !== user);
-              this.dataSource3 = this.dataSource3.filter(u => u !== user);
+              this.dataSource3.data = this.dataSource3.data.filter(u => u !== user);
             }
             this.openSnackBar("Se ha eliminado el usuario: \""+user.username+"\" con rol \""+rol+"\"");
             },
@@ -352,7 +352,7 @@ export class UsersComponent implements OnInit {
       
       }
 
-  usuarios(){
+  usuarios(bandera){
     if(this.loginService.isLogged){
       this.userService.todosUsuarios()
       .subscribe(
@@ -387,14 +387,11 @@ export class UsersComponent implements OnInit {
           this.dataSource3.data = this.administradores;
           this.dataSource3.paginator = this.paginator;
           this.dataSource3.sort = this.sort;
-
-          
-
-          
-
-          this.iterator();
-          this.iterator2();
-          this.iterator3();
+          if(bandera == 1){
+            this.iterator();
+            this.iterator2();
+            this.iterator3();
+          } 
         },
         error => {
           console.log(error);
