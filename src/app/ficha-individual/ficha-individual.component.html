@@ -1,10 +1,11 @@
 <div class="grid-container">
     <h1 class="mat-h1">Pagina Príncipal</h1>
-    <mat-grid-list cols="2" rowHeight="370px">
+    <mat-grid-list cols="2" rowHeight="385px">
       <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
         <div [ngSwitch]="card.title">
   
           <div *ngSwitchCase="'Datos del Historial'">
+
             <mat-card class="dashboard-card">
               <mat-card-header>
                 <mat-card-title>
@@ -14,14 +15,54 @@
                   </button>
                   <mat-menu #menu="matMenu" xPosition="before">
                     <a [routerLink]="'/fichas'" mat-menu-item>Añadir Consulta</a>
+                    <a [routerLink]="'/fichas'" mat-menu-item>Añadir Nota</a>
+                    <a [routerLink]="'/fichas'" mat-menu-item>Añadir Medicación</a>
                   </mat-menu>
                 </mat-card-title>
               </mat-card-header>
   
               <mat-card-content>
+
+                <mat-card class="example-card">
+                  <mat-card-header>
+                    <mat-card-title>Número de Historial</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <h6>{{ficha.id}}</h6>
+                  </mat-card-content>
+                </mat-card>
+
+                <mat-card class="example-card">
+                  <mat-card-header>
+                    <mat-card-title>Paciente</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <h5>{{paciente.nombre}} {{paciente.apellidos}} ({{paciente.dni}})</h5>
+                  </mat-card-content>
+                </mat-card>
+
+
+                <mat-card class="example-card" style="box-shadow: red;">
+                  <mat-card-header>
+                    <mat-card-title>Médico</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <h5>{{medico.nombre}} {{medico.apellidos}} ({{medico.dni}})</h5>
+                  </mat-card-content>
+                </mat-card>
+
+                <mat-card class="example-card">
+                  <mat-card-header>
+                    <mat-card-title>Enfermedad/es</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <h5>{{ficha.enfermedad0}}</h5>
+                  </mat-card-content>
+                </mat-card>
                 
               </mat-card-content>
             </mat-card>
+
         </div>
   
   
@@ -34,7 +75,7 @@
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu" xPosition="before">
-                    <a [routerLink]="'/users'" mat-menu-item>Ver todos los usuarios</a>
+                    <a [routerLink]="'/users'" mat-menu-item>Ver el médico {{medico.username}}</a>
                   </mat-menu>
                 </mat-card-title>
               </mat-card-header>
@@ -52,15 +93,15 @@
                     </h3>
                     <mat-list-item >
                         <h4 mat-line style="font-weight: bold;">Nombre de Usuario</h4>
-                        <p mat-line> pablop44</p>
+                        <p mat-line> {{medico.username}}</p>
                       </mat-list-item>
                     <mat-list-item >
                       <h4 mat-line style="font-weight: bold;">Nombre y Apellidos</h4>
-                      <p mat-line> Pablo Pazos Domínguez</p>
+                      <p mat-line> {{medico.nombre}} {{medico.apellidos}}</p>
                     </mat-list-item>
                     <mat-list-item >
                         <h4 mat-line style="font-weight: bold;">DNI</h4>
-                        <p mat-line>17463632P</p>
+                        <p mat-line>{{medico.dni}}</p>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <h3 mat-subheader>
@@ -73,11 +114,11 @@
                     </h3>
                     <mat-list-item >
                       <h3 mat-line style="font-weight: bold;">Número de Colegiado</h3>
-                      <p mat-line> 343242341 </p>
+                      <p mat-line> {{medico.colegiado}} </p>
                     </mat-list-item>
                     <mat-list-item >
                         <h4 mat-line style="font-weight: bold;">Especialidad</h4>
-                        <p mat-line>Asma</p>
+                        <p mat-line>{{medico.especialidad}}</p>
                       </mat-list-item>
                     <mat-divider></mat-divider>
                     <h3 mat-subheader>
@@ -90,11 +131,11 @@
                     </h3>
                     <mat-list-item >
                       <h4 mat-line style="font-weight: bold;">Email</h4>
-                      <p mat-line> ppd20101@gmail.com </p>
+                      <a mat-line href = "mailto: {{medico.email}}">{{medico.email}}</a>
                     </mat-list-item>
                     <mat-list-item >
                         <h4 mat-line style="font-weight: bold;">Teléfono</h4>
-                        <p mat-line>689664381</p>
+                        <p mat-line>{{medico.telefono}}</p>
                       </mat-list-item>
                   </mat-list>
                    
@@ -111,7 +152,7 @@
                         <mat-icon>more_vert</mat-icon>
                       </button>
                       <mat-menu #menu="matMenu" xPosition="before">
-                        <a [routerLink]="'/consultas'" mat-menu-item>Ver todos los consultas</a>
+                        <a [routerLink]="'/consultas'" mat-menu-item>Ver el paciente {{paciente.username}}</a>
                       </mat-menu>
                     </mat-card-title>
                   </mat-card-header>
@@ -129,19 +170,27 @@
                           </h3>
                           <mat-list-item >
                             <h4 mat-line style="font-weight: bold;">Nombre de Usuario</h4>
-                            <p mat-line> pablop44</p>
+                            <p mat-line> {{paciente.username}}</p>
                           </mat-list-item>
                           <mat-list-item >
                             <h4 mat-line style="font-weight: bold;">Nombre y Apellidos</h4>
-                            <p mat-line> Pablo Pazos Domínguez</p>
+                            <p mat-line> {{paciente.nombre}} {{paciente.apellidos}}</p>
                           </mat-list-item>
                           <mat-list-item >
                             <h4 mat-line style="font-weight: bold;">DNI</h4>
-                            <p mat-line>17463632P</p>
+                            <p mat-line>{{paciente.dni}}</p>
                           </mat-list-item>
                           <mat-list-item >
                             <h4 mat-line style="font-weight: bold;">Población</h4>
-                            <p mat-line >Ponteareas</p>
+                            <p mat-line >{{paciente.poblacion}}</p>
+                          </mat-list-item>
+                          <mat-list-item >
+                            <h4 mat-line style="font-weight: bold;">Género</h4>
+                            <p mat-line >{{paciente.genero}}</p>
+                          </mat-list-item>
+                          <mat-list-item >
+                            <h4 mat-line style="font-weight: bold;">Fecha de Nacimiento</h4>
+                            <p mat-line >{{paciente.nacimiento}}</p>
                           </mat-list-item>
                           <mat-divider></mat-divider>
                           <h3 mat-subheader>
@@ -154,11 +203,11 @@
                           </h3>
                           <mat-list-item >
                             <h4 mat-line style="font-weight: bold;">Email</h4>
-                            <a mat-line href = "mailto: ppd20101@gmail.com">ppd20101@gmail.com</a>
+                            <a mat-line href = "mailto: {{paciente.email}}">{{paciente.email}}</a>
                           </mat-list-item>
                           <mat-list-item >
                             <h4 mat-line style="font-weight: bold;">Teléfono</h4>
-                            <p mat-line>689664381</p>
+                            <p mat-line>{{paciente.telefono}}</p>
                           </mat-list-item>
                         </mat-list>
                        
@@ -186,7 +235,7 @@
                   </mat-card-content>
                     </mat-card>
                 </div>
-        
+
         </div>
       </mat-grid-tile>
     </mat-grid-list>

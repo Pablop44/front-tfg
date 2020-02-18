@@ -9,26 +9,6 @@ import { FichaService } from 'src/services/ficha.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription }   from 'rxjs';
 
-export class Ficha {
-  id: number;
-  fechaCreacion: string;
-  Paciente: string;
-  nombrePaciente: string;
-  Medico: string;
-  nombreMedico: string;
-  colegiado: string;
-  enfermedad: string
-  constructor(id, fechaCreacion, Paciente, nombrePaciente, Medico, nombreMedico, colegiado, enfermedad){
-    this.id = id;
-    this.fechaCreacion = fechaCreacion;
-    this.Paciente = Paciente;
-    this.nombrePaciente = nombrePaciente;
-    this.Medico = Medico;
-    this.nombreMedico = nombreMedico;
-    this.colegiado = colegiado;
-    this.enfermedad = enfermedad;
-  } 
-}
 
 
 @Component({
@@ -39,8 +19,9 @@ export class Ficha {
 export class FichaIndividualComponent implements OnInit {
 
   dataSource;
-  fichasArray : Ficha[] = [];
-  consultas: any = [];
+  ficha : any = [];
+  medico: any = [];
+  paciente: any = [];
   consultaService: ConsultaService;
   loginService: LoginService;
   userService:UserService;
@@ -79,11 +60,61 @@ export class FichaIndividualComponent implements OnInit {
     ngOnInit() {
       this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
+       console.log(this.id);
+       this.datosFicha(this.id);
        });
+
     }
   
     ngOnDestroy() {
       this.sub.unsubscribe();
     }
+
+    datosPaciente(idUser){
+    if(this.loginService.isLogged){
+      this.userService.datosUsuario(idUser)
+      .subscribe(
+        response =>{
+          this.paciente = response;
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  datosMedico(idUser){
+    if(this.loginService.isLogged){
+      this.userService.datosUsuario(idUser)
+      .subscribe(
+        response =>{
+          this.medico = response;
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  datosFicha(idFicha){
+    if(this.loginService.isLogged){
+      this.fichaService.datosFicha(idFicha)
+      .subscribe(
+        response =>{
+          console.log(response);
+          this.ficha = response;
+          this.datosMedico(response['medico']);
+          this.datosPaciente(response['paciente']);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
 
 }

@@ -43,4 +43,12 @@ export class UserService {
     return this.http.post(this.restUrl+"/user/registerMedico.json", JSON.stringify(formResgistro), httpOptions);
 
   }
+
+  datosUsuario(id){
+    return this.http.get(this.restUrl+"/user/view/"+id+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
 }

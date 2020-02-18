@@ -21,4 +21,12 @@ export class FichaService {
       })
     });
   }
+
+  datosFicha(id){
+    return this.http.get(this.restUrl+"/ficha/view/"+id+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
 }
