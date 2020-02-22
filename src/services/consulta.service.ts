@@ -18,4 +18,13 @@ export class ConsultaService {
       })
     });
   }
+
+
+  public consultasFicha(id){
+    return this.httpClient.get(this.restUrl+"/consultaFicha/"+id+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
 }

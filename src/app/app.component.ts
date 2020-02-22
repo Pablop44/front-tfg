@@ -21,11 +21,9 @@ export class AppComponent {
     this.loginService.logout()
       .subscribe(
         response=>{
-          console.log(response);
           this.router.navigateByUrl("/login");
         },
         error=>{
-          console.log(error);
         }
       );
   }

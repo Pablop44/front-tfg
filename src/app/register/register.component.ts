@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
     cargo:null,
     especialidad:null,
     cuenta:null,
+    rol: null,
   };
 
   loginNotification:string ="";

@@ -31,14 +31,14 @@ export class LoginService {
     
   }
 
-  setLoggedUser(username, password){
-    console.log(username);
-    console.log(password);
+  setLoggedUser(username, password, rol){
     this.isLogged = true;
     this.loggedUser.username = username;
     this.loggedUser.password = password;
+    this.loggedUser.rol = rol;
     localStorage.setItem("username", username);
     localStorage.setItem("password", password);
+    localStorage.setItem("rol", rol);
   }
 
   loginWithStorageUser():boolean{

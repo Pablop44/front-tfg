@@ -161,6 +161,7 @@ export class UsersComponent implements OnInit {
     cargo:null,
     especialidad:null,
     cuenta:null,
+    rol:null,
   };
     
   displayedColumns: string[] = ['dni', 'nombre', 'email', 'telefono', 'estado','acciones'];

@@ -34,7 +34,7 @@ export class RegisterService {
       cargo: null,
       especialidad: null,
       cuenta: null,
-      
+      rol: null,
     }
 
     console.log(userToSend);

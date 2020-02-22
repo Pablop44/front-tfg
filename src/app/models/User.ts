@@ -14,6 +14,7 @@ export class User{
         cargo: string;
         especialidad: string;
         cuenta: number;
+        rol:string;
     
     }
 

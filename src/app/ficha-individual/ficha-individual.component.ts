@@ -1,4 +1,3 @@
-import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
@@ -9,7 +8,39 @@ import { FichaService } from 'src/services/ficha.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription }   from 'rxjs';
 
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Component, OnInit, ViewChild, Inject} from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import { User } from 'src/app/models/User';
+import {MAT_SNACK_BAR_DATA} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
+export class Consulta {
+  id: number;
+  lugar: string;
+  motivo: string;
+  fecha: string;
+  diagnostico: string;
+  observaciones:string;
+  medico:string;
+  paciente:string;
+  ficha:string;
+  estado: string;
+constructor(id, lugar, motivo, fecha,diagnostico, observaciones, medico, paciente, ficha, estado){
+  this.id = id;
+  this.lugar = lugar;
+  this.motivo = motivo;
+  this.fecha = fecha;
+  this.diagnostico = diagnostico;
+  this.observaciones = observaciones;
+  this.medico = medico;
+  this.paciente = paciente;
+  this.ficha = ficha;
+  this.estado = estado
+} 
+}
 
 @Component({
   selector: 'app-ficha-individual',
@@ -18,7 +49,12 @@ import { Subscription }   from 'rxjs';
 })
 export class FichaIndividualComponent implements OnInit {
 
-  dataSource;
+  displayedColumns: string[] = ['numeroConsulta', 'lugar', 'fecha', 'motivo', 'estado', 'diagnostico', 'observaciones'];
+
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+
+  public dataSource: any;
   ficha : any = [];
   medico: any = [];
   paciente: any = [];
@@ -28,6 +64,10 @@ export class FichaIndividualComponent implements OnInit {
   fichaService:FichaService;
   sub: Subscription;
   id: number;
+  consultas : Consulta[] = [];
+  public pageSize = 15;
+  public currentPage = 0;
+  public totalSize = 0;
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
@@ -70,6 +110,27 @@ export class FichaIndividualComponent implements OnInit {
       this.sub.unsubscribe();
     }
 
+    applyFilter(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+    }
+
+    public handlePage(e: any) {
+      this.currentPage = e.pageIndex;
+      this.pageSize = e.pageSize;
+      this.iterator();
+    }
+
+    private iterator() {
+      const end = (this.currentPage + 1) * this.pageSize;
+      const start = this.currentPage * this.pageSize;
+      const part = this.consultas.slice(start, end);
+      this.dataSource.data = part;
+    }
+
     datosPaciente(idUser){
     if(this.loginService.isLogged){
       this.userService.datosUsuario(idUser)
@@ -109,7 +170,43 @@ export class FichaIndividualComponent implements OnInit {
           this.ficha = response;
           this.datosMedico(response['medico']);
           this.datosPaciente(response['paciente']);
+          this.datosConsultas(idFicha);
         },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  datosConsultas(idFicha){
+    if(this.loginService.isLogged){
+      this.consultaService.consultasFicha(idFicha)
+      .subscribe(
+        response =>{
+          console.log(response);
+          for (let i in response) {
+              if(response[i]['diagnostico']  !==  null){
+                response[i]['diagnostico'] = "Sí"
+              }else{
+                response[i]['diagnostico'] = "No"
+              }
+              if(response[i]['observaciones'] !==  null){
+                response[i]['observaciones'] = "Sí"
+              }else{
+                response[i]['observaciones'] = "No"
+              }
+              const newConsultaData = new Consulta(response[i]['id'],response[i]['lugar'],response[i]['motivo'], response[i]['fecha'],response[i]['diagnostico'],response[i]['observaciones'], response[i]['medico'], response[i]['paciente'], response[i]['ficha'], response[i]['estado']);
+              this.consultas.push(newConsultaData);
+            } 
+
+          this.dataSource = new MatTableDataSource<Consulta>(this.consultas);
+          this.dataSource.data = this.consultas;
+          this.totalSize = this.consultas.length;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+
+          },
         error => {
           console.log(error);
         }

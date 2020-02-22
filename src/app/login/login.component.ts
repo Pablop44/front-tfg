@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
     cargo:null,
     especialidad:null,
     cuenta:null,
+    rol:null,
   };
 
   durationInSeconds = 4;
@@ -61,7 +62,8 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.formUser.username, this.formUser.password)
       .subscribe(
         response=>{
-          this.loginService.setLoggedUser(this.formUser.username, this.formUser.password);
+          var obj = JSON.parse(response);
+          this.loginService.setLoggedUser(this.formUser.username, this.formUser.password, obj.rol);
           this.openSnackBar("Bienvenido "+this.formUser.username);
           this.router.navigateByUrl("/dashboardHome");
         },
