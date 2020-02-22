@@ -205,6 +205,7 @@ export class FichaIndividualComponent implements OnInit {
           this.totalSize = this.consultas.length;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          
           this.iterator();
 
           },
