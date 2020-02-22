@@ -7,7 +7,8 @@ import { UserService } from 'src/services/user.service';
 import { FichaService } from 'src/services/ficha.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription }   from 'rxjs';
-
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Component, OnInit, ViewChild, Inject} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
@@ -16,6 +17,20 @@ import {MatTableDataSource} from '@angular/material/table';
 import { User } from 'src/app/models/User';
 import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
+
+import * as _moment from 'moment';
+// tslint:disable-next-line:no-duplicate-imports
+import {default as _rollupMoment} from 'moment';
+
+const moment = _rollupMoment || _moment;
+var time = moment().format('ddd DD/MM/YYYY');
+
+
+export interface DialogData {
+  animal: string;
+  name: string;
+  id: number;
+}
 
 export class Consulta {
   id: number;
@@ -28,18 +43,41 @@ export class Consulta {
   paciente:string;
   ficha:string;
   estado: string;
-constructor(id, lugar, motivo, fecha,diagnostico, observaciones, medico, paciente, ficha, estado){
-  this.id = id;
-  this.lugar = lugar;
-  this.motivo = motivo;
-  this.fecha = fecha;
-  this.diagnostico = diagnostico;
-  this.observaciones = observaciones;
-  this.medico = medico;
-  this.paciente = paciente;
-  this.ficha = ficha;
-  this.estado = estado
-} 
+  constructor(id, lugar, motivo, fecha,diagnostico, observaciones, medico, paciente, ficha, estado){
+    this.id = id;
+    this.lugar = lugar;
+    this.motivo = motivo;
+    this.fecha = fecha;
+    this.diagnostico = diagnostico;
+    this.observaciones = observaciones;
+    this.medico = medico;
+    this.paciente = paciente;
+    this.ficha = ficha;
+    this.estado = estado
+  } 
+}
+
+@Component({
+  selector: 'dialogoAnadirConsulta',
+  templateUrl: 'dialogoAnadirConsulta.html',
+  providers: [
+    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+    // `MatMomentDateModule` in your applications root module. We provide it at the component level
+    // here, due to limitations of our example generation script.
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
+})
+
+export class DialogoAnadirConsulta {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoAnadirConsulta>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 }
 
 @Component({
@@ -90,7 +128,7 @@ export class FichaIndividualComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver, consultaService:ConsultaService,
     private route : ActivatedRoute,
-    loginService:LoginService, userService:UserService, fichaService:FichaService) {
+    loginService:LoginService, userService:UserService, fichaService:FichaService, public dialog: MatDialog) {
       this.consultaService = consultaService;
       this.loginService = loginService;
       this.userService = userService;
@@ -214,6 +252,17 @@ export class FichaIndividualComponent implements OnInit {
         }
       );
     }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogoAnadirConsulta, {
+      width: '1000px',
+      data: {name: "hola", animal: "hola"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }

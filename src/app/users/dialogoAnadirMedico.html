@@ -37,7 +37,7 @@
     <mat-label>Número de Colegiado</mat-label>
     <input matInput type="text" id="colegiado" [(ngModel)]="data.colegiado" name="colegiado" placeholder="Número de Colegiado" required  >
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field style="width: 100%;">
     <mat-label>Cargo del Médico</mat-label>
     <select id="cargo" [(ngModel)]="data.cargo" name="cargo" matNativeControl required>
       <option value="Medico jefe">Medico Jefe</option>
@@ -45,7 +45,7 @@
       <option value="Medico raso">Medico Raso</option>
     </select>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field style="width: 100%;">
     <mat-label>Especialidad del Médico</mat-label>
     <select id="especialidad" [(ngModel)]="data.especialidad" name="especialidad" matNativeControl required>
       <option value="migranas">Migrañas</option>

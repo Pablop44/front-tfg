@@ -56,7 +56,7 @@ import {MatTreeModule} from '@angular/material/tree';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
 import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnadirAdministrador, DialogoEliminarUsuario, notificacionComponent } from './users/users.component';
 import { loginNotificacionComponent } from './login/login.component';
-import { FichaIndividualComponent } from './ficha-individual/ficha-individual.component';
+import { FichaIndividualComponent, DialogoAnadirConsulta } from './ficha-individual/ficha-individual.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +73,7 @@ import { FichaIndividualComponent } from './ficha-individual/ficha-individual.co
     loginNotificacionComponent,
     notificacionComponent,
     FichaIndividualComponent,
+    DialogoAnadirConsulta
   ],
   imports: [
     BrowserModule,
@@ -175,7 +176,7 @@ import { FichaIndividualComponent } from './ficha-individual/ficha-individual.co
     PortalModule,
     ScrollingModule,
   ],
-  entryComponents: [ DialogoAnadirPaciente, DialogoAnadirAdministrador, DialogoAnadirMedico, DialogoEliminarUsuario, loginNotificacionComponent, notificacionComponent],
+  entryComponents: [ DialogoAnadirPaciente, DialogoAnadirAdministrador, DialogoAnadirMedico, DialogoEliminarUsuario, loginNotificacionComponent, notificacionComponent, DialogoAnadirConsulta],
   providers: [],
   bootstrap: [AppComponent]
 })

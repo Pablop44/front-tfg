@@ -1,5 +1,5 @@
 <div class="grid-container">
-    <h1 class="mat-h1">Pagina Príncipal</h1>
+    <h1 class="mat-h1">Historial del Paciente</h1>
     <mat-grid-list cols="2" rowHeight="385px">
       <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
         <div [ngSwitch]="card.title">
@@ -14,7 +14,7 @@
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu" xPosition="before">
-                    <a [routerLink]="'/fichas'" mat-menu-item>Añadir Consulta</a>
+                    <a (click)="openDialog()" mat-menu-item>Añadir Consulta</a>
                     <a [routerLink]="'/fichas'" mat-menu-item>Añadir Nota</a>
                     <a [routerLink]="'/fichas'" mat-menu-item>Añadir Medicación</a>
                     <a [routerLink]="'/fichas'" mat-menu-item>Añadir Nueva Enfermedad</a>
