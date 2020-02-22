@@ -65,7 +65,7 @@ export class FichaIndividualComponent implements OnInit {
   sub: Subscription;
   id: number;
   consultas : Consulta[] = [];
-  public pageSize = 10;
+  public pageSize = 15;
   public currentPage = 0;
   public totalSize = 0;
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -83,7 +83,7 @@ export class FichaIndividualComponent implements OnInit {
         { title: 'Datos del Historial', cols: 2, rows: 1, cuerpo: "hola"},
         { title: 'Datos del Médico', cols: 1, rows: 2, cuerpo: 'cuerpo3' },
         { title: 'Datos del Paciente', cols: 1, rows: 2, cuerpo: 'cuerpo3' },
-        { title: 'Consultas', cols: 2, rows: 2, cuerpo: 'cuerpo3' }
+        { title: 'Consultas', cols: 2, rows: 3, cuerpo: 'cuerpo3' }
       ];
     })
   );

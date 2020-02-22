@@ -178,3 +178,15 @@ button {
   margin-left: 1px;
   line-height: 0px; 
 }
+
+.estadoAplazada {
+  background-color: #FDF7C2;
+}
+
+.estadoEnTiempo {
+  background-color: #E2FFD6;
+}
+
+.estadoCancelada {
+  background-color: #FFDFD6;
+}
