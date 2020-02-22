@@ -49,7 +49,7 @@ constructor(id, lugar, motivo, fecha,diagnostico, observaciones, medico, pacient
 })
 export class FichaIndividualComponent implements OnInit {
 
-  displayedColumns: string[] = ['numeroConsulta', 'lugar', 'fecha', 'motivo', 'estado', 'diagnostico', 'observaciones'];
+  displayedColumns: string[] = ['numeroConsulta', 'lugar', 'fecha', 'motivo', 'estado', 'diagnostico', 'observaciones', 'acciones'];
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -65,7 +65,7 @@ export class FichaIndividualComponent implements OnInit {
   sub: Subscription;
   id: number;
   consultas : Consulta[] = [];
-  public pageSize = 15;
+  public pageSize = 10;
   public currentPage = 0;
   public totalSize = 0;
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -205,6 +205,7 @@ export class FichaIndividualComponent implements OnInit {
           this.totalSize = this.consultas.length;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          this.iterator();
 
           },
         error => {
