@@ -27,4 +27,12 @@ export class ConsultaService {
       })
     });
   }
+
+  public getHoras(event){
+    return this.httpClient.get(this.restUrl+"/getHoras/"+event+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
 }

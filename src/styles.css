@@ -73,6 +73,12 @@ body {
       font-size: 15px;
   }
 
+  .mediaAnchura{
+      width: 50%;
+      float: right;
+      text-align: center;
+  }
+
 
 /*Estilo para la cabecera*/
 .cabecera{

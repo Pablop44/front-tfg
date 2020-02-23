@@ -17,14 +17,33 @@ import {MatTableDataSource} from '@angular/material/table';
 import { User } from 'src/app/models/User';
 import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import {default as _rollupMoment} from 'moment';
 
 const moment = _rollupMoment || _moment;
-var time = moment().format('ddd DD/MM/YYYY');
 
+export class Hora {
+  hora: string;
+  estado: Boolean;
+  constructor(hora, estado){
+    this.hora = hora;
+    this.estado = estado;
+  }
+}
+
+const ELEMENT_DATA: Hora[] = [
+  {hora: "09:00", estado:null},
+  {hora: "10:00", estado:null},
+  {hora: "11:00", estado:null},
+  {hora: "12:00", estado:null},
+  {hora: "13:00", estado:null},
+  {hora: "14:00", estado:null},
+  {hora: "15:00", estado:null},
+  {hora: "16:00", estado:null},
+];
 
 export interface DialogData {
   animal: string;
@@ -71,11 +90,65 @@ export class Consulta {
 
 export class DialogoAnadirConsulta {
 
+
+  displayedColumns: string[] = ['hora'];
+  
+  horas: Hora[] = [];
+  dataSource : Hora[] = [];
+
+  consultaService: ConsultaService;
+  loginService: LoginService;
+
   constructor(
+    consultaService: ConsultaService,
+    loginService: LoginService,
     public dialogRef: MatDialogRef<DialogoAnadirConsulta>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+
+      this.consultaService = consultaService;
+      this.loginService = loginService;
+      this.dataSource = ELEMENT_DATA;
+    }
+
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  getHoras(type: string, event: MatDatepickerInputEvent<Date>) {
+  
+  (<HTMLInputElement>document.getElementById('fecha')).value = moment(event.value).format('DD-MM-YYYY');
+   
+    if(this.loginService.isLogged){
+      this.consultaService.getHoras(moment(event.value).format('YYYY-MM-DD'))
+      .subscribe(
+        response =>{
+          var newHora = new Hora('09:00',response['09:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('10:00',response['10:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('11:00',response['11:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('12:00',response['12:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('13:00',response['13:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('14:00',response['14:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('15:00',response['15:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('16:00',response['16:00']);
+          this.horas.push(newHora);
+          console.log(this.horas);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  horaElegida(hora){
+    console.log(hora);
   }
 
 }
