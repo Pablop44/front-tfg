@@ -26,6 +26,7 @@ import { stringify } from 'querystring';
 
 const moment = _rollupMoment || _moment;
 
+
 export class Hora {
   hora: string;
   estado: Boolean;
@@ -47,9 +48,10 @@ const ELEMENT_DATA: Hora[] = [
 ];
 
 export interface DialogData {
-  animal: string;
-  name: string;
-  id: number;
+  hora: string;
+  fecha: string;
+  motivo: string;
+  lugar: string;
 }
 
 export class Consulta {
@@ -63,7 +65,7 @@ export class Consulta {
   paciente:string;
   ficha:string;
   estado: string;
-  constructor(id, lugar, motivo, fecha,diagnostico, observaciones, medico, paciente, ficha, estado){
+  constructor(id, lugar, motivo, fecha, diagnostico, observaciones, medico, paciente, ficha, estado){
     this.id = id;
     this.lugar = lugar;
     this.motivo = motivo;
@@ -98,10 +100,13 @@ export class DialogoAnadirConsulta {
   dataSource : Hora[] = [];
   banderaHora : boolean;
   horaFinal : string;
-  notificacion : string
+  notificacion : string;
+  fechaFinal: string;
 
   consultaService: ConsultaService;
   loginService: LoginService;
+
+  
 
   constructor(
     consultaService: ConsultaService,
@@ -120,8 +125,10 @@ export class DialogoAnadirConsulta {
 
   getHoras(type: string, event: MatDatepickerInputEvent<Date>) {
   
-  (<HTMLInputElement>document.getElementById('fecha')).value = moment(event.value).format('DD-MM-YYYY');
-   
+  
+   this.fechaFinal = moment(event.value).format('YYYY-MM-DD');
+   this.data.fecha = moment(event.value).format('YYYY-MM-DD');
+   (<HTMLInputElement>document.getElementById('fecha')).value = moment(event.value).format('DD-MM-YYYY');
     if(this.loginService.isLogged){
       this.consultaService.getHoras(moment(event.value).format('YYYY-MM-DD'))
       .subscribe(
@@ -163,19 +170,21 @@ export class DialogoAnadirConsulta {
     });
     if(this.banderaHora){
       this.horaFinal = null;
+      this.data.hora = null;
       this.notificacion = "Error en la hora elegida";
     }else{
       this.notificacion = "";
+      this.data.hora = hora;
       this.horaFinal = hora;
     }
   }
-
 }
 
 @Component({
   selector: 'app-ficha-individual',
   templateUrl: './ficha-individual.component.html',
-  styleUrls: ['./ficha-individual.component.css']
+  styleUrls: ['./ficha-individual.component.css'],
+  providers: [DialogoAnadirConsulta]
 })
 export class FichaIndividualComponent implements OnInit {
 
@@ -194,6 +203,8 @@ export class FichaIndividualComponent implements OnInit {
   fichaService:FichaService;
   sub: Subscription;
   id: number;
+  fechaFinal: string;
+  horaFinal:string;
   consultas : Consulta[] = [];
   public pageSize = 15;
   public currentPage = 0;
@@ -225,12 +236,12 @@ export class FichaIndividualComponent implements OnInit {
       this.loginService = loginService;
       this.userService = userService;
       this.fichaService = fichaService;
+
     }
 
     ngOnInit() {
       this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
-       console.log(this.id);
        this.datosFicha(this.id);
        });
 
@@ -267,7 +278,6 @@ export class FichaIndividualComponent implements OnInit {
       .subscribe(
         response =>{
           this.paciente = response;
-          console.log(response);
         },
         error => {
           console.log(error);
@@ -282,7 +292,6 @@ export class FichaIndividualComponent implements OnInit {
       .subscribe(
         response =>{
           this.medico = response;
-          console.log(response);
         },
         error => {
           console.log(error);
@@ -296,7 +305,6 @@ export class FichaIndividualComponent implements OnInit {
       this.fichaService.datosFicha(idFicha)
       .subscribe(
         response =>{
-          console.log(response);
           this.ficha = response;
           this.datosMedico(response['medico']);
           this.datosPaciente(response['paciente']);
@@ -314,7 +322,6 @@ export class FichaIndividualComponent implements OnInit {
       this.consultaService.consultasFicha(idFicha)
       .subscribe(
         response =>{
-          console.log(response);
           for (let i in response) {
               if(response[i]['diagnostico']  !==  null){
                 response[i]['diagnostico'] = "Sí"
@@ -346,14 +353,42 @@ export class FichaIndividualComponent implements OnInit {
     }
   }
 
+  crearConsulta(respuesta){
+
+    respuesta['fecha'] =  respuesta['fecha']+" "+respuesta['hora'];
+    respuesta['diagnostico'] = null;
+    respuesta['observaciones'] = null;
+    respuesta['medico'] = this.medico['id'];
+    respuesta['paciente'] = this.paciente['id'];
+    respuesta['ficha'] = this.id;
+    respuesta['estado'] = "en tiempo";
+    delete respuesta["hora"];
+
+    console.log(respuesta);
+    
+    if(this.loginService.isLogged){
+      this.consultaService.crearConsulta(respuesta)
+      .subscribe(
+        response =>{
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+    
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogoAnadirConsulta, {
       width: '1000px',
-      data: {name: "hola", animal: "hola"}
+      data: {}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+
+    dialogRef.afterClosed().subscribe(response => {
+      this.crearConsulta(response);
     });
   }
 

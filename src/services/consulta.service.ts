@@ -35,4 +35,15 @@ export class ConsultaService {
       })
     });
   }
+
+  crearConsulta(datos){
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+    return this.httpClient.post(this.restUrl+"/add.json", JSON.stringify(datos), httpOptions);
+
+  }
 }
