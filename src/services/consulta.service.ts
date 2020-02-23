@@ -8,6 +8,7 @@ import { LoginService } from 'src/services/login.service';
 export class ConsultaService {
 
   private restUrl = 'http://localhost:8765/consulta'; 
+  public medico : string;
 
   constructor(private httpClient: HttpClient, private loginService : LoginService) { }
 
@@ -28,12 +29,16 @@ export class ConsultaService {
     });
   }
 
-  public getHoras(event){
-    return this.httpClient.get(this.restUrl+"/getHoras/"+event+".json", {
-      headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+  public getHoras(datos){
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
       })
-    });
+    };
+
+    var obj = JSON.stringify('{ "name":"John", "age":30, "city":"New York"}');
+    return this.httpClient.post(this.restUrl+"/getHoras.json", obj
+    , httpOptions);
   }
 
   crearConsulta(datos){

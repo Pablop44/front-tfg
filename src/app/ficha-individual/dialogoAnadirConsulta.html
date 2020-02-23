@@ -1,6 +1,8 @@
 <h1 mat-dialog-title>Añadir una Consulta</h1>
 <div mat-dialog-content>
+  <p style="float: right;">Selecciones una fecha para ver los horarios disponibles</p>
   <p>Introduce los Datos de la Consulta</p>
+  
   <mat-form-field class="example-medium-width">
     <mat-label>Fecha de la Consulta</mat-label>
     <input matInput [matDatepicker]="dp"  name="fecha" [ngModel]="data.fecha" id="fecha" required (dateInput)="getHoras('input', $event)">

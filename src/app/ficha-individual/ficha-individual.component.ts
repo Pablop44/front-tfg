@@ -52,6 +52,7 @@ export interface DialogData {
   fecha: string;
   motivo: string;
   lugar: string;
+  medico:string;
 }
 
 export class Consulta {
@@ -291,6 +292,7 @@ export class FichaIndividualComponent implements OnInit {
       .subscribe(
         response =>{
           this.medico = response;
+          this.consultaService.medico = response['id'];
         },
         error => {
           console.log(error);
