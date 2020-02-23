@@ -3,7 +3,7 @@
   <p>Introduce los Datos de la Consulta</p>
   <mat-form-field class="example-medium-width">
     <mat-label>Fecha de la Consulta</mat-label>
-    <input matInput [matDatepicker]="dp" id="fecha" name="fecha" [ngModel]="data.fecha" required (dateInput)="getHoras('input', $event)">
+    <input matInput [matDatepicker]="dp"  name="fecha" [ngModel]="data.fecha" id="fecha" required (dateInput)="getHoras('input', $event)">
     <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
     <mat-datepicker #dp></mat-datepicker>
   </mat-form-field>

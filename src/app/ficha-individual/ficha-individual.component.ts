@@ -124,8 +124,7 @@ export class DialogoAnadirConsulta {
   }
 
   getHoras(type: string, event: MatDatepickerInputEvent<Date>) {
-  
-  
+
    this.fechaFinal = moment(event.value).format('YYYY-MM-DD');
    this.data.fecha = moment(event.value).format('YYYY-MM-DD');
    (<HTMLInputElement>document.getElementById('fecha')).value = moment(event.value).format('DD-MM-YYYY');
@@ -355,7 +354,7 @@ export class FichaIndividualComponent implements OnInit {
 
   crearConsulta(respuesta){
 
-    respuesta['fecha'] =  respuesta['fecha']+" "+respuesta['hora'];
+    respuesta['fecha'] =  respuesta['fecha']+" "+respuesta['hora']+":00";
     respuesta['diagnostico'] = null;
     respuesta['observaciones'] = null;
     respuesta['medico'] = this.medico['id'];
@@ -363,14 +362,26 @@ export class FichaIndividualComponent implements OnInit {
     respuesta['ficha'] = this.id;
     respuesta['estado'] = "en tiempo";
     delete respuesta["hora"];
-
-    console.log(respuesta);
     
     if(this.loginService.isLogged){
       this.consultaService.crearConsulta(respuesta)
       .subscribe(
         response =>{
           console.log(response);
+          if(response['diagnostico']  !==  null){
+            response['diagnostico'] = "Sí"
+          }else{
+            response['diagnostico'] = "No"
+          }
+          if(response['observaciones'] !==  null){
+            response['observaciones'] = "Sí"
+          }else{
+            response['observaciones'] = "No"
+          }
+          const newConsultaData = new Consulta(response['id'],response['lugar'],response['motivo'], response['fecha'],response['diagnostico'],response['observaciones'], response['medico'], response['paciente'], response['ficha'], response['estado']);
+          this.consultas.push(newConsultaData);
+          this.dataSource.data = this.consultas;
+          this.totalSize = this.consultas.length;
         },
         error => {
           console.log(error);
