@@ -340,8 +340,35 @@ footer{
     padding: 20px;
 }
 
+.estadoAplazada {
+    background-color: #FDF7C2;
+  }
+  
+  .estadoEnTiempo {
+    background-color: #E2FFD6;
+  }
+  
+  .estadoCancelada {
+    background-color: #FFDFD6;
+  }
 
+  .estadoEnTiempo2 {
+    background-color: #E2FFD6;
+  }
+  
+  .estadoCancelada2 {
+    background-color: #FFDFD6;
+  }
 
+  .estadoEnTiempo2:hover {
+    background-color: #E2FFD6;
+    cursor: pointer;
+  }
+  
+  .estadoCancelada2 {
+    background-color: #FFDFD6;
+    cursor: not-allowed;
+  }
 
 
 html, body { height: 100%; }

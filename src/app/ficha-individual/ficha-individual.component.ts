@@ -22,6 +22,7 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import {default as _rollupMoment} from 'moment';
+import { stringify } from 'querystring';
 
 const moment = _rollupMoment || _moment;
 
@@ -95,6 +96,9 @@ export class DialogoAnadirConsulta {
   
   horas: Hora[] = [];
   dataSource : Hora[] = [];
+  banderaHora : boolean;
+  horaFinal : string;
+  notificacion : string
 
   consultaService: ConsultaService;
   loginService: LoginService;
@@ -122,6 +126,8 @@ export class DialogoAnadirConsulta {
       this.consultaService.getHoras(moment(event.value).format('YYYY-MM-DD'))
       .subscribe(
         response =>{
+          this.horas = [];
+          this.notificacion = "";
           var newHora = new Hora('09:00',response['09:00']);
           this.horas.push(newHora);
           var newHora = new Hora('10:00',response['10:00']);
@@ -138,6 +144,7 @@ export class DialogoAnadirConsulta {
           this.horas.push(newHora);
           var newHora = new Hora('16:00',response['16:00']);
           this.horas.push(newHora);
+          this.dataSource = this.horas;
           console.log(this.horas);
         },
         error => {
@@ -148,7 +155,19 @@ export class DialogoAnadirConsulta {
   }
 
   horaElegida(hora){
-    console.log(hora);
+    this.banderaHora = false;
+    this.horas.forEach(element => {
+      if(element.hora == hora && element.estado == true){
+        this.banderaHora = true;
+      }
+    });
+    if(this.banderaHora){
+      this.horaFinal = null;
+      this.notificacion = "Error en la hora elegida";
+    }else{
+      this.notificacion = "";
+      this.horaFinal = hora;
+    }
   }
 
 }
