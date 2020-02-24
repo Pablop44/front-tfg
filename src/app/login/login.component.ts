@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         response=>{
           var obj = JSON.parse(response);
-          this.loginService.setLoggedUser(this.formUser.username, this.formUser.password, obj.rol);
+          this.loginService.setLoggedUser(this.formUser.username, this.formUser.password, obj.rol, obj.id);
           this.openSnackBar("Bienvenido "+this.formUser.username);
           this.router.navigateByUrl("/dashboardHome");
         },

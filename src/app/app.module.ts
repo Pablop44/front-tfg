@@ -57,6 +57,7 @@ import { DashboardHomeComponent } from './dashboard-home/dashboard-home.componen
 import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnadirAdministrador, DialogoEliminarUsuario, notificacionComponent } from './users/users.component';
 import { loginNotificacionComponent } from './login/login.component';
 import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta } from './ficha-individual/ficha-individual.component';
+import { VistaUsuarioComponent } from './vista-usuario/vista-usuario.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentC
     FichaIndividualComponent,
     DialogoAnadirConsulta,
     notificacionComponentCrearConsulta,
+    VistaUsuarioComponent,
   ],
   imports: [
     BrowserModule,

@@ -14,7 +14,6 @@ import {Component, OnInit, ViewChild, Inject} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import { User } from 'src/app/models/User';
 import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
@@ -22,7 +21,6 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import {default as _rollupMoment} from 'moment';
-import { stringify } from 'querystring';
 
 const moment = _rollupMoment || _moment;
 

@@ -6,6 +6,7 @@ import { DashboardHomeComponent } from './dashboard-home/dashboard-home.componen
 import { UsersComponent } from './users/users.component';
 import { FichaIndividualComponent } from './ficha-individual/ficha-individual.component';
 import { element } from 'protractor';
+import { VistaUsuarioComponent } from './vista-usuario/vista-usuario.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'registro', component: RegisterComponent },
   { path: 'dashboardHome', component: DashboardHomeComponent },
   { path: 'users', component: UsersComponent },
-  {path : 'ficha-individual/:id', component : FichaIndividualComponent,}
+  {path : 'ficha-individual/:id', component : FichaIndividualComponent,},
+  {path : 'vista-usuario/:id', component : VistaUsuarioComponent,}
 
 ];
 

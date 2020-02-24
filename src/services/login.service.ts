@@ -31,14 +31,16 @@ export class LoginService {
     
   }
 
-  setLoggedUser(username, password, rol){
+  setLoggedUser(username, password, rol, id){
     this.isLogged = true;
     this.loggedUser.username = username;
     this.loggedUser.password = password;
     this.loggedUser.rol = rol;
+    this.loggedUser.id = id;
     localStorage.setItem("username", username);
     localStorage.setItem("password", password);
     localStorage.setItem("rol", rol);
+    localStorage.setItem("id", id);
   }
 
   loginWithStorageUser():boolean{
@@ -46,6 +48,8 @@ export class LoginService {
       this.isLogged = true;
       this.loggedUser.username = localStorage.getItem("username");
       this.loggedUser.password = localStorage.getItem("password");
+      this.loggedUser.rol = localStorage.getItem("rol");
+      this.loggedUser.id = parseInt(localStorage.getItem("id"));
       return true;
     }
 
@@ -57,6 +61,8 @@ export class LoginService {
     this.isLogged = false;
     localStorage.removeItem("username");
     localStorage.removeItem("password");
+    localStorage.removeItem("rol");
+    localStorage.removeItem("id");
     return this.http.get(this.restUrl+"/user/logout.json");
   }
   
