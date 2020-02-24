@@ -29,15 +29,33 @@ export class ConsultaService {
     });
   }
 
-  public getHoras(datos){
+  public getHoras(x){
+    let array = [{
+      Field: 'fecha',
+      Value: x
+    },
+    {
+      Field: 'medico',
+      Value: this.medico
+    }
+    ];
+    
+    // #1 Mapping the array to an object...
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    // #2 Converting the object to JSON...
+    let json = JSON.stringify(obj);
+    
+    console.log(json);
+
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
       })
     };
 
-    var obj = JSON.stringify('{ "name":"John", "age":30, "city":"New York"}');
-    return this.httpClient.post(this.restUrl+"/getHoras.json", obj
+    return this.httpClient.post(this.restUrl+"/getHoras.json", json
     , httpOptions);
   }
 
