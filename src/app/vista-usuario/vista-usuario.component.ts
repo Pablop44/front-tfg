@@ -18,6 +18,15 @@ import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
+class Medico {
+  nombre: string;
+  id: string;
+  constructor(nombre, id){
+    this.nombre = nombre;
+    this.id = id;
+  }
+}
+
 @Component({
   selector: 'app-vista-usuario',
   templateUrl: './vista-usuario.component.html',
@@ -30,16 +39,29 @@ export class VistaUsuarioComponent implements OnInit {
   userService: UserService;
   datosUser: any = [];
 
+  medico: Medico[] = [];
+
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
         return [
           { title: 'Usuario', cols: 1, rows: 2, cuerpo: "hola"},
+          { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
+          { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
+          { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
+          { title: 'accionRol', cols: 1, rows: 1, cuerpo: "hola"},
+          { title: 'cambiarMedico', cols: 1, rows: 1, cuerpo: "hola"}
         ];
       }
 
       return [
-        { title: 'Usuario', cols: 1, rows: 3, cuerpo: "hola"}
+        { title: 'Usuario', cols: 1, rows: 5, cuerpo: "hola"},
+        { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
+        { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
+        { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
+        { title: 'accionRol', cols: 1, rows: 1, cuerpo: "hola"},
+        { title: 'cambiarMedico', cols: 1, rows: 1, cuerpo: "hola"}
+        
       ];
     })
   );
@@ -75,5 +97,21 @@ export class VistaUsuarioComponent implements OnInit {
       );
     }
   }
+
+  todosMedicos(){
+    if(this.loginService.isLogged){
+      this.userService.todosMedicos()
+      .subscribe(
+        response =>{
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  
 
 }

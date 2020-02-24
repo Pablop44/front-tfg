@@ -1,6 +1,6 @@
 <div class="grid-container">
-    <h1 class="mat-h1">Historial del Paciente</h1>
-    <mat-grid-list cols="2" rowHeight="380px">
+    <h1 class="mat-h1">Perfil del Usuario: {{datosUser.username}}</h1>
+    <mat-grid-list cols="2" rowHeight="240px">
       <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
         <div [ngSwitch]="card.title">
   
@@ -107,6 +107,129 @@
                 </mat-card-content>
                   </mat-card>
 
+            </div>
+
+            <div *ngSwitchCase="'editar'">
+
+                <mat-card class="dashboard-card">
+                    <mat-card-header>
+                      <mat-card-title>
+                        Editar Datos Personales y Profesionales del Usuario
+                      </mat-card-title>
+                      <mat-card-subtitle>Modifica solo los campos necesarios</mat-card-subtitle>
+                    </mat-card-header>
+        
+                    <mat-card-content class="dashboard-card-content">
+                        <button mat-flat-button color="primary">Editar <i class="material-icons">
+                            edit
+                            </i></button>
+                    </mat-card-content>
+                      </mat-card>
+    
+            </div>
+
+            <div *ngSwitchCase="'eliminar'">
+
+                <mat-card class="dashboard-card">
+                    <mat-card-header>
+                      <mat-card-title>
+                        Eliminar Usuario
+                      </mat-card-title>
+                      <mat-card-subtitle>Elimina Permanentemente al usuario y sus datos</mat-card-subtitle>
+                    </mat-card-header>
+        
+                    <mat-card-content class="dashboard-card-content">
+                            <button mat-flat-button color="warn">Eliminar <i class="material-icons">
+                                remove_circle
+                                </i></button>
+                    </mat-card-content>
+                      </mat-card>
+    
+            </div>
+
+            <div *ngSwitchCase="'accionCuenta'">
+
+                <mat-card class="dashboard-card">
+                    <mat-card-header>
+                      <mat-card-title>
+                        Cambiar el Estado de la Cuenta
+                        <mat-menu #menu="matMenu" xPosition="before">
+                          <a [routerLink]="'/users'" mat-menu-item></a>
+                        </mat-menu>
+                      </mat-card-title>
+                    </mat-card-header>
+        
+                    <mat-card-content class="dashboard-card-content">
+                         
+                        <section class="example-section">
+                            <mat-radio-group >
+                              <mat-radio-button class="example-margin" value="autorizada">
+                                Autorizada
+                              </mat-radio-button>
+                              <mat-radio-button class="example-margin" value="activada">
+                                Activada
+                              </mat-radio-button>
+                              <mat-radio-button class="example-margin" value="desactivada">
+                                Desactivada
+                              </mat-radio-button>
+                            </mat-radio-group>
+                          </section>
+
+                    </mat-card-content>
+                      </mat-card>
+    
+            </div>
+
+            <div *ngSwitchCase="'accionRol'">
+
+                <mat-card class="dashboard-card">
+                    <mat-card-header>
+                      <mat-card-title>
+                        Cambiar el rol del Usuario
+                        <mat-menu #menu="matMenu" xPosition="before">
+                          <a [routerLink]="'/users'" mat-menu-item></a>
+                        </mat-menu>
+                      </mat-card-title>
+                    </mat-card-header>
+        
+                    <mat-card-content class="dashboard-card-content">
+                         
+                        <section class="example-section">
+                        <mat-radio-group >
+                          <mat-radio-button class="example-margin" value="paciente">
+                            Paciente
+                          </mat-radio-button>
+                          <mat-radio-button class="example-margin" value="medico">
+                            Médico
+                          </mat-radio-button>
+                          <mat-radio-button class="example-margin" value="administrador">
+                            Administrador
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </section>
+
+                    </mat-card-content>
+                      </mat-card>
+    
+            </div>
+
+            <div *ngSwitchCase="'cambiarMedico'">
+
+                <mat-card class="dashboard-card">
+                    <mat-card-header>
+                      <mat-card-title>
+                        Cambiar el Médico del Usuario
+                        <mat-menu #menu="matMenu" xPosition="before">
+                          <a [routerLink]="'/users'" mat-menu-item></a>
+                        </mat-menu>
+                      </mat-card-title>
+                    </mat-card-header>
+        
+                    <mat-card-content class="dashboard-card-content">
+                         
+                    </mat-card-content>
+                      </mat-card>
+    
             </div>
 
         </div>

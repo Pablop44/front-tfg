@@ -175,7 +175,34 @@ table {
 button {
   min-height: 23px !important;
   min-width: 46px !important;
-  font-size: 5px !important;
+  font-size: 18px !important;
   margin-left: 1px;
   line-height: 0px; 
+  padding: 10px;
+  margin-top: 20px !important;
+}
+
+.col2{
+  width: 20%;
+  margin-left: 0px;
+}
+
+.col3{
+  display: block;
+  width: 30%;
+}
+
+.mat-list-item{
+  width: 30%;
+}
+
+.example-section {
+  margin-top: 30px !important;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 10px;
 }

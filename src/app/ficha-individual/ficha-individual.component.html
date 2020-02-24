@@ -76,7 +76,7 @@
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu" xPosition="before">
-                    <a [routerLink]="'/users'" mat-menu-item>Ver el médico "{{medico.username}}"</a>
+                    <a [routerLink]="['/vista-usuario', medico.id]" mat-menu-item>Ver el médico "{{medico.username}}"</a>
                   </mat-menu>
                 </mat-card-title>
               </mat-card-header>
@@ -153,7 +153,7 @@
                         <mat-icon>more_vert</mat-icon>
                       </button>
                       <mat-menu #menu="matMenu" xPosition="before">
-                        <a [routerLink]="'/consultas'" mat-menu-item>Ver el paciente "{{paciente.username}}"</a>
+                        <a [routerLink]="['/vista-usuario', paciente.id]" mat-menu-item>Ver el paciente "{{paciente.username}}"</a>
                       </mat-menu>
                     </mat-card-title>
                   </mat-card-header>

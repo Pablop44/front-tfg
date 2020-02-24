@@ -51,4 +51,12 @@ export class UserService {
       })
     });
   }
+
+  todosMedicos(){
+    return this.http.get(this.restUrl+"/user/todosMedicos.json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
 }
