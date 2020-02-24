@@ -26,6 +26,18 @@ import { stringify } from 'querystring';
 
 const moment = _rollupMoment || _moment;
 
+@Component({
+  selector: 'notificacionCrearConsulta',
+  templateUrl: 'notificacionCrearConsulta.html',
+  styles: [`
+    .example-pizza-party {
+      color: hotpink;
+    }
+  `],
+})
+export class notificacionComponentCrearConsulta {
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
+}
 
 export class Hora {
   hora: string;
@@ -231,7 +243,7 @@ export class FichaIndividualComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver, consultaService:ConsultaService,
     private route : ActivatedRoute,
-    loginService:LoginService, userService:UserService, fichaService:FichaService, public dialog: MatDialog) {
+    loginService:LoginService, userService:UserService, fichaService:FichaService, public dialog: MatDialog,private _snackBar: MatSnackBar) {
       this.consultaService = consultaService;
       this.loginService = loginService;
       this.userService = userService;
@@ -384,6 +396,7 @@ export class FichaIndividualComponent implements OnInit {
           this.consultas.push(newConsultaData);
           this.dataSource.data = this.consultas;
           this.totalSize = this.consultas.length;
+          this.openSnackBar("Se ha creado la consulta para el paciente "+this.paciente.username+" con fecha: "+response['fecha']);
         },
         error => {
           console.log(error);
@@ -402,6 +415,12 @@ export class FichaIndividualComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(response => {
       this.crearConsulta(response);
+    });
+  }
+
+  openSnackBar(mensaje: String) {
+    this._snackBar.openFromComponent(notificacionComponentCrearConsulta, {
+      duration: 4 * 1000, data: mensaje
     });
   }
 
