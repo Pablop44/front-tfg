@@ -180,3 +180,12 @@ button {
   margin-left: 1px;
   line-height: 0px; 
 }
+
+.matCentrado{
+  text-align: center;
+  padding-top: 20px;
+}
+
+.headerCentrado{
+  text-align: center !important;
+}
