@@ -33,16 +33,8 @@
                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                       <div class="example-element-description">
                           Ver el Historial clínico en detalle
-                        <a class="botonDetalles" [routerLink]="['/ficha-individual', element.id]" mat-stroked-button color="primary">Historial Número {{element.id}}</a>
+                        <a [routerLink]="['/ficha-individual', element.id]" mat-stroked-button color="primary">Historial Número {{element.id}}</a>
                       </div>
-                      <div class="example-element-description">
-                        Ver el Médico
-                      <button class="botonDetalles" mat-stroked-button color="primary">Medico {{element.Medico}}</button>
-                    </div>
-                    <div class="example-element-description">
-                      Ver el Paciente
-                    <button class="botonDetalles" mat-stroked-button color="primary">Paciente {{element.Paciente}}</button>
-                  </div>
                     </div>
                   </td>
                 </ng-container>

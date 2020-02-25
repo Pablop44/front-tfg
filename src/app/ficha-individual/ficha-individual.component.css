@@ -58,7 +58,8 @@
   
   .example-element-description {
     padding: 16px;
-    width: 33%;
+    width: 100%;
+    text-align: center;
   }
   
   .example-element-description-attribution {

@@ -130,6 +130,7 @@ export class DashboardHomeComponent {
       .subscribe(
         response =>{
           console.log(response);
+          console.log(response);
           for (let i in response) {
               if(response[i]['enfermedad'] == 'migranas'){
                 response[i]['enfermedad'] = "Migrañas";
