@@ -41,30 +41,9 @@ export class VistaUsuarioComponent implements OnInit {
 
   medico: Medico[] = [];
 
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'Usuario', cols: 1, rows: 2, cuerpo: "hola"},
-          { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
-          { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
-          { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
-          { title: 'accionRol', cols: 1, rows: 1, cuerpo: "hola"},
-          { title: 'cambiarMedico', cols: 1, rows: 1, cuerpo: "hola"}
-        ];
-      }
+  cards;
 
-      return [
-        { title: 'Usuario', cols: 1, rows: 5, cuerpo: "hola"},
-        { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
-        { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
-        { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
-        { title: 'accionRol', cols: 1, rows: 1, cuerpo: "hola"},
-        { title: 'cambiarMedico', cols: 1, rows: 1, cuerpo: "hola"}
-        
-      ];
-    })
-  );
+  
 
   constructor(private breakpointObserver: BreakpointObserver, private route : ActivatedRoute,loginService:LoginService, userService:UserService) { 
     this.loginService = loginService;
@@ -77,6 +56,7 @@ export class VistaUsuarioComponent implements OnInit {
      this.datosUsuario(this.id);
      });
 
+    this.todosMedicos();
   }
 
   ngOnDestroy() {
@@ -89,6 +69,7 @@ export class VistaUsuarioComponent implements OnInit {
       .subscribe(
         response =>{
           this.datosUser = response;
+          this.makeCards();
           console.log(this.datosUser);
         },
         error => {
@@ -103,13 +84,64 @@ export class VistaUsuarioComponent implements OnInit {
       this.userService.todosMedicos()
       .subscribe(
         response =>{
-          console.log(response);
+          for (let i in response) {
+            this.medico.push(new Medico(response[i]['username'], response[i]['id']));
+          }
         },
         error => {
           console.log(error);
         }
       );
     }
+  }
+
+  makeCards(){
+    this.cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+      map(({ matches }) => {
+        if (matches) {
+          return [
+            { title: 'Usuario', cols: 1, rows: 2, cuerpo: "hola"},
+            { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'accionRol', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'cambiarMedico', cols: 1, rows: 1, cuerpo: "hola"}
+          ];
+        }
+  
+        if(this.datosUser.rol == 'medico')
+        var obj = [
+          { title: 'Usuario', cols: 1, rows: 5, cuerpo: "hola"},
+          { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
+          { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
+          { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
+          { title: 'accionRol', cols: 1, rows: 1, cuerpo: "hola"},
+          { title: 'especialidad', cols: 1, rows: 1, cuerpo: "hola"}
+        ];
+        if(this.datosUser.rol == 'paciente'){
+          var obj = [
+            { title: 'Usuario', cols: 1, rows: 5, cuerpo: "hola"},
+            { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'accionRol', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'cambiarMedico', cols: 1, rows: 1, cuerpo: "hola"}
+          ];
+        }
+        if(this.datosUser.rol == 'administrador'){
+          var obj = [
+            { title: 'Usuario', cols: 1, rows: 5, cuerpo: "hola"},
+            { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'accionRol', cols: 1, rows: 1, cuerpo: "hola"},
+          ];
+        }
+        
+  
+        return obj;
+      })
+    );
   }
 
   

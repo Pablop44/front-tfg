@@ -213,9 +213,9 @@
     
             </div>
 
-            <div *ngSwitchCase="'cambiarMedico'">
+            <div *ngSwitchCase="'cambiarMedico'" >
 
-                <mat-card class="dashboard-card">
+                <mat-card *ngIf="datosUser.rol == 'paciente'" class="dashboard-card">
                     <mat-card-header>
                       <mat-card-title>
                         Cambiar el Médico del Usuario
@@ -226,11 +226,44 @@
                     </mat-card-header>
         
                     <mat-card-content class="dashboard-card-content">
-                         
+                      <mat-form-field style="margin-top: 20px;">
+                        <mat-label>Médico</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let medico of medico" [value]="medico.id">
+                            {{medico.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
                     </mat-card-content>
                       </mat-card>
     
             </div>
+
+            <div *ngSwitchCase="'especialidad'" >
+
+              <mat-card *ngIf="datosUser.rol == 'medico'" class="dashboard-card">
+                  <mat-card-header>
+                    <mat-card-title>
+                      Cambiar la Especialidad del médico
+                      <mat-menu #menu="matMenu" xPosition="before">
+                        <a [routerLink]="'/users'" mat-menu-item></a>
+                      </mat-menu>
+                    </mat-card-title>
+                  </mat-card-header>
+      
+                  <mat-card-content class="dashboard-card-content">
+                    <mat-form-field>
+                      <mat-label>Especialidades</mat-label>
+                      <select matNativeControl required>
+                        <option value="migranas">Migrañas</option>
+                        <option value="asma">Asma</option>
+                        <option value="diabetes">Diabetes</option>
+                      </select>
+                    </mat-form-field>
+                  </mat-card-content>
+              </mat-card>
+  
+          </div>
 
         </div>
       </mat-grid-tile>
