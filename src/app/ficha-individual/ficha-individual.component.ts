@@ -207,6 +207,7 @@ export class FichaIndividualComponent implements OnInit {
   ficha : any = [];
   medico: any = [];
   paciente: any = [];
+  enfermedades : any = [];
   consultaService: ConsultaService;
   loginService: LoginService;
   userService:UserService;
@@ -316,10 +317,25 @@ export class FichaIndividualComponent implements OnInit {
       this.fichaService.datosFicha(idFicha)
       .subscribe(
         response =>{
+          
           this.ficha = response;
+          this.datosFicha2(idFicha);
           this.datosMedico(response['medico']);
           this.datosPaciente(response['paciente']);
           this.datosConsultas(idFicha);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+  datosFicha2(idFicha){
+    if(this.loginService.isLogged){
+      this.fichaService.datosFicha(idFicha)
+      .subscribe(
+        response =>{         
+          this.enfermedades = response['enfermedad'];
         },
         error => {
           console.log(error);
