@@ -18,12 +18,44 @@ import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
+@Component({
+  selector: 'notificacionVistaUser',
+  templateUrl: 'notificacionVistaUser.html',
+  styles: [`
+    .example-pizza-party {
+      color: hotpink;
+    }
+  `],
+})
+export class notificacionVistaUserComponent {
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
+}
+
 class Medico {
   nombre: string;
   id: string;
   constructor(nombre, id){
     this.nombre = nombre;
     this.id = id;
+  }
+}
+export interface DialogData {
+  animal: string;
+  name: string;
+  id: number;
+}
+
+@Component({
+  selector: 'dialogoEliminarUsuarioVista',
+  templateUrl: 'dialogoEliminarUsuarioVista.html',
+})
+export class DialogoEliminarUsuarioVista {
+  constructor(
+    public dialogRef: MatDialogRef<DialogoEliminarUsuarioVista>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }
 
@@ -45,7 +77,7 @@ export class VistaUsuarioComponent implements OnInit {
 
   
 
-  constructor(private breakpointObserver: BreakpointObserver, private route : ActivatedRoute,loginService:LoginService, userService:UserService) { 
+  constructor(private breakpointObserver: BreakpointObserver,private _snackBar: MatSnackBar,private router : Router, public dialog: MatDialog, private route : ActivatedRoute,loginService:LoginService, userService:UserService) { 
     this.loginService = loginService;
     this.userService = userService;
   }
@@ -144,6 +176,37 @@ export class VistaUsuarioComponent implements OnInit {
     );
   }
 
-  
+  openDialog(datosUser, rol): void {
+    const dialogRef = this.dialog.open(DialogoEliminarUsuarioVista, {
+      width: '400px',
+      data: {name: datosUser.username, rol: rol, id: datosUser.id, respuesta: "Si"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result.respuesta == "Si"){
+        this.eliminarUsuario(datosUser.id, datosUser.rol, datosUser.username);
+      }
+    });
+  }
+
+  eliminarUsuario(id, rol, username){
+      
+    this.userService.eliminarUser(id)
+      .subscribe(
+        response =>{console.log(response)
+          this.openSnackBar("Se ha eliminado el usuario: \""+username+"\" con rol \""+rol+"\"");
+          this.router.navigateByUrl("/dashboardHome");
+          },
+        error => {console.log(error)
+          this.openSnackBar("No se ha podido eliminar el usuario:" +username);}
+      );
+  }
+
+  openSnackBar(mensaje: String) {
+    this._snackBar.openFromComponent(notificacionVistaUserComponent, {
+      duration: 4 * 1000, data: mensaje
+    });
+  }
 
 }

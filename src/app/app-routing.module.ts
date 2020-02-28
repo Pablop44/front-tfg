@@ -7,12 +7,14 @@ import { UsersComponent } from './users/users.component';
 import { FichaIndividualComponent } from './ficha-individual/ficha-individual.component';
 import { element } from 'protractor';
 import { VistaUsuarioComponent } from './vista-usuario/vista-usuario.component';
+import { DashboardMedicoComponent } from './dashboard-medico/dashboard-medico.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegisterComponent },
   { path: 'dashboardHome', component: DashboardHomeComponent },
+  { path: 'dashboardMedico', component: DashboardMedicoComponent },
   { path: 'users', component: UsersComponent },
   {path : 'ficha-individual/:id', component : FichaIndividualComponent,},
   {path : 'vista-usuario/:id', component : VistaUsuarioComponent,}

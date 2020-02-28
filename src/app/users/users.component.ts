@@ -120,7 +120,6 @@ export class DialogoEliminarUsuario {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }
 
 @Component({

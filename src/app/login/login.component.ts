@@ -25,7 +25,7 @@ export class loginNotificacionComponent {
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  hide = true;
   cadenas: any = [];
   formUser:User ={
     id: null,
@@ -65,7 +65,12 @@ export class LoginComponent implements OnInit {
           var obj = JSON.parse(response);
           this.loginService.setLoggedUser(this.formUser.username, this.formUser.password, obj.rol, obj.id);
           this.openSnackBar("Bienvenido "+this.formUser.username);
-          this.router.navigateByUrl("/dashboardHome");
+          if(this.loginService.loggedUser.rol == "administrador"){
+            this.router.navigateByUrl("/dashboardHome");
+          }else{
+            this.router.navigateByUrl("/dashboardMedico");
+          }
+         
         },
         error=>{
           this.openSnackBar("Error al Iniciar Sesión, Intentelo de Nuevo");

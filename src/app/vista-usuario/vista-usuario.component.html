@@ -139,7 +139,7 @@
                     </mat-card-header>
         
                     <mat-card-content class="dashboard-card-content">
-                            <button mat-flat-button color="warn">Eliminar <i class="material-icons">
+                            <button mat-flat-button color="warn" (click)="openDialog(datosUser, datosUser.rol)">Eliminar <i class="material-icons">
                                 remove_circle
                                 </i></button>
                     </mat-card-content>
