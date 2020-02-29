@@ -162,16 +162,8 @@
                     <mat-card-content class="dashboard-card-content">
                          
                         <section class="example-section">
-                            <mat-radio-group >
-                              <mat-radio-button class="example-margin" value="autorizada">
-                                Autorizada
-                              </mat-radio-button>
-                              <mat-radio-button class="example-margin" value="activada">
-                                Activada
-                              </mat-radio-button>
-                              <mat-radio-button class="example-margin" value="desactivada">
-                                Desactivada
-                              </mat-radio-button>
+                            <mat-radio-group name="opList"  fxLayout="column" [(ngModel)]="chosenItem">
+                              <mat-radio-button (click)="cambiarEstado(op.value)" class="example-margin" *ngFor="let op of estado" [value]="op.value" name="opList" >{{op.name}}</mat-radio-button>
                             </mat-radio-group>
                           </section>
 
@@ -194,17 +186,9 @@
         
                     <mat-card-content class="dashboard-card-content">
                          
-                        <section class="example-section">
-                        <mat-radio-group >
-                          <mat-radio-button class="example-margin" value="paciente">
-                            Paciente
-                          </mat-radio-button>
-                          <mat-radio-button class="example-margin" value="medico">
-                            Médico
-                          </mat-radio-button>
-                          <mat-radio-button class="example-margin" value="administrador">
-                            Administrador
-                          </mat-radio-button>
+                      <section class="example-section">
+                        <mat-radio-group name="opList2"  fxLayout="column" [(ngModel)]="chosenItem2">
+                          <mat-radio-button (click)="cambiarRol(op2.value)" class="example-margin" *ngFor="let op2 of rol" [value]="op2.value" name="opList2" >{{op2.name}}</mat-radio-button>
                         </mat-radio-group>
                       </section>
 
@@ -252,14 +236,11 @@
                   </mat-card-header>
       
                   <mat-card-content class="dashboard-card-content">
-                    <mat-form-field style="margin-top: 25px;">
-                      <mat-label>Especialidades</mat-label>
-                      <select matNativeControl required>
-                        <option value="migranas">Migrañas</option>
-                        <option value="asma">Asma</option>
-                        <option value="diabetes">Diabetes</option>
-                      </select>
-                    </mat-form-field>
+                    <section class="example-section">
+                      <mat-radio-group name="opList3"  fxLayout="column" [(ngModel)]="chosenItem3">
+                        <mat-radio-button (click)="cambiarEspecialidad(op3.value)" class="example-margin" *ngFor="let op3 of enfermedades" [value]="op3.value" name="opList3" >{{op3.name}}</mat-radio-button>
+                      </mat-radio-group>
+                    </section>
                   </mat-card-content>
               </mat-card>
   

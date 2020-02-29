@@ -59,4 +59,32 @@ export class UserService {
       })
     });
   }
+
+  public editarEstado(valor, id){
+    let array = [{
+      Field: 'estado',
+      Value: valor
+    },
+    {
+      Field: 'id',
+      Value: id
+    }
+    ];
+    
+    // #1 Mapping the array to an object...
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    // #2 Converting the object to JSON...
+    let json = JSON.stringify(obj);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+    return this.http.post(this.restUrl+"/user/edit.json", json
+    , httpOptions);
+  }
 }

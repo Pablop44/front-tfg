@@ -140,7 +140,7 @@ export class DashboardHomeComponent {
                 response[i]['enfermedad'] = "Asma";
               }
 
-                const newFicha = new Ficha(response[i]['id'],response[i]['fechaCreacion'],response[i]['dniPaciente']+" ("+response[i]['nombrePaciente']+")", response[i]['nombrePaciente'],response[i]['dniMedico']+" ("+response[i]['nombrePaciente']+") "+response[i]['colegiado'],response[i]['nombreMedico'], response[i]['colegiado'], response[i]['enfermedad']);
+                const newFicha = new Ficha(response[i]['id'],response[i]['fechaCreacion'],response[i]['dniPaciente']+" ("+response[i]['nombrePaciente']+")", response[i]['nombrePaciente'],response[i]['dniMedico']+" ("+response[i]['nombreMedico']+") "+response[i]['colegiado'],response[i]['nombreMedico'], response[i]['colegiado'], response[i]['enfermedad']);
                 this.fichasArray.push(newFicha);
           }
           this.dataSource = this.fichasArray;

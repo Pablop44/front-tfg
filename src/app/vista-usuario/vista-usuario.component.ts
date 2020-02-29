@@ -14,9 +14,10 @@ import {Component, OnInit, ViewChild, Inject} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import {MAT_SNACK_BAR_DATA} from '@angular/material';
+import {MAT_SNACK_BAR_DATA, MatRadioGroup} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'notificacionVistaUser',
@@ -70,25 +71,44 @@ export class VistaUsuarioComponent implements OnInit {
   loginService: LoginService;
   userService: UserService;
   datosUser: any = [];
+  myForm : FormBuilder;
 
   medico: Medico[] = [];
 
   cards;
 
+  estado: any[] = [
+  {"name": "Autorizada", ID: "D1", "value": "autorizada"},
+  {"name": "Activada", ID: "D2", "value": "activada"},
+  {"name": "Desactivada", ID: "D3", "value": "desactivada"}
+  ];
+  chosenItem = this.estado[0].value;
   
+  rol: any[] = [
+    {"name": "Administrador", ID: "D1", "value": "administrador"},
+    {"name": "Medico", ID: "D2", "value": "medico"},
+    {"name": "Paciente", ID: "D3", "value": "paciente"}
+    ];
+    chosenItem2 = this.rol[0].value;
 
-  constructor(private breakpointObserver: BreakpointObserver,private _snackBar: MatSnackBar,private router : Router, public dialog: MatDialog, private route : ActivatedRoute,loginService:LoginService, userService:UserService) { 
+  enfermedades: any[] = [
+    {"name": "Migrañas", ID: "D1", "value": "migranas"},
+    {"name": "Diabetes", ID: "D2", "value": "diabetes"},
+    {"name": "Asma", ID: "D3", "value": "asma"}
+    ];
+    chosenItem3 = this.rol[0].value;
+
+  constructor(private fb: FormBuilder,private breakpointObserver: BreakpointObserver,private _snackBar: MatSnackBar,private router : Router, public dialog: MatDialog, private route : ActivatedRoute,loginService:LoginService, userService:UserService) { 
     this.loginService = loginService;
     this.userService = userService;
-  }
+    
+    }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
      this.id = params['id'];
      this.datosUsuario(this.id);
      });
-
-    this.todosMedicos();
   }
 
   ngOnDestroy() {
@@ -101,7 +121,36 @@ export class VistaUsuarioComponent implements OnInit {
       .subscribe(
         response =>{
           this.datosUser = response;
+          if(this.datosUser.estado == "desactivada"){
+            this.chosenItem = this.estado[2].value;
+          }else if(this.datosUser.estado == "activada"){
+            this.chosenItem = this.estado[1].value;
+          }else{
+            this.chosenItem = this.estado[0].value;
+          }
+
+
+          if(this.datosUser.rol == "administrador"){
+            this.chosenItem2 = this.rol[0].value;
+          }else if(this.datosUser.rol == "medico"){
+            this.chosenItem2 = this.rol[1].value;
+          }else{
+            this.chosenItem2 = this.rol[2].value;
+          }
+
+          if(this.datosUser.especialidad == "migranas"){
+            this.chosenItem3 = this.enfermedades[0].value;
+          }else if(this.datosUser.especialidad == "diabetes"){
+            this.chosenItem3 = this.enfermedades[1].value;
+          }else{
+            this.chosenItem3 = this.enfermedades[2].value;
+          }
+
           this.makeCards();
+          if(this.datosUser.rol == "paciente"){
+            this.todosMedicos();
+          }
+          
           console.log(this.datosUser);
         },
         error => {
@@ -195,8 +244,12 @@ export class VistaUsuarioComponent implements OnInit {
     this.userService.eliminarUser(id)
       .subscribe(
         response =>{console.log(response)
-          this.openSnackBar("Se ha eliminado el usuario: \""+username+"\" con rol \""+rol+"\"");
-          this.router.navigateByUrl("/dashboardHome");
+            this.openSnackBar("Se ha eliminado el usuario: \""+username+"\" con rol \""+rol+"\"");
+            if(this.loginService.loggedUser.rol == "administrador"){
+              this.router.navigateByUrl("/dashboardHome");
+            }else{
+              this.router.navigateByUrl("/dashboardMedico");
+            }
           },
         error => {console.log(error)
           this.openSnackBar("No se ha podido eliminar el usuario:" +username);}
@@ -208,5 +261,28 @@ export class VistaUsuarioComponent implements OnInit {
       duration: 4 * 1000, data: mensaje
     });
   }
+
+  cambiarEstado(valor){
+    if(this.loginService.isLogged){
+      this.userService.editarEstado(valor, this.datosUser.id)
+      .subscribe(
+        response =>{
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  cambiarRol(valor){
+    console.log(valor);
+  }
+
+  cambiarEspecialidad(valor){
+    console.log(valor);
+  }
+
 
 }
