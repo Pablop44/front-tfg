@@ -277,11 +277,31 @@ export class VistaUsuarioComponent implements OnInit {
   }
 
   cambiarRol(valor){
-    console.log(valor);
+    if(this.loginService.isLogged){
+      this.userService.editarRol(valor, this.datosUser.id)
+      .subscribe(
+        response =>{
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   cambiarEspecialidad(valor){
-    console.log(valor);
+    if(this.loginService.isLogged){
+      this.userService.editarEspecialidad(valor, this.datosUser.id)
+      .subscribe(
+        response =>{
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
 
