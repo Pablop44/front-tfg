@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Editar Usuario {{data.name}}</h1>
+<h1 mat-dialog-title>Editar Usuario {{data.username}}</h1>
 <div mat-dialog-content>
   <p>Modifica los valores que quieras editar</p>
   <mat-form-field class="example-full-width">
@@ -7,7 +7,7 @@
   </mat-form-field>
   <mat-form-field class="example-full-width">
     <mat-label>Nombre de Usuario</mat-label>
-    <input matInput id="username" name="username" [(ngModel)]="data.name"  required  >
+    <input matInput id="username" name="username" [(ngModel)]="data.username"  required  >
   </mat-form-field>
   <mat-form-field class="example-full-width">
     <mat-label>Contraseña</mat-label>
@@ -43,14 +43,6 @@
       <option value="Medico jefe">Medico Jefe</option>
       <option value="Medico medio">Medico Medio</option>
       <option value="Medico raso">Medico Raso</option>
-    </select>
-  </mat-form-field>
-  <mat-form-field *ngIf="data.rol == 'medico'" style="width: 100%;">
-    <mat-label>Especialidad del Médico</mat-label>
-    <select id="especialidad" [(ngModel)]="data.especialidad" name="especialidad" matNativeControl required>
-      <option value="migranas">Migrañas</option>
-      <option value="diabetes">Diabetes</option>
-      <option value="asma">Asma</option>
     </select>
   </mat-form-field>
 </div>

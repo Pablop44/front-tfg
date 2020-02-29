@@ -253,27 +253,29 @@ export class VistaUsuarioComponent implements OnInit {
       const dialogRef = this.dialog.open(DialogoEditarUsuario, {
         width: '500px',
         data: {
-          name: this.datosUser.username,
+          id: this.datosUser.id,
+          username: this.datosUser.username,
+          password: this.datosUser.password,
           email: this.datosUser.email, 
           nombre: this.datosUser.nombre, 
           apellidos: this.datosUser.apellidos, 
           telefono: this.datosUser.telefono, 
           dni: this.datosUser.dni,
-          poblacion: this.datosUser.poblacion
+          poblacion: this.datosUser.poblacion,
+          rol: this.datosUser.rol
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
-        if(result.respuesta == "Si"){
-         
-        }
+        this.editarUser(result);
       });
     }else if(this.datosUser.rol == "medico"){
         const dialogRef = this.dialog.open(DialogoEditarUsuario, {
           width: '500px',
           data: {
-            name: this.datosUser.username,
+            id: this.datosUser.id,
+            username: this.datosUser.username,
             email: this.datosUser.email, 
+            password: this.datosUser.password,
             nombre: this.datosUser.nombre, 
             apellidos: this.datosUser.apellidos, 
             telefono: this.datosUser.telefono, 
@@ -281,14 +283,12 @@ export class VistaUsuarioComponent implements OnInit {
             colegiado: this.datosUser.colegiado,
             poblacion: this.datosUser.poblacion,
             especialidad: this.datosUser.especialidad,
-            cargo: this.datosUser.cargo
+            cargo: this.datosUser.cargo,
+            rol: this.datosUser.rol
           }
         });
         dialogRef.afterClosed().subscribe(result => {
-          console.log(result);
-          if(result.respuesta == "Si"){
-           
-          }
+          this.editarUser(result);
         });
       }
     }
@@ -353,6 +353,22 @@ export class VistaUsuarioComponent implements OnInit {
         },
         error => {
           console.log(error);
+        }
+      );
+    }
+  }
+
+  editarUser(user){
+    if(this.loginService.isLogged){
+      this.userService.editarUser(user)
+      .subscribe(
+        response =>{
+          this.datosUsuario(this.id);
+          this.openSnackBar("Se actualizado los datos con éxito");
+        },
+        error => {
+          console.log(error);
+          this.openSnackBar("Error al actualizar los datos");
         }
       );
     }

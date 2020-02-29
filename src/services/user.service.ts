@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router} from "@angular/router"
 import { LoginService } from 'src/services/login.service';
+import { User } from 'src/app/models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -121,6 +122,7 @@ export class UserService {
   }
 
   public editarEspecialidad(valor, id){
+    
     let array = [{
       Field: 'rol',
       Value: valor
@@ -147,6 +149,37 @@ export class UserService {
     };
 
     return this.http.post(this.restUrl+"/user/editarEspecialidad.json", json
+    , httpOptions);
+  }
+
+  public editarUser(user){
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+    const userToSend : User = {
+      id: user.id,
+      dni: user.dni,
+      username: user.username,
+      password: user.password,
+      email: user.email,
+      nombre: user.nombre,
+      apellidos: user.apellidos,
+      telefono: user.telefono,
+      poblacion: user.poblacion,
+      colegiado: user.colegiado,
+      cargo: null,
+      especialidad: null,
+      cuenta: null,
+      rol: null,
+    }
+  
+
+    
+    return this.http.post(this.restUrl+"/user/editarUser.json", JSON.stringify(userToSend)
     , httpOptions);
   }
 }
