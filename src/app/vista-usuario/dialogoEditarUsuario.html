@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>Editar Usuario {{data.name}}</h1>
+<div mat-dialog-content>
+  <p>Modifica los valores que quieras editar</p>
+  <mat-form-field class="example-full-width">
+    <mat-label>DNI</mat-label>
+    <input matInput id="dni" name="dni" placeholder="DNI" [(ngModel)]="data.dni" required  disabled>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Nombre de Usuario</mat-label>
+    <input matInput id="username" name="username" [(ngModel)]="data.name"  required  >
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Contraseña</mat-label>
+    <input matInput type="password" id="password" [(ngModel)]="data.password" name="password" placeholder="Contraseña"  >
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" id="email" [(ngModel)]="data.email" name="email" placeholder="Email"  required  >
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Nombre</mat-label>
+    <input matInput type="text" id="nombre" [(ngModel)]="data.nombre" name="nombre" placeholder="Nombre"  required  >
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Apellidos</mat-label>
+    <input matInput type="text" id="apellidos" [(ngModel)]="data.apellidos" name="apellidos" placeholder="Apellidos" required  >
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Teléfono</mat-label>
+    <input matInput type="text" id="telefono" [(ngModel)]="data.telefono" name="telefono" placeholder="Teléfono" required  >
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Población</mat-label>
+    <input matInput type="text" id="poblacion" [(ngModel)]="data.poblacion" name="poblacion" placeholder="Población" required  >
+  </mat-form-field>
+  <mat-form-field *ngIf="data.rol == 'medico'" class="example-full-width">
+    <mat-label>Número de Colegiado</mat-label>
+    <input matInput type="text" id="colegiado" [(ngModel)]="data.colegiado" name="colegiado" placeholder="Número de Colegiado" required  >
+  </mat-form-field>
+  <mat-form-field *ngIf="data.rol == 'medico'" style="width: 100%;">
+    <mat-label>Cargo del Médico</mat-label>
+    <select id="cargo" [(ngModel)]="data.cargo" name="cargo" matNativeControl required>
+      <option value="Medico jefe">Medico Jefe</option>
+      <option value="Medico medio">Medico Medio</option>
+      <option value="Medico raso">Medico Raso</option>
+    </select>
+  </mat-form-field>
+  <mat-form-field *ngIf="data.rol == 'medico'" style="width: 100%;">
+    <mat-label>Especialidad del Médico</mat-label>
+    <select id="especialidad" [(ngModel)]="data.especialidad" name="especialidad" matNativeControl required>
+      <option value="migranas">Migrañas</option>
+      <option value="diabetes">Diabetes</option>
+      <option value="asma">Asma</option>
+    </select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">Añadir</button>
+  <button mat-button style="float:right;" (click)="onNoClick()">Cancelar</button>
+</div>

@@ -63,7 +63,7 @@ export class UserService {
   public editarEstado(valor, id){
     let array = [{
       Field: 'estado',
-      Value: valor
+      Value: valor.toString()
     },
     {
       Field: 'id',
@@ -93,7 +93,7 @@ export class UserService {
   public editarRol(valor, id){
     let array = [{
       Field: 'rol',
-      Value: valor
+      Value: valor.toString()
     },
     {
       Field: 'id',

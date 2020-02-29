@@ -57,7 +57,7 @@ import { DashboardHomeComponent } from './dashboard-home/dashboard-home.componen
 import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnadirAdministrador, DialogoEliminarUsuario, notificacionComponent } from './users/users.component';
 import { loginNotificacionComponent } from './login/login.component';
 import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta } from './ficha-individual/ficha-individual.component';
-import { VistaUsuarioComponent, notificacionVistaUserComponent, DialogoEliminarUsuarioVista } from './vista-usuario/vista-usuario.component';
+import { VistaUsuarioComponent, notificacionVistaUserComponent, DialogoEliminarUsuarioVista, DialogoEditarUsuario } from './vista-usuario/vista-usuario.component';
 import { DashboardMedicoComponent} from './dashboard-medico/dashboard-medico.component';
 
 @NgModule({
@@ -80,7 +80,8 @@ import { DashboardMedicoComponent} from './dashboard-medico/dashboard-medico.com
     VistaUsuarioComponent,
     DashboardMedicoComponent,
     notificacionVistaUserComponent,
-    DialogoEliminarUsuarioVista
+    DialogoEliminarUsuarioVista,
+    DialogoEditarUsuario
   ],
   imports: [
     BrowserModule,
@@ -193,7 +194,8 @@ import { DashboardMedicoComponent} from './dashboard-medico/dashboard-medico.com
     DialogoAnadirConsulta, 
     notificacionComponentCrearConsulta, 
     notificacionVistaUserComponent,
-    DialogoEliminarUsuarioVista
+    DialogoEliminarUsuarioVista,
+    DialogoEditarUsuario
   ],
   providers: [],
   bootstrap: [AppComponent]

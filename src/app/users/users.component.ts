@@ -52,12 +52,6 @@ export class UserData {
   } 
 }
 
-export interface DialogData {
-  animal: string;
-  name: string;
-  id: number;
-}
-
 @Component({
   selector: 'dialogoAnadirPaciente',
   templateUrl: 'dialogoAnadirPaciente.html',
@@ -67,7 +61,7 @@ export class DialogoAnadirPaciente {
 
   constructor(
     public dialogRef: MatDialogRef<DialogoAnadirPaciente>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -83,7 +77,7 @@ export class DialogoAnadirMedico {
 
   constructor(
     public dialogRef: MatDialogRef<DialogoAnadirMedico>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -99,7 +93,7 @@ export class DialogoAnadirAdministrador {
 
   constructor(
     public dialogRef: MatDialogRef<DialogoAnadirAdministrador>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -115,7 +109,7 @@ export class DialogoEliminarUsuario {
 
   constructor(
     public dialogRef: MatDialogRef<DialogoEliminarUsuario>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   onNoClick(): void {
     this.dialogRef.close();

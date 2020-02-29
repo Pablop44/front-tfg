@@ -40,11 +40,6 @@ class Medico {
     this.id = id;
   }
 }
-export interface DialogData {
-  animal: string;
-  name: string;
-  id: number;
-}
 
 @Component({
   selector: 'dialogoEliminarUsuarioVista',
@@ -53,7 +48,21 @@ export interface DialogData {
 export class DialogoEliminarUsuarioVista {
   constructor(
     public dialogRef: MatDialogRef<DialogoEliminarUsuarioVista>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'dialogoEditarUsuario',
+  templateUrl: 'dialogoEditarUsuario.html',
+})
+export class DialogoEditarUsuario {
+  constructor(
+    public dialogRef: MatDialogRef<DialogoEditarUsuario>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -238,6 +247,51 @@ export class VistaUsuarioComponent implements OnInit {
       }
     });
   }
+
+  openDialog2(): void {
+    if(this.datosUser.rol == 'administrador'){
+      const dialogRef = this.dialog.open(DialogoEditarUsuario, {
+        width: '500px',
+        data: {
+          name: this.datosUser.username,
+          email: this.datosUser.email, 
+          nombre: this.datosUser.nombre, 
+          apellidos: this.datosUser.apellidos, 
+          telefono: this.datosUser.telefono, 
+          dni: this.datosUser.dni,
+          poblacion: this.datosUser.poblacion
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        if(result.respuesta == "Si"){
+         
+        }
+      });
+    }else if(this.datosUser.rol == "medico"){
+        const dialogRef = this.dialog.open(DialogoEditarUsuario, {
+          width: '500px',
+          data: {
+            name: this.datosUser.username,
+            email: this.datosUser.email, 
+            nombre: this.datosUser.nombre, 
+            apellidos: this.datosUser.apellidos, 
+            telefono: this.datosUser.telefono, 
+            dni: this.datosUser.dni,
+            colegiado: this.datosUser.colegiado,
+            poblacion: this.datosUser.poblacion,
+            especialidad: this.datosUser.especialidad,
+            cargo: this.datosUser.cargo
+          }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(result);
+          if(result.respuesta == "Si"){
+           
+          }
+        });
+      }
+    }
 
   eliminarUsuario(id, rol, username){
       
