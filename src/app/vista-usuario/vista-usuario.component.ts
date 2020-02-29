@@ -159,7 +159,6 @@ export class VistaUsuarioComponent implements OnInit {
           if(this.datosUser.rol == "paciente"){
             this.todosMedicos();
           }
-          
           console.log(this.datosUser);
         },
         error => {
@@ -318,9 +317,10 @@ export class VistaUsuarioComponent implements OnInit {
 
   cambiarEstado(valor){
     if(this.loginService.isLogged){
-      this.userService.editarEstado(valor, this.datosUser.id)
+      this.userService.editarEstado(valor, this.datosUser)
       .subscribe(
         response =>{
+          this.datosUsuario(this.id);
           console.log(response);
         },
         error => {
@@ -332,9 +332,10 @@ export class VistaUsuarioComponent implements OnInit {
 
   cambiarRol(valor){
     if(this.loginService.isLogged){
-      this.userService.editarRol(valor, this.datosUser.id)
+      this.userService.editarRol(valor, this.datosUser)
       .subscribe(
         response =>{
+          this.datosUsuario(this.id);
           console.log(response);
         },
         error => {
@@ -346,10 +347,12 @@ export class VistaUsuarioComponent implements OnInit {
 
   cambiarEspecialidad(valor){
     if(this.loginService.isLogged){
-      this.userService.editarEspecialidad(valor, this.datosUser.id)
+      this.userService.editarEspecialidad(valor, this.datosUser)
       .subscribe(
         response =>{
           console.log(response);
+          this.datosUsuario(this.id);
+          this.openSnackBar("Se actualizado los datos con éxito");
         },
         error => {
           console.log(error);
