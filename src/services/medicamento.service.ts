@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router} from "@angular/router"
 import { LoginService } from 'src/services/login.service';
+import { Medicamento } from 'src/app/medicamentos/medicamentos.component';
 
 
 @Injectable({
@@ -20,5 +21,27 @@ export class MedicamentoService {
         'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
       })
     });
+  }
+
+  public anadirMedicamento(datos){
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+    const medicamentoToSend : Medicamento = {
+      nombre: datos.nombre,
+      viaAdministracion: datos.viaAdministracion,
+      marca: datos.marca,
+      dosis: datos.dosis
+    }
+
+    console.log(medicamentoToSend);
+
+
+    return this.http.post(this.restUrl+"/medicamento/add.json", JSON.stringify(medicamentoToSend)
+    , httpOptions);
   }
 }

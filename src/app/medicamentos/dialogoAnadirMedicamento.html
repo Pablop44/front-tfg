@@ -7,7 +7,7 @@
 
     <mat-form-field class="example-full-width">
         <mat-label>Vía de Administración</mat-label>
-        <select id="via" [(ngModel)]="data.via" name="via" matNativeControl required>
+        <select id="via" [(ngModel)]="data.viaAdministracion" name="viaAdministracion" matNativeControl required>
           <option value="ora">Oral</option>
           <option value="sublingual">Sublingual</option>
           <option value="parental">Parental</option>
@@ -27,7 +27,7 @@
     <mat-form-field class="example-full-width">
         <mat-label>Marca del Medicamento</mat-label>
         <mat-select>
-          <mat-option *ngFor="let marca of data.marca" [value]="marca.nombre">
+          <mat-option *ngFor="let marca of data.marca" (click)="valorSelect(marca.nombre)"[value]="marca.nombre">
             {{marca.nombre}}
           </mat-option>
         </mat-select>

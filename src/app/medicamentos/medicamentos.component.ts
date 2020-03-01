@@ -10,6 +10,22 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MarcaService } from 'src/services/marca.service';
+import {MAT_SNACK_BAR_DATA} from '@angular/material';
+
+var marcaElegida;
+
+@Component({
+  selector: 'notificacion',
+  templateUrl: 'notificacion.html',
+  styles: [`
+    .example-pizza-party {
+      color: hotpink;
+    }
+  `],
+})
+export class notificacionComponent {
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
+}
 
 class Marca {
   nombre: string;
@@ -34,6 +50,10 @@ export class DialogoAnadirMedicamento{
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  valorSelect(valor){
+    marcaElegida = valor;
   }
 }
 
@@ -89,7 +109,7 @@ export class MedicamentosComponent implements OnInit {
   );
 
   constructor(private breakpointObserver: BreakpointObserver,
-    loginService:LoginService, userService:UserService, medicamentoService:MedicamentoService, public dialog: MatDialog, marcaService: MarcaService) {
+    loginService:LoginService, userService:UserService, medicamentoService:MedicamentoService, public dialog: MatDialog, marcaService: MarcaService, private _snackBar: MatSnackBar) {
       this.loginService = loginService;
       this.userService = userService;
       this.medicamentoService = medicamentoService;
@@ -153,7 +173,27 @@ export class MedicamentosComponent implements OnInit {
 
 
     dialogRef.afterClosed().subscribe(response => {
-      console.log(response);
+      response['marca'] = marcaElegida;
+      if(this.loginService.isLogged){
+        this.medicamentoService.anadirMedicamento(response)
+        .subscribe(
+          response =>{
+            for (let i in response) {
+              const newMedicamento = new Medicamento(response[i]['nombre'],response[i]['viaAdministracion'], response[i]['marca'],response[i]['dosis']);
+              this.medicamentos.push(newMedicamento);
+              this.dataSource = new MatTableDataSource<Medicamento>(this.medicamentos);
+              this.dataSource.paginator = this.paginator;
+              this.totalSize= this.medicamentos.length;
+              this.dataSource.sort = this.sort;
+              this.iterator();
+              this.openSnackBar("Se ha añadido el medicamento: \""+newMedicamento.nombre+"\" con rol de Médico");
+            }
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
     });
   }
 
@@ -173,6 +213,11 @@ export class MedicamentosComponent implements OnInit {
         }
       );
     }
+  }
+  openSnackBar(mensaje: String) {
+    this._snackBar.openFromComponent(notificacionComponent, {
+      duration: 4 * 1000, data: mensaje
+    });
   }
 
 }
