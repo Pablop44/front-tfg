@@ -38,7 +38,8 @@ export class UserData {
     estado:string;
     colegiado:string;
     especialidad: string;
-  constructor(id, dni, username, email,telefono, nombre, apellidos, estado, colegiado,especialidad){
+    rol:string;
+  constructor(id, dni, username, email,telefono, nombre, apellidos, estado, colegiado,especialidad, rol){
     this.id = id;
     this.dni = dni;
     this.username = username;
@@ -49,6 +50,7 @@ export class UserData {
     this.estado = estado;
     this.colegiado = colegiado;
     this.especialidad = especialidad
+    this.rol = rol;
   } 
 }
 
@@ -131,6 +133,7 @@ export class UsersComponent implements OnInit {
   public dataSource: any;
   public dataSource2: any;
   public dataSource3: any;
+  public dataSource4: any;
   public pageSize = 15;
   public pageSize2 = 15;
   public pageSize3 = 15;
@@ -140,6 +143,9 @@ export class UsersComponent implements OnInit {
   public totalSizePacientes = 0;
   public totalSizeMedicos = 0;
   public totalSizeAdministradores = 0;
+  panelOpenState = false;
+  peticiones: any;
+  usuariosActivos:UserData[] = [];
 
   formRegistroMedico:User ={
     id: null,
@@ -157,7 +163,10 @@ export class UsersComponent implements OnInit {
     cuenta:null,
     rol:null,
   };
-    
+
+
+  displayedColumns4: string[] = ['dni', 'nombre', 'email', 'telefono','rol','acciones'];
+
   displayedColumns: string[] = ['dni', 'nombre', 'email', 'telefono', 'estado','acciones'];
   displayedColumns2: string[] = ['colegiado', 'dni', 'nombre', 'email', 'especialidad', 'telefono', 'estado',  'acciones'];
   displayedColumns3: string[] = ['dni', 'nombre', 'email', 'telefono', 'estado', 'acciones'];
@@ -189,6 +198,7 @@ export class UsersComponent implements OnInit {
 
     ngOnInit() {   
       this.usuarios(1);
+      this.peticionesAutorizar();
     }
 
     openSnackBar(mensaje: String) {
@@ -231,6 +241,53 @@ export class UsersComponent implements OnInit {
       });
       
     }
+
+    peticionesAutorizar(){
+      if(this.loginService.isLogged){
+        this.userService.peticionesAutorizar()
+        .subscribe(
+          response =>{
+            this.peticiones = response;
+            if(this.peticiones > 0){
+              this.usuariosAutorizar();
+            }
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
+    }
+
+    applyFilter4(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    usuariosAutorizar(){
+      if(this.loginService.isLogged){
+        this.userService.usuariosAutorizar()
+        .subscribe(
+          response =>{
+            console.log(response);
+            for (let i in response) {
+                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'],  response[i]['rol']);
+                this.usuariosActivos.push(newUserData);
+            } 
+
+          this.dataSource4 = new MatTableDataSource<UserData>(this.usuariosActivos);
+          this.dataSource4.data = this.usuariosActivos;
+          console.log(this.usuariosActivos);
+            
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
+    }
+
+
 
     openDialog3(): void {
       const dialogRef = this.dialog.open(DialogoAnadirAdministrador, {
@@ -354,13 +411,13 @@ export class UsersComponent implements OnInit {
         response =>{
           for (let i in response) {
               if (response[i]['rol'] == "paciente") {
-                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
+                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol']);
                 this.users.push(newUserData);
               }else if(response[i]['rol'] == "medico"){
-                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
+                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol']);
                 this.medicos.push(newUserData);
               }else{
-                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad']);
+                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol']);
                 this.administradores.push(newUserData);
               } 
           }
@@ -400,7 +457,7 @@ export class UsersComponent implements OnInit {
       .subscribe(
         response=>{
           for (let i in response) {
-            const newUserData = new UserData(null,response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'])
+            const newUserData = new UserData(null,response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol'])
             this.medicos.push(newUserData);
             console.log(response[i])
             this.dataSource2 = new MatTableDataSource<UserData>(this.medicos);

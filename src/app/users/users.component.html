@@ -1,5 +1,69 @@
 <div class="grid-container">
     <h1 class="mat-h1">Todos los Usuarios</h1>
+
+
+    <mat-accordion *ngIf="peticiones > '0'">
+      <mat-expansion-panel (opened)="panelOpenState = true"
+                           (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Exinten <em style="color: #ff4081; font-style: normal; margin-left: 3px; margin-right: 3px;">{{peticiones}}</em> peticiones de Autorización 
+          </mat-panel-title>
+          <mat-panel-description>
+            Haz click aquí para desplegar o cerrar
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        
+        <table mat-table [dataSource]="dataSource4" class="mat-elevation-z8">
+        
+          <!-- Position Column -->
+          <ng-container matColumnDef="dni">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.dni}} </td>
+          </ng-container>
+        
+          <!-- Name Column -->
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+          </ng-container>
+        
+          <!-- Weight Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Weight </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+          </ng-container>
+        
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="telefono">
+            <th mat-header-cell *matHeaderCellDef> Symbol </th>
+            <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="rol">
+            <th mat-header-cell *matHeaderCellDef> Symbol </th>
+            <td mat-cell *matCellDef="let element"> {{element.rol}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Symbol </th>
+            <td mat-cell *matCellDef="let row"> 
+              <button mat-stroked-button color="primary" [routerLink]="['/vista-usuario', row.id]"><i class="material-icons"> remove_red_eye </i></button>
+              <button mat-stroked-button color="primary" ><i class="material-icons"> edit </i> </button>
+              <button mat-stroked-button color="primary" (click)="openDialog4(row, row.rol)"><i class="material-icons"> remove_circle </i></button>
+            </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
+        </table>
+
+
+      </mat-expansion-panel>
+    </mat-accordion>
+
+
+
     <mat-grid-list cols="2" rowHeight="400px">
       <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
             <mat-card class="dashboard-card">
