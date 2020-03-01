@@ -6,7 +6,9 @@
       <div *ngIf="loginService.isLogged" >
         
         <button mat-button [routerLink]="'/dashboardHome'"> Panel de Control </button>
-        <button mat-button [routerLink]="'/users'"> Usuarios </button>
+        <button mat-button mat-raised-button *ngIf="peticiones > '0'"
+        [matBadge]="peticiones" matBadgePosition="before" matBadgeColor="accent" [routerLink]="'/users'"> Usuarios </button>
+        <button mat-button *ngIf="peticiones == '0'" [routerLink]="'/users'"> Usuarios </button>
         <button mat-button [routerLink]="'/fichas'"> Historiales Clínicos </button>
         <button mat-button [routerLink]="'/consultas'"> Consultas </button>
         <button mat-button [routerLink]="'/medicamentos'"> Medicamentos </button>

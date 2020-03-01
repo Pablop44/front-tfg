@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { LoginService } from 'src/services/login.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,16 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'front-tfg';
   loginService:LoginService;
+  userService:UserService;
+  peticiones: any;
 
-  constructor(loginService:LoginService, private router : Router) { 
+  constructor(loginService:LoginService, private router : Router,  userService:UserService) { 
     this.loginService = loginService;
+    this.userService = userService;
+  }
+
+  ngOnInit() {
+    this.peticionesAutorizar();
   }
 
   logout(){
@@ -27,6 +35,24 @@ export class AppComponent {
         }
       );
   }
+
+  peticionesAutorizar(){
+    if(this.loginService.isLogged){
+      this.userService.peticionesAutorizar()
+      .subscribe(
+        response =>{
+          
+          this.peticiones = response;
+          console.log(this.peticiones);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+
 
   login(){
     this.router.navigateByUrl("/login");

@@ -63,6 +63,14 @@ export class UserService {
     });
   }
 
+  peticionesAutorizar(){
+    return this.http.get(this.restUrl+"/user/longitudUserActivados.json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
+
   public editarEstado(valor, user){
 
     const httpOptions = {
