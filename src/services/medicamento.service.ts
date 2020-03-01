@@ -15,9 +15,7 @@ export class MedicamentoService {
 
 
   todosMedicamentos(){
-
     return this.http.get(this.restUrl+"/medicamento/medicamentos.json", {
-      responseType:'text',
       headers: new HttpHeaders({
         'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
       })

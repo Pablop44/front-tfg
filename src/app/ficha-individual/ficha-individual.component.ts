@@ -1,6 +1,5 @@
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { Router } from '@angular/router';
 import { ConsultaService } from 'src/services/consulta.service';
 import { LoginService } from 'src/services/login.service';
 import { UserService } from 'src/services/user.service';
@@ -279,8 +278,6 @@ export class FichaIndividualComponent implements OnInit {
     private iterator() {
       const end = (this.currentPage + 1) * this.pageSize;
       const start = this.currentPage * this.pageSize;
-      const part = this.consultas.slice(start, end);
-      this.dataSource.data = part;
     }
 
     datosPaciente(idUser){
