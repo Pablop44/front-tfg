@@ -59,6 +59,7 @@ import { loginNotificacionComponent } from './login/login.component';
 import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta } from './ficha-individual/ficha-individual.component';
 import { VistaUsuarioComponent, notificacionVistaUserComponent, DialogoEliminarUsuarioVista, DialogoEditarUsuario } from './vista-usuario/vista-usuario.component';
 import { DashboardMedicoComponent} from './dashboard-medico/dashboard-medico.component';
+import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { DashboardMedicoComponent} from './dashboard-medico/dashboard-medico.com
     DashboardMedicoComponent,
     notificacionVistaUserComponent,
     DialogoEliminarUsuarioVista,
-    DialogoEditarUsuario
+    DialogoEditarUsuario,
+    MedicamentosComponent
   ],
   imports: [
     BrowserModule,

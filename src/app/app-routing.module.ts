@@ -8,6 +8,7 @@ import { FichaIndividualComponent } from './ficha-individual/ficha-individual.co
 import { element } from 'protractor';
 import { VistaUsuarioComponent } from './vista-usuario/vista-usuario.component';
 import { DashboardMedicoComponent } from './dashboard-medico/dashboard-medico.component';
+import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -17,8 +18,8 @@ const routes: Routes = [
   { path: 'dashboardMedico', component: DashboardMedicoComponent },
   { path: 'users', component: UsersComponent },
   {path : 'ficha-individual/:id', component : FichaIndividualComponent,},
-  {path : 'vista-usuario/:id', component : VistaUsuarioComponent,}
-
+  {path : 'vista-usuario/:id', component : VistaUsuarioComponent,},
+  {path : 'medicamentos', component : MedicamentosComponent,}
 ];
 
 @NgModule({
