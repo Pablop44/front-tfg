@@ -138,7 +138,6 @@ export class VistaUsuarioComponent implements OnInit {
             this.chosenItem = this.estado[0].value;
           }
 
-
           if(this.datosUser.rol == "administrador"){
             this.chosenItem2 = this.rol[0].value;
           }else if(this.datosUser.rol == "medico"){

@@ -3,19 +3,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router} from "@angular/router"
 import { LoginService } from 'src/services/login.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
-export class MedicamentoService {
+export class MarcaService {
 
   private restUrl = 'http://localhost:8765';  
 
   constructor(private http: HttpClient, private router: Router,private loginService : LoginService) { }
 
-
-  todosMedicamentos(){
-    return this.http.get(this.restUrl+"/medicamento/medicamentos.json", {
+  todasMarcas(){
+    return this.http.get(this.restUrl+"/marca/todasMarcas.json", {
       headers: new HttpHeaders({
         'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
       })

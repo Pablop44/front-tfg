@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Añadir un Medicamento</h1>
+<div mat-dialog-content>
+    <mat-form-field class="example-full-width">
+        <mat-label>Nombre del Medicamento</mat-label>
+        <input matInput id="nombre" name="nombre" [(ngModel)]="data.nombre"  required  >
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Vía de Administración</mat-label>
+        <select id="via" [(ngModel)]="data.via" name="via" matNativeControl required>
+          <option value="ora">Oral</option>
+          <option value="sublingual">Sublingual</option>
+          <option value="parental">Parental</option>
+          <option value="intravenosa">Intravenosa</option>
+          <option value="intraarterial">Intraarterial</option>
+          <option value="intramuscular">Intramuscular</option>
+          <option value="subcutanea">Subcutánea</option>
+          <option value="otro">Otro</option>
+        </select>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Dosis en Mg</mat-label>
+        <input matInput type="number" id="dosis" name="dosis" [(ngModel)]="data.dosis"  required  >
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Marca del Medicamento</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let marca of data.marca" [value]="marca.nombre">
+            {{marca.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">Añadir</button>
+  <button mat-button style="float:right;" (click)="onNoClick()">Cancelar</button>
+</div>

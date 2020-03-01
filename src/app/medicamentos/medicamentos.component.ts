@@ -8,7 +8,34 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MarcaService } from 'src/services/marca.service';
 
+class Marca {
+  nombre: string;
+  pais: string;
+  constructor(nombre, pais){
+    this.nombre = nombre;
+    this.pais = pais;
+  }
+}
+
+@Component({
+  selector: 'dialogoAnadirMedicamento',
+  templateUrl: 'dialogoAnadirMedicamento.html'
+})
+
+export class DialogoAnadirMedicamento{ 
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoAnadirMedicamento>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
 
 export class Medicamento {
   nombre: string;
@@ -32,8 +59,10 @@ export class MedicamentosComponent implements OnInit {
   loginService: LoginService;
   userService:UserService;
   medicamentoService: MedicamentoService;
+  marcaService: MarcaService;
   medicamentos : Medicamento[] = [];
   public dataSource: any;
+  marcas : Marca[] = []; 
 
   public pageSize = 15;
   public currentPage = 0;
@@ -60,14 +89,16 @@ export class MedicamentosComponent implements OnInit {
   );
 
   constructor(private breakpointObserver: BreakpointObserver,
-    loginService:LoginService, userService:UserService, medicamentoService:MedicamentoService) {
+    loginService:LoginService, userService:UserService, medicamentoService:MedicamentoService, public dialog: MatDialog, marcaService: MarcaService) {
       this.loginService = loginService;
       this.userService = userService;
       this.medicamentoService = medicamentoService;
+      this.marcaService = marcaService;
      }
 
   ngOnInit() {
     this.todosMedicamentos();
+    this.todasMarcas();
   }
 
   todosMedicamentos(){
@@ -112,6 +143,36 @@ export class MedicamentosComponent implements OnInit {
   private iterator() {
     const end = (this.currentPage + 1) * this.pageSize;
     const start = this.currentPage * this.pageSize;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogoAnadirMedicamento, {
+      width: '500px',
+      data: {marca: this.marcas}
+    });
+
+
+    dialogRef.afterClosed().subscribe(response => {
+      console.log(response);
+    });
+  }
+
+  todasMarcas(){
+    if(this.loginService.isLogged){
+      this.marcaService.todasMarcas()
+      .subscribe(
+        response =>{
+          console.log(response);
+            for (let i in response) {
+              const newMarca = new Marca(response[i]['nombre'],response[i]['pais']);
+              this.marcas.push(newMarca);
+            } 
+          },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
 }

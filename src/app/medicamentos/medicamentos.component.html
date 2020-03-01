@@ -13,7 +13,7 @@
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu" xPosition="before">
-                    <a [routerLink]="'/fichas'" mat-menu-item>Añadir Medicamento</a>
+                    <a (click)="openDialog()" mat-menu-item>Añadir Medicamento</a>
                     <a [routerLink]="'/fichas'" mat-menu-item>Añadir Marca de Medicamento</a>
                   </mat-menu>
                 </mat-card-title>
