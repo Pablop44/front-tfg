@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { ConsultaService } from 'src/services/consulta.service';
 import { LoginService } from 'src/services/login.service';
 import { UserService } from 'src/services/user.service';
-import { FichaService } from 'src/services/ficha.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { MedicamentoService } from 'src/services/medicamento.service';
 
 @Component({
   selector: 'app-medicamentos',
@@ -14,6 +14,10 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   styleUrls: ['./medicamentos.component.css']
 })
 export class MedicamentosComponent implements OnInit {
+  loginService: LoginService;
+  userService:UserService;
+  medicamentoService: MedicamentoService;
+
 
   displayedColumns: string[] = ['nombre', 'via', 'marca', 'dosis'];
 
@@ -31,9 +35,29 @@ export class MedicamentosComponent implements OnInit {
     })
   );
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(private breakpointObserver: BreakpointObserver,
+    loginService:LoginService, userService:UserService, medicamentoService:MedicamentoService) {
+      this.loginService = loginService;
+      this.userService = userService;
+      this.medicamentoService = medicamentoService;
+     }
 
   ngOnInit() {
+    this.todosMedicamentos();
+  }
+
+  todosMedicamentos(){
+    if(this.loginService.isLogged){
+      this.medicamentoService.todosMedicamentos()
+      .subscribe(
+        response =>{
+            console.log(response)
+          },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
 }
