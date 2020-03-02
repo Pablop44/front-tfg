@@ -15,6 +15,22 @@ import {MAT_SNACK_BAR_DATA} from '@angular/material';
 var marcaElegida;
 
 @Component({
+  selector: 'dialogoEliminarMedicamento',
+  templateUrl: 'dialogoEliminarMedicamento.html',
+})
+export class dialogoEliminarMedicamento {
+
+  constructor(
+    public dialogRef: MatDialogRef<dialogoEliminarMedicamento>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+
+@Component({
   selector: 'notificacion',
   templateUrl: 'notificacion.html',
   styles: [`
@@ -263,5 +279,36 @@ export class MedicamentosComponent implements OnInit {
       duration: 4 * 1000, data: mensaje
     });
   }
+
+  openDialog4(medicamento:Medicamento): void {
+    const dialogRef = this.dialog.open(dialogoEliminarMedicamento, {
+      width: '400px',
+      data: {name: medicamento.nombre, respuesta: "Si"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result.respuesta == "Si"){
+        this.eliminarMedicamento(medicamento);
+      }
+    });
+  }
+
+  eliminarMedicamento(medicamento){
+      
+    this.medicamentoService.eliminarMedicamento(medicamento.nombre)
+      .subscribe(
+        response =>{console.log(response)
+         
+            this.medicamentos = this.medicamentos.filter(u => u !== medicamento);
+            this.dataSource.data = this.dataSource.data.filter(u => u !== medicamento);
+          
+          this.openSnackBar("Se ha eliminado el medicamento: \""+medicamento.nombre+"\"");
+          },
+        error => {console.log(error)
+          this.openSnackBar("No se ha podido eliminar el medicamento:" +medicamento.nombre);}
+      );
+    
+    }
 
 }

@@ -59,7 +59,7 @@ import { loginNotificacionComponent } from './login/login.component';
 import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta } from './ficha-individual/ficha-individual.component';
 import { VistaUsuarioComponent, notificacionVistaUserComponent, DialogoEliminarUsuarioVista, DialogoEditarUsuario } from './vista-usuario/vista-usuario.component';
 import { DashboardMedicoComponent} from './dashboard-medico/dashboard-medico.component';
-import { MedicamentosComponent, DialogoAnadirMedicamento, notificacionComponentMedicamento, DialogoAnadirMarca } from './medicamentos/medicamentos.component';
+import { MedicamentosComponent, DialogoAnadirMedicamento, notificacionComponentMedicamento, DialogoAnadirMarca, dialogoEliminarMedicamento } from './medicamentos/medicamentos.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +86,8 @@ import { MedicamentosComponent, DialogoAnadirMedicamento, notificacionComponentM
     MedicamentosComponent,
     DialogoAnadirMedicamento,
     notificacionComponentMedicamento,
-    DialogoAnadirMarca
+    DialogoAnadirMarca,
+    dialogoEliminarMedicamento
   ],
   imports: [
     BrowserModule,
@@ -203,7 +204,8 @@ import { MedicamentosComponent, DialogoAnadirMedicamento, notificacionComponentM
     DialogoEditarUsuario,
     DialogoAnadirMedicamento,
     notificacionComponentMedicamento,
-    DialogoAnadirMarca
+    DialogoAnadirMarca,
+    dialogoEliminarMedicamento
   ],
   providers: [],
   bootstrap: [AppComponent]

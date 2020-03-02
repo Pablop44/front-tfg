@@ -42,4 +42,13 @@ export class MedicamentoService {
     return this.http.post(this.restUrl+"/medicamento/add.json", JSON.stringify(medicamentoToSend)
     , httpOptions);
   }
+
+
+  eliminarMedicamento(nombre){
+    return this.http.delete(this.restUrl+"/user/delete/"+nombre+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
 }
