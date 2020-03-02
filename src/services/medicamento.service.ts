@@ -38,8 +38,6 @@ export class MedicamentoService {
       dosis: datos.dosis
     }
 
-    console.log(medicamentoToSend);
-
 
     return this.http.post(this.restUrl+"/medicamento/add.json", JSON.stringify(medicamentoToSend)
     , httpOptions);

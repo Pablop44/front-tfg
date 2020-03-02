@@ -23,7 +23,7 @@ var marcaElegida;
     }
   `],
 })
-export class notificacionComponent {
+export class notificacionComponentMedicamento {
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
 }
 
@@ -42,6 +42,27 @@ class Marca {
 })
 
 export class DialogoAnadirMedicamento{ 
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoAnadirMedicamento>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  valorSelect(valor){
+    marcaElegida = valor;
+  }
+}
+
+@Component({
+  selector: 'dialogoAnadirMarca',
+  templateUrl: 'dialogoAnadirMarca.html'
+})
+
+export class DialogoAnadirMarca{ 
 
   constructor(
     public dialogRef: MatDialogRef<DialogoAnadirMedicamento>,
@@ -178,16 +199,38 @@ export class MedicamentosComponent implements OnInit {
         this.medicamentoService.anadirMedicamento(response)
         .subscribe(
           response =>{
-            for (let i in response) {
-              const newMedicamento = new Medicamento(response[i]['nombre'],response[i]['viaAdministracion'], response[i]['marca'],response[i]['dosis']);
+              console.log(response);
+              const newMedicamento = new Medicamento(response['nombre'],response['viaAdministracion'], response['marca'],response['dosis']);
+              console.log(newMedicamento);
+              this.openSnackBar("Se ha añadido el medicamento: \""+newMedicamento.nombre+"\"");
               this.medicamentos.push(newMedicamento);
-              this.dataSource = new MatTableDataSource<Medicamento>(this.medicamentos);
-              this.dataSource.paginator = this.paginator;
               this.totalSize= this.medicamentos.length;
-              this.dataSource.sort = this.sort;
+              this.dataSource.data = this.medicamentos;
               this.iterator();
-              this.openSnackBar("Se ha añadido el medicamento: \""+newMedicamento.nombre+"\" con rol de Médico");
-            }
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
+    });
+  }
+
+  openDialog2(): void {
+    const dialogRef = this.dialog.open(DialogoAnadirMarca, {
+      width: '500px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(response => {
+      if(this.loginService.isLogged){
+        this.marcaService.anadirMarca(response)
+        .subscribe(
+          response =>{
+            console.log(response);
+              const newMarca = new Marca(response['nombre'],response['pais']);
+              this.marcas.push(newMarca);
+              this.openSnackBar("Se ha añadido el medicamento: \""+newMarca.nombre+"\"")
           },
           error => {
             console.log(error);
@@ -206,6 +249,7 @@ export class MedicamentosComponent implements OnInit {
             for (let i in response) {
               const newMarca = new Marca(response[i]['nombre'],response[i]['pais']);
               this.marcas.push(newMarca);
+              
             } 
           },
         error => {
@@ -215,7 +259,7 @@ export class MedicamentosComponent implements OnInit {
     }
   }
   openSnackBar(mensaje: String) {
-    this._snackBar.openFromComponent(notificacionComponent, {
+    this._snackBar.openFromComponent(notificacionComponentMedicamento, {
       duration: 4 * 1000, data: mensaje
     });
   }
