@@ -12,6 +12,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { User } from 'src/app/models/User';
 import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { AppComponent } from '../app.component';
 
 
 @Component({
@@ -146,6 +147,7 @@ export class UsersComponent implements OnInit {
   panelOpenState = false;
   peticiones: any;
   usuariosActivos:UserData[] = [];
+  appComponent:AppComponent;
 
   formRegistroMedico:User ={
     id: null,
@@ -191,7 +193,9 @@ export class UsersComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver, consultaService:ConsultaService,
     private router : Router,
-    loginService:LoginService, userService:UserService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
+    loginService:LoginService, userService:UserService, public dialog: MatDialog, private _snackBar: MatSnackBar,
+    appComponent: AppComponent) {
+      this.appComponent = appComponent;
       this.loginService = loginService;
       this.userService = userService;
     }
@@ -397,6 +401,8 @@ export class UsersComponent implements OnInit {
               this.dataSource3.data = this.dataSource3.data.filter(u => u !== user);
             }
             this.openSnackBar("Se ha eliminado el usuario: \""+user.username+"\" con rol \""+rol+"\"");
+            this.peticionesAutorizar();
+            this.appComponent.peticionesAutorizar();
             },
           error => {console.log(error)
             this.openSnackBar("No se ha podido eliminar el usuario:" +user.username);}

@@ -45,7 +45,7 @@ export class MedicamentoService {
 
 
   eliminarMedicamento(nombre){
-    return this.http.delete(this.restUrl+"/user/delete/"+nombre+".json", {
+    return this.http.delete(this.restUrl+"/medicamento/delete/"+nombre+".json", {
       headers: new HttpHeaders({
         'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
       })

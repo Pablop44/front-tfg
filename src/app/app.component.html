@@ -10,9 +10,7 @@
         [matBadge]="peticiones" matBadgePosition="before" matBadgeColor="accent" [routerLink]="'/users'"> Usuarios </button>
         <button mat-button *ngIf="peticiones == '0'" [routerLink]="'/users'"> Usuarios </button>
         <button mat-button [routerLink]="'/fichas'"> Historiales Clínicos </button>
-        <button mat-button [routerLink]="'/consultas'"> Consultas </button>
         <button mat-button [routerLink]="'/medicamentos'"> Medicamentos </button>
-        <button mat-button [routerLink]="'/enfermedades'"> Enfermedades </button>
         
       </div>
       <div *ngIf="loginService.isLogged" style="margin-left:auto; margin-right:0;">

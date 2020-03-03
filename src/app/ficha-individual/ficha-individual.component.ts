@@ -219,21 +219,34 @@ export class FichaIndividualComponent implements OnInit {
   public pageSize = 15;
   public currentPage = 0;
   public totalSize = 0;
+  panelOpenState = false;
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
         return [
           { title: 'Datos del Historial', cols: 2, rows: 1, cuerpo: "hola"},
           { title: 'Datos del Médico', cols: 1, rows: 2, cuerpo: 'cuerpo3' },
-          { title: 'Datos del Paciente', cols: 1, rows: 2, cuerpo: 'cuerpo3' },
-          { title: 'Consultas', cols: 2, rows: 2, cuerpo: 'cuerpo3' }
+          { title: 'Datos del Paciente', cols: 1, rows: 2, cuerpo: 'cuerpo3' }
         ];
       }
 
       return [
         { title: 'Datos del Historial', cols: 2, rows: 1, cuerpo: "hola"},
         { title: 'Datos del Médico', cols: 1, rows: 2, cuerpo: 'cuerpo3' },
-        { title: 'Datos del Paciente', cols: 1, rows: 2, cuerpo: 'cuerpo3' },
+        { title: 'Datos del Paciente', cols: 1, rows: 2, cuerpo: 'cuerpo3' }
+      ];
+    })
+  );
+
+  cards2 = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map(({ matches }) => {
+      if (matches) {
+        return [
+          { title: 'Consultas', cols: 2, rows: 2, cuerpo: 'cuerpo3' }
+        ];
+      }
+
+      return [
         { title: 'Consultas', cols: 2, rows: 3, cuerpo: 'cuerpo3' }
       ];
     })
