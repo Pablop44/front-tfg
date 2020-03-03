@@ -220,6 +220,9 @@ export class FichaIndividualComponent implements OnInit {
   public currentPage = 0;
   public totalSize = 0;
   panelOpenState = false;
+  diabetes = "";
+  asma = "";
+  migranas = "";
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
@@ -346,6 +349,17 @@ export class FichaIndividualComponent implements OnInit {
       .subscribe(
         response =>{         
           this.enfermedades = response['enfermedad'];
+          for(const element in this.enfermedades){
+            if(this.enfermedades[element] == "diabetes"){
+              this.diabetes = "Diabetes";
+            }
+            else if(this.enfermedades[element] == "asma"){
+              this.asma = "Asma"
+            }
+            else{
+              this.migranas = "Migrañas";
+            }
+          }
         },
         error => {
           console.log(error);

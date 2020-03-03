@@ -57,7 +57,7 @@
                     <mat-card-title>Enfermedad/es</mat-card-title>
                   </mat-card-header>
                   <mat-card-content  class="matCentrado">
-                    <h5>{{enfermedades['0']}} {{enfermedades['1']}} {{enfermedades['2']}}</h5>
+                    <h5>{{asma}} {{diabetes}} {{migranas}}</h5>
                   </mat-card-content>
                 </mat-card>
                 
@@ -223,8 +223,8 @@
 
 
   <div class="grid-container">
-      <mat-accordion>
-        <mat-expansion-panel (opened)="panelOpenState = true"
+      <mat-accordion >
+        <mat-expansion-panel *ngIf="diabetes == 'Diabetes'" (opened)="panelOpenState = true"
                              (closed)="panelOpenState = false">
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -236,7 +236,7 @@
           </mat-expansion-panel-header>
     
         </mat-expansion-panel>
-        <mat-expansion-panel (opened)="panelOpenState = true"
+        <mat-expansion-panel  *ngIf="asma == 'Asma'" (opened)="panelOpenState = true"
                              (closed)="panelOpenState = false">
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -248,9 +248,9 @@
           </mat-expansion-panel-header>
     
         </mat-expansion-panel>
-        <mat-expansion-panel (opened)="panelOpenState = true"
-                             (closed)="panelOpenState = false">
-          <mat-expansion-panel-header>
+        <mat-expansion-panel  *ngIf="migranas == 'Migrañas'" (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false" >
+          <mat-expansion-panel-header  >
             <mat-panel-title>
               <h6>Informes de Migrañas</h6>
             </mat-panel-title>
