@@ -54,7 +54,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
-import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnadirAdministrador, DialogoEliminarUsuario, notificacionComponent } from './users/users.component';
+import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnadirAdministrador, DialogoEliminarUsuario, notificacionComponent, DialogoAceptarUsuario } from './users/users.component';
 import { loginNotificacionComponent } from './login/login.component';
 import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta } from './ficha-individual/ficha-individual.component';
 import { VistaUsuarioComponent, notificacionVistaUserComponent, DialogoEliminarUsuarioVista, DialogoEditarUsuario } from './vista-usuario/vista-usuario.component';
@@ -87,7 +87,8 @@ import { MedicamentosComponent, DialogoAnadirMedicamento, notificacionComponentM
     DialogoAnadirMedicamento,
     notificacionComponentMedicamento,
     DialogoAnadirMarca,
-    dialogoEliminarMedicamento
+    dialogoEliminarMedicamento,
+    DialogoAceptarUsuario
   ],
   imports: [
     BrowserModule,
@@ -205,7 +206,8 @@ import { MedicamentosComponent, DialogoAnadirMedicamento, notificacionComponentM
     DialogoAnadirMedicamento,
     notificacionComponentMedicamento,
     DialogoAnadirMarca,
-    dialogoEliminarMedicamento
+    dialogoEliminarMedicamento,
+    DialogoAceptarUsuario
   ],
   providers: [],
   bootstrap: [AppComponent]

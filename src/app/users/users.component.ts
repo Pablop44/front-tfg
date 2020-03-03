@@ -73,6 +73,23 @@ export class DialogoAnadirPaciente {
 }
 
 @Component({
+  selector: 'dialogoAceptarUsuario',
+  templateUrl: 'dialogoAceptarUsuario.html',
+})
+
+export class DialogoAceptarUsuario {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoAceptarUsuario>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
   selector: 'dialogoAnadirMedico',
   templateUrl: 'dialogoAnadirMedico.html',
 })
@@ -85,7 +102,6 @@ export class DialogoAnadirMedico {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }
 
 @Component({
@@ -317,6 +333,20 @@ export class UsersComponent implements OnInit {
         }
       });
     }
+
+    openDialog5(user:UserData, rol): void {
+      const dialogRef = this.dialog.open(DialogoAceptarUsuario, {
+        width: '400px',
+        data: {name: user.username, rol: rol, id: user.id, respuesta: "Si"}
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        if(result.respuesta == "Si"){
+          this.autorizarUsuario(user, rol);
+        }
+      });
+    }
   
     applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;
@@ -480,4 +510,21 @@ export class UsersComponent implements OnInit {
         }
       );
   }
+
+  autorizarUsuario(user, rol){
+      
+    this.userService.autorizarUser(user.id)
+      .subscribe(
+        response =>{console.log(response)
+            this.usuariosActivos = this.usuariosActivos.filter(u => u !== user);
+            this.dataSource4.data = this.dataSource4.data.filter(u => u !== user);
+          this.openSnackBar("Se ha aceptado el usuario: \""+user.username+"\" con rol \""+rol+"\"");
+          this.peticionesAutorizar();
+          this.appComponent.peticionesAutorizar();
+          },
+        error => {console.log(error)
+          this.openSnackBar("No se ha podido eliminar el usuario:" +user.username);}
+      );
+    
+    }
 }

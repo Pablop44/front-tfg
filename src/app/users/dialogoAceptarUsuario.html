@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Aceptar Usuario</h1>
+<div mat-dialog-content>
+  <p>¿Quieres aceptar el usuario "{{data.name}}" con rol "{{data.rol}}"?</p>
+</div>
+<div mat-dialog-actions>
+<button mat-raised-button color="primary" [mat-dialog-close]="data">Aceptar Usuario</button>
+<button mat-button (click)="onNoClick()">Cancelar</button>
+</div>

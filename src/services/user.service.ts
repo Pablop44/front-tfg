@@ -40,6 +40,14 @@ export class UserService {
     });
   }
 
+  autorizarUser(id){
+    return this.http.get(this.restUrl+"/user/autorizar/"+id+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
+
   registroMedico(formResgistro){
     const httpOptions = {
       headers: new HttpHeaders({ 
