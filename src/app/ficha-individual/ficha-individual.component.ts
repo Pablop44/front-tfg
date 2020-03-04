@@ -1,4 +1,3 @@
-import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { ConsultaService } from 'src/services/consulta.service';
 import { LoginService } from 'src/services/login.service';
@@ -6,17 +5,22 @@ import { UserService } from 'src/services/user.service';
 import { FichaService } from 'src/services/ficha.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription }   from 'rxjs';
+import {FormControl} from '@angular/forms';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {Component, OnInit, ViewChild, Inject} from '@angular/core';
+import {Component, OnInit, ViewChild, Inject, ElementRef} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import {MAT_SNACK_BAR_DATA} from '@angular/material';
+import {MAT_SNACK_BAR_DATA, MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { Hora } from 'src/app/models/Hora';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
@@ -205,6 +209,17 @@ export class FichaIndividualComponent implements OnInit {
   asma = "";
   migranas = "";
 
+  visible = true;
+  selectable = true;
+  removable = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  controlEstados = new FormControl();
+  filteredEstado: Observable<string[]>;
+  estado: string[] = [];
+  allEstados: string[] = ['En Tiempo', 'Cancelada', 'Aplazada', 'Realizada'];
+
+  @ViewChild('auto',{ static: true }) matAutocomplete: MatAutocomplete;
+
   tarjetaResumen = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
@@ -240,6 +255,9 @@ export class FichaIndividualComponent implements OnInit {
       this.loginService = loginService;
       this.userService = userService;
       this.fichaService = fichaService;
+      this.filteredEstado = this.controlEstados.valueChanges.pipe(
+        startWith(null),
+        map((fruit: string | null) => fruit ? this._filter(fruit) : this.allEstados.slice()));
     }
 
     ngOnInit() {
@@ -429,6 +447,45 @@ export class FichaIndividualComponent implements OnInit {
     this._snackBar.openFromComponent(notificacionComponentCrearConsulta, {
       duration: 4 * 1000, data: mensaje
     });
+  }
+
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.estado.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+    this.controlEstados.setValue(null);
+  }
+
+  remove(estado: string): void {
+    this.allEstados.push(estado);
+    console.log(this.allEstados);
+    const index = this.estado.indexOf(estado);
+    
+
+    if (index >= 0) {
+      this.estado.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.estado.push(event.option.viewValue);
+    this.controlEstados.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.allEstados.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 
 }

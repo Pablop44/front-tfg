@@ -1,6 +1,6 @@
 <div class="grid-container">
-    <h1 class="mat-h1">Historial Número {{ficha.id}}</h1>
-      <mat-grid-list cols="2" rowHeight="350px">
+    <h1 class="mat-h1">Historial Número <em style="color: #ff4081; font-style: normal; margin-left: 3px; margin-right: 3px;">{{ficha.id}}</em></h1>
+      <mat-grid-list cols="2" rowHeight="420px">
         <mat-grid-tile *ngFor="let card of tarjetaDatos | async" [colspan]="card.cols" [rowspan]="card.rows"> 
               <mat-card class="dashboard-card">
     
@@ -166,6 +166,91 @@
   
   
                     <mat-tab label="Consultas">
+
+                      <mat-card class="cartaFiltro">
+                        <mat-card-header>
+                          <mat-card-subtitle>
+                            Filtrar Consultas
+                          </mat-card-subtitle>
+                        </mat-card-header>
+
+                        <mat-card-content>
+
+                          <form class="formFiltrar" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+                            <div>
+                              <mat-form-field>
+                                <mat-label>Número de Consulta</mat-label>
+                                <input matInput type="number" id="id" name="id" placeholder="Número">
+                              </mat-form-field>
+                            </div>
+                            
+                            <div>
+                              <mat-form-field>
+                                <mat-label>Fecha Fin Periodo</mat-label>
+                                <input matInput [matDatepicker]="dpInicio"  name="fechaInicio" id="fechaInicio">
+                                <mat-datepicker-toggle matSuffix [for]="dpInicio"></mat-datepicker-toggle>
+                                <mat-datepicker #dpInicio></mat-datepicker>
+                              </mat-form-field>
+                              <mat-form-field>
+                                <mat-label>Fecha Inicio Periodo</mat-label>
+                                <input matInput [matDatepicker]="dpFin"  name="fechaFin" id="fechaFin">
+                                <mat-datepicker-toggle matSuffix [for]="dpFin"></mat-datepicker-toggle>
+                                <mat-datepicker #dpFin></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+
+                            <div>
+                              <mat-form-field>
+                                <mat-label>Lugar de Consulta</mat-label>
+                                <input matInput id="lugar" name="lugar" placeholder="Número">
+                              </mat-form-field>
+                            </div>
+
+                            <mat-form-field class="example-full-width">
+                              <mat-label>Estado de la Consulta</mat-label>
+                              <mat-chip-list #chipList >
+                                <mat-chip
+                                  *ngFor="let estado of estado"
+                                  [selectable]="selectable"
+                                  [removable]="removable"
+                                  (removed)="remove(estado)">
+                                  {{estado}}
+                                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                </mat-chip>
+                                <input
+                                  placeholder="Nuevo Es..."
+                                  #estadoInput
+                                  [matAutocomplete]="auto"
+                                  [matChipInputFor]="chipList"
+                                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                  (matChipInputTokenEnd)="add($event)">
+                              </mat-chip-list>
+                              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                <mat-option *ngFor="let estado of filteredEstado | async" [value]="estado">
+                                  {{estado}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+
+                              <mat-label>Diagnóstico</mat-label>
+                              <mat-radio-group class="example-radio-group" aria-label="Select an option">
+                                <mat-radio-button value="1">Sí</mat-radio-button>
+                                <mat-radio-button value="2">No</mat-radio-button>
+                              </mat-radio-group>
+                            
+                              <mat-label>Observaciones</mat-label>
+                              <mat-radio-group class="example-radio-group" aria-label="Select an option">
+                                <mat-radio-button value="1">Sí</mat-radio-button>
+                                <mat-radio-button value="2">No</mat-radio-button>
+                              </mat-radio-group>
+                                                                             
+                            <br>
+                            <button mat-raised-button type="submit" color="primary">Pre-Registrarme</button>
+                          </form>
+
+                        </mat-card-content>
+
+                      </mat-card>
 
                       <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuConsulta" aria-label="Toggle menu">
                         <mat-icon>more_vert</mat-icon>
