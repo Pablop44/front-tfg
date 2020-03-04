@@ -423,6 +423,7 @@ export class UsersComponent implements OnInit {
             if(rol == 'medico'){
               this.medicos = this.medicos.filter(u => u !== user);
               this.dataSource2.data = this.dataSource2.data.filter(u => u !== user);
+              
             }else if(rol == 'paciente'){
               this.users = this.users.filter(u => u !== user);
               this.dataSource.data = this.dataSource.data.filter(u => u !== user);
@@ -430,6 +431,8 @@ export class UsersComponent implements OnInit {
               this.administradores = this.administradores.filter(u => u !== user);
               this.dataSource3.data = this.dataSource3.data.filter(u => u !== user);
             }
+            this.dataSource4.data = this.dataSource4.data.filter(u => u !== user);
+            this.usuariosActivos = this.usuariosActivos.filter(u => u !== user);
             this.openSnackBar("Se ha eliminado el usuario: \""+user.username+"\" con rol \""+rol+"\"");
             this.peticionesAutorizar();
             this.appComponent.peticionesAutorizar();

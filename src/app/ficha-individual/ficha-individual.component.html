@@ -1,363 +1,253 @@
 <div class="grid-container">
-    <h1 class="mat-h1">Historial del Paciente</h1>
-    <mat-grid-list cols="2" rowHeight="385px">
-      <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
-        <div [ngSwitch]="card.title">
+    <h1 class="mat-h1">Historial Número {{ficha.id}}</h1>
+      <mat-grid-list cols="2" rowHeight="350px">
+        <mat-grid-tile *ngFor="let card of tarjetaDatos | async" [colspan]="card.cols" [rowspan]="card.rows"> 
+              <mat-card class="dashboard-card">
+    
+                <mat-card-content class="dashboard-card-content">
+      
+                  <mat-tab-group >
   
-          <div *ngSwitchCase="'Datos del Historial'">
+                    <mat-tab label="Datos del Paciente"> 
 
-            <mat-card class="dashboard-card">
-              <mat-card-header>
-                <mat-card-title>
-                  Datos del Historial
-                  <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu" xPosition="before">
-                    <a (click)="openDialog()" mat-menu-item>Añadir Consulta</a>
-                    <a [routerLink]="'/fichas'" mat-menu-item>Añadir Nota</a>
-                    <a [routerLink]="'/fichas'" mat-menu-item>Añadir Tratamiento</a>
-                    <a [routerLink]="'/fichas'" mat-menu-item>Añadir Nueva Enfermedad</a>
-                  </mat-menu>
-                </mat-card-title>
-              </mat-card-header>
-  
-              <mat-card-content>
-
-                <mat-card class="example-card">
-                  <mat-card-header >
-                    <mat-card-title>Número de Historial</mat-card-title>
-                  </mat-card-header>
-                  <mat-card-content class="matCentrado">
-                    <h5>{{ficha.id}}</h5>
-                  </mat-card-content>
-                </mat-card>
-
-                <mat-card class="example-card">
-                  <mat-card-header>
-                    <mat-card-title>Paciente</mat-card-title>
-                  </mat-card-header>
-                  <mat-card-content class="matCentrado">
-                    <h5>{{paciente.nombre}} {{paciente.apellidos}} ({{paciente.dni}})</h5>
-                  </mat-card-content>
-                </mat-card>
-
-
-                <mat-card class="example-card">
-                  <mat-card-header>
-                    <mat-card-title>Médico</mat-card-title>
-                  </mat-card-header>
-                  <mat-card-content class="matCentrado">
-                    <h5>{{medico.nombre}} {{medico.apellidos}} ({{medico.dni}})</h5>
-                  </mat-card-content>
-                </mat-card>
-
-                <mat-card class="example-card">
-                  <mat-card-header>
-                    <mat-card-title>Enfermedad/es</mat-card-title>
-                  </mat-card-header>
-                  <mat-card-content  class="matCentrado">
-                    <h5>{{asma}} {{diabetes}} {{migranas}}</h5>
-                  </mat-card-content>
-                </mat-card>
-                
-              </mat-card-content>
-            </mat-card>
-
-        </div>
-  
-  
-          <div *ngSwitchCase="'Datos del Médico'">
-            <mat-card class="dashboard-card">
-              <mat-card-header>
-                <mat-card-title>
-                  {{card.title}}
-                  <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu" xPosition="before">
-                    <a [routerLink]="['/vista-usuario', medico.id]" mat-menu-item>Ver el médico "{{medico.username}}"</a>
-                  </mat-menu>
-                </mat-card-title>
-              </mat-card-header>
-  
-              <mat-card-content class="dashboard-card-content">
-               
-                <mat-list>
-                    <h3 mat-subheader>
-                        <mat-icon mat-list-icon style="margin-right: 10px;">
-                            <i class="material-icons">
-                                person
-                                </i>
-                          </mat-icon>
-                          Datos Personales
-                    </h3>
-                    <mat-list-item >
-                        <h4 mat-line style="font-weight: bold;">Nombre de Usuario</h4>
-                        <p mat-line> {{medico.username}}</p>
-                      </mat-list-item>
-                    <mat-list-item >
-                      <h4 mat-line style="font-weight: bold;">Nombre y Apellidos</h4>
-                      <p mat-line> {{medico.nombre}} {{medico.apellidos}}</p>
-                    </mat-list-item>
-                    <mat-list-item >
-                        <h4 mat-line style="font-weight: bold;">DNI</h4>
-                        <p mat-line>{{medico.dni}}</p>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-                    <h3 mat-subheader>
-                        <mat-icon mat-list-icon style="margin-right: 10px;">
-                            <i class="material-icons">
-                                work
-                                </i>
-                          </mat-icon>
-                          Datos Profesionales
-                    </h3>
-                    <mat-list-item >
-                      <h3 mat-line style="font-weight: bold;">Número de Colegiado</h3>
-                      <p mat-line> {{medico.colegiado}} </p>
-                    </mat-list-item>
-                    <mat-list-item >
-                        <h4 mat-line style="font-weight: bold;">Especialidad</h4>
-                        <p mat-line>{{medico.especialidad}}</p>
-                      </mat-list-item>
-                    <mat-divider></mat-divider>
-                    <h3 mat-subheader>
-                        <mat-icon mat-list-icon style="margin-right: 10px;">
-                            <i class="material-icons">
-                              contact_mail
-                              </i>
-                          </mat-icon>
-                          Datos de Contacto
-                    </h3>
-                    <mat-list-item >
-                      <h4 mat-line style="font-weight: bold;">Email</h4>
-                      <a mat-line href = "mailto: {{medico.email}}">{{medico.email}}</a>
-                    </mat-list-item>
-                    <mat-list-item >
-                        <h4 mat-line style="font-weight: bold;">Teléfono</h4>
-                        <p mat-line>{{medico.telefono}}</p>
-                      </mat-list-item>
-                  </mat-list>
-                   
-              </mat-card-content>
-                </mat-card>
-            </div>
-
-            <div *ngSwitchCase="'Datos del Paciente'">
-                <mat-card class="dashboard-card">
-                  <mat-card-header>
-                    <mat-card-title>
-                      {{card.title}}
-                      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuDatosPaciente" aria-label="Toggle menu">
                         <mat-icon>more_vert</mat-icon>
                       </button>
-                      <mat-menu #menu="matMenu" xPosition="before">
+                      <mat-menu #menuDatosPaciente="matMenu" xPosition="before">
                         <a [routerLink]="['/vista-usuario', paciente.id]" mat-menu-item>Ver el paciente "{{paciente.username}}"</a>
                       </mat-menu>
-                    </mat-card-title>
-                  </mat-card-header>
-    
-                  <mat-card-content class="dashboard-card-content">
-  
+
                       <mat-list>
-                          <h3 mat-subheader>
-                              <mat-icon mat-list-icon style="margin-right: 10px;">
-                                  <i class="material-icons">
-                                      person
-                                      </i>
-                                </mat-icon>
-                                Datos Personales
-                          </h3>
-                          <mat-list-item >
-                            <h4 mat-line style="font-weight: bold;">Nombre de Usuario</h4>
-                            <p mat-line> {{paciente.username}}</p>
-                          </mat-list-item>
-                          <mat-list-item >
-                            <h4 mat-line style="font-weight: bold;">Nombre y Apellidos</h4>
-                            <p mat-line> {{paciente.nombre}} {{paciente.apellidos}}</p>
-                          </mat-list-item>
-                          <mat-list-item >
-                            <h4 mat-line style="font-weight: bold;">DNI</h4>
-                            <p mat-line>{{paciente.dni}}</p>
-                          </mat-list-item>
-                          <mat-list-item >
-                            <h4 mat-line style="font-weight: bold;">Población</h4>
-                            <p mat-line >{{paciente.poblacion}}</p>
-                          </mat-list-item>
-                          <mat-list-item >
-                            <h4 mat-line style="font-weight: bold;">Género</h4>
-                            <p mat-line >{{paciente.genero}}</p>
-                          </mat-list-item>
-                          <mat-list-item >
-                            <h4 mat-line style="font-weight: bold;">Fecha de Nacimiento</h4>
-                            <p mat-line >{{paciente.nacimiento}}</p>
-                          </mat-list-item>
-                          <mat-divider></mat-divider>
-                          <h3 mat-subheader>
-                              <mat-icon mat-list-icon style="margin-right: 10px;">
-                                  <i class="material-icons">
-                                    contact_mail
+                        <h3 mat-subheader>
+                            <mat-icon mat-list-icon style="margin-right: 10px;">
+                                <i class="material-icons">
+                                    person
                                     </i>
-                                </mat-icon>
-                                Datos de Contacto
-                          </h3>
-                          <mat-list-item >
-                            <h4 mat-line style="font-weight: bold;">Email</h4>
-                            <a mat-line href = "mailto: {{paciente.email}}">{{paciente.email}}</a>
+                              </mat-icon>
+                              Datos Personales
+                        </h3>
+                        <mat-list-item >
+                          <h4 mat-line style="font-weight: bold;">Nombre de Usuario</h4>
+                          <p mat-line> {{paciente.username}}</p>
+                        </mat-list-item>
+                        <mat-list-item >
+                          <h4 mat-line style="font-weight: bold;">Nombre y Apellidos</h4>
+                          <p mat-line> {{paciente.nombre}} {{paciente.apellidos}}</p>
+                        </mat-list-item>
+                        <mat-list-item >
+                          <h4 mat-line style="font-weight: bold;">DNI</h4>
+                          <p mat-line>{{paciente.dni}}</p>
+                        </mat-list-item>
+                        <mat-list-item >
+                          <h4 mat-line style="font-weight: bold;">Población</h4>
+                          <p mat-line >{{paciente.poblacion}}</p>
+                        </mat-list-item>
+                        <mat-list-item >
+                          <h4 mat-line style="font-weight: bold;">Género</h4>
+                          <p mat-line >{{paciente.genero}}</p>
+                        </mat-list-item>
+                        <mat-list-item >
+                          <h4 mat-line style="font-weight: bold;">Fecha de Nacimiento</h4>
+                          <p mat-line >{{paciente.nacimiento}}</p>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <h3 mat-subheader>
+                            <mat-icon mat-list-icon style="margin-right: 10px;">
+                                <i class="material-icons">
+                                  contact_mail
+                                  </i>
+                              </mat-icon>
+                              Datos de Contacto
+                        </h3>
+                        <mat-list-item >
+                          <h4 mat-line style="font-weight: bold;">Email</h4>
+                          <a mat-line href = "mailto: {{paciente.email}}">{{paciente.email}}</a>
+                        </mat-list-item>
+                        <mat-list-item >
+                          <h4 mat-line style="font-weight: bold;">Teléfono</h4>
+                          <p mat-line>{{paciente.telefono}}</p>
+                        </mat-list-item>
+                        <h3 mat-subheader>
+                          <mat-icon mat-list-icon style="margin-right: 10px;">
+                            <i class="material-icons">
+                              apartment
+                              </i>
+                            </mat-icon>
+                            Datos Clínicos
+                        </h3>
+                        <mat-list-item >
+                          <h4 mat-line style="font-weight: bold;">Enfermedades</h4>
+                          <p mat-line>{{asma}}</p>
+                          <p mat-line>{{diabetes}}</p>
+                          <p mat-line>{{migranas}}</p>
+                        </mat-list-item>
+                      </mat-list>
+                      
+                    </mat-tab>
+
+                    <mat-tab label="Datos del Médico"> 
+                      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuDatosMedico" aria-label="Toggle menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menuDatosMedico="matMenu" xPosition="before">
+                        <a [routerLink]="['/vista-usuario', medico.id]" mat-menu-item>Ver el médico "{{medico.username}}"</a>
+                      </mat-menu>
+
+                      <mat-list>
+                        <h3 mat-subheader>
+                            <mat-icon mat-list-icon style="margin-right: 10px;">
+                                <i class="material-icons">
+                                    person
+                                    </i>
+                              </mat-icon>
+                              Datos Personales
+                        </h3>
+                        <mat-list-item >
+                            <h4 mat-line style="font-weight: bold;">Nombre de Usuario</h4>
+                            <p mat-line> {{medico.username}}</p>
                           </mat-list-item>
-                          <mat-list-item >
+                        <mat-list-item >
+                          <h4 mat-line style="font-weight: bold;">Nombre y Apellidos</h4>
+                          <p mat-line> {{medico.nombre}} {{medico.apellidos}}</p>
+                        </mat-list-item>
+                        <mat-list-item >
+                            <h4 mat-line style="font-weight: bold;">DNI</h4>
+                            <p mat-line>{{medico.dni}}</p>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <h3 mat-subheader>
+                            <mat-icon mat-list-icon style="margin-right: 10px;">
+                                <i class="material-icons">
+                                    work
+                                    </i>
+                              </mat-icon>
+                              Datos Profesionales
+                        </h3>
+                        <mat-list-item >
+                          <h3 mat-line style="font-weight: bold;">Número de Colegiado</h3>
+                          <p mat-line> {{medico.colegiado}} </p>
+                        </mat-list-item>
+                        <mat-list-item >
+                            <h4 mat-line style="font-weight: bold;">Especialidad</h4>
+                            <p mat-line>{{medico.especialidad}}</p>
+                          </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <h3 mat-subheader>
+                            <mat-icon mat-list-icon style="margin-right: 10px;">
+                                <i class="material-icons">
+                                  contact_mail
+                                  </i>
+                              </mat-icon>
+                              Datos de Contacto
+                        </h3>
+                        <mat-list-item >
+                          <h4 mat-line style="font-weight: bold;">Email</h4>
+                          <a mat-line href = "mailto: {{medico.email}}">{{medico.email}}</a>
+                        </mat-list-item>
+                        <mat-list-item >
                             <h4 mat-line style="font-weight: bold;">Teléfono</h4>
-                            <p mat-line>{{paciente.telefono}}</p>
+                            <p mat-line>{{medico.telefono}}</p>
                           </mat-list-item>
-                        </mat-list>
-                       
-                  </mat-card-content>
-                </mat-card>
-            </div>
-        </div>
+                      </mat-list>
+                      
+                    </mat-tab>
+
+                    <mat-tab label="Informes de Asma"> 
+                         
+                    </mat-tab>
+
+                    <mat-tab label="Informes de Diabetes"> 
+                         
+                    </mat-tab>
+
+                    <mat-tab label="Informes de Migrañas"> 
+                         
+                    </mat-tab>
   
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
-
-
-  <div class="grid-container">
-      <mat-accordion >
-        <mat-expansion-panel *ngIf="diabetes == 'Diabetes'" (opened)="panelOpenState = true"
-                             (closed)="panelOpenState = false">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <h6>Informes de Diabetes</h6>
-            </mat-panel-title>
-            <mat-panel-description>
-              Haz click aquí para desplegar o cerrar
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-    
-        </mat-expansion-panel>
-        <mat-expansion-panel  *ngIf="asma == 'Asma'" (opened)="panelOpenState = true"
-                             (closed)="panelOpenState = false">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <h6>Informes de Asma</h6>
-            </mat-panel-title>
-            <mat-panel-description>
-              Haz click aquí para ver los informes
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-    
-        </mat-expansion-panel>
-        <mat-expansion-panel  *ngIf="migranas == 'Migrañas'" (opened)="panelOpenState = true"
-                             (closed)="panelOpenState = false" >
-          <mat-expansion-panel-header  >
-            <mat-panel-title>
-              <h6>Informes de Migrañas</h6>
-            </mat-panel-title>
-            <mat-panel-description>
-              Haz click aquí para ver los informes
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-
-        </mat-expansion-panel>
-      </mat-accordion>
-  </div>
-
-
-  <div class="grid-container">
-    <mat-grid-list cols="2" rowHeight="340px">
-      <mat-grid-tile *ngFor="let card of cards2 | async" [colspan]="card.cols" [rowspan]="card.rows"> 
-        <div [ngSwitch]="card.title">
   
-          <div *ngSwitchCase="'Consultas'">
+                    <mat-tab label="Consultas">
 
-            <mat-card class="dashboard-card">
+                      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuConsulta" aria-label="Toggle menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menuConsulta="matMenu" xPosition="before">
+                        <a (click)="openDialog()" mat-menu-item>Añadir Consulta</a>
+                      </mat-menu>
 
-              <mat-card-header>
-                <mat-card-title>
-                  {{card.title}}
-                  <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu" xPosition="before">
-                    <a [routerLink]="'/users'" mat-menu-item>Ver todos las Consultas</a>
-                  </mat-menu>
-                </mat-card-title>
-              </mat-card-header>
+                      <div>
+                        <table  mat-table matSort [dataSource]="dataSource" >
+                      
+                          <!-- Progress Column -->
+                          <ng-container matColumnDef="numeroConsulta">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Número de Consulta </th>
+                            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                          </ng-container>
+      
+                          <ng-container matColumnDef="lugar">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Lugar </th>
+                            <td mat-cell *matCellDef="let row"> {{row.lugar}} </td>
+                          </ng-container>
+                      
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="fecha">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha y Hora</th>
+                            <td mat-cell *matCellDef="let row"> {{row.fecha}}</td>
+                          </ng-container>
+      
+                          <ng-container matColumnDef="motivo">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Motivo </th>
+                            <td mat-cell *matCellDef="let row"> {{row.motivo}} </td>
+                          </ng-container>
+      
+                          <ng-container matColumnDef="diagnostico">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> ¿Tiene Diagnóstico? </th>
+                            <td mat-cell *matCellDef="let row"> {{row.diagnostico}} </td>
+                          </ng-container>
+      
+                          <ng-container matColumnDef="observaciones">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> ¿Tiene Observaciones? </th>
+                            <td mat-cell *matCellDef="let row"> {{row.observaciones}} </td>
+                          </ng-container>
+      
+                          <ng-container matColumnDef="estado">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado de la Consulta </th>
+                            <td mat-cell *matCellDef="let row"> {{row.estado}} </td>
+                          </ng-container>
+      
+                          <ng-container matColumnDef="acciones">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones</th>
+                            <td mat-cell *matCellDef="let row"> 
+                              <button mat-stroked-button color="primary" ><i class="material-icons"> remove_red_eye </i></button>
+                              <button mat-stroked-button color="primary" ><i class="material-icons"> edit </i> </button>
+                              <button mat-stroked-button color="primary" (click)="openDialog4(row, 'administrador')"><i class="material-icons"> remove_circle </i></button>
+                            </td>
+                          </ng-container>
+                      
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'estadoAplazada': row.estado == 'aplazada', 'estadoEnTiempo': row.estado == 'realizada', 'estadoCancelada': row.estado == 'cancelada' }">
+                          </tr>
+                        </table>
+                      
+                        <mat-paginator #paginator3 [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSize"
+                            [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)">
+                        </mat-paginator>
+                      </div>
+                         
+                    </mat-tab>
+
+                    <mat-tab label="Tratamientos"> 
+                         
+                    </mat-tab>
+
+                    <mat-tab label="Notas"> 
+                         
+                    </mat-tab>
   
-              <mat-card-content class="dashboard-card-content">
-
-                <mat-form-field class="formularioFilter">
-                  <mat-label>Filtrar</mat-label>
-                  <input matInput (keyup)="applyFilter($event)">
-              </mat-form-field>
-                
-                <div>
-                  <table  mat-table matSort [dataSource]="dataSource" >
-                
-                    <!-- Progress Column -->
-                    <ng-container matColumnDef="numeroConsulta">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Número de Consulta </th>
-                      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="lugar">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Lugar </th>
-                      <td mat-cell *matCellDef="let row"> {{row.lugar}} </td>
-                    </ng-container>
-                
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="fecha">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha y Hora</th>
-                      <td mat-cell *matCellDef="let row"> {{row.fecha}}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="motivo">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Motivo </th>
-                      <td mat-cell *matCellDef="let row"> {{row.motivo}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="diagnostico">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header> ¿Tiene Diagnóstico? </th>
-                      <td mat-cell *matCellDef="let row"> {{row.diagnostico}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="observaciones">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header> ¿Tiene Observaciones? </th>
-                      <td mat-cell *matCellDef="let row"> {{row.observaciones}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="estado">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado de la Consulta </th>
-                      <td mat-cell *matCellDef="let row"> {{row.estado}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="acciones">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones</th>
-                      <td mat-cell *matCellDef="let row"> 
-                        <button mat-stroked-button color="primary" ><i class="material-icons"> remove_red_eye </i></button>
-                        <button mat-stroked-button color="primary" ><i class="material-icons"> edit </i> </button>
-                        <button mat-stroked-button color="primary" (click)="openDialog4(row, 'administrador')"><i class="material-icons"> remove_circle </i></button>
-                      </td>
-                    </ng-container>
-                
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'estadoAplazada': row.estado == 'aplazada', 'estadoEnTiempo': row.estado == 'realizada', 'estadoCancelada': row.estado == 'cancelada' }">
-                    </tr>
-                  </table>
-                
-                  <mat-paginator #paginator3 [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSize"
-                      [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)">
-                  </mat-paginator>
-                </div>
-                   
-              </mat-card-content>
-                </mat-card>
-            </div>
-
-
-          </div>
+                  </mat-tab-group>
   
+  
+                </mat-card-content>
+              </mat-card>
         </mat-grid-tile>
       </mat-grid-list>
     </div>

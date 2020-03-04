@@ -16,6 +16,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import { Hora } from 'src/app/models/Hora';
 
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
@@ -36,15 +37,6 @@ export class notificacionComponentCrearConsulta {
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
 }
 
-export class Hora {
-  hora: string;
-  estado: Boolean;
-  constructor(hora, estado){
-    this.hora = hora;
-    this.estado = estado;
-  }
-}
-
 const ELEMENT_DATA: Hora[] = [
   {hora: "09:00", estado:null},
   {hora: "10:00", estado:null},
@@ -55,14 +47,6 @@ const ELEMENT_DATA: Hora[] = [
   {hora: "15:00", estado:null},
   {hora: "16:00", estado:null},
 ];
-
-export interface DialogData {
-  hora: string;
-  fecha: string;
-  motivo: string;
-  lugar: string;
-  medico:string;
-}
 
 export class Consulta {
   id: number;
@@ -112,17 +96,14 @@ export class DialogoAnadirConsulta {
   horaFinal : string;
   notificacion : string;
   fechaFinal: string;
-
   consultaService: ConsultaService;
   loginService: LoginService;
-
-  
 
   constructor(
     consultaService: ConsultaService,
     loginService: LoginService,
     public dialogRef: MatDialogRef<DialogoAnadirConsulta>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    @Inject(MAT_DIALOG_DATA) public data: any) {
 
       this.consultaService = consultaService;
       this.loginService = loginService;
@@ -223,34 +204,31 @@ export class FichaIndividualComponent implements OnInit {
   diabetes = "";
   asma = "";
   migranas = "";
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+
+  tarjetaResumen = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
         return [
           { title: 'Datos del Historial', cols: 2, rows: 1, cuerpo: "hola"},
-          { title: 'Datos del Médico', cols: 1, rows: 2, cuerpo: 'cuerpo3' },
-          { title: 'Datos del Paciente', cols: 1, rows: 2, cuerpo: 'cuerpo3' }
         ];
       }
 
       return [
-        { title: 'Datos del Historial', cols: 2, rows: 1, cuerpo: "hola"},
-        { title: 'Datos del Médico', cols: 1, rows: 2, cuerpo: 'cuerpo3' },
-        { title: 'Datos del Paciente', cols: 1, rows: 2, cuerpo: 'cuerpo3' }
+        { title: 'Datos del Historial', cols: 2, rows: 1, cuerpo: "hola"}
       ];
     })
   );
 
-  cards2 = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+  tarjetaDatos = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
         return [
-          { title: 'Consultas', cols: 2, rows: 2, cuerpo: 'cuerpo3' }
+          { title: 'Usuarios', cols: 2, rows: 3}
         ];
       }
 
       return [
-        { title: 'Consultas', cols: 2, rows: 3, cuerpo: 'cuerpo3' }
+        { title: 'Usuarios', cols: 2, rows: 3},
       ];
     })
   );
@@ -262,7 +240,6 @@ export class FichaIndividualComponent implements OnInit {
       this.loginService = loginService;
       this.userService = userService;
       this.fichaService = fichaService;
-
     }
 
     ngOnInit() {
@@ -275,14 +252,6 @@ export class FichaIndividualComponent implements OnInit {
   
     ngOnDestroy() {
       this.sub.unsubscribe();
-    }
-
-    applyFilter(event: Event) {
-      const filterValue = (event.target as HTMLInputElement).value;
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-      if (this.dataSource.paginator) {
-        this.dataSource.paginator.firstPage();
-      }
     }
 
     public handlePage(e: any) {
