@@ -264,38 +264,38 @@
                       
                           <!-- Progress Column -->
                           <ng-container matColumnDef="numeroConsulta">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Número de Consulta </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('id')"> Número de Consulta </th>
                             <td mat-cell *matCellDef="let row"> {{row.id}} </td>
                           </ng-container>
       
                           <ng-container matColumnDef="lugar">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Lugar </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('lugar')"> Lugar </th>
                             <td mat-cell *matCellDef="let row"> {{row.lugar}} </td>
                           </ng-container>
                       
                           <!-- Name Column -->
                           <ng-container matColumnDef="fecha">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha y Hora</th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('fecha')"> Fecha y Hora</th>
                             <td mat-cell *matCellDef="let row"> {{row.fecha}}</td>
                           </ng-container>
       
                           <ng-container matColumnDef="motivo">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Motivo </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('motivo')"> Motivo </th>
                             <td mat-cell *matCellDef="let row"> {{row.motivo}} </td>
                           </ng-container>
       
                           <ng-container matColumnDef="diagnostico">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> ¿Tiene Diagnóstico? </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('diagnostico')"> ¿Tiene Diagnóstico? </th>
                             <td mat-cell *matCellDef="let row"> {{row.diagnostico}} </td>
                           </ng-container>
       
                           <ng-container matColumnDef="observaciones">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> ¿Tiene Observaciones? </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('observaciones')"> ¿Tiene Observaciones? </th>
                             <td mat-cell *matCellDef="let row"> {{row.observaciones}} </td>
                           </ng-container>
       
                           <ng-container matColumnDef="estado">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado de la Consulta </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('estado')"> Estado de la Consulta </th>
                             <td mat-cell *matCellDef="let row"> {{row.estado}} </td>
                           </ng-container>
       

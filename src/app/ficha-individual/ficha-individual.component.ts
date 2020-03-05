@@ -208,6 +208,7 @@ export class FichaIndividualComponent implements OnInit {
   diabetes = "";
   asma = "";
   migranas = "";
+  filtro = null;
 
   visible = true;
   selectable = true;
@@ -277,7 +278,7 @@ export class FichaIndividualComponent implements OnInit {
     public handlePage(e: any) {
       this.currentPage = e.pageIndex;
       this.pageSize = e.pageSize;
-      this.datosConsultas(this.id,this.currentPage,this.pageSize);
+      this.datosConsultas();
     }
 
     datosPaciente(idUser){
@@ -319,7 +320,7 @@ export class FichaIndividualComponent implements OnInit {
           this.datosFicha2(idFicha);
           this.datosMedico(response['medico']);
           this.datosPaciente(response['paciente']);
-          this.datosConsultas(idFicha, this.currentPage, this.pageSize);
+          this.datosConsultas();
         },
         error => {
           console.log(error);
@@ -352,9 +353,9 @@ export class FichaIndividualComponent implements OnInit {
     }
   }
 
-  datosConsultas(idFicha, pagina, numeroAMostar){
+  datosConsultas(){
     if(this.loginService.isLogged){
-      this.consultaService.consultasFicha(idFicha,pagina, numeroAMostar )
+      this.consultaService.consultasFicha(this.id, this.currentPage, this.pageSize, this.filtro)
       .subscribe(
         response =>{
           this.consultas = [];
@@ -493,6 +494,13 @@ export class FichaIndividualComponent implements OnInit {
           console.log(error);
         }
       );
+    }
+  }
+
+  ordenar(tipo){
+    if(this.loginService.isLogged){
+      this.filtro = tipo;
+      this.datosConsultas();
     }
   }
 

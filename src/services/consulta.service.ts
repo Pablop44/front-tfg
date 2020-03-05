@@ -29,27 +29,28 @@ export class ConsultaService {
   }
 
 
-  public consultasFicha(id, pagina, aMostrar){
+  public consultasFicha(id, pagina, aMostrar, tipo){
 
-    let array = [{
-      Field: 'id',
-      Value: id
-    },
-    {
-      Field: 'page',
-      Value: pagina
-    },
-    {
-      Field: 'limit',
-      Value: aMostrar
-    }
-    ];
-    
-    // #1 Mapping the array to an object...
-    let obj = {};
+    console.log(tipo);
+
+    if(tipo == null){
+      let array = [{
+        Field: 'id',
+        Value: id
+      },
+      {
+        Field: 'page',
+        Value: pagina
+      },
+      {
+        Field: 'limit',
+        Value: aMostrar
+      }
+      ];
+
+      let obj = {};
     array.forEach(item => obj[item.Field] = item.Value);
     
-    // #2 Converting the object to JSON...
     let json = JSON.stringify(obj);
     
     console.log(json);
@@ -62,7 +63,48 @@ export class ConsultaService {
 
       return this.httpClient.post(this.restUrl+"/consultaFicha.json", json,
        httpOptions);
+
+    }else{
+      console.log('aqui');
+      let array = [{
+        Field: 'id',
+        Value: id
+      },
+      {
+        Field: 'page',
+        Value: pagina
+      },
+      {
+        Field: 'limit',
+        Value: aMostrar
+      }, 
+      {
+        Field: 'tipo',
+        Value: tipo
+      },
+      ];
+      let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+    
+    console.log(json);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.httpClient.post(this.restUrl+"/consultaFicha.json", json,
+       httpOptions);
+    }
+
+    
+    
+    
   }
+
 
   public getHoras(x){
     let array = [{
@@ -75,11 +117,9 @@ export class ConsultaService {
     }
     ];
     
-    // #1 Mapping the array to an object...
     let obj = {};
     array.forEach(item => obj[item.Field] = item.Value);
     
-    // #2 Converting the object to JSON...
     let json = JSON.stringify(obj);
     
     console.log(json);
