@@ -202,7 +202,7 @@ export class FichaIndividualComponent implements OnInit {
   horaFinal:string;
   consultas : Consulta[] = [];
   public pageSize = 15;
-  public currentPage = 1;
+  public currentPage = 0;
   public totalSize = 0;
   panelOpenState = false;
   diabetes = "";
@@ -264,7 +264,9 @@ export class FichaIndividualComponent implements OnInit {
       this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
        this.datosFicha(this.id);
+       this.numeroConsultas(this.id);
        });
+       
 
     }
   
@@ -273,7 +275,7 @@ export class FichaIndividualComponent implements OnInit {
     }
 
     public handlePage(e: any) {
-      this.currentPage = e.pageIndex+1;
+      this.currentPage = e.pageIndex;
       this.pageSize = e.pageSize;
       this.datosConsultas(this.id,this.currentPage,this.pageSize);
     }
@@ -355,6 +357,7 @@ export class FichaIndividualComponent implements OnInit {
       this.consultaService.consultasFicha(idFicha,pagina, numeroAMostar )
       .subscribe(
         response =>{
+          this.consultas = [];
           for (let i in response) {
               if(response[i]['diagnostico']  !==  null){
                 response[i]['diagnostico'] = "Sí"
@@ -372,7 +375,8 @@ export class FichaIndividualComponent implements OnInit {
 
           this.dataSource = new MatTableDataSource<Consulta>(this.consultas);
           this.dataSource.data = this.consultas;
-          this.dataSource.paginator = this.paginator;
+
+          console.log(this.consultas);
 
           },
         error => {
@@ -411,7 +415,6 @@ export class FichaIndividualComponent implements OnInit {
           const newConsultaData = new Consulta(response['id'],response['lugar'],response['motivo'], response['fecha'],response['diagnostico'],response['observaciones'], response['medico'], response['paciente'], response['ficha'], response['estado']);
           this.consultas.push(newConsultaData);
           this.dataSource.data = this.consultas;
-          this.totalSize = this.consultas.length;
           this.openSnackBar("Se ha creado la consulta para el paciente "+this.paciente.username+" con fecha: "+response['fecha']);
         },
         error => {
@@ -477,6 +480,20 @@ export class FichaIndividualComponent implements OnInit {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.allEstados.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  numeroConsultas(id){
+    if(this.loginService.isLogged){
+      this.consultaService.numeroConsultas(id)
+      .subscribe(
+        response =>{         
+          this.totalSize = response['numero'];
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
 }

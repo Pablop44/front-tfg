@@ -20,6 +20,14 @@ export class ConsultaService {
     });
   }
 
+  public numeroConsultas(id){
+    return this.httpClient.get(this.restUrl+"/numeroConsultas/"+id+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
+
 
   public consultasFicha(id, pagina, aMostrar){
 
