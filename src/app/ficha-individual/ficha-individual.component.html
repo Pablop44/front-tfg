@@ -1,6 +1,6 @@
 <div class="grid-container">
     <h1 class="mat-h1">Historial Número <em style="color: #ff4081; font-style: normal; margin-left: 3px; margin-right: 3px;">{{ficha.id}}</em></h1>
-      <mat-grid-list cols="2" rowHeight="420px">
+      <mat-grid-list cols="2" rowHeight="500px">
         <mat-grid-tile *ngFor="let card of tarjetaDatos | async" [colspan]="card.cols" [rowspan]="card.rows"> 
               <mat-card class="dashboard-card">
     

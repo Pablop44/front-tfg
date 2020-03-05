@@ -202,7 +202,7 @@ export class FichaIndividualComponent implements OnInit {
   horaFinal:string;
   consultas : Consulta[] = [];
   public pageSize = 15;
-  public currentPage = 0;
+  public currentPage = 1;
   public totalSize = 0;
   panelOpenState = false;
   diabetes = "";
@@ -273,14 +273,9 @@ export class FichaIndividualComponent implements OnInit {
     }
 
     public handlePage(e: any) {
-      this.currentPage = e.pageIndex;
+      this.currentPage = e.pageIndex+1;
       this.pageSize = e.pageSize;
-      this.iterator();
-    }
-
-    private iterator() {
-      const end = (this.currentPage + 1) * this.pageSize;
-      const start = this.currentPage * this.pageSize;
+      this.datosConsultas(this.id,this.currentPage,this.pageSize);
     }
 
     datosPaciente(idUser){
@@ -322,7 +317,7 @@ export class FichaIndividualComponent implements OnInit {
           this.datosFicha2(idFicha);
           this.datosMedico(response['medico']);
           this.datosPaciente(response['paciente']);
-          this.datosConsultas(idFicha);
+          this.datosConsultas(idFicha, this.currentPage, this.pageSize);
         },
         error => {
           console.log(error);
@@ -355,9 +350,9 @@ export class FichaIndividualComponent implements OnInit {
     }
   }
 
-  datosConsultas(idFicha){
+  datosConsultas(idFicha, pagina, numeroAMostar){
     if(this.loginService.isLogged){
-      this.consultaService.consultasFicha(idFicha)
+      this.consultaService.consultasFicha(idFicha,pagina, numeroAMostar )
       .subscribe(
         response =>{
           for (let i in response) {
@@ -377,11 +372,7 @@ export class FichaIndividualComponent implements OnInit {
 
           this.dataSource = new MatTableDataSource<Consulta>(this.consultas);
           this.dataSource.data = this.consultas;
-          this.totalSize = this.consultas.length;
           this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          
-          this.iterator();
 
           },
         error => {

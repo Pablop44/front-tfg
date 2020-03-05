@@ -21,12 +21,39 @@ export class ConsultaService {
   }
 
 
-  public consultasFicha(id){
-    return this.httpClient.get(this.restUrl+"/consultaFicha/"+id+".json", {
-      headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+  public consultasFicha(id, pagina, aMostrar){
+
+    let array = [{
+      Field: 'id',
+      Value: id
+    },
+    {
+      Field: 'page',
+      Value: pagina
+    },
+    {
+      Field: 'limit',
+      Value: aMostrar
+    }
+    ];
+    
+    // #1 Mapping the array to an object...
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    // #2 Converting the object to JSON...
+    let json = JSON.stringify(obj);
+    
+    console.log(json);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
       })
-    });
+    };
+
+      return this.httpClient.post(this.restUrl+"/consultaFicha.json", json,
+       httpOptions);
   }
 
   public getHoras(x){
