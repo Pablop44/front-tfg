@@ -1,6 +1,6 @@
 <div class="grid-container">
     <h1 class="mat-h1">Historial Número <em style="color: #ff4081; font-style: normal; margin-left: 3px; margin-right: 3px;">{{ficha.id}}</em></h1>
-      <mat-grid-list cols="2" rowHeight="500px">
+      <mat-grid-list cols="2" rowHeight="400px">
         <mat-grid-tile *ngFor="let card of tarjetaDatos | async" [colspan]="card.cols" [rowspan]="card.rows"> 
               <mat-card class="dashboard-card">
     
@@ -177,36 +177,33 @@
                         <mat-card-content>
 
                           <form class="formFiltrar" (ngSubmit)="aplicarFiltro()" #loginForm="ngForm">
-                            <div>
-                              <mat-form-field>
+                              <mat-form-field style="width: 20%;">
                                 <mat-label>Número de Consulta</mat-label>
                                 <input matInput type="number" id="id" name="id" [(ngModel)]="filtroConsulta.id" placeholder="Número">
                               </mat-form-field>
-                            </div>
                             
-                            <div>
-                              <mat-form-field>
+              
+                              <mat-form-field style="width: 20%; margin-left: 80px;">
                                 <mat-label>Fecha Inicio Periodo</mat-label>
                                 <input matInput [matDatepicker]="dpInicio"  name="fechaInicio" id="fechaInicio" [(ngModel)]="filtroConsulta.fechaInicio">
                                 <mat-datepicker-toggle matSuffix [for]="dpInicio"></mat-datepicker-toggle>
                                 <mat-datepicker #dpInicio></mat-datepicker>
                               </mat-form-field>
-                              <mat-form-field>
+
+                              <mat-form-field style="width: 20%;">
                                 <mat-label>Fecha Fin Periodo</mat-label>
                                 <input matInput [matDatepicker]="dpFin"  name="fechaFin" id="fechaFin" [(ngModel)]="filtroConsulta.fechaFin">
                                 <mat-datepicker-toggle matSuffix [for]="dpFin"></mat-datepicker-toggle>
                                 <mat-datepicker #dpFin></mat-datepicker>
                               </mat-form-field>
-                            </div>
+                            
 
-                            <div>
-                              <mat-form-field>
+                              <mat-form-field style="width: 20%; margin-left: 80px;">
                                 <mat-label>Lugar de Consulta</mat-label>
                                 <input matInput id="lugar" name="lugar" placeholder="Número" [(ngModel)]="filtroConsulta.lugar">
                               </mat-form-field>
-                            </div>
 
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field style="width: 45%; margin-right: 70px;">
                               <mat-label>Estado de la Consulta</mat-label>
                               <mat-chip-list #chipList >
                                 <mat-chip
@@ -232,20 +229,21 @@
                               </mat-autocomplete>
                             </mat-form-field>
 
-                              <mat-label>Diagnóstico</mat-label>
+                              
                               <mat-radio-group class="example-radio-group" aria-label="Select an option" name="diagnostico" id="diagnostico" [(ngModel)]="filtroConsulta.diagnostico">
+                                <mat-label class="labelRadios">Diagnóstico</mat-label>
                                 <mat-radio-button value="si">Sí</mat-radio-button>
                                 <mat-radio-button value="no">No</mat-radio-button>
                               </mat-radio-group>
                             
-                              <mat-label>Observaciones</mat-label>
+                              
                               <mat-radio-group class="example-radio-group" aria-label="Select an option" name="observaciones" id="observaciones" [(ngModel)]="filtroConsulta.observaciones">
+                                <mat-label class="labelRadios">Observaciones</mat-label>
                                 <mat-radio-button value="si">Sí</mat-radio-button>
                                 <mat-radio-button value="no">No</mat-radio-button>
                               </mat-radio-group>
                                                                              
-                            <br>
-                            <button mat-raised-button type="submit" color="primary">Pre-Registrarme</button>
+                            <button mat-raised-button type="submit" color="primary">Filtrar</button>
                           </form>
 
                         </mat-card-content>

@@ -84,6 +84,10 @@ export class ConsultaService {
         Field: 'tipo',
         Value: tipo
       },
+      {
+        Field: 'filtro',
+        Value: filtro
+      }
       ];
       let obj = {};
     array.forEach(item => obj[item.Field] = item.Value);

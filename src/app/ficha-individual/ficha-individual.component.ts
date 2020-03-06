@@ -222,12 +222,15 @@ export class FichaIndividualComponent implements OnInit {
   filtroConsulta: FiltroConsulta = {
     id: null,
     lugar: "",
-    fechaFin: "",
-    fechaInicio: "",
+    fechaFin: null,
+    fechaInicio: null,
     motivo: "",
-    estado: "",
     diagnostico: null,
     observaciones: null,
+    tiempo:null,
+    cancelada: null,
+    aplazada: null,
+    realizada: null
   }
 
   @ViewChild('auto',{ static: true }) matAutocomplete: MatAutocomplete;
@@ -523,6 +526,17 @@ export class FichaIndividualComponent implements OnInit {
     }else{
       this.filtroConsulta.observaciones = null;
     }
+    this.estado.forEach(element => {
+      if(element == "En Tiempo"){
+        this.filtroConsulta.tiempo = "si";
+      }else if(element == "Cancelada"){
+        this.filtroConsulta.cancelada = "si";
+      }else if(element == "Aplazada"){
+        this.filtroConsulta.aplazada = "si";
+      }else if(element == "Realizada"){
+        this.filtroConsulta.realizada = "si";
+      }
+    });
     this.datosConsultas();
   }
 

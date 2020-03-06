@@ -6,8 +6,10 @@ export class FiltroConsulta{
         fechaFin: string;
         fechaInicio: string;
         motivo: string;
-        estado:string;
         diagnostico:string;
         observaciones: string;
-    
+        tiempo: string;
+        cancelada: string;
+        aplazada: string;
+        realizada:string;
     }

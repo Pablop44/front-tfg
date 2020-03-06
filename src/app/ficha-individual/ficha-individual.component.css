@@ -165,7 +165,21 @@ button {
 mat-form-field{
   margin-right: 15px;
 }
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
 
 .example-radio-group {
-  display: flex;
+  display: inline-block;
+  width: 20%;
+
+}
+
+.labelRadios{
+  margin-right: 16px;
+  margin-bottom: 6px;
+}
+
+button{
+  font-size: medium !important;
 }
