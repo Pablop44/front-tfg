@@ -176,24 +176,24 @@
 
                         <mat-card-content>
 
-                          <form class="formFiltrar" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+                          <form class="formFiltrar" (ngSubmit)="aplicarFiltro()" #loginForm="ngForm">
                             <div>
                               <mat-form-field>
                                 <mat-label>Número de Consulta</mat-label>
-                                <input matInput type="number" id="id" name="id" placeholder="Número">
+                                <input matInput type="number" id="id" name="id" [(ngModel)]="filtroConsulta.id" placeholder="Número">
                               </mat-form-field>
                             </div>
                             
                             <div>
                               <mat-form-field>
-                                <mat-label>Fecha Fin Periodo</mat-label>
-                                <input matInput [matDatepicker]="dpInicio"  name="fechaInicio" id="fechaInicio">
+                                <mat-label>Fecha Inicio Periodo</mat-label>
+                                <input matInput [matDatepicker]="dpInicio"  name="fechaInicio" id="fechaInicio" [(ngModel)]="filtroConsulta.fechaInicio">
                                 <mat-datepicker-toggle matSuffix [for]="dpInicio"></mat-datepicker-toggle>
                                 <mat-datepicker #dpInicio></mat-datepicker>
                               </mat-form-field>
                               <mat-form-field>
-                                <mat-label>Fecha Inicio Periodo</mat-label>
-                                <input matInput [matDatepicker]="dpFin"  name="fechaFin" id="fechaFin">
+                                <mat-label>Fecha Fin Periodo</mat-label>
+                                <input matInput [matDatepicker]="dpFin"  name="fechaFin" id="fechaFin" [(ngModel)]="filtroConsulta.fechaFin">
                                 <mat-datepicker-toggle matSuffix [for]="dpFin"></mat-datepicker-toggle>
                                 <mat-datepicker #dpFin></mat-datepicker>
                               </mat-form-field>
@@ -202,7 +202,7 @@
                             <div>
                               <mat-form-field>
                                 <mat-label>Lugar de Consulta</mat-label>
-                                <input matInput id="lugar" name="lugar" placeholder="Número">
+                                <input matInput id="lugar" name="lugar" placeholder="Número" [(ngModel)]="filtroConsulta.lugar">
                               </mat-form-field>
                             </div>
 
@@ -233,15 +233,15 @@
                             </mat-form-field>
 
                               <mat-label>Diagnóstico</mat-label>
-                              <mat-radio-group class="example-radio-group" aria-label="Select an option">
-                                <mat-radio-button value="1">Sí</mat-radio-button>
-                                <mat-radio-button value="2">No</mat-radio-button>
+                              <mat-radio-group class="example-radio-group" aria-label="Select an option" name="diagnostico" id="diagnostico" [(ngModel)]="filtroConsulta.diagnostico">
+                                <mat-radio-button value="si">Sí</mat-radio-button>
+                                <mat-radio-button value="no">No</mat-radio-button>
                               </mat-radio-group>
                             
                               <mat-label>Observaciones</mat-label>
-                              <mat-radio-group class="example-radio-group" aria-label="Select an option">
-                                <mat-radio-button value="1">Sí</mat-radio-button>
-                                <mat-radio-button value="2">No</mat-radio-button>
+                              <mat-radio-group class="example-radio-group" aria-label="Select an option" name="observaciones" id="observaciones" [(ngModel)]="filtroConsulta.observaciones">
+                                <mat-radio-button value="si">Sí</mat-radio-button>
+                                <mat-radio-button value="no">No</mat-radio-button>
                               </mat-radio-group>
                                                                              
                             <br>

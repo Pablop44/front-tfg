@@ -21,6 +21,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { FiltroConsulta } from 'src/app/models/FiltroConsulta';
 
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
@@ -208,8 +209,7 @@ export class FichaIndividualComponent implements OnInit {
   diabetes = "";
   asma = "";
   migranas = "";
-  filtro = null;
-
+  orden = null;
   visible = true;
   selectable = true;
   removable = true;
@@ -218,6 +218,17 @@ export class FichaIndividualComponent implements OnInit {
   filteredEstado: Observable<string[]>;
   estado: string[] = [];
   allEstados: string[] = ['En Tiempo', 'Cancelada', 'Aplazada', 'Realizada'];
+
+  filtroConsulta: FiltroConsulta = {
+    id: null,
+    lugar: "",
+    fechaFin: "",
+    fechaInicio: "",
+    motivo: "",
+    estado: "",
+    diagnostico: null,
+    observaciones: null,
+  }
 
   @ViewChild('auto',{ static: true }) matAutocomplete: MatAutocomplete;
 
@@ -355,7 +366,7 @@ export class FichaIndividualComponent implements OnInit {
 
   datosConsultas(){
     if(this.loginService.isLogged){
-      this.consultaService.consultasFicha(this.id, this.currentPage, this.pageSize, this.filtro)
+      this.consultaService.consultasFicha(this.id, this.currentPage, this.pageSize, this.orden, this.filtroConsulta)
       .subscribe(
         response =>{
           this.consultas = [];
@@ -464,10 +475,7 @@ export class FichaIndividualComponent implements OnInit {
 
   remove(estado: string): void {
     this.allEstados.push(estado);
-    console.log(this.allEstados);
     const index = this.estado.indexOf(estado);
-    
-
     if (index >= 0) {
       this.estado.splice(index, 1);
     }
@@ -499,9 +507,23 @@ export class FichaIndividualComponent implements OnInit {
 
   ordenar(tipo){
     if(this.loginService.isLogged){
-      this.filtro = tipo;
+      this.orden = tipo;
       this.datosConsultas();
     }
+  }
+
+  aplicarFiltro(){
+    if(this.filtroConsulta.diagnostico == 'si'){
+      this.filtroConsulta.diagnostico = 'si';
+    }else{
+      this.filtroConsulta.diagnostico = null;
+    }
+    if(this.filtroConsulta.observaciones == 'si'){
+      this.filtroConsulta.observaciones = 'si';
+    }else{
+      this.filtroConsulta.observaciones = null;
+    }
+    this.datosConsultas();
   }
 
 }

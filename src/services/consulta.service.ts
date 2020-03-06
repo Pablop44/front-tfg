@@ -29,9 +29,7 @@ export class ConsultaService {
   }
 
 
-  public consultasFicha(id, pagina, aMostrar, tipo){
-
-    console.log(tipo);
+  public consultasFicha(id, pagina, aMostrar, tipo, filtro){
 
     if(tipo == null){
       let array = [{
@@ -45,6 +43,10 @@ export class ConsultaService {
       {
         Field: 'limit',
         Value: aMostrar
+      },
+      {
+        Field: 'filtro',
+        Value: filtro
       }
       ];
 
