@@ -20,12 +20,32 @@ export class ConsultaService {
     });
   }
 
-  public numeroConsultas(id){
-    return this.httpClient.get(this.restUrl+"/numeroConsultas/"+id+".json", {
-      headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+  public numeroConsultas(id,filtro){
+
+
+    let array = [{
+      Field: 'filtro',
+      Value: filtro
+    },
+    {
+      Field: 'id',
+      Value: id
+    }
+    ];
+
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
       })
-    });
+    };
+
+      return this.httpClient.post(this.restUrl+"/numeroConsultas.json", json,
+       httpOptions);
   }
 
 

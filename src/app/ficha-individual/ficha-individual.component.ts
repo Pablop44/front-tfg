@@ -279,7 +279,6 @@ export class FichaIndividualComponent implements OnInit {
       this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
        this.datosFicha(this.id);
-       this.numeroConsultas(this.id);
        });
        
 
@@ -372,6 +371,7 @@ export class FichaIndividualComponent implements OnInit {
       this.consultaService.consultasFicha(this.id, this.currentPage, this.pageSize, this.orden, this.filtroConsulta)
       .subscribe(
         response =>{
+          this.numeroConsultas(this.id, this.filtroConsulta);
           this.consultas = [];
           for (let i in response) {
               if(response[i]['diagnostico']  !==  null){
@@ -494,9 +494,9 @@ export class FichaIndividualComponent implements OnInit {
     return this.allEstados.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  numeroConsultas(id){
+  numeroConsultas(id, filtro){
     if(this.loginService.isLogged){
-      this.consultaService.numeroConsultas(id)
+      this.consultaService.numeroConsultas(id, filtro)
       .subscribe(
         response =>{         
           this.totalSize = response['numero'];
