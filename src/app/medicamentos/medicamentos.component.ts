@@ -180,10 +180,10 @@ export class MedicamentosComponent implements OnInit {
 
           this.dataSource = new MatTableDataSource<Medicamento>(this.medicamentos);
           this.dataSource.data = this.medicamentos;
-          this.filtroMedicamento.marca = null;
           this.filtroMedicamento.maxDosis = null;
           this.filtroMedicamento.minDosis  = null;
           this.filtroMedicamento.nombre = null;
+          this.filtroMedicamento.marca = null;
           },
         error => {
           console.log(error);
@@ -256,10 +256,11 @@ export class MedicamentosComponent implements OnInit {
       .subscribe(
         response =>{
           console.log(response);
+          const marcaVacia = new Marca("","");
+          this.marcas.push(marcaVacia);
             for (let i in response) {
               const newMarca = new Marca(response[i]['nombre'],response[i]['pais']);
-              this.marcas.push(newMarca);
-              
+              this.marcas.push(newMarca);  
             } 
           },
         error => {
@@ -307,7 +308,7 @@ export class MedicamentosComponent implements OnInit {
 
     numeroMedicamento(){
       
-      this.medicamentoService.numeroMedicamento()
+      this.medicamentoService.numeroMedicamento(this.filtroMedicamento)
         .subscribe(
           response =>{
               this.totalSize = response['numero'];
@@ -329,9 +330,14 @@ export class MedicamentosComponent implements OnInit {
 
       aplicarFiltro(){
         this.todosMedicamentos();
+        this.numeroMedicamento();
       }
 
       establecerMarcaFiltro(nombre){
-        this.filtroMedicamento.marca = nombre;
+        if(nombre == ""){
+          this.filtroMedicamento.marca = null;
+        }else{
+          this.filtroMedicamento.marca = nombre;
+        } 
       }
 }

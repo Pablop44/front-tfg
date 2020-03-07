@@ -120,11 +120,32 @@ export class MedicamentoService {
     });
   }
 
-  numeroMedicamento(){
-    return this.http.get(this.restUrl+"/medicamento/numeroMedicamentos.json", {
-      headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
-      })
-    });
+  numeroMedicamento(filtro){
+
+      if(filtro.marca == null && filtro.maxDosis == null && filtro.minDosis == null && filtro.nombre == null){
+        filtro = null;
+      }
+  
+      let array = [
+        {
+          Field: 'filtro',
+          Value: filtro
+        }
+        ];
+        let obj = {};
+      array.forEach(item => obj[item.Field] = item.Value);
+      
+      let json = JSON.stringify(obj);
+      
+      console.log(json);
+  
+      const httpOptions = {
+        headers: new HttpHeaders({ 
+          'Content-Type': 'application/json',
+        })
+      };
+  
+        return this.http.post(this.restUrl+"/medicamento/numeroMedicamentos.json", json,
+         httpOptions);
   }
 }
