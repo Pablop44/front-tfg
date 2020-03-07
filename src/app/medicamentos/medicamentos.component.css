@@ -263,3 +263,19 @@ button {
 .headerCentrado{
   text-align: center !important;
 }
+
+.formFiltrar{
+  text-align: left;
+  margin: 5px;
+}
+
+.cartaFiltro{
+  margin-top: 20px;
+  width: 85%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+button{
+  font-size: medium !important;
+}

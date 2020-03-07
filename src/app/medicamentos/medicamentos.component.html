@@ -1,6 +1,6 @@
 <div class="grid-container">
     <h1 class="mat-h1">Mediacamentos Disponibles</h1>
-    <mat-grid-list cols="2" rowHeight="350px">
+    <mat-grid-list cols="2" rowHeight="380px">
       <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
         <div [ngSwitch]="card.title">
   
@@ -21,10 +21,44 @@
   
               <mat-card-content class="dashboard-card-content">
 
-                <mat-form-field class="formularioFilter">
-                    <mat-label>Filtrar</mat-label>
-                    <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Mia">
-                </mat-form-field>
+                <mat-card class="cartaFiltro">
+                  <mat-card-header>
+                    <mat-card-subtitle>
+                      Filtrar Medicamentos
+                    </mat-card-subtitle>
+                  </mat-card-header>
+
+                  <mat-card-content>
+
+                    <form class="formFiltrar" (ngSubmit)="aplicarFiltro()" #loginForm="ngForm">
+                        <mat-form-field style="width: 20%;">
+                          <mat-label>Nombre del Medicamento</mat-label>
+                          <input matInput type="text" id="id" name="id" placeholder="Nombre">
+                        </mat-form-field>
+                      
+        
+                        <mat-form-field style="width: 20%; margin-left: 80px;">
+                          <mat-label>Vía de Administración</mat-label>
+                          <input matInput type="text" id="id" name="id" placeholder="Vía">
+                        </mat-form-field>
+
+                        <mat-form-field style="width: 20%; margin-left: 80px;">
+                          <mat-label>Marca</mat-label>
+                          <input matInput type="text" id="id" name="id" placeholder="Vía">
+                        </mat-form-field>
+                      
+
+                        <mat-form-field style="width: 20%; margin-left: 80px;">
+                          <mat-label>Dosis</mat-label>
+                          <input matInput id="lugar" name="lugar" placeholder="Número">
+                        </mat-form-field>
+                                                                       
+                      <button mat-raised-button type="submit" color="primary">Filtrar</button>
+                    </form>
+
+                  </mat-card-content>
+
+                </mat-card>
                   
                   <div>
                     <table  mat-table matSort [dataSource]="dataSource" >
