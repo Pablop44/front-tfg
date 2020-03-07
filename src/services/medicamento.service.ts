@@ -15,12 +15,67 @@ export class MedicamentoService {
   constructor(private http: HttpClient, private router: Router,private loginService : LoginService) { }
 
 
-  todosMedicamentos(){
-    return this.http.get(this.restUrl+"/medicamento/medicamentos.json", {
-      headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+  public todosMedicamentos(pagina, aMostrar, tipo){
+
+  if(tipo == null){
+    let array = [
+      {
+        Field: 'page',
+        Value: pagina
+      },
+      {
+        Field: 'limit',
+        Value: aMostrar
+      }
+      ];
+      let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+    
+    console.log(json);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
       })
-    });
+    };
+
+      return this.http.post(this.restUrl+"/medicamento/medicamentos.json", json,
+       httpOptions);
+  }else{
+    let array = [
+      {
+        Field: 'page',
+        Value: pagina
+      },
+      {
+        Field: 'limit',
+        Value: aMostrar
+      }
+      ,
+      {
+        Field: 'tipo',
+        Value: tipo
+      }
+      ];
+      let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+    
+    console.log(json);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.http.post(this.restUrl+"/medicamento/medicamentos.json", json,
+       httpOptions);
+  }
+      
   }
 
   public anadirMedicamento(datos){
@@ -46,6 +101,14 @@ export class MedicamentoService {
 
   eliminarMedicamento(nombre){
     return this.http.delete(this.restUrl+"/medicamento/delete/"+nombre+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
+
+  numeroMedicamento(){
+    return this.http.get(this.restUrl+"/medicamento/numeroMedicamentos.json", {
       headers: new HttpHeaders({
         'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
       })

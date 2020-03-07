@@ -10,8 +10,6 @@ import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-mome
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Component, OnInit, ViewChild, Inject, ElementRef} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MAT_SNACK_BAR_DATA, MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -184,9 +182,6 @@ export class DialogoAnadirConsulta {
 export class FichaIndividualComponent implements OnInit {
 
   displayedColumns: string[] = ['numeroConsulta', 'lugar', 'fecha', 'motivo', 'estado', 'diagnostico', 'observaciones', 'acciones'];
-
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   public dataSource: any;
   ficha : any = [];

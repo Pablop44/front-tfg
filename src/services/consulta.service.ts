@@ -70,7 +70,7 @@ export class ConsultaService {
       }
       ];
 
-      let obj = {};
+    let obj = {};
     array.forEach(item => obj[item.Field] = item.Value);
     
     let json = JSON.stringify(obj);
@@ -87,7 +87,6 @@ export class ConsultaService {
        httpOptions);
 
     }else{
-      console.log('aqui');
       let array = [{
         Field: 'id',
         Value: id
@@ -125,10 +124,6 @@ export class ConsultaService {
       return this.httpClient.post(this.restUrl+"/consultaFicha.json", json,
        httpOptions);
     }
-
-    
-    
-    
   }
 
 
