@@ -152,15 +152,15 @@
                       
                     </mat-tab>
 
-                    <mat-tab label="Informes de Asma"> 
+                    <mat-tab *ngIf="asma != ''" label="Informes de Asma"> 
                          
                     </mat-tab>
 
-                    <mat-tab label="Informes de Diabetes"> 
+                    <mat-tab *ngIf="diabetes != ''" label="Informes de Diabetes"> 
                          
                     </mat-tab>
 
-                    <mat-tab label="Informes de Migrañas"> 
+                    <mat-tab *ngIf="migranas != ''" label="Informes de Migrañas"> 
                          
                     </mat-tab>
   
