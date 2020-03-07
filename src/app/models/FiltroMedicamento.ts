@@ -4,5 +4,6 @@ export class FiltroMedicamento{
         nombre: string;
         viaAdministacion: string;
         marca: string;
-        dosis: string;
+        minDosis: string;
+        maxDosis;
     }

@@ -5,7 +5,6 @@ export class FiltroConsulta{
         lugar: string;
         fechaFin: string;
         fechaInicio: string;
-        motivo: string;
         diagnostico:string;
         observaciones: string;
         tiempo: string;

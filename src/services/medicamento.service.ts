@@ -15,9 +15,14 @@ export class MedicamentoService {
   constructor(private http: HttpClient, private router: Router,private loginService : LoginService) { }
 
 
-  public todosMedicamentos(pagina, aMostrar, tipo){
+  public todosMedicamentos(pagina, aMostrar, tipo, filtro){
 
   if(tipo == null){
+
+    if(filtro.marca == null && filtro.maxDosis == null && filtro.minDosis == null && filtro.nombre == null){
+      filtro = null;
+    }
+
     let array = [
       {
         Field: 'page',
@@ -26,6 +31,10 @@ export class MedicamentoService {
       {
         Field: 'limit',
         Value: aMostrar
+      },
+      {
+        Field: 'filtro',
+        Value: filtro
       }
       ];
       let obj = {};
@@ -57,6 +66,10 @@ export class MedicamentoService {
       {
         Field: 'tipo',
         Value: tipo
+      },
+      {
+        Field: 'filtro',
+        Value: filtro
       }
       ];
       let obj = {};

@@ -131,7 +131,8 @@ export class MedicamentosComponent implements OnInit {
     nombre: null, 
     viaAdministacion: null,
     marca: null,
-    dosis: null
+    minDosis: null,
+    maxDosis: null
   }
 
 
@@ -167,7 +168,7 @@ export class MedicamentosComponent implements OnInit {
 
   todosMedicamentos(){
     if(this.loginService.isLogged){
-      this.medicamentoService.todosMedicamentos(this.currentPage, this.pageSize, this.orden)
+      this.medicamentoService.todosMedicamentos(this.currentPage, this.pageSize, this.orden, this.filtroMedicamento)
       .subscribe(
         response =>{
           this.medicamentos = [];
@@ -179,6 +180,10 @@ export class MedicamentosComponent implements OnInit {
 
           this.dataSource = new MatTableDataSource<Medicamento>(this.medicamentos);
           this.dataSource.data = this.medicamentos;
+          this.filtroMedicamento.marca = null;
+          this.filtroMedicamento.maxDosis = null;
+          this.filtroMedicamento.minDosis  = null;
+          this.filtroMedicamento.nombre = null;
           },
         error => {
           console.log(error);
@@ -320,5 +325,13 @@ export class MedicamentosComponent implements OnInit {
           this.todosMedicamentos();
           
         }
+      }
+
+      aplicarFiltro(){
+        this.todosMedicamentos();
+      }
+
+      establecerMarcaFiltro(nombre){
+        this.filtroMedicamento.marca = nombre;
       }
 }

@@ -216,10 +216,9 @@ export class FichaIndividualComponent implements OnInit {
 
   filtroConsulta: FiltroConsulta = {
     id: null,
-    lugar: "",
+    lugar: null,
     fechaFin: null,
     fechaInicio: null,
-    motivo: "",
     diagnostico: null,
     observaciones: null,
     tiempo:null,
@@ -385,6 +384,15 @@ export class FichaIndividualComponent implements OnInit {
 
           this.dataSource = new MatTableDataSource<Consulta>(this.consultas);
           this.dataSource.data = this.consultas;
+          this.filtroConsulta.aplazada = null;
+          this.filtroConsulta.cancelada = null;
+          this.filtroConsulta.diagnostico = null;
+          this.filtroConsulta.id = null;
+          this.filtroConsulta.lugar = null;
+          this.filtroConsulta.fechaFin = null;
+          this.filtroConsulta.fechaInicio = null;
+          this.filtroConsulta.realizada = null,
+          this.filtroConsulta.tiempo = null;
 
           console.log(this.consultas);
 

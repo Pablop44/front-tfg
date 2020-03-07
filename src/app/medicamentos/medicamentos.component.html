@@ -31,28 +31,36 @@
                   <mat-card-content>
 
                     <form class="formFiltrar" (ngSubmit)="aplicarFiltro()" #loginForm="ngForm">
-                        <mat-form-field style="width: 20%;">
+                        <mat-form-field style="width: 40%;">
                           <mat-label>Nombre del Medicamento</mat-label>
-                          <input matInput type="text" id="id" name="id" placeholder="Nombre">
+                          <input matInput type="text" id="id" name="id" [(ngModel)]="filtroMedicamento.nombre" placeholder="Nombre">
+                        </mat-form-field>
+
+
+                        <mat-form-field style="width: 20%; margin-left: 100px; margin-right: 20px;">
+                          <mat-label>Mínima Dosis</mat-label>
+                          <input matInput id="minDosis" name="minDosis" [(ngModel)]="filtroMedicamento.minDosis" placeholder="Número">
+                        </mat-form-field>
+                        <mat-form-field style="width: 20%;">
+                          <mat-label>Máxima Dosis</mat-label>
+                          <input matInput id="maxDosis" name="maxDosis" [(ngModel)]="filtroMedicamento.maxDosis" placeholder="Número">
                         </mat-form-field>
                       
         
-                        <mat-form-field style="width: 20%; margin-left: 80px;">
+                        <mat-form-field style="width: 50%; margin-right: 100px;">
                           <mat-label>Vía de Administración</mat-label>
                           <input matInput type="text" id="id" name="id" placeholder="Vía">
                         </mat-form-field>
 
-                        <mat-form-field style="width: 20%; margin-left: 80px;">
-                          <mat-label>Marca</mat-label>
-                          <input matInput type="text" id="id" name="id" placeholder="Vía">
+                        <mat-form-field style="width: 30%; margin-right: 20px;">
+                          <mat-label>Marca del Medicamento</mat-label>
+                          <mat-select >
+                            <mat-option *ngFor="let marca of marcas" (click)="establecerMarcaFiltro(marca.nombre)" [value]="marca.nombre">
+                              {{marca.nombre}}
+                            </mat-option>
+                          </mat-select>
                         </mat-form-field>
-                      
-
-                        <mat-form-field style="width: 20%; margin-left: 80px;">
-                          <mat-label>Dosis</mat-label>
-                          <input matInput id="lugar" name="lugar" placeholder="Número">
-                        </mat-form-field>
-                                                                       
+                                                                   
                       <button mat-raised-button type="submit" color="primary">Filtrar</button>
                     </form>
 
