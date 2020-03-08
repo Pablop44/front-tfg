@@ -9,6 +9,7 @@ import { element } from 'protractor';
 import { VistaUsuarioComponent } from './vista-usuario/vista-usuario.component';
 import { DashboardMedicoComponent } from './dashboard-medico/dashboard-medico.component';
 import { MedicamentosComponent } from './medicamentos/medicamentos.component';
+import { HistorialComponent } from './historial/historial.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'users', component: UsersComponent },
   {path : 'ficha-individual/:id', component : FichaIndividualComponent,},
   {path : 'vista-usuario/:id', component : VistaUsuarioComponent,},
-  {path : 'medicamentos', component : MedicamentosComponent,}
+  {path : 'medicamentos', component : MedicamentosComponent,},
+  {path : 'historial', component : HistorialComponent,}
 ];
 
 @NgModule({

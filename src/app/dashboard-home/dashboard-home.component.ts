@@ -7,27 +7,7 @@ import { LoginService } from 'src/services/login.service';
 import { UserService } from 'src/services/user.service';
 import { FichaService } from 'src/services/ficha.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-
-export class Ficha {
-  id: number;
-  fechaCreacion: string;
-  Paciente: string;
-  nombrePaciente: string;
-  Medico: string;
-  nombreMedico: string;
-  colegiado: string;
-  enfermedad: string
-  constructor(id, fechaCreacion, Paciente, nombrePaciente, Medico, nombreMedico, colegiado, enfermedad){
-    this.id = id;
-    this.fechaCreacion = fechaCreacion;
-    this.Paciente = Paciente;
-    this.nombrePaciente = nombrePaciente;
-    this.Medico = Medico;
-    this.nombreMedico = nombreMedico;
-    this.colegiado = colegiado;
-    this.enfermedad = enfermedad;
-  } 
-}
+import { Ficha } from 'src/app/models/Ficha';
 
 @Component({
   selector: 'app-dashboard-home',
@@ -88,7 +68,6 @@ export class DashboardHomeComponent {
     if(this.loginService.isLogged){
       this.consultas();
       this.usuarios();
-      this.fichas()
     }else{
       this.router.navigateByUrl("/login");
     }
@@ -124,34 +103,6 @@ export class DashboardHomeComponent {
     }
   }
 
-  fichas(){
-    if(this.loginService.isLogged){
-      this.fichaService.todasFichas()
-      .subscribe(
-        response =>{
-          console.log(response);
-          console.log(response);
-          for (let i in response) {
-              if(response[i]['enfermedad'] == 'migranas'){
-                response[i]['enfermedad'] = "Migrañas";
-              }else if(response[i]['enfermedad'] == 'diabetes'){
-                response[i]['enfermedad'] = "Diabetes";
-              }else{
-                response[i]['enfermedad'] = "Asma";
-              }
-
-                const newFicha = new Ficha(response[i]['id'],response[i]['fechaCreacion'],response[i]['dniPaciente']+" ("+response[i]['nombrePaciente']+")", response[i]['nombrePaciente'],response[i]['dniMedico']+" ("+response[i]['nombreMedico']+") "+response[i]['colegiado'],response[i]['nombreMedico'], response[i]['colegiado'], response[i]['enfermedad']);
-                this.fichasArray.push(newFicha);
-          }
-          this.dataSource = this.fichasArray;
-          console.log(this.fichasArray);
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
-  }
 }
 
 
