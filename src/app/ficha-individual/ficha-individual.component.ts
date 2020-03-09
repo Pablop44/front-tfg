@@ -519,6 +519,13 @@ export class FichaIndividualComponent implements OnInit {
   }
 
   aplicarFiltro(){
+    if(this.filtroConsulta.fechaInicio != null){
+      this.filtroConsulta.fechaInicio = moment(this.filtroConsulta.fechaInicio).format('YYYY-MM-DD');
+    }
+    if(this.filtroConsulta.fechaFin != null){
+      this.filtroConsulta.fechaFin = moment(this.filtroConsulta.fechaFin).format('YYYY-MM-DD');
+    }
+    
     if(this.filtroConsulta.diagnostico == 'si'){
       this.filtroConsulta.diagnostico = 'si';
     }else{

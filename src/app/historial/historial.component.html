@@ -1,5 +1,5 @@
 <div class="grid-container">
-    <mat-grid-list cols="2" rowHeight="400px">
+    <mat-grid-list cols="2" rowHeight="450px">
       <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
   
             <mat-card class="dashboard-card">
@@ -19,39 +19,74 @@
                     </mat-card-header>
   
                     <mat-card-content>
-  
+
                       <form class="formFiltrar" (ngSubmit)="aplicarFiltro()" #loginForm="ngForm">
-                          <mat-form-field style="width: 40%;">
-                            <mat-label>Nombre del Medicamento</mat-label>
-                            <input matInput type="text" id="id" name="id"  placeholder="Nombre">
-                          </mat-form-field>
-  
-  
-                          <mat-form-field style="width: 20%; margin-left: 100px; margin-right: 20px;">
-                            <mat-label>Mínima Dosis</mat-label>
-                            <input matInput id="minDosis" name="minDosis"  placeholder="Número">
-                          </mat-form-field>
-                          <mat-form-field style="width: 20%;">
-                            <mat-label>Máxima Dosis</mat-label>
-                            <input matInput id="maxDosis" name="maxDosis"  placeholder="Número">
-                          </mat-form-field>
-                        
-          
-                          <mat-form-field style="width: 50%; margin-right: 100px;">
-                            <mat-label>Vía de Administración</mat-label>
-                            <input matInput type="text" id="id" name="id" placeholder="Vía">
-                          </mat-form-field>
-  
-                          <mat-form-field style="width: 30%; margin-right: 20px;">
-                            <mat-label>Marca del Medicamento</mat-label>
-                            <mat-select >
-                              <mat-option *ngFor="let marca of marcas" (click)="establecerMarcaFiltro(marca.nombre)" [value]="marca.nombre">
-                                {{marca.nombre}}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                                                                     
-                        <button mat-raised-button type="submit" color="primary">Filtrar</button>
+                        <mat-list>
+                          <h3 mat-subheader>
+                                Datos del Fichero
+                          </h3>
+                          <mat-list-item >
+                            <mat-form-field style="width: 20%;">
+                              <mat-label>Número de Historial</mat-label>
+                              <input matInput type="number" id="id" name="id" [(ngModel)]="filtroHistorial.id" placeholder="Número">
+                            </mat-form-field>
+                            <mat-form-field style="width: 15%; margin-left: 80px;">
+                              <mat-label>Fecha Inicio Periodo</mat-label>
+                              <input matInput [matDatepicker]="dpInicio"  name="fechaInicio" id="fechaInicio" [(ngModel)]="filtroHistorial.fechaInicio">
+                              <mat-datepicker-toggle matSuffix [for]="dpInicio"></mat-datepicker-toggle>
+                              <mat-datepicker #dpInicio></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field style="width: 15%; margin-left: 20px;">
+                              <mat-label>Fecha Fin Periodo</mat-label>
+                              <input matInput [matDatepicker]="dpFin"  name="fechaFin" id="fechaFin" [(ngModel)]="filtroHistorial.fechaFin">
+                              <mat-datepicker-toggle matSuffix [for]="dpFin"></mat-datepicker-toggle>
+                              <mat-datepicker #dpFin></mat-datepicker>
+                            </mat-form-field>
+                          </mat-list-item>
+                          <mat-divider></mat-divider>
+                          <h3 mat-subheader>
+                                Datos del Paciente
+                          </h3>
+                          <mat-list-item >
+                            <mat-form-field style="width: 25%; margin-right: 20px;">
+                              <mat-label>DNI del paciente</mat-label>
+                              <input matInput type="text" id="dniPaciente" name="dniPaciente" [(ngModel)]="filtroHistorial.dniPaciente" placeholder="Número">
+                            </mat-form-field>
+                            <mat-form-field style="width: 25%; margin-right: 20px;">
+                              <mat-label>Nombre del Paciente</mat-label>
+                              <input matInput type="text" id="nombrePaciente" name="nombrePaciente" [(ngModel)]="filtroHistorial.nombrePaciente" placeholder="Número">
+                            </mat-form-field>
+                            <mat-form-field style="width: 40%;">
+                              <mat-label>Apellidos del Paciente</mat-label>
+                              <input matInput type="text" id="apellidosPaciente" name="apellidosPaciente" [(ngModel)]="filtroHistorial.apellidosPaciente" placeholder="Número">
+                            </mat-form-field>
+                          </mat-list-item>
+                          <mat-divider></mat-divider>
+                          <h3 mat-subheader>
+                                Datos del Médico
+                          </h3>
+                          <mat-list-item >
+                            <mat-form-field style="width: 20%; margin-right: 20px;">
+                              <mat-label>DNI del Médico</mat-label>
+                              <input matInput type="text" id="dniMedico" name="dniMedico"  [(ngModel)]="filtroHistorial.dniMedico" placeholder="Número">
+                            </mat-form-field>
+                            <mat-form-field style="width: 20%; margin-right: 20px;">
+                              <mat-label>Nombre del Médico</mat-label>
+                              <input matInput type="text" id="nombreMedico" name="nombreMedico" [(ngModel)]="filtroHistorial.nombreMedico" placeholder="Número">
+                            </mat-form-field>
+                            <mat-form-field style="width: 30%; margin-right: 20px;">
+                              <mat-label>Apellidos del Médico</mat-label>
+                              <input matInput type="text" id="apellidosMedico" name="apellidosMedico" [(ngModel)]="filtroHistorial.apellidosMedico" placeholder="Número">
+                            </mat-form-field>
+                            <mat-form-field style="width: 20%;">
+                              <mat-label>Número de Colegiado</mat-label>
+                              <input matInput type="number" id="colegiado" name="colegiado" [(ngModel)]="filtroHistorial.colegiado" placeholder="Número">
+                            </mat-form-field>
+                          </mat-list-item>
+                          <mat-list-item>
+                            <button mat-raised-button type="submit" color="primary">Filtrar</button>
+                          </mat-list-item>
+                        </mat-list>
                       </form>
   
                     </mat-card-content>

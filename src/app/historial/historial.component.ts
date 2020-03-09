@@ -6,6 +6,14 @@ import { UserService } from 'src/services/user.service';
 import { FichaService } from 'src/services/ficha.service';
 import { Ficha } from 'src/app/models/Ficha';
 import {MatTableDataSource} from '@angular/material/table';
+import { FiltroHistorial } from 'src/app/models/FiltroHistorial';
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+
+import * as _moment from 'moment';
+// tslint:disable-next-line:no-duplicate-imports
+import {default as _rollupMoment} from 'moment';
+
+const moment = _rollupMoment || _moment;
 
 @Component({
   selector: 'app-historial',
@@ -18,6 +26,22 @@ export class HistorialComponent implements OnInit {
   loginService: LoginService;
   userService: UserService;
   fichasArray : Ficha[] = [];
+
+  filtroHistorial : FiltroHistorial = {
+    id:null,
+    fechaInicio:null,
+    fechaFin:null,
+    dniPaciente:null,
+    nombrePaciente:null,
+    apellidosPaciente:null,
+    dniMedico:null,
+    nombreMedico:null,
+    apellidosMedico:null,
+    colegiado:null,
+    migranas:null,
+    diabetes:null,
+    asma:null
+  }
 
   public dataSource: any;
 
@@ -53,7 +77,6 @@ export class HistorialComponent implements OnInit {
       this.numeroFichas();
     }else if(this.loginService.loggedUser.rol == 'medico' && this.loginService.isLogged){
     }
-    
   }
 
 
@@ -133,5 +156,11 @@ export class HistorialComponent implements OnInit {
         }
       );
     }
+
+  aplicarFiltro(){
+    this.filtroHistorial.fechaInicio = moment(this.filtroHistorial.fechaInicio).format('YYYY-MM-DD');
+    this.filtroHistorial.fechaFin = moment(this.filtroHistorial.fechaFin).format('YYYY-MM-DD');
+    console.log(this.filtroHistorial);
+  }
 
 }
