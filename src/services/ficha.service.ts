@@ -18,9 +18,12 @@ export class FichaService {
 
     if(tipo == null){
 
-      if(filtro = null){
+      if(filtro.id == null && filtro.fechaInicio == null && filtro.fechaFin == null && filtro.dniPaciente == null && filtro.nombrePaciente == null 
+        && filtro.apellidosPaciente == null && filtro.dniMedico == null && filtro.nombreMedico == null 
+        && filtro.apellidosMedico == null && filtro.colegiado == null && filtro.asma == null && filtro.diabetes == null && filtro.migranas == null){
         filtro = null;
       }
+
   
       let array = [
         {

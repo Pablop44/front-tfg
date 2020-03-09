@@ -82,7 +82,7 @@ export class HistorialComponent implements OnInit {
 
   fichas(){
     if(this.loginService.isLogged){
-      this.fichaService.todasFichas(this.currentPage, this.pageSize, null, null)
+      this.fichaService.todasFichas(this.currentPage, this.pageSize, null, this.filtroHistorial)
       .subscribe(
         response =>{
           this.fichasArray = [];
@@ -158,9 +158,17 @@ export class HistorialComponent implements OnInit {
     }
 
   aplicarFiltro(){
-    this.filtroHistorial.fechaInicio = moment(this.filtroHistorial.fechaInicio).format('YYYY-MM-DD');
-    this.filtroHistorial.fechaFin = moment(this.filtroHistorial.fechaFin).format('YYYY-MM-DD');
-    console.log(this.filtroHistorial);
+
+    if(this.filtroHistorial.fechaInicio != null){
+      this.filtroHistorial.fechaInicio = moment(this.filtroHistorial.fechaInicio).format('YYYY-MM-DD');
+    }
+
+    if(this.filtroHistorial.fechaFin != null){
+      this.filtroHistorial.fechaFin = moment(this.filtroHistorial.fechaFin).format('YYYY-MM-DD');
+    }
+
+    this.fichas();
+    
   }
 
 }
