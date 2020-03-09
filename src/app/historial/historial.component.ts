@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { LoginService } from 'src/services/login.service';
@@ -8,12 +8,44 @@ import { Ficha } from 'src/app/models/Ficha';
 import {MatTableDataSource} from '@angular/material/table';
 import { FiltroHistorial } from 'src/app/models/FiltroHistorial';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_SNACK_BAR_DATA, MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import {default as _rollupMoment} from 'moment';
 
 const moment = _rollupMoment || _moment;
+
+@Component({
+  selector: 'dialogoEliminarHistorial',
+  templateUrl: 'dialogoEliminarHistorial.html',
+})
+export class DialogoEliminarHistorial {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoEliminarHistorial>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'notificacionEliminarHistorial',
+  templateUrl: 'notificacionEliminarHistorial.html',
+  styles: [`
+    .example-pizza-party {
+      color: hotpink;
+    }
+  `],
+})
+export class notificacionEliminarHistorial {
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
+}
 
 @Component({
   selector: 'app-historial',
@@ -65,7 +97,8 @@ export class HistorialComponent implements OnInit {
     })
   );
 
-  constructor(fichaService:FichaService, private breakpointObserver: BreakpointObserver, loginService: LoginService, userService:UserService) {
+  constructor(fichaService:FichaService, private breakpointObserver: BreakpointObserver, loginService: LoginService,
+    private _snackBar: MatSnackBar, userService:UserService,public dialog: MatDialog) {
     this.fichaService = fichaService;
     this.loginService = loginService;
     this.userService = userService;
@@ -169,6 +202,36 @@ export class HistorialComponent implements OnInit {
 
     this.fichas();
     
+  }
+
+  openDialog(data): void {
+    const dialogRef = this.dialog.open(DialogoEliminarHistorial, {
+      width: '300px',
+      data: {id: data.id}
+    });
+
+    dialogRef.afterClosed().subscribe(response => {
+      this.eliminarHistorial(data.id);
+    });
+  }
+
+  openSnackBar(mensaje: String) {
+    this._snackBar.openFromComponent(notificacionEliminarHistorial, {
+      duration: 4 * 1000, data: mensaje
+    });
+  }
+
+  eliminarHistorial(id){
+    this.fichaService.eliminarFicha(id)
+      .subscribe(
+        response =>{
+            this.fichas();
+            this.openSnackBar("Se ha eliminado correctamente el historial"+response['id']);
+          },
+        error => {
+          console.log(error)
+        }
+      );
   }
 
 }

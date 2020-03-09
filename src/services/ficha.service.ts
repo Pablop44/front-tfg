@@ -116,4 +116,13 @@ export class FichaService {
       })
     });
   }
+
+  eliminarFicha(id){
+    return this.http.delete(this.restUrl+"/ficha/delete/"+id+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
+
 }

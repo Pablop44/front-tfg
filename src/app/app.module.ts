@@ -60,7 +60,8 @@ import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentC
 import { VistaUsuarioComponent, notificacionVistaUserComponent, DialogoEliminarUsuarioVista, DialogoEditarUsuario } from './vista-usuario/vista-usuario.component';
 import { DashboardMedicoComponent} from './dashboard-medico/dashboard-medico.component';
 import { MedicamentosComponent, DialogoAnadirMedicamento, notificacionComponentMedicamento, DialogoAnadirMarca, dialogoEliminarMedicamento } from './medicamentos/medicamentos.component';
-import { HistorialComponent } from './historial/historial.component';
+import { HistorialComponent, DialogoEliminarHistorial, notificacionEliminarHistorial } from './historial/historial.component';
+
 
 @NgModule({
   declarations: [
@@ -90,7 +91,9 @@ import { HistorialComponent } from './historial/historial.component';
     DialogoAnadirMarca,
     dialogoEliminarMedicamento,
     DialogoAceptarUsuario,
-    HistorialComponent
+    HistorialComponent,
+    DialogoEliminarHistorial,
+    notificacionEliminarHistorial
   ],
   imports: [
     BrowserModule,
@@ -209,7 +212,9 @@ import { HistorialComponent } from './historial/historial.component';
     notificacionComponentMedicamento,
     DialogoAnadirMarca,
     dialogoEliminarMedicamento,
-    DialogoAceptarUsuario
+    DialogoAceptarUsuario,
+    DialogoEliminarHistorial,
+    notificacionEliminarHistorial
   ],
   providers: [],
   bootstrap: [AppComponent]
