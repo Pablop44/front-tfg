@@ -81,7 +81,8 @@ export class HistorialComponent implements OnInit {
   public currentPage = 0;
   public totalSize = 0;
 
-  displayedColumns: string[] = ['numero', 'fecha', 'enfermedad', 'dniPaciente', 'nombrePaciente', 'dniMedico', 'nombreMedico', 'colegiado', 'acciones'];
+
+  displayedColumns: string[] = [];
 
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
@@ -106,9 +107,13 @@ export class HistorialComponent implements OnInit {
 
   ngOnInit() {
     if(this.loginService.loggedUser.rol == 'administrador' && this.loginService.isLogged){
+      this.displayedColumns = ['numero', 'fecha', 'enfermedad', 'dniPaciente', 'nombrePaciente', 'dniMedico', 'nombreMedico', 'colegiado', 'acciones'];
       this.fichas();
       this.numeroFichas();
     }else if(this.loginService.loggedUser.rol == 'medico' && this.loginService.isLogged){
+      this.displayedColumns = ['numero', 'fecha', 'enfermedad', 'dniPaciente', 'nombrePaciente', 'acciones'];
+      this.fichasMedico();
+      this.numeroFichas();
     }
   }
 
@@ -143,7 +148,7 @@ export class HistorialComponent implements OnInit {
 
   fichasMedico(){
     if(this.loginService.isLogged){
-      this.fichaService.fichasMedico()
+      this.fichaService.fichasMedico(this.currentPage, this.pageSize, null, this.filtroHistorial)
       .subscribe(
         response =>{
           this.fichasArray = [];
@@ -192,6 +197,8 @@ export class HistorialComponent implements OnInit {
 
   aplicarFiltro(){
 
+    
+
     if(this.filtroHistorial.fechaInicio != null){
       this.filtroHistorial.fechaInicio = moment(this.filtroHistorial.fechaInicio).format('YYYY-MM-DD');
     }
@@ -200,7 +207,12 @@ export class HistorialComponent implements OnInit {
       this.filtroHistorial.fechaFin = moment(this.filtroHistorial.fechaFin).format('YYYY-MM-DD');
     }
 
-    this.fichas();
+    if(this.loginService.loggedUser.rol == "administrador"){
+      this.fichas();
+    }else{
+      this.fichasMedico();
+    }
+   
     
   }
 
