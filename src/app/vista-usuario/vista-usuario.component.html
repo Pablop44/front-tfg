@@ -147,9 +147,9 @@
     
             </div>
 
-            <div *ngSwitchCase="'accionCuenta'">
+            <div *ngSwitchCase="'accionCuenta'" >
 
-                <mat-card class="dashboard-card">
+                <mat-card class="dashboard-card" *ngIf="loginService.loggedUser.rol == 'administrador'">
                     <mat-card-header>
                       <mat-card-title>
                         Cambiar el Estado de la Cuenta
@@ -172,9 +172,9 @@
     
             </div>
 
-            <div *ngSwitchCase="'accionRol'">
+            <div *ngSwitchCase="'accionRol'" >
 
-                <mat-card class="dashboard-card">
+                <mat-card class="dashboard-card" *ngIf="loginService.loggedUser.rol == 'administrador'">
                     <mat-card-header>
                       <mat-card-title>
                         Cambiar el rol del Usuario
@@ -225,7 +225,7 @@
 
             <div *ngSwitchCase="'especialidad'" >
 
-              <mat-card *ngIf="datosUser.rol == 'medico'" class="dashboard-card">
+              <mat-card *ngIf="datosUser.rol == 'administrador'" class="dashboard-card">
                   <mat-card-header>
                     <mat-card-title>
                       Cambiar la Especialidad del médico

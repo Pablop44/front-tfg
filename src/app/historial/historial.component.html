@@ -102,12 +102,12 @@
                   
                       <!-- Progress Column -->
                       <ng-container matColumnDef="numero">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('nombre')"> Número de Historial </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('id')"> Número de Historial </th>
                         <td mat-cell *matCellDef="let row"> {{row.id}} </td>
                       </ng-container>
 
                       <ng-container matColumnDef="fecha">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('viaAdministracion')"> Fecha de Creación </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('fechaCreacion')"> Fecha de Creación </th>
                         <td mat-cell *matCellDef="let row"> {{row.fechaCreacion}} </td>
                       </ng-container>
 
@@ -118,26 +118,26 @@
                   
                       <!-- Name Column -->
                       <ng-container matColumnDef="dniPaciente">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('marca')"> DNI del Paciente</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('pacienteDni')"> DNI del Paciente</th>
                         <td mat-cell *matCellDef="let row"> {{row.pacienteDni}}</td>
                       </ng-container>
 
                       <ng-container matColumnDef="nombrePaciente">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('dosis')"> Nombre del Paciente </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('nombrePaciente')"> Nombre del Paciente </th>
                         <td mat-cell *matCellDef="let row"> {{row.nombrePaciente}}</td>
                       </ng-container>
 
                       <ng-container matColumnDef="dniMedico">
-                        <th mat-header-cell *matHeaderCellDef> DNI del Médico</th>
+                        <th mat-header-cell *matHeaderCellDef (click)="ordenar('dniMedico')"> DNI del Médico</th>
                         <td mat-cell *matCellDef="let row"> {{row.dniMedico}}</td>
                       </ng-container>
 
-                      <ng-container matColumnDef="nombreMedico">
+                      <ng-container matColumnDef="nombreMedico" (click)="ordenar('nombreMedico')">
                         <th mat-header-cell *matHeaderCellDef> Nombre del Médico</th>
                         <td mat-cell *matCellDef="let row"> {{row.nombreMedico}}</td>
                       </ng-container>
                   
-                      <ng-container matColumnDef="colegiado">
+                      <ng-container matColumnDef="colegiado" (click)="ordenar('colegiado')">
                         <th mat-header-cell *matHeaderCellDef> Número de Colegiado</th>
                         <td mat-cell *matCellDef="let row"> {{row.colegiado}}</td>
                       </ng-container>

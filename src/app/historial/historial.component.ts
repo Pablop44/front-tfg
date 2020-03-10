@@ -81,6 +81,8 @@ export class HistorialComponent implements OnInit {
   public currentPage = 0;
   public totalSize = 0;
 
+  orden:null;
+
 
   displayedColumns: string[] = [];
 
@@ -120,7 +122,7 @@ export class HistorialComponent implements OnInit {
 
   fichas(){
     if(this.loginService.isLogged){
-      this.fichaService.todasFichas(this.currentPage, this.pageSize, null, this.filtroHistorial)
+      this.fichaService.todasFichas(this.currentPage, this.pageSize, this.orden, this.filtroHistorial)
       .subscribe(
         response =>{
           this.fichasArray = [];
@@ -148,7 +150,7 @@ export class HistorialComponent implements OnInit {
 
   fichasMedico(){
     if(this.loginService.isLogged){
-      this.fichaService.fichasMedico(this.currentPage, this.pageSize, null, this.filtroHistorial)
+      this.fichaService.fichasMedico(this.currentPage, this.pageSize, this.orden, this.filtroHistorial)
       .subscribe(
         response =>{
           this.fichasArray = [];
@@ -244,6 +246,20 @@ export class HistorialComponent implements OnInit {
           console.log(error)
         }
       );
+  }
+
+  ordenar(tipo){
+    if(this.loginService.isLogged){
+      
+      this.orden = tipo;
+
+      if(this.loginService.loggedUser.rol == "administrador"){
+        this.fichas();
+      }else{
+        this.fichasMedico();
+      }
+      
+    }
   }
 
 }
