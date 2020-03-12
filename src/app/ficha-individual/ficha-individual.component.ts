@@ -3,6 +3,7 @@ import { ConsultaService } from 'src/services/consulta.service';
 import { LoginService } from 'src/services/login.service';
 import { UserService } from 'src/services/user.service';
 import { FichaService } from 'src/services/ficha.service';
+import { NotaService } from 'src/services/nota.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription }   from 'rxjs';
 import {FormControl} from '@angular/forms';
@@ -15,6 +16,7 @@ import {MAT_SNACK_BAR_DATA, MatAutocomplete, MatAutocompleteSelectedEvent} from 
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { Hora } from 'src/app/models/Hora';
+import { Nota } from 'src/app/models/Nota';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatChipInputEvent} from '@angular/material/chips';
@@ -188,10 +190,12 @@ export class FichaIndividualComponent implements OnInit {
   medico: any = [];
   paciente: any = [];
   enfermedades : any = [];
+  notas:Nota[] = [];
   consultaService: ConsultaService;
   loginService: LoginService;
   userService:UserService;
   fichaService:FichaService;
+  notaService:NotaService;
   sub: Subscription;
   id: number;
   fechaFinal: string;
@@ -200,11 +204,16 @@ export class FichaIndividualComponent implements OnInit {
   public pageSize = 15;
   public currentPage = 0;
   public totalSize = 0;
+
+  public pageSizeNotas = 15;
+  public currentPageNotas = 0;
+  public totalSizeNotas = 0;
   panelOpenState = false;
   diabetes = "";
   asma = "";
   migranas = "";
   orden = null;
+  ordenNotas:null;
   visible = true;
   selectable = true;
   removable = true;
@@ -258,12 +267,13 @@ export class FichaIndividualComponent implements OnInit {
   );
 
   constructor(private breakpointObserver: BreakpointObserver, consultaService:ConsultaService,
-    private route : ActivatedRoute,
+    private route : ActivatedRoute, notaService:NotaService,
     loginService:LoginService, userService:UserService, fichaService:FichaService, public dialog: MatDialog,private _snackBar: MatSnackBar) {
       this.consultaService = consultaService;
       this.loginService = loginService;
       this.userService = userService;
       this.fichaService = fichaService;
+      this.notaService = notaService;
       this.filteredEstado = this.controlEstados.valueChanges.pipe(
         startWith(null),
         map((fruit: string | null) => fruit ? this._filter(fruit) : this.allEstados.slice()));
@@ -274,8 +284,6 @@ export class FichaIndividualComponent implements OnInit {
        this.id = params['id'];
        this.datosFicha(this.id);
        });
-       
-
     }
   
     ngOnDestroy() {
@@ -328,6 +336,7 @@ export class FichaIndividualComponent implements OnInit {
           this.datosMedico(response['medico']);
           this.datosPaciente(response['paciente']);
           this.datosConsultas();
+          this.datosNotas();
         },
         error => {
           console.log(error);
@@ -352,6 +361,24 @@ export class FichaIndividualComponent implements OnInit {
               this.migranas = "Migrañas";
             }
           }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  datosNotas(){
+    if(this.loginService.isLogged){
+      this.notaService.todasNotas(this.id, this.currentPageNotas, this.pageSizeNotas, null, null)
+      .subscribe(
+        response =>{         
+          for (let i in response) {
+            const newNota = new Nota(response[i]['id'],response[i]['fecha'],response[i]['datos'], response[i]['ficha']);
+            this.notas.push(newNota);
+          } 
+          console.log(this.notas);
         },
         error => {
           console.log(error);
