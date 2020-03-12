@@ -183,9 +183,12 @@ export class DialogoAnadirConsulta {
 })
 export class FichaIndividualComponent implements OnInit {
 
+  displayedColumnsNotas : string[] = ['fecha', 'datos', 'acciones'];
+
   displayedColumns: string[] = ['numeroConsulta', 'lugar', 'fecha', 'motivo', 'estado', 'diagnostico', 'observaciones', 'acciones'];
 
-  public dataSource: any;
+  dataSource: any;
+  dataSourceNotas: any
   ficha : any = [];
   medico: any = [];
   paciente: any = [];
@@ -296,6 +299,12 @@ export class FichaIndividualComponent implements OnInit {
       this.datosConsultas();
     }
 
+    public handlePageNotas(e: any) {
+      this.currentPageNotas = e.pageIndex;
+      this.pageSizeNotas = e.pageSize;
+      this.datosNotas();
+    }
+
     datosPaciente(idUser){
     if(this.loginService.isLogged){
       this.userService.datosUsuario(idUser)
@@ -373,11 +382,15 @@ export class FichaIndividualComponent implements OnInit {
     if(this.loginService.isLogged){
       this.notaService.todasNotas(this.id, this.currentPageNotas, this.pageSizeNotas, null, null)
       .subscribe(
-        response =>{         
+        response =>{       
+          this.numeroNotas(this.id, null);
+          this.notas = [];  
           for (let i in response) {
             const newNota = new Nota(response[i]['id'],response[i]['fecha'],response[i]['datos'], response[i]['ficha']);
             this.notas.push(newNota);
           } 
+          this.dataSourceNotas = new MatTableDataSource<Nota>(this.notas);
+          this.dataSourceNotas.data = this.notas;
           console.log(this.notas);
         },
         error => {
@@ -530,6 +543,20 @@ export class FichaIndividualComponent implements OnInit {
       .subscribe(
         response =>{         
           this.totalSize = response['numero'];
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  numeroNotas(id, filtro){
+    if(this.loginService.isLogged){
+      this.notaService.numeroNotas(id, filtro)
+      .subscribe(
+        response =>{         
+          this.totalSizeNotas = response['numero'];
         },
         error => {
           console.log(error);
