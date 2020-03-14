@@ -99,6 +99,10 @@ export class NotaService {
 
   public numeroNotas(id,filtro){
 
+    if(filtro.fechaInicio == null && filtro.fechaFin == null && filtro.texto == null){
+      filtro = null;
+    }
+
     let array = [{
       Field: 'filtro',
       Value: filtro
@@ -121,6 +125,40 @@ export class NotaService {
     };
 
       return this.http.post(this.restUrl+"/nota/numeroNotas.json", json,
+       httpOptions);
+  }
+
+
+  public crearNota(texto,id, fecha){
+
+    let array = [{
+      Field: 'datos',
+      Value: texto
+    },
+    {
+      Field: 'ficha',
+      Value: id
+    },
+    {
+      Field: 'fecha',
+      Value: fecha
+    }
+    ];
+
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+
+    console.log(json);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.http.post(this.restUrl+"/nota/add.json", json,
        httpOptions);
   }
 }

@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Añadir una Nota</h1>
+<div mat-dialog-content>
+  <p>Introduce el texto de la Nota</p>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Motivo</mat-label>
+    <textarea matInput required id="motivo" name="motivo" placeholder="Motivo" [(ngModel)]="data.texto"></textarea>
+  </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">Añadir</button>
+  <button mat-button style="float:right;" (click)="onNoClick()">Cancelar</button>
+</div>

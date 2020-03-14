@@ -371,5 +371,6 @@ footer{
   }
 
 
-html, body { height: 100%;}
+html, body { height: 100%;   overflow-wrap: break-word;
+  word-wrap: break-word;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

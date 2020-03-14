@@ -177,6 +177,22 @@ export class DialogoAnadirConsulta {
 }
 
 @Component({
+  selector: 'dialogoAnadirNota',
+  templateUrl: 'dialogoAnadirNota.html',
+})
+export class DialogoAnadirNota{
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoAnadirNota>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
   selector: 'app-ficha-individual',
   templateUrl: './ficha-individual.component.html',
   styleUrls: ['./ficha-individual.component.css'],
@@ -184,7 +200,7 @@ export class DialogoAnadirConsulta {
 })
 export class FichaIndividualComponent implements OnInit {
 
-  displayedColumnsNotas : string[] = ['fecha', 'datos', 'acciones'];
+  displayedColumnsNotas : string[] = ['fecha'];
 
   displayedColumns: string[] = ['numeroConsulta', 'lugar', 'fecha', 'motivo', 'estado', 'diagnostico', 'observaciones', 'acciones'];
 
@@ -209,7 +225,7 @@ export class FichaIndividualComponent implements OnInit {
   public currentPage = 0;
   public totalSize = 0;
 
-  public pageSizeNotas = 15;
+  public pageSizeNotas = 5;
   public currentPageNotas = 0;
   public totalSizeNotas = 0;
   panelOpenState = false;
@@ -217,7 +233,7 @@ export class FichaIndividualComponent implements OnInit {
   asma = "";
   migranas = "";
   orden = null;
-  ordenNotas:null;
+  ordenNotas = null;
   visible = true;
   selectable = true;
   removable = true;
@@ -387,10 +403,10 @@ export class FichaIndividualComponent implements OnInit {
 
   datosNotas(){
     if(this.loginService.isLogged){
-      this.notaService.todasNotas(this.id, this.currentPageNotas, this.pageSizeNotas, null, this.filtroNota)
+      this.notaService.todasNotas(this.id, this.currentPageNotas, this.pageSizeNotas, this.ordenNotas, this.filtroNota)
       .subscribe(
         response =>{       
-          this.numeroNotas(this.id, null);
+          this.numeroNotas(this.id, this.filtroNota);
           this.notas = [];  
           for (let i in response) {
             const newNota = new Nota(response[i]['id'],response[i]['fecha'],response[i]['datos'], response[i]['ficha']);
@@ -470,19 +486,7 @@ export class FichaIndividualComponent implements OnInit {
       .subscribe(
         response =>{
           console.log(response);
-          if(response['diagnostico']  !==  null){
-            response['diagnostico'] = "Sí"
-          }else{
-            response['diagnostico'] = "No"
-          }
-          if(response['observaciones'] !==  null){
-            response['observaciones'] = "Sí"
-          }else{
-            response['observaciones'] = "No"
-          }
-          const newConsultaData = new Consulta(response['id'],response['lugar'],response['motivo'], response['fecha'],response['diagnostico'],response['observaciones'], response['medico'], response['paciente'], response['ficha'], response['estado']);
-          this.consultas.push(newConsultaData);
-          this.dataSource.data = this.consultas;
+          this.datosConsultas();
           this.openSnackBar("Se ha creado la consulta para el paciente "+this.paciente.username+" con fecha: "+response['fecha']);
         },
         error => {
@@ -490,7 +494,22 @@ export class FichaIndividualComponent implements OnInit {
         }
       );
     }
-    
+  }
+
+  crearNota(respuesta){
+    if(this.loginService.isLogged){
+      this.notaService.crearNota(respuesta, this.id, moment().format('YYYY-MM-DD'))
+      .subscribe(
+        response =>{
+          console.log(response);
+          this.datosNotas();
+          this.openSnackBar("Se ha creado la nota");
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   openDialog(): void {
@@ -502,6 +521,16 @@ export class FichaIndividualComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(response => {
       this.crearConsulta(response);
+    });
+  }
+
+  openDialogNota(): void {
+    const dialogRef = this.dialog.open(DialogoAnadirNota, {
+      width: '500px',
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(response => {
+      this.crearNota(response['texto']);
     });
   }
 
@@ -624,5 +653,12 @@ export class FichaIndividualComponent implements OnInit {
     }
     this.datosNotas();
   }
+
+
+  ordenarNota(orden){
+    this.ordenNotas = orden;
+    this.datosNotas();
+  }
+
 
 }
