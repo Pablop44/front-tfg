@@ -17,6 +17,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { Hora } from 'src/app/models/Hora';
 import { Nota } from 'src/app/models/Nota';
+import { FiltroNota } from 'src/app/models/FiltroNota';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatChipInputEvent} from '@angular/material/chips';
@@ -239,6 +240,12 @@ export class FichaIndividualComponent implements OnInit {
     realizada: null
   }
 
+  filtroNota: FiltroNota = {
+    fechaInicio: null,
+    fechaFin: null,
+    texto: null,
+  }
+
   @ViewChild('auto',{ static: true }) matAutocomplete: MatAutocomplete;
 
   tarjetaResumen = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -380,7 +387,7 @@ export class FichaIndividualComponent implements OnInit {
 
   datosNotas(){
     if(this.loginService.isLogged){
-      this.notaService.todasNotas(this.id, this.currentPageNotas, this.pageSizeNotas, null, null)
+      this.notaService.todasNotas(this.id, this.currentPageNotas, this.pageSizeNotas, null, this.filtroNota)
       .subscribe(
         response =>{       
           this.numeroNotas(this.id, null);
@@ -391,6 +398,9 @@ export class FichaIndividualComponent implements OnInit {
           } 
           this.dataSourceNotas = new MatTableDataSource<Nota>(this.notas);
           this.dataSourceNotas.data = this.notas;
+          this.filtroNota.fechaFin = null;
+          this.filtroNota.fechaInicio = null;
+          this.filtroNota.texto = null;
           console.log(this.notas);
         },
         error => {
@@ -602,6 +612,17 @@ export class FichaIndividualComponent implements OnInit {
       }
     });
     this.datosConsultas();
+  }
+
+
+  aplicarFiltroNotas(){
+    if(this.filtroNota.fechaInicio != null){
+      this.filtroNota.fechaInicio = moment(this.filtroNota.fechaInicio).format('YYYY-MM-DD');
+    }
+    if(this.filtroNota.fechaFin != null){
+      this.filtroNota.fechaFin = moment(this.filtroNota.fechaFin).format('YYYY-MM-DD');
+    }
+    this.datosNotas();
   }
 
 }

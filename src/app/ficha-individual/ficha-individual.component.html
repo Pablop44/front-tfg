@@ -333,72 +333,27 @@
 
                         <mat-card-content>
 
-                          <form class="formFiltrar" (ngSubmit)="aplicarFiltro()" #loginForm="ngForm">
-                              <mat-form-field style="width: 20%;">
-                                <mat-label>Número de Consulta</mat-label>
-                                <input matInput type="number" id="id" name="id" [(ngModel)]="filtroConsulta.id" placeholder="Número">
-                              </mat-form-field>
-                            
+                          <form class="formFiltrar" (ngSubmit)="aplicarFiltroNotas()" #loginForm="ngForm">      
               
-                              <mat-form-field style="width: 20%; margin-left: 80px;">
+                              <mat-form-field style="width: 40%;">
                                 <mat-label>Fecha Inicio Periodo</mat-label>
-                                <input matInput [matDatepicker]="dpInicioNota"  name="fechaInicio" id="fechaInicio" >
-                                <mat-datepicker-toggle matSuffix [for]="dpInicio"></mat-datepicker-toggle>
+                                <input matInput [matDatepicker]="dpInicioNota"  name="fechaInicio" id="fechaInicio" [(ngModel)]="filtroNota.fechaInicio">
+                                <mat-datepicker-toggle matSuffix [for]="dpInicioNota"></mat-datepicker-toggle>
                                 <mat-datepicker #dpInicioNota></mat-datepicker>
                               </mat-form-field>
 
-                              <mat-form-field style="width: 20%;">
+                              <mat-form-field style="width: 40%;">
                                 <mat-label>Fecha Fin Periodo</mat-label>
-                                <input matInput [matDatepicker]="dpFinNota"  name="fechaFin" id="fechaFin">
-                                <mat-datepicker-toggle matSuffix [for]="dpFin"></mat-datepicker-toggle>
+                                <input matInput [matDatepicker]="dpFinNota"  name="fechaFin" id="fechaFin" [(ngModel)]="filtroNota.fechaFin">
+                                <mat-datepicker-toggle matSuffix [for]="dpFinNota"></mat-datepicker-toggle>
                                 <mat-datepicker #dpFinNota></mat-datepicker>
                               </mat-form-field>
-                            
 
-                              <mat-form-field style="width: 20%; margin-left: 80px;">
-                                <mat-label>Lugar de Consulta</mat-label>
-                                <input matInput id="lugar" name="lugar" placeholder="Número" [(ngModel)]="filtroConsulta.lugar">
+                              <mat-form-field style="width: 100%;">
+                                <mat-label>Texto de la nota</mat-label>
+                                <textarea matInput placeholder="Texto de la nota" name="texto" [(ngModel)]="filtroNota.texto"></textarea>
                               </mat-form-field>
-
-                            <mat-form-field style="width: 45%; margin-right: 70px;">
-                              <mat-label>Estado de la Consulta</mat-label>
-                              <mat-chip-list #chipList >
-                                <mat-chip
-                                  *ngFor="let estado of estado"
-                                  [selectable]="selectable"
-                                  [removable]="removable"
-                                  (removed)="remove(estado)">
-                                  {{estado}}
-                                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                                </mat-chip>
-                                <input
-                                  placeholder="Nuevo Es..."
-                                  #estadoInput
-                                  [matAutocomplete]="auto"
-                                  [matChipInputFor]="chipList"
-                                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                  (matChipInputTokenEnd)="add($event)">
-                              </mat-chip-list>
-                              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                                <mat-option *ngFor="let estado of filteredEstado | async" [value]="estado">
-                                  {{estado}}
-                                </mat-option>
-                              </mat-autocomplete>
-                            </mat-form-field>
-
-                              
-                              <mat-radio-group class="example-radio-group" aria-label="Select an option" name="diagnostico" id="diagnostico" [(ngModel)]="filtroConsulta.diagnostico">
-                                <mat-label class="labelRadios">Diagnóstico</mat-label>
-                                <mat-radio-button value="si">Sí</mat-radio-button>
-                                <mat-radio-button value="no">No</mat-radio-button>
-                              </mat-radio-group>
-                            
-                              
-                              <mat-radio-group class="example-radio-group" aria-label="Select an option" name="observaciones" id="observaciones" [(ngModel)]="filtroConsulta.observaciones">
-                                <mat-label class="labelRadios">Observaciones</mat-label>
-                                <mat-radio-button value="si">Sí</mat-radio-button>
-                                <mat-radio-button value="no">No</mat-radio-button>
-                              </mat-radio-group>
+                  
                                                                              
                             <button mat-raised-button type="submit" color="primary">Filtrar</button>
                           </form>
@@ -419,12 +374,12 @@
                       
                           <!-- Progress Column -->
                           <ng-container matColumnDef="fecha">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('id')"> Fecha de la Nota </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenarNota('fecha')"> Fecha de la Nota </th>
                             <td mat-cell *matCellDef="let row"> {{row.fecha}} </td>
                           </ng-container>
       
                           <ng-container matColumnDef="datos">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('lugar')"> Texto de la Nota </th>
+                            <th mat-header-cell *matHeaderCellDef> Texto de la Nota </th>
                             <td mat-cell *matCellDef="let row"> {{row.datos}} </td>
                           </ng-container>
 

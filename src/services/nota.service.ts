@@ -17,6 +17,10 @@ export class NotaService {
 
     if(tipo == null){
 
+      if(filtro.fechaInicio == null && filtro.fechaFin == null && filtro.texto == null){
+        filtro = null;
+      }
+
       let array = [
         {
           Field: 'idFicha',
