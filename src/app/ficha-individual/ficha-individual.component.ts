@@ -4,6 +4,7 @@ import { LoginService } from 'src/services/login.service';
 import { UserService } from 'src/services/user.service';
 import { FichaService } from 'src/services/ficha.service';
 import { NotaService } from 'src/services/nota.service';
+import { TratamientoService } from 'src/services/tratamiento.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription }   from 'rxjs';
 import {FormControl} from '@angular/forms';
@@ -244,16 +245,21 @@ export class FichaIndividualComponent implements OnInit {
   paciente: any = [];
   enfermedades : any = [];
   notas:Nota[] = [];
+
   consultaService: ConsultaService;
   loginService: LoginService;
   userService:UserService;
   fichaService:FichaService;
   notaService:NotaService;
+  tratamientoService:TratamientoService;
+
   sub: Subscription;
   id: number;
   fechaFinal: string;
   horaFinal:string;
   consultas : Consulta[] = [];
+
+
   public pageSize = 15;
   public currentPage = 0;
   public totalSize = 0;
@@ -261,12 +267,18 @@ export class FichaIndividualComponent implements OnInit {
   public pageSizeNotas = 5;
   public currentPageNotas = 0;
   public totalSizeNotas = 0;
+
+  public pageSizeTratamiento = 15;
+  public currentPageTratamiento = 0;
+  public totalSizeTratamiento = 0;
+
   panelOpenState = false;
   diabetes = "";
   asma = "";
   migranas = "";
   orden = null;
   ordenNotas = null;
+  ordenTratamiento = null;
   visible = true;
   selectable = true;
   removable = true;
@@ -327,8 +339,10 @@ export class FichaIndividualComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver, consultaService:ConsultaService,
     private route : ActivatedRoute, notaService:NotaService,
-    loginService:LoginService, userService:UserService, fichaService:FichaService, public dialog: MatDialog,private _snackBar: MatSnackBar) {
+    loginService:LoginService, userService:UserService, fichaService:FichaService,
+     public dialog: MatDialog,private _snackBar: MatSnackBar, tratamientoService:TratamientoService) {
       this.consultaService = consultaService;
+      this.tratamientoService = tratamientoService;
       this.loginService = loginService;
       this.userService = userService;
       this.fichaService = fichaService;
@@ -402,6 +416,7 @@ export class FichaIndividualComponent implements OnInit {
           this.datosPaciente(response['paciente']);
           this.datosConsultas();
           this.datosNotas();
+          this.datosTratamientos();
         },
         error => {
           console.log(error);
@@ -451,6 +466,20 @@ export class FichaIndividualComponent implements OnInit {
           this.filtroNota.fechaInicio = null;
           this.filtroNota.texto = null;
           console.log(this.notas);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  datosTratamientos(){
+    if(this.loginService.isLogged){
+      this.tratamientoService.todosTratamientos(this.id, this.currentPageTratamiento, this.pageSizeTratamiento, this.ordenTratamiento, null)
+      .subscribe(
+        response =>{       
+          console.log(response);
         },
         error => {
           console.log(error);
