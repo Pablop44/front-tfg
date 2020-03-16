@@ -56,7 +56,7 @@ import {MatTreeModule} from '@angular/material/tree';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
 import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnadirAdministrador, DialogoEliminarUsuario, notificacionComponent, DialogoAceptarUsuario } from './users/users.component';
 import { loginNotificacionComponent } from './login/login.component';
-import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta, DialogoAnadirNota } from './ficha-individual/ficha-individual.component';
+import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta, DialogoAnadirNota, DialogoEliminarNota } from './ficha-individual/ficha-individual.component';
 import { VistaUsuarioComponent, notificacionVistaUserComponent, DialogoEliminarUsuarioVista, DialogoEditarUsuario } from './vista-usuario/vista-usuario.component';
 import { DashboardMedicoComponent} from './dashboard-medico/dashboard-medico.component';
 import { MedicamentosComponent, DialogoAnadirMedicamento, notificacionComponentMedicamento, DialogoAnadirMarca, dialogoEliminarMedicamento } from './medicamentos/medicamentos.component';
@@ -94,7 +94,8 @@ import { HistorialComponent, DialogoEliminarHistorial, notificacionEliminarHisto
     HistorialComponent,
     DialogoEliminarHistorial,
     notificacionEliminarHistorial,
-    DialogoAnadirNota
+    DialogoAnadirNota,
+    DialogoEliminarNota
   ],
   imports: [
     BrowserModule,
@@ -216,7 +217,8 @@ import { HistorialComponent, DialogoEliminarHistorial, notificacionEliminarHisto
     DialogoAceptarUsuario,
     DialogoEliminarHistorial,
     notificacionEliminarHistorial,
-    DialogoAnadirNota
+    DialogoAnadirNota,
+    DialogoEliminarNota
   ],
   providers: [],
   bootstrap: [AppComponent]

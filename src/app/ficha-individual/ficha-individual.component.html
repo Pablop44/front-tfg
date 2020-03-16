@@ -379,9 +379,8 @@
                               <h6>Fecha de la Nota: {{row.fecha}}</h6>
                               <p style="font-size: 15px;">{{row.datos}}</p>
                               <p>
-                                <button mat-stroked-button color="primary" ><i class="material-icons"> remove_red_eye </i></button>
                                 <button mat-stroked-button color="primary" ><i class="material-icons"> edit </i> </button>
-                                <button  *ngIf="loginService.loggedUser.rol == 'administrador'" mat-stroked-button color="primary" (click)="openDialog4(row, 'administrador')"><i class="material-icons"> remove_circle </i></button>
+                                <button  *ngIf="loginService.loggedUser.rol == 'administrador'" mat-stroked-button color="primary" (click)="openDialogEliminarNota(row)"><i class="material-icons"> remove_circle </i></button>
                               </p>
                             </td>
                           </ng-container>

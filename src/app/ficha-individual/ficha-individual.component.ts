@@ -193,6 +193,22 @@ export class DialogoAnadirNota{
 }
 
 @Component({
+  selector: 'dialogoEliminarNota',
+  templateUrl: 'dialogoEliminarNota.html',
+})
+export class DialogoEliminarNota{
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoEliminarNota>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
   selector: 'app-ficha-individual',
   templateUrl: './ficha-individual.component.html',
   styleUrls: ['./ficha-individual.component.css'],
@@ -524,6 +540,20 @@ export class FichaIndividualComponent implements OnInit {
     });
   }
 
+  openDialogEliminarNota(nota): void {
+    const dialogRef = this.dialog.open(DialogoEliminarNota, {
+      width: '300px',
+      data: {fecha :nota.fecha, respuesta: "Si"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result.respuesta == "Si"){
+        this.eliminarNota(nota);
+      }
+    });
+  }
+
   openDialogNota(): void {
     const dialogRef = this.dialog.open(DialogoAnadirNota, {
       width: '500px',
@@ -660,5 +690,20 @@ export class FichaIndividualComponent implements OnInit {
     this.datosNotas();
   }
 
+  eliminarNota(nota){
+    if(this.loginService.isLogged){
+      this.notaService.eliminarNota(nota.id)
+      .subscribe(
+        response =>{
+          console.log(response);
+          this.datosNotas();
+          this.openSnackBar("Se ha eliminado la nota");
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
 
 }

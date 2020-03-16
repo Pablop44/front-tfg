@@ -161,4 +161,12 @@ export class NotaService {
       return this.http.post(this.restUrl+"/nota/add.json", json,
        httpOptions);
   }
+
+  eliminarNota(id){
+    return this.http.delete(this.restUrl+"/nota/delete/"+id+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
 }
