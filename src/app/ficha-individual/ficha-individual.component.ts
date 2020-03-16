@@ -208,6 +208,23 @@ export class DialogoEliminarNota{
   }
 }
 
+
+@Component({
+  selector: 'dialogoEditarNota',
+  templateUrl: 'dialogoEditarNota.html',
+})
+export class DialogoEditarNota{
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoEditarNota>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
 @Component({
   selector: 'app-ficha-individual',
   templateUrl: './ficha-individual.component.html',
@@ -554,6 +571,18 @@ export class FichaIndividualComponent implements OnInit {
     });
   }
 
+  openDialogEditarNota(nota): void {
+    const dialogRef = this.dialog.open(DialogoEditarNota, {
+      width: '1000px',
+      data: {id :nota.id, fecha:nota.fecha, datos: nota.datos, ficha:nota.ficha}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.editarNota(result);
+    });
+  }
+
   openDialogNota(): void {
     const dialogRef = this.dialog.open(DialogoAnadirNota, {
       width: '500px',
@@ -701,6 +730,23 @@ export class FichaIndividualComponent implements OnInit {
         },
         error => {
           console.log(error);
+        }
+      );
+    }
+  }
+
+  editarNota(nota){
+    if(this.loginService.isLogged){
+      this.notaService.editarNota(nota)
+      .subscribe(
+        response =>{
+          console.log(response);
+          this.datosNotas();
+          this.openSnackBar("Se ha actualizado los datos con éxito");
+        },
+        error => {
+          console.log(error);
+          this.openSnackBar("Error al actualizar los datos");
         }
       );
     }

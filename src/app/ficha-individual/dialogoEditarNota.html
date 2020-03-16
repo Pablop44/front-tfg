@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Modificar Nota</h1>
+<div mat-dialog-content>
+  <p>Modifica el texto de la Nota</p>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Texto</mat-label>
+    <textarea matInput required id="texto" name="texto" placeholder="texto" [(ngModel)]="data.datos"></textarea>
+  </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">Editar</button>
+  <button mat-button style="float:right;" (click)="onNoClick()">Cancelar</button>
+</div>

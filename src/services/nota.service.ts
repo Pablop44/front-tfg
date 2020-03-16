@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginService } from 'src/services/login.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router} from "@angular/router"
+import { Nota } from 'src/app/models/Nota';
 
 @Injectable({
   providedIn: 'root'
@@ -168,5 +169,24 @@ export class NotaService {
         'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
       })
     });
+  }
+
+  public editarNota(nota){
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+    const notaToSend : Nota = {
+      id: nota.id,
+      fecha: nota.fecha,
+      datos: nota.datos,
+      ficha: nota.ficha,
+    }
+
+    return this.http.post(this.restUrl+"/nota/editarNota.json", JSON.stringify(notaToSend)
+    , httpOptions);
   }
 }
