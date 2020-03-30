@@ -26,12 +26,14 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { FiltroConsulta } from 'src/app/models/FiltroConsulta';
 import { InformeDiabetes } from 'src/app/models/InformeDiabetes';
 import { InformeAsma } from 'src/app/models/InformeAsma';
+import { InformeMigranas } from 'src/app/models/InformeMigranas';
 
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import {default as _rollupMoment} from 'moment';
 import { DiabetesService } from 'src/services/diabetes.service';
 import { AsmaService } from 'src/services/asma.service';
+import { MigranasService } from 'src/services/migranas.service';
 
 const moment = _rollupMoment || _moment;
 
@@ -246,6 +248,7 @@ export class FichaIndividualComponent implements OnInit {
   dataSourceNotas: any;
   dataSourceInformeDiabetes: any;
   dataSourceInformeAsma: any;
+  dataSourceInformeMigranas: any;
   ficha : any = [];
   medico: any = [];
   paciente: any = [];
@@ -253,6 +256,7 @@ export class FichaIndividualComponent implements OnInit {
   notas:Nota[] = [];
   informeDiabetes:InformeDiabetes[] = [];
   informeAsma: InformeAsma[] = [];
+  informeMigranas: InformeMigranas[] = [];
 
   consultaService: ConsultaService;
   loginService: LoginService;
@@ -262,13 +266,13 @@ export class FichaIndividualComponent implements OnInit {
   tratamientoService:TratamientoService;
   diabetesService: DiabetesService;
   asmaService: AsmaService;
+  migranasService: MigranasService;
 
   sub: Subscription;
   id: number;
   fechaFinal: string;
   horaFinal:string;
   consultas : Consulta[] = [];
-
 
   public pageSize = 15;
   public currentPage = 0;
@@ -290,6 +294,10 @@ export class FichaIndividualComponent implements OnInit {
   public currentPageAsma = 0;
   public totalSizeAsma = 0;
 
+  public pageSizeMigranas = 15;
+  public currentPageMigranas = 0;
+  public totalSizeMigranas = 0;
+
   panelOpenState = false;
   diabetes = "";
   asma = "";
@@ -299,6 +307,7 @@ export class FichaIndividualComponent implements OnInit {
   ordenTratamiento = null;
   ordenDiabetes = null;
   ordenAsma = null;
+  ordenMigranas = null;
   visible = true;
   selectable = true;
   removable = true;
@@ -361,7 +370,7 @@ export class FichaIndividualComponent implements OnInit {
     private route : ActivatedRoute, notaService:NotaService,
     loginService:LoginService, userService:UserService, fichaService:FichaService,
      public dialog: MatDialog,private _snackBar: MatSnackBar, tratamientoService:TratamientoService,
-     diabetesService: DiabetesService, asmaService: AsmaService) {
+     diabetesService: DiabetesService, asmaService: AsmaService, migranasService: MigranasService) {
       this.consultaService = consultaService;
       this.tratamientoService = tratamientoService;
       this.loginService = loginService;
@@ -370,6 +379,7 @@ export class FichaIndividualComponent implements OnInit {
       this.notaService = notaService;
       this.diabetesService = diabetesService;
       this.asmaService = asmaService;
+      this.migranasService = migranasService;
       this.filteredEstado = this.controlEstados.valueChanges.pipe(
         startWith(null),
         map((fruit: string | null) => fruit ? this._filter(fruit) : this.allEstados.slice()));
@@ -465,6 +475,7 @@ export class FichaIndividualComponent implements OnInit {
             }
             else{
               this.migranas = "Migrañas";
+              this.datosMigranas();
             }
           }
         },
@@ -548,6 +559,34 @@ export class FichaIndividualComponent implements OnInit {
           this.filtroNota.texto = null;
           */
           console.log(this.informeAsma);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  datosMigranas(){
+    if(this.loginService.isLogged){
+      this.migranasService.migranasFicha(this.id, this.currentPageMigranas, this.pageSizeMigranas, this.ordenMigranas, null)
+      .subscribe(
+        response =>{       
+          //this.numeroNotas(this.id, this.filtroNota);
+          this.informeMigranas = [];  
+          for (let i in response) {
+            const newInformeMigranas = new InformeMigranas(response[i]['id'],response[i]['fecha'],response[i]['frecuencia'], response[i]['duracion'],
+            response[i]['horario'], response[i]['finalizacion'], response[i]['tipoEpisodio'], response[i]['intensidad'], response[i]['limitaciones'],
+            response[i]['despiertoNoche'], response[i]['estadoGeneral'], response[i]['sintomas'], response[i]['factores']);
+            this.informeMigranas.push(newInformeMigranas);
+          } 
+          this.dataSourceInformeMigranas = new MatTableDataSource<InformeMigranas>(this.informeMigranas);
+          this.dataSourceInformeMigranas.data = this.informeMigranas;
+          /*this.filtroNota.fechaFin = null;
+          this.filtroNota.fechaInicio = null;
+          this.filtroNota.texto = null;
+          */
+          console.log(this.informeMigranas);
         },
         error => {
           console.log(error);
