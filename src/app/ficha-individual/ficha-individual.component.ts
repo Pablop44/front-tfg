@@ -24,10 +24,12 @@ import {map, startWith} from 'rxjs/operators';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { FiltroConsulta } from 'src/app/models/FiltroConsulta';
+import { InformeDiabetes } from 'src/app/models/InformeDiabetes';
 
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import {default as _rollupMoment} from 'moment';
+import { DiabetesService } from 'src/services/diabetes.service';
 
 const moment = _rollupMoment || _moment;
 
@@ -239,12 +241,14 @@ export class FichaIndividualComponent implements OnInit {
   displayedColumns: string[] = ['numeroConsulta', 'lugar', 'fecha', 'motivo', 'estado', 'diagnostico', 'observaciones', 'acciones'];
 
   dataSource: any;
-  dataSourceNotas: any
+  dataSourceNotas: any;
+  dataSourceInformeDiabetes: any;
   ficha : any = [];
   medico: any = [];
   paciente: any = [];
   enfermedades : any = [];
   notas:Nota[] = [];
+  informeDiabetes:InformeDiabetes[] = [];
 
   consultaService: ConsultaService;
   loginService: LoginService;
@@ -252,6 +256,7 @@ export class FichaIndividualComponent implements OnInit {
   fichaService:FichaService;
   notaService:NotaService;
   tratamientoService:TratamientoService;
+  diabetesService: DiabetesService;
 
   sub: Subscription;
   id: number;
@@ -272,6 +277,10 @@ export class FichaIndividualComponent implements OnInit {
   public currentPageTratamiento = 0;
   public totalSizeTratamiento = 0;
 
+  public pageSizeDiabetes = 15;
+  public currentPageDiabetes = 0;
+  public totalSizeDiabetes = 0;
+
   panelOpenState = false;
   diabetes = "";
   asma = "";
@@ -279,6 +288,7 @@ export class FichaIndividualComponent implements OnInit {
   orden = null;
   ordenNotas = null;
   ordenTratamiento = null;
+  ordenDiabetes = null;
   visible = true;
   selectable = true;
   removable = true;
@@ -340,13 +350,15 @@ export class FichaIndividualComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver, consultaService:ConsultaService,
     private route : ActivatedRoute, notaService:NotaService,
     loginService:LoginService, userService:UserService, fichaService:FichaService,
-     public dialog: MatDialog,private _snackBar: MatSnackBar, tratamientoService:TratamientoService) {
+     public dialog: MatDialog,private _snackBar: MatSnackBar, tratamientoService:TratamientoService,
+     diabetesService: DiabetesService) {
       this.consultaService = consultaService;
       this.tratamientoService = tratamientoService;
       this.loginService = loginService;
       this.userService = userService;
       this.fichaService = fichaService;
       this.notaService = notaService;
+      this.diabetesService = diabetesService;
       this.filteredEstado = this.controlEstados.valueChanges.pipe(
         startWith(null),
         map((fruit: string | null) => fruit ? this._filter(fruit) : this.allEstados.slice()));
@@ -417,6 +429,7 @@ export class FichaIndividualComponent implements OnInit {
           this.datosConsultas();
           this.datosNotas();
           this.datosTratamientos();
+
         },
         error => {
           console.log(error);
@@ -433,6 +446,7 @@ export class FichaIndividualComponent implements OnInit {
           for(const element in this.enfermedades){
             if(this.enfermedades[element] == "diabetes"){
               this.diabetes = "Diabetes";
+              this.datosDiabetes();
             }
             else if(this.enfermedades[element] == "asma"){
               this.asma = "Asma"
@@ -466,6 +480,34 @@ export class FichaIndividualComponent implements OnInit {
           this.filtroNota.fechaInicio = null;
           this.filtroNota.texto = null;
           console.log(this.notas);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  datosDiabetes(){
+    if(this.loginService.isLogged){
+      this.diabetesService.diabetesFicha(this.id, this.currentPageDiabetes, this.pageSizeDiabetes, this.ordenDiabetes, null)
+      .subscribe(
+        response =>{       
+          //this.numeroNotas(this.id, this.filtroNota);
+          this.informeDiabetes = [];  
+          for (let i in response) {
+            const newDiabetesInforme = new InformeDiabetes(response[i]['id'],response[i]['fecha'],response[i]['numeroControles'], response[i]['nivelBajo'],
+            response[i]['frecuenciaBajo'], response[i]['horarioBajo'], response[i]['perdidaConocimiento'], response[i]['nivelAlto'], response[i]['frecuenciaAlto'],
+            response[i]['horarioAlto'], response[i]['actividadFisica'], response[i]['problemaDieta'], response[i]['estadoGeneral'], response[i]['momentos']);
+            this.informeDiabetes.push(newDiabetesInforme);
+          } 
+          this.dataSourceInformeDiabetes = new MatTableDataSource<InformeDiabetes>(this.informeDiabetes);
+          this.dataSourceInformeDiabetes.data = this.informeDiabetes;
+          /*this.filtroNota.fechaFin = null;
+          this.filtroNota.fechaInicio = null;
+          this.filtroNota.texto = null;
+          */
+          console.log(this.informeDiabetes);
         },
         error => {
           console.log(error);
