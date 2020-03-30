@@ -25,11 +25,13 @@ import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { FiltroConsulta } from 'src/app/models/FiltroConsulta';
 import { InformeDiabetes } from 'src/app/models/InformeDiabetes';
+import { InformeAsma } from 'src/app/models/InformeAsma';
 
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import {default as _rollupMoment} from 'moment';
 import { DiabetesService } from 'src/services/diabetes.service';
+import { AsmaService } from 'src/services/asma.service';
 
 const moment = _rollupMoment || _moment;
 
@@ -243,12 +245,14 @@ export class FichaIndividualComponent implements OnInit {
   dataSource: any;
   dataSourceNotas: any;
   dataSourceInformeDiabetes: any;
+  dataSourceInformeAsma: any;
   ficha : any = [];
   medico: any = [];
   paciente: any = [];
   enfermedades : any = [];
   notas:Nota[] = [];
   informeDiabetes:InformeDiabetes[] = [];
+  informeAsma: InformeAsma[] = [];
 
   consultaService: ConsultaService;
   loginService: LoginService;
@@ -257,6 +261,7 @@ export class FichaIndividualComponent implements OnInit {
   notaService:NotaService;
   tratamientoService:TratamientoService;
   diabetesService: DiabetesService;
+  asmaService: AsmaService;
 
   sub: Subscription;
   id: number;
@@ -281,6 +286,10 @@ export class FichaIndividualComponent implements OnInit {
   public currentPageDiabetes = 0;
   public totalSizeDiabetes = 0;
 
+  public pageSizeAsma = 15;
+  public currentPageAsma = 0;
+  public totalSizeAsma = 0;
+
   panelOpenState = false;
   diabetes = "";
   asma = "";
@@ -289,6 +298,7 @@ export class FichaIndividualComponent implements OnInit {
   ordenNotas = null;
   ordenTratamiento = null;
   ordenDiabetes = null;
+  ordenAsma = null;
   visible = true;
   selectable = true;
   removable = true;
@@ -351,7 +361,7 @@ export class FichaIndividualComponent implements OnInit {
     private route : ActivatedRoute, notaService:NotaService,
     loginService:LoginService, userService:UserService, fichaService:FichaService,
      public dialog: MatDialog,private _snackBar: MatSnackBar, tratamientoService:TratamientoService,
-     diabetesService: DiabetesService) {
+     diabetesService: DiabetesService, asmaService: AsmaService) {
       this.consultaService = consultaService;
       this.tratamientoService = tratamientoService;
       this.loginService = loginService;
@@ -359,6 +369,7 @@ export class FichaIndividualComponent implements OnInit {
       this.fichaService = fichaService;
       this.notaService = notaService;
       this.diabetesService = diabetesService;
+      this.asmaService = asmaService;
       this.filteredEstado = this.controlEstados.valueChanges.pipe(
         startWith(null),
         map((fruit: string | null) => fruit ? this._filter(fruit) : this.allEstados.slice()));
@@ -449,7 +460,8 @@ export class FichaIndividualComponent implements OnInit {
               this.datosDiabetes();
             }
             else if(this.enfermedades[element] == "asma"){
-              this.asma = "Asma"
+              this.asma = "Asma";
+              this.datosAsma();
             }
             else{
               this.migranas = "Migrañas";
@@ -508,6 +520,34 @@ export class FichaIndividualComponent implements OnInit {
           this.filtroNota.texto = null;
           */
           console.log(this.informeDiabetes);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  datosAsma(){
+    if(this.loginService.isLogged){
+      this.asmaService.asmaFicha(this.id, this.currentPageAsma, this.pageSizeAsma, this.ordenAsma, null)
+      .subscribe(
+        response =>{       
+          //this.numeroNotas(this.id, this.filtroNota);
+          this.informeAsma = [];  
+          for (let i in response) {
+            const newInformeAsma = new InformeAsma(response[i]['id'],response[i]['fecha'],response[i]['calidadSueno'], response[i]['dificultadRespirar'],
+            response[i]['tos'], response[i]['gravedadTos'], response[i]['limitaciones'], response[i]['silbidos'], response[i]['usoMedicacion'],
+            response[i]['espirometria'], response[i]['factoresCrisis'], response[i]['estadoGeneral']);
+            this.informeAsma.push(newInformeAsma);
+          } 
+          this.dataSourceInformeAsma = new MatTableDataSource<InformeAsma>(this.informeAsma);
+          this.dataSourceInformeAsma.data = this.informeAsma;
+          /*this.filtroNota.fechaFin = null;
+          this.filtroNota.fechaInicio = null;
+          this.filtroNota.texto = null;
+          */
+          console.log(this.informeAsma);
         },
         error => {
           console.log(error);
