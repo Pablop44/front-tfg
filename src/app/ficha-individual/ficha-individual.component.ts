@@ -244,6 +244,12 @@ export class FichaIndividualComponent implements OnInit {
 
   displayedColumns: string[] = ['numeroConsulta', 'lugar', 'fecha', 'motivo', 'estado', 'diagnostico', 'observaciones', 'acciones'];
 
+  displayedColumnsAsma: string[] = ['fecha', 'limitaciones', 'estadoGeneral', 'acciones'];
+
+  displayedColumnsDiabetes: string[] = ['fecha', 'nivelBajo', 'nivelAlto', 'estadoGeneral', 'acciones'];
+
+  displayedColumnsMigranas: string[] = ['fecha', 'tipoEpisodio', 'intensidad', 'frecuencia', 'estadoGeneral', 'acciones'];
+
   dataSource: any;
   dataSourceNotas: any;
   dataSourceInformeDiabetes: any;
