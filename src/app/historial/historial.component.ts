@@ -199,8 +199,6 @@ export class HistorialComponent implements OnInit {
 
   aplicarFiltro(){
 
-    
-
     if(this.filtroHistorial.fechaInicio != null){
       this.filtroHistorial.fechaInicio = moment(this.filtroHistorial.fechaInicio).format('YYYY-MM-DD');
     }
@@ -215,7 +213,6 @@ export class HistorialComponent implements OnInit {
       this.fichasMedico();
     }
    
-    
   }
 
   openDialog(data): void {

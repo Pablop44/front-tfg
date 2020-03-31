@@ -34,6 +34,9 @@ import {default as _rollupMoment} from 'moment';
 import { DiabetesService } from 'src/services/diabetes.service';
 import { AsmaService } from 'src/services/asma.service';
 import { MigranasService } from 'src/services/migranas.service';
+import { FiltroDiabetes } from '../models/filtroDiabetes';
+import { FiltroAsma } from '../models/filtroAsma';
+import { FiltroMigranas } from '../models/filtroMigranas';
 
 const moment = _rollupMoment || _moment;
 
@@ -342,6 +345,27 @@ export class FichaIndividualComponent implements OnInit {
     texto: null,
   }
 
+  filtroDiabetes: FiltroDiabetes = {
+    fecha: null,
+    nivelBajo: null,
+    nivelAlto: null,
+    estadoGeneral: null,
+  }
+
+  filtroAsma : FiltroAsma = {
+    fecha : null,
+    limitaciones: null,
+    estadoGeneral: null
+  }
+
+  filtroMigranas: FiltroMigranas = {
+    fecha: null,
+    tipoEpisodio: null,
+    intensidad: null,
+    frecuencia: null,
+    estadoGeneral: null
+  }
+
   @ViewChild('auto',{ static: true }) matAutocomplete: MatAutocomplete;
 
   tarjetaResumen = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -412,6 +436,24 @@ export class FichaIndividualComponent implements OnInit {
       this.currentPageNotas = e.pageIndex;
       this.pageSizeNotas = e.pageSize;
       this.datosNotas();
+    }
+
+    public handlePageDiabetes(e: any) {
+      this.currentPageDiabetes = e.pageIndex;
+      this.pageSizeDiabetes = e.pageSize;
+      this.datosDiabetes();
+    }
+
+    public handlePageAsma(e: any) {
+      this.currentPageAsma = e.pageIndex;
+      this.pageSizeAsma = e.pageSize;
+      this.datosAsma();
+    }
+
+    public handlePageMigranas(e: any) {
+      this.currentPageMigranas = e.pageIndex;
+      this.pageSizeMigranas = e.pageSize;
+      this.datosMigranas();
     }
 
     datosPaciente(idUser){
@@ -522,7 +564,7 @@ export class FichaIndividualComponent implements OnInit {
       this.diabetesService.diabetesFicha(this.id, this.currentPageDiabetes, this.pageSizeDiabetes, this.ordenDiabetes, null)
       .subscribe(
         response =>{       
-          //this.numeroNotas(this.id, this.filtroNota);
+          this.numeroInformesDiabetes(this.id, null);
           this.informeDiabetes = [];  
           for (let i in response) {
             const newDiabetesInforme = new InformeDiabetes(response[i]['id'],response[i]['fecha'],response[i]['numeroControles'], response[i]['nivelBajo'],
@@ -532,10 +574,10 @@ export class FichaIndividualComponent implements OnInit {
           } 
           this.dataSourceInformeDiabetes = new MatTableDataSource<InformeDiabetes>(this.informeDiabetes);
           this.dataSourceInformeDiabetes.data = this.informeDiabetes;
-          /*this.filtroNota.fechaFin = null;
-          this.filtroNota.fechaInicio = null;
-          this.filtroNota.texto = null;
-          */
+          this.filtroDiabetes.fecha = null;
+          this.filtroDiabetes.nivelAlto = null;
+          this.filtroDiabetes.nivelBajo = null;
+          this.filtroDiabetes.estadoGeneral = null;
           console.log(this.informeDiabetes);
         },
         error => {
@@ -550,7 +592,7 @@ export class FichaIndividualComponent implements OnInit {
       this.asmaService.asmaFicha(this.id, this.currentPageAsma, this.pageSizeAsma, this.ordenAsma, null)
       .subscribe(
         response =>{       
-          //this.numeroNotas(this.id, this.filtroNota);
+          this.numeroInformesAsma(this.id, null);
           this.informeAsma = [];  
           for (let i in response) {
             const newInformeAsma = new InformeAsma(response[i]['id'],response[i]['fecha'],response[i]['calidadSueno'], response[i]['dificultadRespirar'],
@@ -560,10 +602,9 @@ export class FichaIndividualComponent implements OnInit {
           } 
           this.dataSourceInformeAsma = new MatTableDataSource<InformeAsma>(this.informeAsma);
           this.dataSourceInformeAsma.data = this.informeAsma;
-          /*this.filtroNota.fechaFin = null;
-          this.filtroNota.fechaInicio = null;
-          this.filtroNota.texto = null;
-          */
+          this.filtroAsma.fecha = null;
+          this.filtroAsma.limitaciones = null;
+          this.filtroAsma.estadoGeneral = null;
           console.log(this.informeAsma);
         },
         error => {
@@ -578,7 +619,7 @@ export class FichaIndividualComponent implements OnInit {
       this.migranasService.migranasFicha(this.id, this.currentPageMigranas, this.pageSizeMigranas, this.ordenMigranas, null)
       .subscribe(
         response =>{       
-          //this.numeroNotas(this.id, this.filtroNota);
+          this.numeroInformesMigranas(this.id, null);
           this.informeMigranas = [];  
           for (let i in response) {
             const newInformeMigranas = new InformeMigranas(response[i]['id'],response[i]['fecha'],response[i]['frecuencia'], response[i]['duracion'],
@@ -588,10 +629,11 @@ export class FichaIndividualComponent implements OnInit {
           } 
           this.dataSourceInformeMigranas = new MatTableDataSource<InformeMigranas>(this.informeMigranas);
           this.dataSourceInformeMigranas.data = this.informeMigranas;
-          /*this.filtroNota.fechaFin = null;
-          this.filtroNota.fechaInicio = null;
-          this.filtroNota.texto = null;
-          */
+          this.filtroMigranas.estadoGeneral = null;
+          this.filtroMigranas.fecha = null;
+          this.filtroMigranas.frecuencia = null;
+          this.filtroMigranas.intensidad = null;
+          this.filtroMigranas.tipoEpisodio = null;
           console.log(this.informeMigranas);
         },
         error => {
@@ -819,6 +861,48 @@ export class FichaIndividualComponent implements OnInit {
     }
   }
 
+  numeroInformesDiabetes(id, filtro){
+    if(this.loginService.isLogged){
+      this.diabetesService.numeroInformesDiabetes(id, filtro)
+      .subscribe(
+        response =>{         
+          this.totalSizeDiabetes = response['numero'];
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  numeroInformesAsma(id, filtro){
+    if(this.loginService.isLogged){
+      this.asmaService.numeroInformesAsma(id, filtro)
+      .subscribe(
+        response =>{         
+          this.totalSizeAsma = response['numero'];
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  numeroInformesMigranas(id, filtro){
+    if(this.loginService.isLogged){
+      this.migranasService.numeroInformesMigranas(id, filtro)
+      .subscribe(
+        response =>{         
+          this.totalSizeMigranas = response['numero'];
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
   ordenar(tipo){
     if(this.loginService.isLogged){
       this.orden = tipo;
@@ -869,6 +953,28 @@ export class FichaIndividualComponent implements OnInit {
     this.datosNotas();
   }
 
+  aplicarFiltroDiabetes(){
+    if(this.filtroDiabetes.fecha != null){
+      this.filtroDiabetes.fecha = moment(this.filtroDiabetes.fecha).format('YYYY-MM-DD');
+    }
+    this.datosDiabetes();
+  }
+
+  aplicarFiltroAsma(){
+    if(this.filtroAsma.fecha != null){
+      this.filtroAsma.fecha = moment(this.filtroDiabetes.fecha).format('YYYY-MM-DD');
+    }
+    this.datosAsma();
+  }
+
+  aplicarFiltroMigranas(){
+    if(this.filtroMigranas.fecha != null){
+      this.filtroMigranas.fecha = moment(this.filtroMigranas.fecha).format('YYYY-MM-DD');
+    }
+
+    this.datosMigranas();
+  }
+
 
   ordenarNota(orden){
     this.ordenNotas = orden;
@@ -907,5 +1013,4 @@ export class FichaIndividualComponent implements OnInit {
       );
     }
   }
-
 }
