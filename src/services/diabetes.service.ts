@@ -91,8 +91,6 @@ export class DiabetesService {
 
 
   public numeroInformesDiabetes(id,filtro){
-
-
     let array = [{
       Field: 'filtro',
       Value: filtro
@@ -116,5 +114,13 @@ export class DiabetesService {
 
       return this.httpClient.post(this.restUrl+"/numeroInformesDiabetes.json", json,
        httpOptions);
+  }
+  
+  public informeDiabetes(id){
+    return this.httpClient.get(this.restUrl+'/view/'+id+'.json', {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
   }
 }

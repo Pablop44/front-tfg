@@ -61,6 +61,9 @@ import { VistaUsuarioComponent, notificacionVistaUserComponent, DialogoEliminarU
 import { DashboardMedicoComponent} from './dashboard-medico/dashboard-medico.component';
 import { MedicamentosComponent, DialogoAnadirMedicamento, notificacionComponentMedicamento, DialogoAnadirMarca, dialogoEliminarMedicamento } from './medicamentos/medicamentos.component';
 import { HistorialComponent, DialogoEliminarHistorial, notificacionEliminarHistorial } from './historial/historial.component';
+import { InformeDiabetesComponent } from './informe-diabetes/informe-diabetes.component';
+import { InformeAsmaComponent } from './informe-asma/informe-asma.component';
+import { InformeMigranasComponent } from './informe-migranas/informe-migranas.component';
 
 
 @NgModule({
@@ -96,7 +99,10 @@ import { HistorialComponent, DialogoEliminarHistorial, notificacionEliminarHisto
     notificacionEliminarHistorial,
     DialogoAnadirNota,
     DialogoEliminarNota,
-    DialogoEditarNota
+    DialogoEditarNota,
+    InformeDiabetesComponent,
+    InformeAsmaComponent,
+    InformeMigranasComponent
   ],
   imports: [
     BrowserModule,

@@ -1,22 +1,14 @@
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
-import { ConsultaService } from 'src/services/consulta.service';
 import { LoginService } from 'src/services/login.service';
 import { UserService } from 'src/services/user.service';
-import { FichaService } from 'src/services/ficha.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription }   from 'rxjs';
-import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {Component, OnInit, ViewChild, Inject} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {MAT_SNACK_BAR_DATA, MatRadioGroup} from '@angular/material';
+import {Component, OnInit, Inject} from '@angular/core';
+import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {FormBuilder} from '@angular/forms';
 
 @Component({
