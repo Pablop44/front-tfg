@@ -1,16 +1,13 @@
-import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { LoginService } from 'src/services/login.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription }   from 'rxjs';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {Component, OnInit, Inject} from '@angular/core';
-import {MAT_SNACK_BAR_DATA} from '@angular/material';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {FormBuilder} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
 import { AsmaService } from 'src/services/asma.service';
 import { InformeAsma } from '../models/InformeAsma';
+import * as jsPDF from 'jspdf';
+import { ExportToCsv } from 'export-to-csv';
 
 @Component({
   selector: 'app-informe-asma',
@@ -25,19 +22,7 @@ export class InformeAsmaComponent implements OnInit {
   idInformeAsma: String;
   datosInformeAsma: InformeAsma;
 
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'asma', cols: 2, rows: 3, cuerpo: "hola"},
-        ];
-      }
-
-      return [
-        { title: 'asma', cols: 2, rows: 3, cuerpo: "hola"},
-      ];
-    })
-  );
+  cards; 
 
   constructor(loginService: LoginService, asmaService: AsmaService, private breakpointObserver: BreakpointObserver, private route : ActivatedRoute) {
     this.loginService = loginService;
@@ -61,13 +46,50 @@ export class InformeAsmaComponent implements OnInit {
           response['tos'], response['gravedadTos'], response['limitaciones'], response['silbidos'], response['usoMedicacion'],
           response['espirometria'], response['factoresCrisis'], response['estadoGeneral']);
           console.log(this.datosInformeAsma);
-          
+          this.cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+            map(({ matches }) => {
+              if (matches) {
+                return [
+                  { title: 'asma', cols: 2, rows: 3, cuerpo: "hola"},
+                ];
+              }
+        
+              return [
+                { title: 'asma', cols: 2, rows: 3, cuerpo: "hola"},
+              ];
+            })
+          );
           },
         error => {
           console.log(error);
         }
       );
     }
+  }
+
+  generatePDFInforme(){
+    const doc = new jsPDF();
+    doc.fromHTML(document.getElementById('listaInformeAsma'), 10, 10);
+    doc.save('informeAsma'+this.datosInformeAsma.fecha);
+  }
+
+  generateCSVInforme(){
+    const options = { 
+      fieldSeparator: ';',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true, 
+      showTitle: true,
+      title: 'Informe Asma con Fecha: '+this.datosInformeAsma.fecha,
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: true,
+    };
+    var data = [
+      this.datosInformeAsma
+    ];
+    const csvExporter = new ExportToCsv(options);
+    csvExporter.generateCsv(data);
   }
 
 }

@@ -11,7 +11,8 @@
                         <mat-icon>more_vert</mat-icon>
                       </button>
                       <mat-menu #menu="matMenu" xPosition="before">
-                        <a mat-menu-item>Descargar Informe</a>
+                        <a mat-menu-item (click)="generatePDFInforme()">Descargar Informe como PDF</a>
+                        <a mat-menu-item (click)="generateCSVInforme()">Descargar Informe como CSV</a>
                       </mat-menu>
                   </mat-card-title>
                 </mat-card-header>

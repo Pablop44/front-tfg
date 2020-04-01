@@ -115,6 +115,33 @@ export class MigranasService {
        httpOptions);
   }
 
+  public todosInformesMigranas(id,filtro){
+
+    let array = [{
+      Field: 'filtro',
+      Value: filtro
+    },
+    {
+      Field: 'id',
+      Value: id
+    }
+    ];
+
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.httpClient.post(this.restUrl+"/todosMigranasFichas.json", json,
+       httpOptions);
+  }
+
   public informeMigranas(id){
     return this.httpClient.get(this.restUrl+'/view/'+id+'.json', {
       headers: new HttpHeaders({

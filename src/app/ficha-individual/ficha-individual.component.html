@@ -153,6 +153,13 @@
                     </mat-tab>
 
                     <mat-tab *ngIf="asma != ''" label="Informes de Asma"> 
+
+                      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuInformeAsma" aria-label="Toggle menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menuInformeAsma="matMenu" xPosition="before">
+                        <a mat-menu-item (click)="generarCSVAsma()">Descargar Informes como CSV</a>
+                      </mat-menu>
                       
                       <mat-card class="cartaFiltro">
                         <mat-card-header>
@@ -212,6 +219,13 @@
                     </mat-tab>
 
                     <mat-tab *ngIf="diabetes != ''" label="Informes de Diabetes"> 
+
+                      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuInformeDiabetes" aria-label="Toggle menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menuInformeDiabetes="matMenu" xPosition="before">
+                        <a mat-menu-item (click)="generarCSVDiabetes()">Descargar Informes como CSV</a>
+                      </mat-menu>
 
                       <mat-card class="cartaFiltro">
                         <mat-card-header>
@@ -276,6 +290,13 @@
                     </mat-tab>
 
                     <mat-tab *ngIf="migranas != ''" label="Informes de Migrañas"> 
+
+                      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuInformeMigranas" aria-label="Toggle menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menuInformeMigranas="matMenu" xPosition="before">
+                        <a mat-menu-item (click)="generarCSVMigranas()">Descargar Informes como CSV</a>
+                      </mat-menu>
 
                       <mat-card class="cartaFiltro">
                         <mat-card-header>

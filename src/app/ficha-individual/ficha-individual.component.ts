@@ -27,9 +27,7 @@ import { FiltroConsulta } from 'src/app/models/FiltroConsulta';
 import { InformeDiabetes } from 'src/app/models/InformeDiabetes';
 import { InformeAsma } from 'src/app/models/InformeAsma';
 import { InformeMigranas } from 'src/app/models/InformeMigranas';
-
 import * as _moment from 'moment';
-// tslint:disable-next-line:no-duplicate-imports
 import {default as _rollupMoment} from 'moment';
 import { DiabetesService } from 'src/services/diabetes.service';
 import { AsmaService } from 'src/services/asma.service';
@@ -37,6 +35,8 @@ import { MigranasService } from 'src/services/migranas.service';
 import { FiltroDiabetes } from '../models/filtroDiabetes';
 import { FiltroAsma } from '../models/filtroAsma';
 import { FiltroMigranas } from '../models/filtroMigranas';
+import * as jsPDF from 'jspdf';
+import { ExportToCsv } from 'export-to-csv';
 
 const moment = _rollupMoment || _moment;
 
@@ -1009,6 +1009,105 @@ export class FichaIndividualComponent implements OnInit {
         error => {
           console.log(error);
           this.openSnackBar("Error al actualizar los datos");
+        }
+      );
+    }
+  }
+
+  generarCSVAsma(){
+    if(this.loginService.isLogged){
+      this.asmaService.todosInformesAsma(this.id, null)
+      .subscribe(
+        response =>{       
+          const informeAsma = [];  
+          for (let i in response) {
+            const newInformeAsma = new InformeAsma(response[i]['id'],response[i]['fecha'],response[i]['calidadSueno'], response[i]['dificultadRespirar'],
+            response[i]['tos'], response[i]['gravedadTos'], response[i]['limitaciones'], response[i]['silbidos'], response[i]['usoMedicacion'],
+            response[i]['espirometria'], response[i]['factoresCrisis'], response[i]['estadoGeneral']);
+            informeAsma.push(newInformeAsma);
+          } 
+          const options = { 
+            fieldSeparator: ';',
+            quoteStrings: '"',
+            decimalSeparator: '.',
+            showLabels: true, 
+            showTitle: true,
+            title: 'CSV Informes Asma',
+            useTextFile: false,
+            useBom: true,
+            useKeysAsHeaders: true,
+          };
+          const csvExporter = new ExportToCsv(options);
+          csvExporter.generateCsv(informeAsma);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  generarCSVDiabetes(){
+    if(this.loginService.isLogged){
+      this.diabetesService.todosInformesDiabetes(this.id, null)
+      .subscribe(
+        response =>{       
+          const informeDiabetes = [];  
+          for (let i in response) {
+            const newDiabetesInforme = new InformeDiabetes(response[i]['id'],response[i]['fecha'],response[i]['numeroControles'], response[i]['nivelBajo'],
+            response[i]['frecuenciaBajo'], response[i]['horarioBajo'], response[i]['perdidaConocimiento'], response[i]['nivelAlto'], response[i]['frecuenciaAlto'],
+            response[i]['horarioAlto'], response[i]['actividadFisica'], response[i]['problemaDieta'], response[i]['estadoGeneral'], response[i]['momentos']);
+            informeDiabetes.push(newDiabetesInforme);
+          } 
+          const options = { 
+            fieldSeparator: ';',
+            quoteStrings: '"',
+            decimalSeparator: '.',
+            showLabels: true, 
+            showTitle: true,
+            title: 'CSV Informes Diabetes',
+            useTextFile: false,
+            useBom: true,
+            useKeysAsHeaders: true,
+          };
+            const csvExporter = new ExportToCsv(options);
+            csvExporter.generateCsv(informeDiabetes);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  generarCSVMigranas(){
+    if(this.loginService.isLogged){
+      this.migranasService.todosInformesMigranas(this.id, null)
+      .subscribe(
+        response =>{       
+          const informeMigranas = [];  
+          for (let i in response) {
+            const newInformeMigranas = new InformeMigranas(response[i]['id'],response[i]['fecha'],response[i]['frecuencia'], response[i]['duracion'],
+            response[i]['horario'], response[i]['finalizacion'], response[i]['tipoEpisodio'], response[i]['intensidad'], response[i]['limitaciones'],
+            response[i]['despiertoNoche'], response[i]['estadoGeneral'], response[i]['sintomas'], response[i]['factores']);
+            informeMigranas.push(newInformeMigranas);
+          } 
+          const options = { 
+            fieldSeparator: ';',
+            quoteStrings: '"',
+            decimalSeparator: '.',
+            showLabels: true, 
+            showTitle: true,
+            title: 'CSV Informes Asma',
+            useTextFile: false,
+            useBom: true,
+            useKeysAsHeaders: true,
+          };
+            const csvExporter = new ExportToCsv(options);
+            csvExporter.generateCsv(informeMigranas);
+        },
+        error => {
+          console.log(error);
         }
       );
     }

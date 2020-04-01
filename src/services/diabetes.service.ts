@@ -115,6 +115,33 @@ export class DiabetesService {
       return this.httpClient.post(this.restUrl+"/numeroInformesDiabetes.json", json,
        httpOptions);
   }
+
+  public todosInformesDiabetes(id,filtro){
+
+    let array = [{
+      Field: 'filtro',
+      Value: filtro
+    },
+    {
+      Field: 'id',
+      Value: id
+    }
+    ];
+
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.httpClient.post(this.restUrl+"/todosDiabetesFichas.json", json,
+       httpOptions);
+  }
   
   public informeDiabetes(id){
     return this.httpClient.get(this.restUrl+'/view/'+id+'.json', {
