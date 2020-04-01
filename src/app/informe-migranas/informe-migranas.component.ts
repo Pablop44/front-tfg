@@ -25,7 +25,21 @@ export class InformeMigranasComponent implements OnInit {
   idInformeMigranas: String;
   datosInformeMigranas: InformeMigranas;
 
-  constructor(loginService: LoginService, migranasService: MigranasService, private route : ActivatedRoute) {
+  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map(({ matches }) => {
+      if (matches) {
+        return [
+          { title: 'migranas', cols: 2, rows: 3, cuerpo: "hola"},
+        ];
+      }
+
+      return [
+        { title: 'migranas', cols: 2, rows: 3, cuerpo: "hola"},
+      ];
+    })
+  );
+
+  constructor(loginService: LoginService, private breakpointObserver: BreakpointObserver, migranasService: MigranasService, private route : ActivatedRoute) {
     this.loginService = loginService;
     this.migranasService = migranasService;
    }

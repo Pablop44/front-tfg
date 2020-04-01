@@ -1,1 +1,91 @@
-<p>informe-diabetes works!</p>
+<div class="grid-container">
+    <h1 class="mat-h1">Informe de Diabetes</h1>
+    <mat-grid-list cols="2" rowHeight="350px">
+      <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
+
+            <mat-card class="dashboard-card">
+                <mat-card-header>
+                  <mat-card-title>
+                    Informe con Fecha: {{datosInformeDiabetes.fecha}}
+                    <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu" xPosition="before">
+                        <a mat-menu-item>Descargar Informe</a>
+                      </mat-menu>
+                  </mat-card-title>
+                </mat-card-header>
+    
+                <mat-card-content class="dashboard-card-content">
+                 
+                  <mat-list>
+                    <h3 mat-subheader>
+                        <mat-icon mat-list-icon style="margin-right: 10px;">
+                            <i class="material-icons">
+                                lock
+                                </i>
+                          </mat-icon>
+                            Preguntas de Respuesta Cerrada
+                    </h3>
+                    <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">Número de Controles</h4>
+                        <p mat-line> {{datosInformeDiabetes.numeroControles}} </p>
+                      </mat-list-item>
+                      <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">¿En qué momento del día realiza los controles?</h4>
+                        <p mat-line *ngFor="let column of datosInformeDiabetes.momentos">{{column.momento}}</p>
+                      </mat-list-item>
+                      <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">¿El paciente ha presentado niveles bajos de azúcar en sangre?</h4>
+                        <p mat-line>{{datosInformeDiabetes.nivelBajo}}</p>
+                      </mat-list-item>
+                      <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">¿Con qué frecuencia ha presentado niveles bajos?</h4>
+                        <p mat-line>{{datosInformeDiabetes.frecuenciaBajo}}</p>
+                      </mat-list-item>
+                      <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">¿En qúe horario a presentado niveles bajos?</h4>
+                        <p mat-line>{{datosInformeDiabetes.horarioBajo}}</p>
+                      </mat-list-item>
+                      <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">¿El paciente ha presentado ha presentado niveles altos de azúcar en sangre?</h4>
+                        <p mat-line>{{datosInformeDiabetes.nivelAlto}}</p>
+                      </mat-list-item>
+                      <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">¿Con qué frecuencia ha presentado niveles altos?</h4>
+                        <p mat-line>{{datosInformeDiabetes.frecuenciaAlto}}</p>
+                      </mat-list-item>
+                      <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">¿En qúe horario a presentado niveles altos?</h4>
+                        <p mat-line>{{datosInformeDiabetes.horarioAlto}}</p>
+                      </mat-list-item>
+                      <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">¿El paciente ha realizado alguna actividad física?</h4>
+                        <p mat-line>{{datosInformeDiabetes.actividadFisica}}</p>
+                      </mat-list-item>
+                      <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">¿El paciente tiene algún problema con la dieta diabética?</h4>
+                        <p mat-line>{{datosInformeDiabetes.problemaDieta}}</p>
+                      </mat-list-item>
+                      <mat-divider></mat-divider>
+                      <h3 mat-subheader>
+                          <mat-icon mat-list-icon style="margin-right: 10px;">
+                              <i class="material-icons">
+                                  lock_open
+                                  </i>
+                            </mat-icon>
+                            Preguntas de Respuesta Abierta
+                      </h3>
+                      <mat-list-item >
+                          <h4 mat-line style="font-weight: bold;">Estado General del Paciente</h4>
+                          <p mat-line>{{datosInformeDiabetes.estadoGeneral}}</p>
+                      </mat-list-item>
+                    </mat-list>
+                     
+                </mat-card-content>
+                  </mat-card>
+
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  

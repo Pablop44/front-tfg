@@ -25,7 +25,21 @@ export class InformeDiabetesComponent implements OnInit {
   idInformeDiabetes: String;
   datosInformeDiabetes: InformeDiabetes;
 
-  constructor(loginService: LoginService, diabetesService: DiabetesService, private route : ActivatedRoute) {
+  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map(({ matches }) => {
+      if (matches) {
+        return [
+          { title: 'diabetes', cols: 2, rows: 3, cuerpo: "hola"},
+        ];
+      }
+
+      return [
+        { title: 'diabetes', cols: 2, rows: 3, cuerpo: "hola"},
+      ];
+    })
+  );
+
+  constructor(loginService: LoginService, private breakpointObserver: BreakpointObserver, diabetesService: DiabetesService, private route : ActivatedRoute) {
     this.loginService = loginService;
     this.diabetesService = diabetesService;
     

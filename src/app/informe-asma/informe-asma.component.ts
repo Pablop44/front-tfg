@@ -1,8 +1,9 @@
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { LoginService } from 'src/services/login.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription }   from 'rxjs';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Component, OnInit, Inject} from '@angular/core';
 import {MAT_SNACK_BAR_DATA} from '@angular/material';
@@ -24,7 +25,21 @@ export class InformeAsmaComponent implements OnInit {
   idInformeAsma: String;
   datosInformeAsma: InformeAsma;
 
-  constructor(loginService: LoginService, asmaService: AsmaService, private route : ActivatedRoute) {
+  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map(({ matches }) => {
+      if (matches) {
+        return [
+          { title: 'asma', cols: 2, rows: 3, cuerpo: "hola"},
+        ];
+      }
+
+      return [
+        { title: 'asma', cols: 2, rows: 3, cuerpo: "hola"},
+      ];
+    })
+  );
+
+  constructor(loginService: LoginService, asmaService: AsmaService, private breakpointObserver: BreakpointObserver, private route : ActivatedRoute) {
     this.loginService = loginService;
     this.asmaService = asmaService;
    }
