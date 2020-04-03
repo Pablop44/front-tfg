@@ -113,11 +113,29 @@ export class MedicamentoService {
 
 
   eliminarMedicamento(nombre){
-    return this.http.delete(this.restUrl+"/medicamento/delete/"+nombre+".json", {
-      headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+    let array = [
+      {
+        Field: 'nombre',
+        Value: nombre
+      }
+      ];
+      let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+    
+    console.log(json);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
       })
-    });
+    };
+
+    console.log(json);
+
+      return this.http.post(this.restUrl+"/medicamento/delete.json", json,
+       httpOptions);
   }
 
   numeroMedicamento(filtro){

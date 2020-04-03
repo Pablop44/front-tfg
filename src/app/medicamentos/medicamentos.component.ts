@@ -113,7 +113,7 @@ export class DialogoAnadirMedicamento{
 
   validarDosis(): Boolean{
     if(this.data['dosis'] != null){
-      var nameRegex = /^[a-zA-Z0-9\s]*$/;
+      var nameRegex = /^[0-9\s]*$/;
       if(nameRegex.test(this.data['dosis']) === true){
         this.errorDosis= false;
         return true;
@@ -135,6 +135,9 @@ export class DialogoAnadirMedicamento{
 
 export class DialogoAnadirMarca{ 
 
+  errorNombre: Boolean;
+  errorPais: Boolean;
+
   constructor(
     public dialogRef: MatDialogRef<DialogoAnadirMedicamento>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -147,6 +150,40 @@ export class DialogoAnadirMarca{
   valorSelect(valor){
     marcaElegida = valor;
   }
+
+  validarNombre(): Boolean{
+    if(this.data['nombre'] != null){
+      var nameRegex = /^[a-zA-Z0-9\s]*$/;
+      if(nameRegex.test(this.data['nombre']) === true){
+        this.errorNombre = false;
+        return true;
+      }else{
+        this.errorNombre = true;
+        return false;
+      }
+    }else{
+      this.errorNombre = true;
+      return false;
+    }
+  }
+
+  validarPais(): Boolean{
+    if(this.data['pais'] != null){
+      var nameRegex = /^[a-zA-Z\s]*$/;
+      if(nameRegex.test(this.data['pais']) === true){
+        this.errorPais = false;
+        return true;
+      }else{
+        this.errorPais = true;
+        return false;
+      }
+    }else{
+      this.errorPais = true;
+      return false;
+    }
+  }
+
+  
 }
 
 export class Medicamento {
@@ -219,11 +256,11 @@ export class MedicamentosComponent implements OnInit {
   ngOnInit() {
     this.todosMedicamentos();
     this.todasMarcas();
-    this.numeroMedicamento();
   }
 
   todosMedicamentos(){
     if(this.loginService.isLogged){
+      this.numeroMedicamento();
       this.medicamentoService.todosMedicamentos(this.currentPage, this.pageSize, this.orden, this.filtroMedicamento)
       .subscribe(
         response =>{
@@ -269,11 +306,8 @@ export class MedicamentosComponent implements OnInit {
           .subscribe(
             response =>{
                 console.log(response);
-                const newMedicamento = new Medicamento(response['nombre'],response['viaAdministracion'], response['marca'],response['dosis']);
-                console.log(newMedicamento);
-                this.openSnackBar("Se ha añadido el medicamento: \""+newMedicamento.nombre+"\"");
-                this.medicamentos.push(newMedicamento);
-                this.dataSource.data = this.medicamentos;
+                this.todosMedicamentos();
+                this.openSnackBar("Se ha añadido el medicamento: \""+response['nombre']+"\"");
             },
             error => {
               this.openSnackBar("No se ha podido añadir el medicamento");
@@ -322,8 +356,8 @@ export class MedicamentosComponent implements OnInit {
 
   validarDosis(response): Boolean{
     if(response['dosis'] != null){
-      var nameRegex = /^[a-zA-Z0-9\s]*$/;
-      if(nameRegex.test(response['nombre']) === true){
+      var nameRegex = /^[0-9\s]*$/;
+      if(nameRegex.test(response['dosis']) === true){
         return true;
       }else{
         this.openSnackBar("El formato de la dosis no es correcto");
@@ -335,7 +369,41 @@ export class MedicamentosComponent implements OnInit {
   }
 
 
+  validarNombreMarca(response): Boolean{
+    if(response['nombre'] != null){
+      var nameRegex = /^[a-zA-Z0-9\s]*$/;
+      if(nameRegex.test(response['nombre']) === true){
+        return true;
+      }else{
+        this.openSnackBar("Error en el formato del nombre de la marca");
+        return false;
+      }
+    }else{
+      this.openSnackBar("Es necesario introducir el nombre de la marca")
+      return false;
+    }
+  }
 
+  validarPais(response): Boolean{
+    if(response['pais'] != null){
+      var nameRegex = /^[a-zA-Z\s]*$/;
+      if(nameRegex.test(response['pais']) === true){
+        return true;
+      }else{
+        this.openSnackBar("Error en el formato del pais de la marca");
+        return false;
+      }
+    }else{
+      this.openSnackBar("Es necesario introducir el pais de la marca")
+      return false;
+    }
+  }
+
+  validarMarcaMedicamento(response) : Boolean{
+    return (this.validarNombreMarca(response) && this.validarPais(response));
+  }
+
+  
   openDialog2(): void {
     const dialogRef = this.dialog.open(DialogoAnadirMarca, {
       width: '500px',
@@ -344,18 +412,18 @@ export class MedicamentosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(response => {
       if(this.loginService.isLogged){
-        this.marcaService.anadirMarca(response)
-        .subscribe(
-          response =>{
-            console.log(response);
-              const newMarca = new Marca(response['nombre'],response['pais']);
-              this.marcas.push(newMarca);
-              this.openSnackBar("Se ha añadido el medicamento: \""+newMarca.nombre+"\"")
-          },
-          error => {
-            console.log(error);
-          }
-        );
+        if(this.validarMarcaMedicamento(response)){
+          this.marcaService.anadirMarca(response)
+          .subscribe(
+            response =>{
+              this.todasMarcas();
+                this.openSnackBar("Se ha añadido el medicamento: \""+response['nombre']+"\"")
+            },
+            error => {
+              console.log(error);
+            }
+          );
+        }
       }
     });
   }
@@ -394,24 +462,20 @@ export class MedicamentosComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if(result.respuesta == "Si"){
-        this.eliminarMedicamento(medicamento);
+        this.eliminarMedicamento(result['name']);
       }
     });
   }
 
   eliminarMedicamento(medicamento){
-      
-    this.medicamentoService.eliminarMedicamento(medicamento.nombre)
+    this.medicamentoService.eliminarMedicamento(medicamento)
       .subscribe(
         response =>{console.log(response)
-         
-            this.medicamentos = this.medicamentos.filter(u => u !== medicamento);
-            this.dataSource.data = this.dataSource.data.filter(u => u !== medicamento);
-          
-          this.openSnackBar("Se ha eliminado el medicamento: \""+medicamento.nombre+"\"");
+          this.todosMedicamentos();
+          this.openSnackBar("Se ha eliminado el medicamento: \""+medicamento+"\"");
           },
         error => {console.log(error)
-          this.openSnackBar("No se ha podido eliminar el medicamento:" +medicamento.nombre);}
+          this.openSnackBar("No se ha podido eliminar el medicamento:" +medicamento);}
       );
     
     }
