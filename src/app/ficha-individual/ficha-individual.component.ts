@@ -1098,7 +1098,7 @@ export class FichaIndividualComponent implements OnInit {
             decimalSeparator: '.',
             showLabels: true, 
             showTitle: true,
-            title: 'CSV Informes Asma',
+            title: 'CSV Informes Migranas',
             useTextFile: false,
             useBom: true,
             useKeysAsHeaders: true,

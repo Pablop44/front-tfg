@@ -41,7 +41,6 @@ export class AppComponent {
       this.userService.peticionesAutorizar()
       .subscribe(
         response =>{
-          
           this.peticiones = response;
           console.log(this.peticiones);
         },

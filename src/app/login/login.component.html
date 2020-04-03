@@ -10,11 +10,14 @@
               <br>
               <mat-form-field class="example-full-width">
                 <mat-label>Nombre de Usuario</mat-label>
-                <input matInput id="username" name="username" placeholder="Usuario" [(ngModel)]="formUser.username" required  >
+                <input matInput id="username" name="username" placeholder="Usuario" [(ngModel)]="formUser.username" required (focusout)="validarUsername()" >
               </mat-form-field>
+              <mat-error *ngIf="errorUsername">
+								Nombre de usuario erróneo, solo letras y números
+							</mat-error>
               <mat-form-field class="example-full-width">
                 <mat-label>Contraseña</mat-label>
-                <input matInput id="password" name="password" placeholder="Contraseña" [type]="hide ? 'password' : 'text'" [(ngModel)]="formUser.password">
+                <input matInput id="password" name="password" placeholder="Contraseña" [type]="hide ? 'password' : 'text'" [(ngModel)]="formUser.password" required>
                 <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>

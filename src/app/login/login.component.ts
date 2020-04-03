@@ -44,6 +44,9 @@ export class LoginComponent implements OnInit {
     rol:null,
   };
 
+  errorUsername: boolean;
+  errorPassword: boolean;
+
   durationInSeconds = 4;
 
   loginService:LoginService;
@@ -59,7 +62,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
-    this.loginService.login(this.formUser.username, this.formUser.password)
+    if(this.validar()){
+      this.loginService.login(this.formUser.username, this.formUser.password)
       .subscribe(
         response=>{
           var obj = JSON.parse(response);
@@ -76,9 +80,25 @@ export class LoginComponent implements OnInit {
           this.openSnackBar("Error al Iniciar Sesión, Intentelo de Nuevo");
         }
       );
+    }
   }
 
+  validar(): Boolean{
+    return (this.validarUsername());
+  }
 
+  validarUsername(): Boolean{
+    if(this.formUser.username != null){
+      var nameRegex = /^[a-zA-Z0-9\-]+$/;
+      if(nameRegex.test(this.formUser.username) === true){
+        this.errorUsername = false;
+        return true;
+      }else{
+        this.errorUsername = true;
+        return false;
+      }
+    }
+  }
 
   ngOnInit() {
   }

@@ -9,40 +9,67 @@
 						<form class="form-signin" (ngSubmit)="onSubmit()" #loginForm="ngForm">
 							<mat-form-field class="example-full-width">
 								<mat-label>DNI</mat-label>
-								<input matInput id="dni" name="dni" placeholder="DNI" [(ngModel)]="formRegistro.dni" required  >
+								<input matInput id="dni" name="dni" placeholder="DNI" [(ngModel)]="formRegistro.dni" required (focusout)="validarDni()">
 							</mat-form-field>
+							<mat-error *ngIf="errorDni">
+								Error en el DNI
+							</mat-error>
 							<mat-form-field class="example-full-width">
 								<mat-label>Nombre de Usuario</mat-label>
-								<input matInput id="username" name="username" placeholder="Nombre de Usuario" [(ngModel)]="formRegistro.username" required  >
+								<input matInput id="username" name="username" placeholder="Nombre de Usuario" [(ngModel)]="formRegistro.username" required (focusout)="validarUsername()" >
 							</mat-form-field>
+							<mat-error *ngIf="errorUsername">
+								Nombre de usuario erróneo, solo letras y números
+							</mat-error>
 							<mat-form-field class="example-full-width">
 								<mat-label>Contraseña</mat-label>
-								<input matInput type="password" id="password" name="password" placeholder="Contraseña" [(ngModel)]="formRegistro.password" required  >
+								<input matInput type="password" id="password" name="password" placeholder="Contraseña" [(ngModel)]="formRegistro.password" required (focusout)="validarPassword()" >
 							</mat-form-field>
+							<mat-error *ngIf="errorPassword">
+								Contraseña debete tener una minúscula, mayúscula y número
+							</mat-error>
 							<mat-form-field class="example-full-width">
 								<mat-label>Email</mat-label>
-								<input matInput type="email" id="email" name="email" placeholder="Email" [(ngModel)]="formRegistro.email" required  >
+								<input matInput type="email" id="email" name="email" placeholder="Email" [(ngModel)]="formRegistro.email" required (focusout)="validarEmail()" >
 							</mat-form-field>
+							<mat-error *ngIf="errorEmail">
+								Email erróneo
+							</mat-error>
 							<mat-form-field class="example-full-width">
 								<mat-label>Nombre</mat-label>
-								<input matInput type="text" id="nombre" name="nombre" placeholder="Nombre" [(ngModel)]="formRegistro.nombre" required  >
+								<input matInput type="text" id="nombre" name="nombre" placeholder="Nombre" [(ngModel)]="formRegistro.nombre" required  (focusout)="validarNombre()">
 							</mat-form-field>
+							<mat-error *ngIf="errorNombre">
+								Nombre invalido
+							</mat-error>
 							<mat-form-field class="example-full-width">
 								<mat-label>Apellidos</mat-label>
-								<input matInput type="text" id="apellidos" name="apellidos" placeholder="Apellidos" [(ngModel)]="formRegistro.apellidos" required  >
+								<input matInput type="text" id="apellidos" name="apellidos" placeholder="Apellidos" [(ngModel)]="formRegistro.apellidos" required  (focusout)="validarApellidos()">
 							</mat-form-field>
+							<mat-error *ngIf="errorApellidos">
+								Apellidos invalido
+							</mat-error>
 							<mat-form-field class="example-full-width">
 								<mat-label>Teléfono</mat-label>
-								<input matInput type="text" id="telefono" name="telefono" placeholder="Teléfono" [(ngModel)]="formRegistro.telefono" required  >
+								<input matInput type="text" id="telefono" name="telefono" placeholder="Teléfono" [(ngModel)]="formRegistro.telefono" required (focusout)="validarTelefono()" >
 							</mat-form-field>
+							<mat-error *ngIf="errorTelefono">
+								Número de teléfono erróneo
+							</mat-error>
 							<mat-form-field class="example-full-width">
 								<mat-label>Población</mat-label>
-								<input matInput type="text" id="poblacion" name="poblacion" placeholder="Población" [(ngModel)]="formRegistro.poblacion" required  >
+								<input matInput type="text" id="poblacion" name="poblacion" placeholder="Población" [(ngModel)]="formRegistro.poblacion" required  (focusout)="validarPoblacion()">
 							</mat-form-field>
+							<mat-error *ngIf="errorPoblacion">
+								Población solo con letras
+							</mat-error>
 							<mat-form-field class="example-full-width">
 								<mat-label>Número de Colegiado</mat-label>
-								<input matInput type="text" id="colegiado" name="colegiado" placeholder="Número de Colegiado" [(ngModel)]="formRegistro.colegiado" required  >
+								<input matInput type="text" id="colegiado" name="colegiado" placeholder="Número de Colegiado" [(ngModel)]="formRegistro.colegiado" required  (focusout)="validarColegiado()">
 							</mat-form-field>
+							<mat-error *ngIf="errorColegiado">
+								Número de Colegiado Invalido
+							</mat-error>
                                 <div class="form-label-group">
 									Es necesario que el administrador valide la cuenta para poder acceder a la aplicación
 								</div>
