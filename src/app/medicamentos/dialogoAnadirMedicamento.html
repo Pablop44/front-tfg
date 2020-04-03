@@ -2,12 +2,14 @@
 <div mat-dialog-content>
     <mat-form-field class="example-full-width">
         <mat-label>Nombre del Medicamento</mat-label>
-        <input matInput id="nombre" name="nombre" [(ngModel)]="data.nombre"  required  >
+        <input matInput id="nombre" name="nombre" [(ngModel)]="data.nombre"  required  (focusout)="validarNombre()">
     </mat-form-field>
-
+    <mat-error *ngIf="errorNombre">
+      Nombre de usuario erróneo, solo letras y números y espacios
+    </mat-error>
     <mat-form-field class="example-full-width">
         <mat-label>Vía de Administración</mat-label>
-        <select id="via" [(ngModel)]="data.viaAdministracion" name="viaAdministracion" matNativeControl required>
+        <select id="via" [(ngModel)]="data.viaAdministracion" name="viaAdministracion" matNativeControl (focusout)="validarVia()" required>
           <option value="ora">Oral</option>
           <option value="sublingual">Sublingual</option>
           <option value="parental">Parental</option>
@@ -18,20 +20,29 @@
           <option value="otro">Otro</option>
         </select>
     </mat-form-field>
+    <mat-error *ngIf="errorVia">
+      Es necesario introducir la vía de administración
+    </mat-error>
 
     <mat-form-field class="example-full-width">
         <mat-label>Dosis en Mg</mat-label>
-        <input matInput type="number" id="dosis" name="dosis" [(ngModel)]="data.dosis"  required  >
+        <input matInput type="number" id="dosis" name="dosis" [(ngModel)]="data.dosis"  required  (focusout)="validarMarca()">
     </mat-form-field>
+    <mat-error *ngIf="errorDosis">
+      Formato de dosis erróneo
+    </mat-error>
 
     <mat-form-field class="example-full-width">
-        <mat-label>Marca del Medicamento</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let marca of data.marca" (click)="valorSelect(marca.nombre)"[value]="marca.nombre">
-            {{marca.nombre}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <mat-label>Marca del Medicamento</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let marca of data.marca" (click)="valorSelect(marca.nombre)"[value]="marca.nombre" (focusout)="validarMarca()">
+          {{marca.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-error *ngIf="errorMarca">
+      Es necesario elegir una marca
+    </mat-error>
 
 </div>
 <div mat-dialog-actions>
