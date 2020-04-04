@@ -197,6 +197,8 @@ export class VistaUsuarioComponent implements OnInit {
   myForm : FormBuilder;
   appComponent:AppComponent;
   idFicha: string;
+  idMedico: string;
+  nombreMedico;
 
   medico: Medico[] = [];
 
@@ -233,6 +235,7 @@ export class VistaUsuarioComponent implements OnInit {
     this.userService = userService;
     this.appComponent = appComponent;
     this.fichaService = fichaService;
+    this.idMedico = "";
     }
 
   ngOnInit() {
@@ -278,7 +281,6 @@ export class VistaUsuarioComponent implements OnInit {
 
           this.makeCards();
           if(this.datosUser.rol == "paciente"){
-            this.todosMedicos();
             this.getFichaPaciente();
           }
         },
@@ -297,9 +299,35 @@ export class VistaUsuarioComponent implements OnInit {
           for (let i in response) {
             this.medico.push(new Medico(response[i]['username'], response[i]['id']));
           }
+          for (let i in this.medico) {
+            if(this.medico[i]['id'] == this.idMedico){
+              this.nombreMedico = this.medico[i]['nombre'];
+            }
+          }
         },
         error => {
           console.log(error);
+        }
+      );
+    }
+  }
+
+  cambiarMedicoAsignado(idMedico){
+    if(this.loginService.isLogged){
+      this.fichaService.cambiarMedico(idMedico, this.idFicha)
+      .subscribe(
+        response =>{
+          for (let i in this.medico) {
+            if(this.medico[i]['id'] == response['medico']){
+              this.idMedico = this.medico[i]['id'];
+              this.nombreMedico = this.medico[i]['nombre'];
+              this.openSnackBar("Se ha actualizado el medico con éxito");
+            }
+          }
+        },
+        error => {
+          console.log(error);
+          this.openSnackBar("No se ha podido actualizar el medico");
         }
       );
     }
@@ -311,6 +339,7 @@ export class VistaUsuarioComponent implements OnInit {
       .subscribe(
         response =>{   
           console.log(response);
+          this.idMedico = response[0]['medico'];
           this.idFicha = response[0]['id'];      
           this.enfermedades = response[0]['enfermedad'];
           for(const element in this.enfermedades){
@@ -324,6 +353,7 @@ export class VistaUsuarioComponent implements OnInit {
               this.migranas = "Migrañas";
             }
           }
+          this.todosMedicos();
         },
         error => {
           console.log(error);
@@ -448,7 +478,8 @@ export class VistaUsuarioComponent implements OnInit {
             }
           },
         error => {console.log(error)
-          this.openSnackBar("No se ha podido eliminar el usuario:" +username);}
+          this.openSnackBar("No se ha podido eliminar el usuario:" +username);
+        }
       );
   }
 

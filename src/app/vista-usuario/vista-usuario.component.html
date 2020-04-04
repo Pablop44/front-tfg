@@ -131,18 +131,21 @@
                 <mat-card class="dashboard-card">
                     <mat-card-header>
                       <mat-card-title>
-                        Editar Datos Personales y Profesionales del Usuario
+                        Editar Datos del Usuario
                       </mat-card-title>
                       <mat-card-subtitle>Modifica solo los campos necesarios</mat-card-subtitle>
                     </mat-card-header>
         
                     <mat-card-content class="dashboard-card-content">
-                        <button mat-flat-button color="primary" (click)="openDialog2()">Editar <i class="material-icons">
+                        <button mat-flat-button *ngIf="datosUser.rol == 'medico'" color="primary" (click)="openDialog2()">Editar <i class="material-icons">
                             edit
-                            </i></button>
+                        </i></button>
+                        <button mat-flat-button *ngIf="datosUser.rol == 'paciente'" color="primary" (click)="openDialog2()">Editar <i class="material-icons">
+                          edit
+                        </i></button>
                     </mat-card-content>
-                      </mat-card>
-    
+                </mat-card>
+
             </div>
 
             <div *ngSwitchCase="'eliminar'">
@@ -190,7 +193,6 @@
             </div>
 
             <div *ngSwitchCase="'cambiarMedico'" >
-
                 <mat-card *ngIf="datosUser.rol == 'paciente'" class="dashboard-card">
                     <mat-card-header>
                       <mat-card-title>
@@ -199,19 +201,21 @@
                           <a [routerLink]="'/users'" mat-menu-item></a>
                         </mat-menu>
                       </mat-card-title>
+                      <mat-card-subtitle *ngIf="idMedico != ''" >El médico actual es "{{nombreMedico}}"</mat-card-subtitle>
+                      <mat-card-subtitle *ngIf="idMedico == ''" >No tiene asignado ningún médico</mat-card-subtitle>
                     </mat-card-header>
         
                     <mat-card-content class="dashboard-card-content">
                       <mat-form-field style="margin-top: 20px;">
                         <mat-label>Médico</mat-label>
-                        <mat-select>
+                        <mat-select (selectionChange)="cambiarMedicoAsignado($event.value)">
                           <mat-option *ngFor="let medico of medico" [value]="medico.id">
                             {{medico.nombre}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
                     </mat-card-content>
-                      </mat-card>
+                  </mat-card>
     
             </div>
 

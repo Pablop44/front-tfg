@@ -210,4 +210,31 @@ export class FichaService {
     });
   }
 
+  public cambiarMedico(idMedico, idFicha){
+
+    let array = [{
+      Field: 'medico',
+      Value: idMedico
+    },
+    {
+      Field: 'id',
+      Value: idFicha
+    }
+    ];
+
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.http.post(this.restUrl+"/ficha/cambiarMedico.json", json,
+       httpOptions);
+  }
+
 }
