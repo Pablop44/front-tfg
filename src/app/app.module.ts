@@ -54,7 +54,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
-import { UsersComponent, DialogoAnadirPaciente, DialogoAnadirMedico, DialogoAnadirAdministrador, DialogoEliminarUsuario, notificacionComponent, DialogoAceptarUsuario } from './users/users.component';
+import { UsersComponent, DialogoEliminarUsuario, notificacionComponent, DialogoAceptarUsuario } from './users/users.component';
 import { loginNotificacionComponent } from './login/login.component';
 import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta, DialogoAnadirNota, DialogoEliminarNota, DialogoEditarNota } from './ficha-individual/ficha-individual.component';
 import { VistaUsuarioComponent, notificacionVistaUserComponent, DialogoEliminarUsuarioVista, DialogoEditarUsuario } from './vista-usuario/vista-usuario.component';
@@ -74,10 +74,7 @@ import { InformeMigranasComponent } from './informe-migranas/informe-migranas.co
     NavComponent,
     DashboardHomeComponent,
     UsersComponent,
-    DialogoAnadirPaciente,
     DialogoEliminarUsuario,
-    DialogoAnadirAdministrador,
-    DialogoAnadirMedico,
     loginNotificacionComponent,
     notificacionComponent,
     FichaIndividualComponent,
@@ -206,9 +203,6 @@ import { InformeMigranasComponent } from './informe-migranas/informe-migranas.co
     ScrollingModule,
   ],
   entryComponents: [
-    DialogoAnadirPaciente,
-    DialogoAnadirAdministrador,
-    DialogoAnadirMedico,
     DialogoEliminarUsuario,
     loginNotificacionComponent,
     notificacionComponent, 

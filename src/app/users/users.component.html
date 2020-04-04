@@ -70,16 +70,6 @@
               <mat-card-header>
                 <mat-card-title>
                   {{card.title}}
-                  <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                    <i class="material-icons">
-                      person_add
-                      </i>
-                  </button>
-                  <mat-menu #menu="matMenu" xPosition="before">
-                    <a mat-menu-item (click)="openDialog()">Añadir un Paciente</a>
-                    <a mat-menu-item (click)="openDialog2()">Añadir un Médico</a>
-                    <a mat-menu-item (click)="openDialog3()">Añadir un Administrador</a>
-                  </mat-menu>
                 </mat-card-title>
               </mat-card-header>
   
@@ -87,15 +77,9 @@
     
                 <mat-tab-group >
 
-                  <mat-tab label="Administradores"> 
-                    <mat-form-field class="formularioFilter">
-                        <mat-label>Filtrar</mat-label>
-                        <input matInput (keyup)="applyFilter3($event)" placeholder="Ej. Mia">
-                    </mat-form-field>
-                      
+                  <mat-tab label="Administradores">          
                       <div>
-                        <table  mat-table matSort [dataSource]="dataSource3" >
-                      
+                        <table  mat-table matSort [dataSource]="dataSourceAdministradores" >
                           <!-- Progress Column -->
                           <ng-container matColumnDef="dni">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> DNI </th>
@@ -142,8 +126,8 @@
                           </tr>
                         </table>
                       
-                        <mat-paginator #paginator3 [pageSize]="pageSize3" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizeAdministradores"
-                            [pageIndex]="currentPage3" (page)="pageEvent3 = handlePage3($event)">
+                        <mat-paginator #paginator3 [pageSize]="pageSizeAdministrador" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizeAdministrador"
+                            [pageIndex]="currentPageAdministrador" (page)="pageEvent3 = handlePageAdministradores($event)">
                         </mat-paginator>
                       </div>
                 </mat-tab>
@@ -151,13 +135,9 @@
                    
 
                     <mat-tab label="Medicos"> 
-                      <mat-form-field class="formularioFilter">
-                          <mat-label>Filtrar</mat-label>
-                          <input matInput (keyup)="applyFilter2($event)" placeholder="Ej. Mia">
-                      </mat-form-field>
                         
                         <div>
-                          <table mat-table [dataSource]="dataSource2" matSort>
+                          <table mat-table [dataSource]="dataSourceMedicos" matSort>
 
                             <ng-container matColumnDef="colegiado">
                               <th mat-header-cell *matHeaderCellDef mat-sort-header> Número de Colegiado </th>
@@ -216,20 +196,16 @@
                           </table>
                       
                         </div>
-                        <mat-paginator #paginator2 [pageSize]="pageSize2" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizeMedicos"
-                                [pageIndex]="currentPage2" (page)="pageEvent = handlePage2($event)">
+                        <mat-paginator #paginator2 [pageSize]="pageSizeMedico" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizeMedico"
+                                [pageIndex]="currentPageMedico" (page)="pageEvent = handlePageMedicos($event)">
                         </mat-paginator>
                   </mat-tab>
 
 
                     <mat-tab label="Pacientes"> 
-                        <mat-form-field class="formularioFilter">
-                            <mat-label>Filtrar</mat-label>
-                            <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Mia">
-                        </mat-form-field>
                           
                           <div class="mat-elevation-z8">
-                            <table mat-table [dataSource]="dataSource" matSort>
+                            <table mat-table [dataSource]="dataSourcePacientes" matSort>
                         
                               <!-- Progress Column -->
                               <ng-container matColumnDef="dni">
@@ -277,8 +253,8 @@
                               </tr>
                             </table>
                           
-                            <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizePacientes"
-                                [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)">
+                            <mat-paginator #paginator [pageSize]="pageSizePaciente" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizePaciente"
+                                [pageIndex]="currentPagePaciente" (page)="pageEvent = handlePagePacientes($event)">
                             </mat-paginator>
                           </div>
                     </mat-tab>

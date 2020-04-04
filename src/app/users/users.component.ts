@@ -55,22 +55,6 @@ export class UserData {
   } 
 }
 
-@Component({
-  selector: 'dialogoAnadirPaciente',
-  templateUrl: 'dialogoAnadirPaciente.html',
-})
-
-export class DialogoAnadirPaciente {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogoAnadirPaciente>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-}
 
 @Component({
   selector: 'dialogoAceptarUsuario',
@@ -86,38 +70,6 @@ export class DialogoAceptarUsuario {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-}
-
-@Component({
-  selector: 'dialogoAnadirMedico',
-  templateUrl: 'dialogoAnadirMedico.html',
-})
-export class DialogoAnadirMedico {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogoAnadirMedico>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  selector: 'dialogoAnadirAdministrador',
-  templateUrl: 'dialogoAnadirAdministrador.html',
-})
-export class DialogoAnadirAdministrador {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogoAnadirAdministrador>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
 }
 
 @Component({
@@ -144,22 +96,31 @@ export class UsersComponent implements OnInit {
 
   loginService: LoginService;
   userService:UserService;
-  users : UserData[] = [];
+  pacientes : UserData[] = [];
   administradores : UserData[] = [];
   medicos : UserData[] = [];
-  public dataSource: any;
-  public dataSource2: any;
-  public dataSource3: any;
+
+  public dataSourcePacientes: any;
+  public dataSourceMedicos: any;
+  public dataSourceAdministradores: any;
   public dataSource4: any;
-  public pageSize = 15;
-  public pageSize2 = 15;
-  public pageSize3 = 15;
-  public currentPage = 0;
-  public currentPage2 = 0;
-  public currentPage3 = 0;
-  public totalSizePacientes = 0;
-  public totalSizeMedicos = 0;
-  public totalSizeAdministradores = 0;
+
+  public pageSizeAdministrador= 15;
+  public currentPageAdministrador = 0;
+  public totalSizeAdministrador = 0;
+
+  public pageSizeMedico= 15;
+  public currentPageMedico = 0;
+  public totalSizeMedico = 0;
+
+  public pageSizePaciente = 15;
+  public currentPagePaciente = 0;
+  public totalSizePaciente = 0;
+
+  public ordenAdministador = null;
+  public ordenMedico = null;
+  public ordenPaciente = null;
+
   panelOpenState = false;
   peticiones: any;
   usuariosActivos:UserData[] = [];
@@ -184,7 +145,6 @@ export class UsersComponent implements OnInit {
 
 
   displayedColumns4: string[] = ['dni', 'nombre', 'email', 'telefono','rol','acciones'];
-
   displayedColumns: string[] = ['dni', 'nombre', 'email', 'telefono', 'estado','acciones'];
   displayedColumns2: string[] = ['colegiado', 'dni', 'nombre', 'email', 'especialidad', 'telefono', 'estado',  'acciones'];
   displayedColumns3: string[] = ['dni', 'nombre', 'email', 'telefono', 'estado', 'acciones'];
@@ -217,7 +177,9 @@ export class UsersComponent implements OnInit {
     }
 
     ngOnInit() {   
-      this.usuarios(1);
+      this.getAdministradores();
+      this.getMedicos();
+      this.getPacientes();
       this.peticionesAutorizar();
     }
 
@@ -225,41 +187,6 @@ export class UsersComponent implements OnInit {
       this._snackBar.openFromComponent(notificacionComponent, {
         duration: 4 * 1000, data: mensaje
       });
-    }
-
-    openDialog(): void {
-      const dialogRef = this.dialog.open(DialogoAnadirPaciente, {
-        width: '400px',
-        data: {name: "hola", animal: "hola"}
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });
-    }
-
-    openDialog2(): void {
-      const dialogMed = this.dialog.open(DialogoAnadirMedico, {
-        width: '400px',
-        data: {dni: null, username: null, password: null, email: null, nombre: null, apellidos: null, telefono: null, poblacion: null}
-      });
-  
-      dialogMed.afterClosed().subscribe(result => {
-        this.formRegistroMedico.id = null;
-        this.formRegistroMedico.email = result.email;
-        this.formRegistroMedico.username = result.username;
-        this.formRegistroMedico.cargo = result.cargo;
-        this.formRegistroMedico.dni = result.dni;
-        this.formRegistroMedico.apellidos = result.apellidos;
-        this.formRegistroMedico.nombre = result.nombre;
-        this.formRegistroMedico.password = result.password;
-        this.formRegistroMedico.poblacion = result.poblacion;
-        this.formRegistroMedico.telefono = result.telefono;
-        this.formRegistroMedico.colegiado = result.colegiado;
-        this.formRegistroMedico.especialidad = result.especialidad;
-        this.registrarMedico();
-      });
-      
     }
 
     peticionesAutorizar(){
@@ -279,16 +206,12 @@ export class UsersComponent implements OnInit {
       }
     }
 
-    applyFilter4(event: Event) {
-      const filterValue = (event.target as HTMLInputElement).value;
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-
     usuariosAutorizar(){
       if(this.loginService.isLogged){
         this.userService.usuariosAutorizar()
         .subscribe(
           response =>{
+            this.usuariosActivos = [];
             console.log(response);
             for (let i in response) {
                 const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'],  response[i]['rol']);
@@ -298,7 +221,6 @@ export class UsersComponent implements OnInit {
           this.dataSource4 = new MatTableDataSource<UserData>(this.usuariosActivos);
           this.dataSource4.data = this.usuariosActivos;
           console.log(this.usuariosActivos);
-            
           },
           error => {
             console.log(error);
@@ -307,18 +229,6 @@ export class UsersComponent implements OnInit {
       }
     }
 
-
-
-    openDialog3(): void {
-      const dialogRef = this.dialog.open(DialogoAnadirAdministrador, {
-        width: '400px',
-        data: {name: "hola", animal: "hola"}
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });
-    }
 
     openDialog4(user:UserData, rol): void {
       const dialogRef = this.dialog.open(DialogoEliminarUsuario, {
@@ -347,142 +257,56 @@ export class UsersComponent implements OnInit {
         }
       });
     }
-  
-    applyFilter(event: Event) {
-      const filterValue = (event.target as HTMLInputElement).value;
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-      if (this.dataSource.paginator) {
-        this.dataSource.paginator.firstPage();
-      }
+
+    public handlePageAdministrador(e: any) {
+      this.currentPageAdministrador = e.pageIndex;
+      this.pageSizeAdministrador = e.pageSize;
+      this.getAdministradores();
     }
 
-    applyFilter2(event2: Event) {
-      const filterValue = (event2.target as HTMLInputElement).value;
-      this.dataSource2.filter = filterValue.trim().toLowerCase();
-  
-      if (this.dataSource2.paginator) {
-        this.dataSource2.paginator.firstPage();
-      }
+    public handlePageMedico(e: any) {
+      this.currentPageMedico = e.pageIndex;
+      this.pageSizeMedico = e.pageSize;
+      this.getMedicos();
+    }
+    public handlePagePaciente(e: any) {
+      this.currentPagePaciente = e.pageIndex;
+      this.pageSizePaciente = e.pageSize;
+      this.getPacientes();
     }
 
-    applyFilter3(event3: Event) {
-      console.log(this.dataSource3.paginator);
-      const filterValue = (event3.target as HTMLInputElement).value;
-      this.dataSource3.filter = filterValue.trim().toLowerCase();
-  
-      if (this.dataSource3.paginator) {
-        this.dataSource3.paginator.firstPage();
-      }
+
+  eliminarUsuario(user, rol){
+    this.userService.eliminarUser(user.id)
+      .subscribe(
+        response =>{console.log(response)
+          if(rol == 'medico'){
+            this.getMedicos();
+          }else if(rol == 'paciente'){
+            this.getPacientes();
+          }else{
+            this.getAdministradores();
+          }
+          this.openSnackBar("Se ha eliminado el usuario: \""+user.username+"\" con rol \""+rol+"\"");
+          this.peticionesAutorizar();
+          this.appComponent.peticionesAutorizar();
+          },
+        error => {console.log(error)
+          this.openSnackBar("No se ha podido eliminar el usuario:" +user.username);}
+      );
     }
 
-    public handlePage(e: any) {
-      this.currentPage = e.pageIndex;
-      this.pageSize = e.pageSize;
-      this.iterator();
-    }
-
-    private iterator() {
-      const end = (this.currentPage + 1) * this.pageSize;
-      const start = this.currentPage * this.pageSize;
-      const part = this.users.slice(start, end);
-      this.dataSource.data = part;
-    }
-
-    public handlePage2(e2: any) {
-      this.currentPage2 = e2.pageIndex;
-      this.pageSize2 = e2.pageSize;
-      this.iterator2();
-    }
-
-    private iterator2() {
-      const end = (this.currentPage2 + 1) * this.pageSize2;
-      const start = this.currentPage2 * this.pageSize2;
-      const part = this.medicos.slice(start, end);
-      this.dataSource2.data = part;
-      
-    }
-
-    public handlePage3(e3: any) {
-      this.currentPage3 = e3.pageIndex;
-      this.pageSize3 = e3.pageSize;
-      this.iterator3();
-    }
-
-    private iterator3() {
-      const end = (this.currentPage3 + 1) * this.pageSize3;
-      const start = this.currentPage3 * this.pageSize3;
-      const part = this.administradores.slice(start, end);
-      this.dataSource3.data = part;
-    }
-
-    eliminarUsuario(user, rol){
-      
-      this.userService.eliminarUser(user.id)
-        .subscribe(
-          response =>{console.log(response)
-            if(rol == 'medico'){
-              this.medicos = this.medicos.filter(u => u !== user);
-              this.dataSource2.data = this.dataSource2.data.filter(u => u !== user);
-              
-            }else if(rol == 'paciente'){
-              this.users = this.users.filter(u => u !== user);
-              this.dataSource.data = this.dataSource.data.filter(u => u !== user);
-            }else{
-              this.administradores = this.administradores.filter(u => u !== user);
-              this.dataSource3.data = this.dataSource3.data.filter(u => u !== user);
-            }
-            this.dataSource4.data = this.dataSource4.data.filter(u => u !== user);
-            this.usuariosActivos = this.usuariosActivos.filter(u => u !== user);
-            this.openSnackBar("Se ha eliminado el usuario: \""+user.username+"\" con rol \""+rol+"\"");
-            this.peticionesAutorizar();
-            this.appComponent.peticionesAutorizar();
-            },
-          error => {console.log(error)
-            this.openSnackBar("No se ha podido eliminar el usuario:" +user.username);}
-        );
-      
-      }
-
-  usuarios(bandera){
+  getAdministradores(){
     if(this.loginService.isLogged){
-      this.userService.todosUsuarios()
+      this.userService.getAdministradores(this.currentPageAdministrador, this.pageSizeAdministrador, this.ordenAdministador)
       .subscribe(
         response =>{
           for (let i in response) {
-              if (response[i]['rol'] == "paciente") {
-                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol']);
-                this.users.push(newUserData);
-              }else if(response[i]['rol'] == "medico"){
-                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol']);
-                this.medicos.push(newUserData);
-              }else{
                 const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol']);
                 this.administradores.push(newUserData);
-              } 
           }
-
-          this.dataSource = new MatTableDataSource<UserData>(this.users);
-          this.dataSource.data = this.users;
-          this.totalSizePacientes = this.users.length;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          
-          this.dataSource2 = new MatTableDataSource<UserData>(this.medicos);
-          this.totalSizeMedicos= this.medicos.length;
-          this.dataSource2.data = this.medicos;
-          this.dataSource2.paginator = this.paginator;
-          this.dataSource2.sort = this.sort;
-
-          this.dataSource3 = new MatTableDataSource<UserData>(this.administradores);
-          this.totalSizeAdministradores = this.administradores.length;
-          this.dataSource3.data = this.administradores;
-          this.dataSource3.paginator = this.paginator;
-          this.dataSource3.sort = this.sort;
-          if(bandera == 1){
-            this.iterator();
-            this.iterator2();
-            this.iterator3();
-          } 
+          this.dataSourceAdministradores = new MatTableDataSource<UserData>(this.administradores);
+          this.dataSourceAdministradores.data = this.administradores;
         },
         error => {
           console.log(error);
@@ -491,39 +315,53 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  registrarMedico(){
-    this.userService.registroMedico(this.formRegistroMedico)
+  getMedicos(){
+    if(this.loginService.isLogged){
+      this.userService.getMedicos(this.currentPageMedico, this.pageSizeMedico, this.ordenMedico)
       .subscribe(
-        response=>{
+        response =>{
+          this.medicos = [];
           for (let i in response) {
-            const newUserData = new UserData(null,response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol'])
-            this.medicos.push(newUserData);
-            console.log(response[i])
-            this.dataSource2 = new MatTableDataSource<UserData>(this.medicos);
-            this.dataSource2.paginator = this.paginator;
-            this.totalSizeMedicos= this.medicos.length;
-            this.dataSource2.sort = this.sort;
-            this.iterator2();
-            this.openSnackBar("Se ha añadido el usuario: \""+newUserData.username+"\" con rol de Médico");
+                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol']);
+                this.medicos.push(newUserData);
           }
+          this.dataSourceMedicos = new MatTableDataSource<UserData>(this.medicos);
+          this.dataSourceMedicos.data = this.medicos;
         },
-        error=>{
-          this.openSnackBar("No se ha podido añadir el usuario, intentelo");
+        error => {
           console.log(error);
         }
       );
+    }
+  }
+
+  getPacientes(){
+    if(this.loginService.isLogged){
+      this.userService.getPacientes(this.currentPagePaciente, this.pageSizePaciente, this.ordenPaciente)
+      .subscribe(
+        response =>{
+          this.pacientes = [];
+          for (let i in response) {
+                const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol']);
+                this.pacientes.push(newUserData);
+          }
+          this.dataSourcePacientes = new MatTableDataSource<UserData>(this.pacientes);
+          this.dataSourcePacientes.data = this.pacientes;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   autorizarUsuario(user, rol){
-      
     this.userService.autorizarUser(user.id)
       .subscribe(
         response =>{console.log(response)
-            this.usuariosActivos = this.usuariosActivos.filter(u => u !== user);
-            this.dataSource4.data = this.dataSource4.data.filter(u => u !== user);
-          this.openSnackBar("Se ha aceptado el usuario: \""+user.username+"\" con rol \""+rol+"\"");
           this.peticionesAutorizar();
           this.appComponent.peticionesAutorizar();
+          this.openSnackBar("Se ha aceptado el usuario: \""+user.username+"\" con rol \""+rol+"\"");
           },
         error => {console.log(error)
           this.openSnackBar("No se ha podido eliminar el usuario:" +user.username);}

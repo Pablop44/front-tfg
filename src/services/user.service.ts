@@ -48,19 +48,6 @@ export class UserService {
     });
   }
 
-  registroMedico(formResgistro){
-    const httpOptions = {
-      headers: new HttpHeaders({ 
-        'Content-Type': 'application/json',
-      })
-    };
-
-    console.log(formResgistro);
-
-    return this.http.post(this.restUrl+"/user/registerMedico.json", JSON.stringify(formResgistro), httpOptions);
-
-  }
-
   datosUsuario(id){
     console.log()
     return this.http.get(this.restUrl+"/user/view/"+id+".json", {
@@ -128,7 +115,6 @@ export class UserService {
 
   public editarEspecialidad(valor, user){
 
-
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
@@ -186,4 +172,195 @@ export class UserService {
     return this.http.post(this.restUrl+"/user/editarUser.json", JSON.stringify(userToSend)
     , httpOptions);
   }
+
+
+
+  public getMedicos(pagina, aMostrar, tipo){
+
+    if(tipo == null){
+  
+      let array = [
+        {
+          Field: 'page',
+          Value: pagina
+        },
+        {
+          Field: 'limit',
+          Value: aMostrar
+        }
+        ];
+        let obj = {};
+      array.forEach(item => obj[item.Field] = item.Value);
+      
+      let json = JSON.stringify(obj);
+      
+      console.log(json);
+  
+      const httpOptions = {
+        headers: new HttpHeaders({ 
+          'Content-Type': 'application/json',
+        })
+      };
+  
+        return this.http.post(this.restUrl+"/user/getMedicos.json", json,
+         httpOptions);
+    }else{
+      let array = [
+        {
+          Field: 'page',
+          Value: pagina
+        },
+        {
+          Field: 'limit',
+          Value: aMostrar
+        }
+        ,
+        {
+          Field: 'tipo',
+          Value: tipo
+        }
+        ];
+        let obj = {};
+      array.forEach(item => obj[item.Field] = item.Value);
+      
+      let json = JSON.stringify(obj);
+      
+      console.log(json);
+  
+      const httpOptions = {
+        headers: new HttpHeaders({ 
+          'Content-Type': 'application/json',
+        })
+      };
+  
+        return this.http.post(this.restUrl+"/user/getMedicos.json", json,
+         httpOptions);
+      }    
+    }
+
+
+  public getPacientes(pagina, aMostrar, tipo){
+
+    if(tipo == null){
+      let array = [
+        {
+          Field: 'page',
+          Value: pagina
+        },
+        {
+          Field: 'limit',
+          Value: aMostrar
+        }
+        ];
+        let obj = {};
+      array.forEach(item => obj[item.Field] = item.Value);
+      
+      let json = JSON.stringify(obj);
+      
+      console.log(json);
+  
+      const httpOptions = {
+        headers: new HttpHeaders({ 
+          'Content-Type': 'application/json',
+        })
+      };
+  
+        return this.http.post(this.restUrl+"/user/getPacientes.json", json,
+         httpOptions);
+    }else{
+      let array = [
+        {
+          Field: 'page',
+          Value: pagina
+        },
+        {
+          Field: 'limit',
+          Value: aMostrar
+        }
+        ,
+        {
+          Field: 'tipo',
+          Value: tipo
+        }
+        ];
+        let obj = {};
+      array.forEach(item => obj[item.Field] = item.Value);
+      
+      let json = JSON.stringify(obj);
+      
+      console.log(json);
+  
+      const httpOptions = {
+        headers: new HttpHeaders({ 
+          'Content-Type': 'application/json',
+        })
+      };
+  
+        return this.http.post(this.restUrl+"/user/getPacientes.json", json,
+         httpOptions);
+      }    
+    }
+
+    public getAdministradores(pagina, aMostrar, tipo){
+
+      if(tipo == null){
+        let array = [
+          {
+            Field: 'page',
+            Value: pagina
+          },
+          {
+            Field: 'limit',
+            Value: aMostrar
+          }
+          ];
+          let obj = {};
+        array.forEach(item => obj[item.Field] = item.Value);
+        
+        let json = JSON.stringify(obj);
+        
+        console.log(json);
+    
+        const httpOptions = {
+          headers: new HttpHeaders({ 
+            'Content-Type': 'application/json',
+          })
+        };
+    
+          return this.http.post(this.restUrl+"/user/getAdministradores.json", json,
+           httpOptions);
+      }else{
+        let array = [
+          {
+            Field: 'page',
+            Value: pagina
+          },
+          {
+            Field: 'limit',
+            Value: aMostrar
+          }
+          ,
+          {
+            Field: 'tipo',
+            Value: tipo
+          }
+          ];
+          let obj = {};
+        array.forEach(item => obj[item.Field] = item.Value);
+        
+        let json = JSON.stringify(obj);
+        
+        console.log(json);
+    
+        const httpOptions = {
+          headers: new HttpHeaders({ 
+            'Content-Type': 'application/json',
+          })
+        };
+    
+          return this.http.post(this.restUrl+"/user/getAdministradores.json", json,
+           httpOptions);
+        }    
+      }
+
 }
