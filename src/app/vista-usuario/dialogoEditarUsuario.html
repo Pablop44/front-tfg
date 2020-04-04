@@ -1,6 +1,9 @@
 <h1 mat-dialog-title>Editar Usuario {{data.username}}</h1>
 <div mat-dialog-content>
-  <p>Modifica los valores que quieras editar</p>
+  <div>
+    <p>Modifica los valores que quieras editar</p>
+    <p>Deja el campo de contraseña vacio para no modificarla</p>
+  </div>
   <mat-form-field class="example-full-width">
     <mat-label>DNI</mat-label>
     <input matInput id="dni" name="dni" placeholder="DNI" [(ngModel)]="data.dni" required  disabled>

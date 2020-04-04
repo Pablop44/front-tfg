@@ -10,6 +10,7 @@ import {Component, OnInit, Inject} from '@angular/core';
 import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormBuilder} from '@angular/forms';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'notificacionVistaUser',
@@ -73,6 +74,7 @@ export class VistaUsuarioComponent implements OnInit {
   userService: UserService;
   datosUser: any = [];
   myForm : FormBuilder;
+  appComponent:AppComponent;
 
   medico: Medico[] = [];
 
@@ -99,10 +101,11 @@ export class VistaUsuarioComponent implements OnInit {
     ];
     chosenItem3 = this.rol[0].value;
 
-  constructor(private fb: FormBuilder,private breakpointObserver: BreakpointObserver,private _snackBar: MatSnackBar,private router : Router, public dialog: MatDialog, private route : ActivatedRoute,loginService:LoginService, userService:UserService) { 
+  constructor(private fb: FormBuilder,private breakpointObserver: BreakpointObserver,private _snackBar: MatSnackBar,private router : Router, public dialog: MatDialog,
+     private route : ActivatedRoute,loginService:LoginService, userService:UserService, appComponent: AppComponent) { 
     this.loginService = loginService;
     this.userService = userService;
-    
+    this.appComponent = appComponent;
     }
 
   ngOnInit() {
@@ -164,6 +167,7 @@ export class VistaUsuarioComponent implements OnInit {
       this.userService.todosMedicos()
       .subscribe(
         response =>{
+          console.log(response);
           for (let i in response) {
             this.medico.push(new Medico(response[i]['username'], response[i]['id']));
           }
@@ -284,11 +288,11 @@ export class VistaUsuarioComponent implements OnInit {
     }
 
   eliminarUsuario(id, rol, username){
-      
     this.userService.eliminarUser(id)
       .subscribe(
         response =>{console.log(response)
             this.openSnackBar("Se ha eliminado el usuario: \""+username+"\" con rol \""+rol+"\"");
+            this.appComponent.peticionesAutorizar();
             if(this.loginService.loggedUser.rol == "administrador"){
               this.router.navigateByUrl("/dashboardHome");
             }else{
