@@ -72,7 +72,7 @@ export class UserService {
     });
   }
 
-  public editarEstado(valor, user){
+  public editarEstado(id, valorCuenta){
 
     const httpOptions = {
       headers: new HttpHeaders({ 
@@ -80,36 +80,25 @@ export class UserService {
       })
     };
 
-    const CuentaToSend : Cuenta = {
-      id: null,
-      rol: user.rol,
-      estado: valor,
-      user: user.id
-    }
+    let array = [
+      {
+        Field: 'id',
+        Value: id
+      },
+      {
+        Field: 'valorCuenta',
+        Value: valorCuenta
+      }
+      ];
+      let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
 
+    console.log(json);
 
-    return this.http.post(this.restUrl+"/cuenta/edit.json", JSON.stringify(CuentaToSend)
-    , httpOptions);
-  }
-
-  public editarRol(valor, user){
-
-    const httpOptions = {
-      headers: new HttpHeaders({ 
-        'Content-Type': 'application/json',
-      })
-    };
-
-    const CuentaToSend : Cuenta = {
-      id: null,
-      rol: valor,
-      estado: user.estado,
-      user: user.id
-    }
-
-
-    return this.http.post(this.restUrl+"/cuenta/edit.json", JSON.stringify(CuentaToSend)
-    , httpOptions);
+      return this.http.post(this.restUrl+"/user/editCuentaEstado.json", json,
+       httpOptions);
   }
 
   public editarEspecialidad(valor, user){

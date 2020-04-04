@@ -172,31 +172,6 @@
     
             </div>
 
-            <div *ngSwitchCase="'accionRol'" >
-
-                <mat-card class="dashboard-card" *ngIf="loginService.loggedUser.rol == 'administrador'">
-                    <mat-card-header>
-                      <mat-card-title>
-                        Cambiar el rol del Usuario
-                        <mat-menu #menu="matMenu" xPosition="before">
-                          <a [routerLink]="'/users'" mat-menu-item></a>
-                        </mat-menu>
-                      </mat-card-title>
-                    </mat-card-header>
-        
-                    <mat-card-content class="dashboard-card-content">
-                         
-                      <section class="example-section">
-                        <mat-radio-group name="opList2"  fxLayout="column" [(ngModel)]="chosenItem2">
-                          <mat-radio-button (click)="cambiarRol(op2.value)" class="example-margin" *ngFor="let op2 of rol" [value]="op2.value" name="opList2" >{{op2.name}}</mat-radio-button>
-                        </mat-radio-group>
-                      </section>
-
-                    </mat-card-content>
-                      </mat-card>
-    
-            </div>
-
             <div *ngSwitchCase="'cambiarMedico'" >
 
                 <mat-card *ngIf="datosUser.rol == 'paciente'" class="dashboard-card">
@@ -225,7 +200,7 @@
 
             <div *ngSwitchCase="'especialidad'" >
 
-              <mat-card *ngIf="datosUser.rol == 'administrador'" class="dashboard-card">
+              <mat-card *ngIf="loginService.loggedUser.rol == 'administrador'" class="dashboard-card">
                   <mat-card-header>
                     <mat-card-title>
                       Cambiar la Especialidad del médico

@@ -272,7 +272,6 @@ export class VistaUsuarioComponent implements OnInit {
           if(this.datosUser.rol == "paciente"){
             this.todosMedicos();
           }
-          console.log(this.datosUser);
         },
         error => {
           console.log(error);
@@ -286,7 +285,6 @@ export class VistaUsuarioComponent implements OnInit {
       this.userService.todosMedicos()
       .subscribe(
         response =>{
-          console.log(response);
           for (let i in response) {
             this.medico.push(new Medico(response[i]['username'], response[i]['id']));
           }
@@ -307,7 +305,6 @@ export class VistaUsuarioComponent implements OnInit {
             { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
             { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
             { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
-            { title: 'accionRol', cols: 1, rows: 1, cuerpo: "hola"},
             { title: 'cambiarMedico', cols: 1, rows: 1, cuerpo: "hola"}
           ];
         }
@@ -318,7 +315,6 @@ export class VistaUsuarioComponent implements OnInit {
           { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
           { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
           { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
-          { title: 'accionRol', cols: 1, rows: 1, cuerpo: "hola"},
           { title: 'especialidad', cols: 1, rows: 1, cuerpo: "hola"}
         ];
         if(this.datosUser.rol == 'paciente'){
@@ -327,7 +323,6 @@ export class VistaUsuarioComponent implements OnInit {
             { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
             { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
             { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
-            { title: 'accionRol', cols: 1, rows: 1, cuerpo: "hola"},
             { title: 'cambiarMedico', cols: 1, rows: 1, cuerpo: "hola"}
           ];
         }
@@ -337,7 +332,6 @@ export class VistaUsuarioComponent implements OnInit {
             { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
             { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
             { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
-            { title: 'accionRol', cols: 1, rows: 1, cuerpo: "hola"},
           ];
         }
         
@@ -354,7 +348,6 @@ export class VistaUsuarioComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if(result.respuesta == "Si"){
         this.eliminarUsuario(datosUser.id, datosUser.rol, datosUser.username);
       }
@@ -409,7 +402,7 @@ export class VistaUsuarioComponent implements OnInit {
   eliminarUsuario(id, rol, username){
     this.userService.eliminarUser(id)
       .subscribe(
-        response =>{console.log(response)
+        response =>{
             this.openSnackBar("Se ha eliminado el usuario: \""+username+"\" con rol \""+rol+"\"");
             this.appComponent.peticionesAutorizar();
             if(this.loginService.loggedUser.rol == "administrador"){
@@ -431,26 +424,10 @@ export class VistaUsuarioComponent implements OnInit {
 
   cambiarEstado(valor){
     if(this.loginService.isLogged){
-      this.userService.editarEstado(valor, this.datosUser)
+      this.userService.editarEstado(this.datosUser.id, valor)
       .subscribe(
         response =>{
           this.datosUsuario(this.id);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
-  }
-
-  cambiarRol(valor){
-    if(this.loginService.isLogged){
-      this.userService.editarRol(valor, this.datosUser)
-      .subscribe(
-        response =>{
-          this.datosUsuario(this.id);
-          console.log(response);
         },
         error => {
           console.log(error);
