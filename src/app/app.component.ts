@@ -42,7 +42,6 @@ export class AppComponent {
       .subscribe(
         response =>{
           this.peticiones = response;
-          console.log(this.peticiones);
         },
         error => {
           console.log(error);

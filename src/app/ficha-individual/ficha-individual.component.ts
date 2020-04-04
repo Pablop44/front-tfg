@@ -510,7 +510,8 @@ export class FichaIndividualComponent implements OnInit {
     if(this.loginService.isLogged){
       this.fichaService.datosFicha(idFicha)
       .subscribe(
-        response =>{         
+        response =>{      
+          console.log(response);   
           this.enfermedades = response['enfermedad'];
           for(const element in this.enfermedades){
             if(this.enfermedades[element] == "diabetes"){

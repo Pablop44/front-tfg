@@ -11,6 +11,7 @@ import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormBuilder} from '@angular/forms';
 import { AppComponent } from '../app.component';
+import { FichaService } from 'src/services/ficha.service';
 
 @Component({
   selector: 'notificacionVistaUser',
@@ -191,11 +192,17 @@ export class VistaUsuarioComponent implements OnInit {
   sub: Subscription;
   loginService: LoginService;
   userService: UserService;
+  fichaService: FichaService;
   datosUser: any = [];
   myForm : FormBuilder;
   appComponent:AppComponent;
+  idFicha: string;
 
   medico: Medico[] = [];
+
+  diabetes = "";
+  asma = "";
+  migranas = "";
 
   cards;
 
@@ -221,10 +228,11 @@ export class VistaUsuarioComponent implements OnInit {
     chosenItem3 = this.rol[0].value;
 
   constructor(private fb: FormBuilder,private breakpointObserver: BreakpointObserver,private _snackBar: MatSnackBar,private router : Router, public dialog: MatDialog,
-     private route : ActivatedRoute,loginService:LoginService, userService:UserService, appComponent: AppComponent) { 
+     private route : ActivatedRoute,loginService:LoginService, userService:UserService, appComponent: AppComponent, fichaService: FichaService) { 
     this.loginService = loginService;
     this.userService = userService;
     this.appComponent = appComponent;
+    this.fichaService = fichaService;
     }
 
   ngOnInit() {
@@ -271,6 +279,7 @@ export class VistaUsuarioComponent implements OnInit {
           this.makeCards();
           if(this.datosUser.rol == "paciente"){
             this.todosMedicos();
+            this.getFichaPaciente();
           }
         },
         error => {
@@ -287,6 +296,33 @@ export class VistaUsuarioComponent implements OnInit {
         response =>{
           for (let i in response) {
             this.medico.push(new Medico(response[i]['username'], response[i]['id']));
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  getFichaPaciente(){
+    if(this.loginService.isLogged){
+      this.fichaService.getFichaPaciente(this.datosUser.id)
+      .subscribe(
+        response =>{   
+          console.log(response);
+          this.idFicha = response[0]['id'];      
+          this.enfermedades = response[0]['enfermedad'];
+          for(const element in this.enfermedades){
+            if(this.enfermedades[element] == "diabetes"){
+              this.diabetes = "Diabetes";
+            }
+            else if(this.enfermedades[element] == "asma"){
+              this.asma = "Asma";
+            }
+            else{
+              this.migranas = "Migrañas";
+            }
           }
         },
         error => {
@@ -428,9 +464,11 @@ export class VistaUsuarioComponent implements OnInit {
       .subscribe(
         response =>{
           this.datosUsuario(this.id);
+          this.openSnackBar("Se ha actualizado el estado de la cuenta");
         },
         error => {
           console.log(error);
+          this.openSnackBar("No se ha actualizado el estado de la cuenta");
         }
       );
     }

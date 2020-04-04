@@ -194,6 +194,14 @@ export class FichaService {
     });
   }
 
+  getFichaPaciente(idUser){
+    return this.http.get(this.restUrl+"/ficha/getFichaPaciente/"+idUser+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
+
   eliminarFicha(id){
     return this.http.delete(this.restUrl+"/ficha/delete/"+id+".json", {
       headers: new HttpHeaders({

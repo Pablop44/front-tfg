@@ -37,6 +37,23 @@
                       </mat-list-item>
                       <mat-divider></mat-divider>
                       <h3 mat-subheader>
+                        <mat-icon mat-list-icon style="margin-right: 10px;">
+                            <i class="material-icons">
+                                person
+                                </i>
+                          </mat-icon>
+                            Datos Médicos
+                    </h3>
+                    <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">Id del Historial</h4>
+                        <a mat-line [routerLink]="['/ficha-individual', idFicha]">{{idFicha}}</a>
+                      </mat-list-item>
+                      <mat-list-item >
+                        <h4 mat-line style="font-weight: bold;">Enfermedades Asociadas al paciente</h4>
+                        <p mat-line> {{asma}} {{diabetes}} {{migranas}}</p>
+                      </mat-list-item>
+                      <mat-divider></mat-divider>
+                      <h3 mat-subheader>
                           <mat-icon mat-list-icon style="margin-right: 10px;">
                               <i class="material-icons">
                                   person
