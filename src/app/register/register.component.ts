@@ -146,7 +146,7 @@ export class RegisterComponent implements OnInit {
   }
 
   validarPoblacion(): Boolean{
-    if(this.formRegistro.password != null){
+    if(this.formRegistro.poblacion != null){
       var nameRegex = /^[a-zA-Z\-]+$/;
       if(nameRegex.test(this.formRegistro.poblacion) === true){
         this.errorPoblacion = false;

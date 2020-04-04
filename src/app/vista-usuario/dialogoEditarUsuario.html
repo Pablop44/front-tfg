@@ -10,36 +10,60 @@
   </mat-form-field>
   <mat-form-field class="example-full-width">
     <mat-label>Nombre de Usuario</mat-label>
-    <input matInput id="username" name="username" [(ngModel)]="data.username"  required  >
+    <input matInput id="username" name="username" [(ngModel)]="data.username"  required  (focusout)="validarUsername()">
   </mat-form-field>
+  <mat-error *ngIf="errorUsername">
+    Nombre de usuario erróneo, solo letras y números
+  </mat-error>
   <mat-form-field class="example-full-width">
     <mat-label>Contraseña</mat-label>
-    <input matInput type="password" id="password" [(ngModel)]="data.password" name="password" placeholder="Contraseña"  >
+    <input matInput type="password" id="password" [(ngModel)]="data.password" name="password" placeholder="Contraseña"  (focusout)="validarPassword()">
   </mat-form-field>
+  <mat-error *ngIf="errorPassword">
+    Contraseña debete tener una minúscula, mayúscula y número
+  </mat-error>
   <mat-form-field class="example-full-width">
     <mat-label>Email</mat-label>
-    <input matInput type="email" id="email" [(ngModel)]="data.email" name="email" placeholder="Email"  required  >
+    <input matInput type="email" id="email" [(ngModel)]="data.email" name="email" placeholder="Email"  required  (focusout)="validarEmail()">
   </mat-form-field>
+  <mat-error *ngIf="errorEmail">
+    Email erróneo
+  </mat-error>
   <mat-form-field class="example-full-width">
     <mat-label>Nombre</mat-label>
-    <input matInput type="text" id="nombre" [(ngModel)]="data.nombre" name="nombre" placeholder="Nombre"  required  >
+    <input matInput type="text" id="nombre" [(ngModel)]="data.nombre" name="nombre" placeholder="Nombre"  required (focusout)="validarNombre()" >
   </mat-form-field>
+  <mat-error *ngIf="errorNombre">
+    Nombre invalido
+  </mat-error>
   <mat-form-field class="example-full-width">
     <mat-label>Apellidos</mat-label>
-    <input matInput type="text" id="apellidos" [(ngModel)]="data.apellidos" name="apellidos" placeholder="Apellidos" required  >
+    <input matInput type="text" id="apellidos" [(ngModel)]="data.apellidos" name="apellidos" placeholder="Apellidos" required (focusout)="validarApellidos()" >
   </mat-form-field>
+  <mat-error *ngIf="errorApellidos">
+    Apellidos invalido
+  </mat-error>
   <mat-form-field class="example-full-width">
     <mat-label>Teléfono</mat-label>
-    <input matInput type="text" id="telefono" [(ngModel)]="data.telefono" name="telefono" placeholder="Teléfono" required  >
+    <input matInput type="text" id="telefono" [(ngModel)]="data.telefono" name="telefono" placeholder="Teléfono" required  (focusout)="validarTelefono()">
   </mat-form-field>
+  <mat-error *ngIf="errorTelefono">
+    Número de teléfono erróneo
+  </mat-error>
   <mat-form-field class="example-full-width">
     <mat-label>Población</mat-label>
-    <input matInput type="text" id="poblacion" [(ngModel)]="data.poblacion" name="poblacion" placeholder="Población" required  >
+    <input matInput type="text" id="poblacion" [(ngModel)]="data.poblacion" name="poblacion" placeholder="Población" required  (focusout)="validarPoblacion()">
   </mat-form-field>
+  <mat-error *ngIf="errorPoblacion">
+    Población solo con letras
+  </mat-error>
   <mat-form-field *ngIf="data.rol == 'medico'" class="example-full-width">
     <mat-label>Número de Colegiado</mat-label>
-    <input matInput type="text" id="colegiado" [(ngModel)]="data.colegiado" name="colegiado" placeholder="Número de Colegiado" required  >
+    <input matInput type="text" id="colegiado" [(ngModel)]="data.colegiado" name="colegiado" placeholder="Número de Colegiado" required  (focusout)="validarColegiado()">
   </mat-form-field>
+  <mat-error *ngIf="errorColegiado">
+    Número de Colegiado Invalido
+  </mat-error>
   <mat-form-field *ngIf="data.rol == 'medico'" style="width: 100%;">
     <mat-label>Cargo del Médico</mat-label>
     <select id="cargo" [(ngModel)]="data.cargo" name="cargo" matNativeControl required>

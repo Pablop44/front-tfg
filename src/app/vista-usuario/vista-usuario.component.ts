@@ -53,12 +53,131 @@ export class DialogoEliminarUsuarioVista {
   templateUrl: 'dialogoEditarUsuario.html',
 })
 export class DialogoEditarUsuario {
+
+  errorUsername: Boolean;
+  errorPassword: Boolean;
+  errorEmail: Boolean;
+  errorNombre: Boolean;
+  errorApellidos: Boolean;
+  errorTelefono: Boolean;
+  errorPoblacion: Boolean;
+  errorColegiado: Boolean;
+  errorCargo: Boolean;
+
+
   constructor(
     public dialogRef: MatDialogRef<DialogoEditarUsuario>,
     @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  validarUsername(){
+    if(this.data.username != null){
+      var nameRegex = /^[a-zA-Z0-9\-]+$/;
+      if(nameRegex.test(this.data.username) === true){
+        this.errorUsername = false;
+      }else{
+        this.errorUsername = true;
+      }
+    }else{
+      this.errorUsername = true;
+    }
+  }
+
+  validarEmail(){
+    if(this.data.email != null){
+      var nameRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+      if(nameRegex.test(this.data.email) === true){
+        this.errorEmail = false;
+      }else{
+        this.errorEmail = true;
+      }
+    }else{
+      this.errorEmail = true;
+    }
+  }
+
+  validarApellidos(){
+    if(this.data.apellidos != null){
+      var nameRegex = /^[a-zA-Z\s]*$/;
+      if(nameRegex.test(this.data.apellidos) === true){
+        this.errorApellidos = false;
+      }else{
+        this.errorApellidos = true;
+      }
+    }else{
+      this.errorApellidos = true;
+    }
+  }
+
+  validarPoblacion(){
+    if(this.data.poblacion != null){
+      var nameRegex = /^[a-zA-Z\-]+$/;
+      if(nameRegex.test(this.data.poblacion) === true){
+        this.errorPoblacion = false;
+      }else{
+        this.errorPoblacion = true;
+      }
+    }else{
+      this.errorPoblacion = true;
+    }
+  }
+
+
+  validarPassword(){
+    if(this.data.password != null){
+      var nameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{1,30}$/;
+      if(nameRegex.test(this.data.password) === true){
+        this.errorPassword = false;
+        return true;
+      }else{
+        this.errorPassword = true;
+        return false;
+      }
+    }else{
+      this.errorPassword = false;
+    }
+  }
+
+  validarTelefono(){
+    if(this.data.telefono != null){
+      var nameRegex = /^([9,7,6]{1})+([0-9]{8})$/;
+      if(nameRegex.test(this.data.telefono) === true){
+        this.errorTelefono= false;
+      }else{
+        this.errorTelefono = true;
+      }
+    }else{
+      this.errorTelefono= true;
+    }
+  }
+
+  validarNombre(){
+    if(this.data.nombre != null){
+      var nameRegex = /^[a-zA-Z\s]*$/;
+      if(nameRegex.test(this.data.nombre) === true){
+        this.errorNombre = false;
+      }else{
+        this.errorNombre = true;
+      }
+    }else{
+      this.errorNombre = true;
+    }
+  }
+
+  validarColegiado(){
+    if(this.data.colegiado != null){
+      var nameRegex = /^([0-9\-]){9}$/;
+      if(nameRegex.test(this.data.colegiado.toString()) === true){
+        this.errorColegiado = false;
+      }else{
+        this.errorColegiado = true;
+      }
+    }else{
+      this.errorColegiado = true;
+    }
   }
 }
 
@@ -357,20 +476,148 @@ export class VistaUsuarioComponent implements OnInit {
   }
 
   editarUser(user){
-    if(this.loginService.isLogged){
-      this.userService.editarUser(user)
-      .subscribe(
-        response =>{
-          this.datosUsuario(this.id);
-          this.openSnackBar("Se actualizado los datos con éxito");
-        },
-        error => {
-          console.log(error);
-          this.openSnackBar("Error al actualizar los datos");
-        }
-      );
+    if(this.loginService.isLogged){ 
+      if(this.validar(user)){
+        this.userService.editarUser(user)
+        .subscribe(
+          response =>{
+            this.datosUsuario(user.id);
+            this.openSnackBar("Se actualizado los datos con éxito");
+          },
+          error => {
+            console.log(error);
+            this.openSnackBar("Error al actualizar los datos");
+          }
+        );
+      }
+    }
+  }
+
+  validar(usuario): Boolean{
+    return  (this.validarUsername(usuario) && 
+    this.validarPoblacion(usuario) && this.validarPassword(usuario) && this.validarNombre(usuario) &&
+    this.validarColegiado(usuario) && this.validarTelefono(usuario) && this.validarEmail(usuario)
+    && this.validarApellidos(usuario));
+  }
+
+  validarUsername(usuario): Boolean{
+    if(usuario.username != null){
+      var nameRegex = /^[a-zA-Z0-9\-]+$/;
+      if(nameRegex.test(usuario.username) === true){
+        return true;
+      }else{
+        this.openSnackBar("Error en el formato del nombre");
+        return false;
+      }
+    }else{
+      this.openSnackBar("El nombre debe estar cubierto");
+      return false;
+    }
+  }
+
+  validarEmail(usuario): Boolean{
+    if(usuario.email != null){
+      var nameRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+      if(nameRegex.test(usuario.email) === true){
+        return true;
+      }else{
+        this.openSnackBar("Error en el formato del email");
+        return false;
+      }
+    }else{
+      this.openSnackBar("El email debe estar cubierto");
+      return false;
+    }
+  }
+
+  validarApellidos(usuario): Boolean{
+    if(usuario.apellidos != null){
+      var nameRegex = /^[a-zA-Z\s]*$/;
+      if(nameRegex.test(usuario.apellidos) === true){
+        return true;
+      }else{
+        this.openSnackBar("Error en el formato de los apellidos");
+        return false;
+      }
+    }else{
+      this.openSnackBar("Los apellidos deben etar cubiertos");
+      return false;
+    }
+  }
+
+  validarPoblacion(usuario): Boolean{
+    if(usuario.poblacion != null){
+      var nameRegex = /^[a-zA-Z\-]+$/;
+      if(nameRegex.test(usuario.poblacion) === true){
+        return true;
+      }else{
+        this.openSnackBar("Error en el formato de la población");
+        return false;
+      }
+    }else{
+      this.openSnackBar("La población debe estar cubierta");
+      return false;
     }
   }
 
 
+  validarPassword(usuario): Boolean{
+    if(usuario.password != null){
+      var nameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{1,30}$/;
+      if(nameRegex.test(usuario.password) === true){
+        return true;
+      }else{
+        this.openSnackBar("La contraseña debe tener una mayúscula, minúscula y un signo");
+        return false;
+      }
+    }else{
+      return true;
+    }
+  }
+
+  validarTelefono(usuario): Boolean{
+    if(usuario.telefono != null){
+      var nameRegex = /^([9,7,6]{1})+([0-9]{8})$/;
+      if(nameRegex.test(usuario.telefono) === true){
+        return true;
+      }else{
+        this.openSnackBar("Error en el formato del teléfono");
+        return false;
+      }
+    }else{
+      this.openSnackBar("El teléfono debe estar cubierto");
+      return false;
+    }
+  }
+
+  validarNombre(usuario): Boolean{
+    if(usuario.nombre != null){
+      var nameRegex = /^[a-zA-Z\s]*$/;
+      if(nameRegex.test(usuario.nombre) === true){
+        return true;
+      }else{
+        this.openSnackBar("Error en el formato del nombre");
+        return false;
+      }
+    }else{
+      this.openSnackBar("El nombre debe estar cubierto");
+      return false;
+    }
+  }
+
+  validarColegiado(usuario): Boolean{
+  
+    if(usuario.colegiado != null){
+      var nameRegex = /^([0-9\-]){9}$/;
+      if(nameRegex.test(usuario.colegiado.toString()) === true){
+        return true;
+      }else{
+        this.openSnackBar("Error en el formato del número de colegiado");
+        return false;
+      }
+    }else{
+      this.openSnackBar("El número de colegiado debe estar cubierto");
+      return false;
+    }
+  }
 }
