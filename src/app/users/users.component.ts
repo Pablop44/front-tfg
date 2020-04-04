@@ -212,7 +212,6 @@ export class UsersComponent implements OnInit {
         .subscribe(
           response =>{
             this.usuariosActivos = [];
-            console.log(response);
             for (let i in response) {
                 const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'],  response[i]['rol']);
                 this.usuariosActivos.push(newUserData);
@@ -220,7 +219,6 @@ export class UsersComponent implements OnInit {
 
           this.dataSource4 = new MatTableDataSource<UserData>(this.usuariosActivos);
           this.dataSource4.data = this.usuariosActivos;
-          console.log(this.usuariosActivos);
           },
           error => {
             console.log(error);
@@ -237,7 +235,6 @@ export class UsersComponent implements OnInit {
       });
   
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
         if(result.respuesta == "Si"){
           this.eliminarUsuario(user, rol);
         }
@@ -251,7 +248,6 @@ export class UsersComponent implements OnInit {
       });
   
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
         if(result.respuesta == "Si"){
           this.autorizarUsuario(user, rol);
         }
@@ -301,6 +297,8 @@ export class UsersComponent implements OnInit {
       this.userService.getAdministradores(this.currentPageAdministrador, this.pageSizeAdministrador, this.ordenAdministador)
       .subscribe(
         response =>{
+          this.administradores = [];
+          this.getNumeroAdministradores();
           for (let i in response) {
                 const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol']);
                 this.administradores.push(newUserData);
@@ -320,6 +318,7 @@ export class UsersComponent implements OnInit {
       this.userService.getMedicos(this.currentPageMedico, this.pageSizeMedico, this.ordenMedico)
       .subscribe(
         response =>{
+          this.getNumeroMedicos();
           this.medicos = [];
           for (let i in response) {
                 const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol']);
@@ -340,6 +339,7 @@ export class UsersComponent implements OnInit {
       this.userService.getPacientes(this.currentPagePaciente, this.pageSizePaciente, this.ordenPaciente)
       .subscribe(
         response =>{
+          this.getNumeroPacientes();
           this.pacientes = [];
           for (let i in response) {
                 const newUserData = new UserData(response[i]['id'],response[i]['dni'],response[i]['username'], response[i]['email'],response[i]['telefono'],response[i]['nombre'], response[i]['apellidos'], response[i]['estado'], response[i]['colegiado'], response[i]['especialidad'], response[i]['rol']);
@@ -358,14 +358,49 @@ export class UsersComponent implements OnInit {
   autorizarUsuario(user, rol){
     this.userService.autorizarUser(user.id)
       .subscribe(
-        response =>{console.log(response)
+        response =>{
           this.peticionesAutorizar();
           this.appComponent.peticionesAutorizar();
           this.openSnackBar("Se ha aceptado el usuario: \""+user.username+"\" con rol \""+rol+"\"");
           },
         error => {console.log(error)
-          this.openSnackBar("No se ha podido eliminar el usuario:" +user.username);}
+          this.openSnackBar("No se ha podido aceptar el usuario:" +user.username);}
       );
-    
     }
+
+    getNumeroAdministradores(){
+      this.userService.getNumeroAdministradores()
+        .subscribe(
+          response =>{
+              this.totalSizeAdministrador = response['numero'];
+            },
+          error => {
+            console.log(error)
+          }
+        );
+    }
+
+    getNumeroMedicos(){
+      this.userService.getNumeroMedicos()
+        .subscribe(
+          response =>{
+              this.totalSizeMedico = response['numero'];
+            },
+          error => {
+            console.log(error)
+          }
+        );
+      }
+    
+      getNumeroPacientes(){
+        this.userService.getNumeroPacientes()
+          .subscribe(
+            response =>{
+                this.totalSizePaciente = response['numero'];
+              },
+            error => {
+              console.log(error)
+            }
+          );
+        }
 }

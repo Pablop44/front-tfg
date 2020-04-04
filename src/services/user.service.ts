@@ -49,7 +49,6 @@ export class UserService {
   }
 
   datosUsuario(id){
-    console.log()
     return this.http.get(this.restUrl+"/user/view/"+id+".json", {
       headers: new HttpHeaders({
         'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
@@ -138,7 +137,6 @@ export class UserService {
       rol: user.rol,
     }
 
-    console.log(userToSend);
 
     return this.http.post(this.restUrl+"/user/editarUser.json", JSON.stringify(userToSend)
     , httpOptions);
@@ -193,8 +191,6 @@ export class UserService {
       array.forEach(item => obj[item.Field] = item.Value);
       
       let json = JSON.stringify(obj);
-      
-      console.log(json);
   
       const httpOptions = {
         headers: new HttpHeaders({ 
@@ -224,9 +220,7 @@ export class UserService {
       array.forEach(item => obj[item.Field] = item.Value);
       
       let json = JSON.stringify(obj);
-      
-      console.log(json);
-  
+
       const httpOptions = {
         headers: new HttpHeaders({ 
           'Content-Type': 'application/json',
@@ -256,8 +250,6 @@ export class UserService {
       array.forEach(item => obj[item.Field] = item.Value);
       
       let json = JSON.stringify(obj);
-      
-      console.log(json);
   
       const httpOptions = {
         headers: new HttpHeaders({ 
@@ -287,8 +279,6 @@ export class UserService {
       array.forEach(item => obj[item.Field] = item.Value);
       
       let json = JSON.stringify(obj);
-      
-      console.log(json);
   
       const httpOptions = {
         headers: new HttpHeaders({ 
@@ -318,8 +308,6 @@ export class UserService {
         array.forEach(item => obj[item.Field] = item.Value);
         
         let json = JSON.stringify(obj);
-        
-        console.log(json);
     
         const httpOptions = {
           headers: new HttpHeaders({ 
@@ -349,8 +337,6 @@ export class UserService {
         array.forEach(item => obj[item.Field] = item.Value);
         
         let json = JSON.stringify(obj);
-        
-        console.log(json);
     
         const httpOptions = {
           headers: new HttpHeaders({ 
@@ -361,6 +347,30 @@ export class UserService {
           return this.http.post(this.restUrl+"/user/getAdministradores.json", json,
            httpOptions);
         }    
+      }
+
+      getNumeroAdministradores(){
+        return this.http.get(this.restUrl+"/user/getNumeroAdministradores.json", {
+          headers: new HttpHeaders({
+            'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+          })
+        });
+      }
+
+      getNumeroPacientes(){
+        return this.http.get(this.restUrl+"/user/getNumeroPacientes.json", {
+          headers: new HttpHeaders({
+            'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+          })
+        });
+      }
+
+      getNumeroMedicos(){
+        return this.http.get(this.restUrl+"/user/getNumeroMedicos.json", {
+          headers: new HttpHeaders({
+            'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+          })
+        });
       }
 
 }
