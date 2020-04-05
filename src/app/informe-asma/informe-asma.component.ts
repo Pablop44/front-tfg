@@ -21,6 +21,7 @@ export class InformeAsmaComponent implements OnInit {
   sub: Subscription;
   idInformeAsma: String;
   datosInformeAsma: InformeAsma;
+  fecha:String;
 
   cards; 
 
@@ -41,7 +42,7 @@ export class InformeAsmaComponent implements OnInit {
       this.asmaService.informeAsma(id)
       .subscribe(
         response =>{
-        
+          this.fecha = response['fecha'];
           this.datosInformeAsma = new InformeAsma(response['id'],response['fecha'],response['calidadSueno'], response['dificultadRespirar'],
           response['tos'], response['gravedadTos'], response['limitaciones'], response['silbidos'], response['usoMedicacion'],
           response['espirometria'], response['factoresCrisis'], response['estadoGeneral']);
@@ -50,12 +51,14 @@ export class InformeAsmaComponent implements OnInit {
             map(({ matches }) => {
               if (matches) {
                 return [
-                  { title: 'asma', cols: 2, rows: 3, cuerpo: "hola"},
+                  { title: 'respuestaCerrada', cols: 1, rows: 2, cuerpo: "hola"},
+                  { title: 'respuestaAbierta', cols: 1, rows: 2, cuerpo: "hola"}
                 ];
-              }
+              } 
         
               return [
-                { title: 'asma', cols: 2, rows: 3, cuerpo: "hola"},
+                { title: 'respuestaCerrada', cols: 1, rows: 2, cuerpo: "hola"},
+                { title: 'respuestaAbierta', cols: 1, rows: 2, cuerpo: "hola"}
               ];
             })
           );
@@ -75,6 +78,7 @@ export class InformeAsmaComponent implements OnInit {
 
   generateCSVInforme(){
     const options = { 
+      filename: 'informeAsma'+this.datosInformeAsma.fecha,
       fieldSeparator: ';',
       quoteStrings: '"',
       decimalSeparator: '.',

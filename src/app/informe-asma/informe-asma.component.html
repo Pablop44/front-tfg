@@ -1,82 +1,101 @@
 <div class="grid-container">
-    <h1 class="mat-h1">Informe de Asma</h1>
+    <h1 class="mat-h1">Informe de Asma con Fecha: {{fecha}}</h1>
     <mat-grid-list cols="2" rowHeight="350px">
       <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
+        <div [ngSwitch]="card.title">
 
+          <div *ngSwitchCase="'respuestaCerrada'">
             <mat-card class="dashboard-card">
-                <mat-card-header>
-                  <mat-card-title>
-                    Informe con Fecha: {{datosInformeAsma.fecha}}
-                    <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                        <mat-icon>more_vert</mat-icon>
-                      </button>
-                      <mat-menu #menu="matMenu" xPosition="before">
-                        <a mat-menu-item (click)="generatePDFInforme()">Descargar Informe como PDF</a>
-                        <a mat-menu-item (click)="generateCSVInforme()">Descargar Informe como CSV</a>
-                      </mat-menu>
-                  </mat-card-title>
-                </mat-card-header>
-    
-                <mat-card-content class="dashboard-card-content">
-                 
-                  <mat-list id="listaInformeAsma">
-                    <h3 mat-subheader>
-                        <mat-icon mat-list-icon style="margin-right: 10px;">
-                            <i class="material-icons">
-                                lock
-                                </i>
-                          </mat-icon>
-                            Preguntas de Respuesta Cerrada
-                    </h3>
+              <mat-card-header>
+                <mat-card-title>
+                </mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="dashboard-card-content">
+               
+                <mat-list id="listaInformeAsma">
+                  <h3 mat-subheader>
+                      <mat-icon mat-list-icon style="margin-right: 10px;">
+                          <i class="material-icons">
+                              lock
+                              </i>
+                        </mat-icon>
+                          Preguntas de Respuesta Cerrada
+                  </h3>
+                  <mat-list-item >
+                      <h4 mat-line style="font-weight: bold;">Calidad del Sueño</h4>
+                      <p mat-line> {{datosInformeAsma.calidadSueno}} </p>
+                    </mat-list-item>
                     <mat-list-item >
-                        <h4 mat-line style="font-weight: bold;">Calidad del Sueño</h4>
-                        <p mat-line> {{datosInformeAsma.calidadSueno}} </p>
-                      </mat-list-item>
-                      <mat-list-item >
-                        <h4 mat-line style="font-weight: bold;">¿El paciente ha presentado dificultad para Respirar?</h4>
-                        <p mat-line>{{datosInformeAsma.dificultadRespirar}}</p>
-                      </mat-list-item>
-                      <mat-list-item >
-                        <h4 mat-line style="font-weight: bold;">¿El paciente ha presentado Tos?</h4>
-                        <p mat-line>{{datosInformeAsma.tos}}</p>
-                      </mat-list-item>
-                      <mat-list-item >
-                        <h4 mat-line style="font-weight: bold;">¿El paciente ha presentado Silbidos?</h4>
-                        <p mat-line>{{datosInformeAsma.silbidos}}</p>
-                      </mat-list-item>
-                      <mat-list-item >
-                        <h4 mat-line style="font-weight: bold;">¿El paciente ha presentado Limitaciones para desarrollar una vida normal?</h4>
-                        <p mat-line>{{datosInformeAsma.limitaciones}}</p>
-                      </mat-list-item>
-                      <mat-list-item >
-                        <h4 mat-line style="font-weight: bold;">¿El paciente ha necesitado medicación de rescate?</h4>
-                        <p mat-line>{{datosInformeAsma.usoMedicacion}}</p>
-                      </mat-list-item>
-                      <mat-divider></mat-divider>
-                      <h3 mat-subheader>
-                          <mat-icon mat-list-icon style="margin-right: 10px;">
-                              <i class="material-icons">
-                                  lock_open
-                                  </i>
-                            </mat-icon>
-                            Preguntas de Respuesta Abierta
-                      </h3>
-                      <mat-list-item >
-                          <h4 mat-line style="font-weight: bold;">Datos Espirometría</h4>
-                          <p mat-line>{{datosInformeAsma.espirometria}}</p>
-                        </mat-list-item>
-                      <mat-list-item >
-                        <h4 mat-line style="font-weight: bold;">Factores que han propiciado una crisis</h4>
-                        <p mat-line>{{datosInformeAsma.factoresCrisis}}</p>
-                      </mat-list-item>
-                      <mat-list-item >
-                          <h4 mat-line style="font-weight: bold;">Estado General del Paciente</h4>
-                          <p mat-line>{{datosInformeAsma.estadoGeneral}}</p>
-                      </mat-list-item>
-                    </mat-list>
-                     
-                </mat-card-content>
-                  </mat-card>
+                      <h4 mat-line style="font-weight: bold;">¿El paciente ha presentado dificultad para Respirar?</h4>
+                      <p mat-line>{{datosInformeAsma.dificultadRespirar}}</p>
+                    </mat-list-item>
+                    <mat-list-item >
+                      <h4 mat-line style="font-weight: bold;">¿El paciente ha presentado Tos?</h4>
+                      <p mat-line>{{datosInformeAsma.tos}}</p>
+                    </mat-list-item>
+                    <mat-list-item >
+                      <h4 mat-line style="font-weight: bold;">¿El paciente ha presentado Silbidos?</h4>
+                      <p mat-line>{{datosInformeAsma.silbidos}}</p>
+                    </mat-list-item>
+                    <mat-list-item >
+                      <h4 mat-line style="font-weight: bold;">¿El paciente ha presentado Limitaciones para desarrollar una vida normal?</h4>
+                      <p mat-line>{{datosInformeAsma.limitaciones}}</p>
+                    </mat-list-item>
+                    <mat-list-item >
+                      <h4 mat-line style="font-weight: bold;">¿El paciente ha necesitado medicación de rescate?</h4>
+                      <p mat-line>{{datosInformeAsma.usoMedicacion}}</p>
+                    </mat-list-item>
+                  </mat-list>
+                   
+              </mat-card-content>
+                </mat-card>
+          </div>
+
+          <div *ngSwitchCase="'respuestaAbierta'">
+            <mat-card class="dashboard-card">
+              <mat-card-header>
+                <mat-card-title>
+                  <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                      <mat-icon>save_alt</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" xPosition="before">
+                      <a mat-menu-item (click)="generatePDFInforme()">Descargar Informe como PDF</a>
+                      <a mat-menu-item (click)="generateCSVInforme()">Descargar Informe como CSV</a>
+                    </mat-menu>
+                </mat-card-title>
+              </mat-card-header>
+
+              <mat-card-content class="dashboard-card-content">
+               
+                <mat-list id="listaInformeAsma">
+                  <h3 mat-subheader>
+                      <mat-icon mat-list-icon style="margin-right: 10px;">
+                          <i class="material-icons">
+                              lock_open
+                              </i>
+                        </mat-icon>
+                          Preguntas de Respuesta Abierta
+                  </h3>
+                  <mat-list-item >
+                      <h4 mat-line style="font-weight: bold;">Espirometría</h4>
+                      <p mat-line> {{datosInformeAsma.espirometria}} </p>
+                    </mat-list-item>
+                    <mat-list-item >
+                      <h4 mat-line style="font-weight: bold;">Factores que propiciaron la crisis</h4>
+                      <p mat-line>{{datosInformeAsma.factoresCrisis}}</p>
+                    </mat-list-item>
+                    <mat-list-item >
+                      <h4 mat-line style="font-weight: bold;">Estado general del paciente</h4>
+                      <p mat-line>{{datosInformeAsma.estadoGeneral}}</p>
+                    </mat-list-item>
+                  </mat-list>
+                   
+              </mat-card-content>
+                </mat-card>
+          </div>
+            
+        </div>
 
       </mat-grid-tile>
     </mat-grid-list>

@@ -1,19 +1,15 @@
 <div class="grid-container">
-    <h1 class="mat-h1">Informe de Diabetes</h1>
-    <mat-grid-list cols="2" rowHeight="350px">
+    <h1 class="mat-h1">Informe de Diabetes con Fecha: {{fecha}}</h1>
+    <mat-grid-list cols="2" rowHeight="450px">
       <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
+
+        <div [ngSwitch]="card.title">
+
+          <div *ngSwitchCase="'respuestaCerrada'">
 
             <mat-card class="dashboard-card">
                 <mat-card-header>
                   <mat-card-title>
-                    Informe con Fecha: {{datosInformeDiabetes.fecha}}
-                    <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                        <mat-icon>more_vert</mat-icon>
-                      </button>
-                      <mat-menu #menu="matMenu" xPosition="before">
-                        <a mat-menu-item (click)="generatePDFInforme()">Descargar Informe como PDF</a>
-                        <a mat-menu-item (click)="generateCSVInforme()">Descargar Informe como CSV</a>
-                      </mat-menu>
                   </mat-card-title>
                 </mat-card-header>
     
@@ -68,23 +64,51 @@
                         <h4 mat-line style="font-weight: bold;">¿El paciente tiene algún problema con la dieta diabética?</h4>
                         <p mat-line>{{datosInformeDiabetes.problemaDieta}}</p>
                       </mat-list-item>
-                      <mat-divider></mat-divider>
-                      <h3 mat-subheader>
-                          <mat-icon mat-list-icon style="margin-right: 10px;">
-                              <i class="material-icons">
-                                  lock_open
-                                  </i>
-                            </mat-icon>
-                            Preguntas de Respuesta Abierta
-                      </h3>
-                      <mat-list-item >
-                          <h4 mat-line style="font-weight: bold;">Estado General del Paciente</h4>
-                          <p mat-line>{{datosInformeDiabetes.estadoGeneral}}</p>
-                      </mat-list-item>
+
                     </mat-list>
                      
                 </mat-card-content>
-                  </mat-card>
+              </mat-card>
+              </div>
+
+
+                <div *ngSwitchCase="'respuestaAbierta'">
+
+                  <mat-card class="dashboard-card">
+                      <mat-card-header>
+                        <mat-card-title>
+                          <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                              <mat-icon>save_alt</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu" xPosition="before">
+                              <a mat-menu-item (click)="generatePDFInforme()">Descargar Informe como PDF</a>
+                              <a mat-menu-item (click)="generateCSVInforme()">Descargar Informe como CSV</a>
+                            </mat-menu>
+                        </mat-card-title>
+                      </mat-card-header>
+          
+                      <mat-card-content class="dashboard-card-content">
+                       
+                        <mat-list>
+                            <h3 mat-subheader>
+                                <mat-icon mat-list-icon style="margin-right: 10px;">
+                                    <i class="material-icons">
+                                        lock_open
+                                        </i>
+                                  </mat-icon>
+                                  Preguntas de Respuesta Abierta
+                            </h3>
+                            <mat-list-item >
+                                <h4 mat-line style="font-weight: bold;">Estado General del Paciente</h4>
+                                <p mat-line>{{datosInformeDiabetes.estadoGeneral}}</p>
+                            </mat-list-item>
+                          </mat-list>
+                           
+                      </mat-card-content>
+                        </mat-card>
+
+                    </div>
+              </div>
 
       </mat-grid-tile>
     </mat-grid-list>

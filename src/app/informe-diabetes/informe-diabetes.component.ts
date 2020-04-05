@@ -21,6 +21,7 @@ export class InformeDiabetesComponent implements OnInit {
   sub: Subscription;
   idInformeDiabetes: String;
   datosInformeDiabetes: InformeDiabetes;
+  fecha: String;
 
   cards;
 
@@ -42,7 +43,7 @@ export class InformeDiabetesComponent implements OnInit {
       this.diabetesService.informeDiabetes(id)
       .subscribe(
         response =>{
-        
+          this.fecha = response['fecha'];
           this.datosInformeDiabetes = new InformeDiabetes(response['id'],response['fecha'],response['numeroControles'], response['nivelBajo'],
           response['frecuenciaBajo'], response['horarioBajo'], response['perdidaConocimiento'], response['nivelAlto'], response['frecuenciaAlto'],
           response['horarioAlto'], response['actividadFisica'], response['problemaDieta'], response['estadoGeneral'], response['momentos']);
@@ -51,12 +52,14 @@ export class InformeDiabetesComponent implements OnInit {
             map(({ matches }) => {
               if (matches) {
                 return [
-                  { title: 'diabetes', cols: 2, rows: 3, cuerpo: "hola"},
+                  { title: 'respuestaCerrada', cols: 1, rows: 2, cuerpo: "hola"},
+                  { title: 'respuestaAbierta', cols: 1, rows: 2, cuerpo: "hola"}
                 ];
               }
         
               return [
-                { title: 'diabetes', cols: 2, rows: 3, cuerpo: "hola"},
+                { title: 'respuestaCerrada', cols: 1, rows: 2, cuerpo: "hola"},
+                { title: 'respuestaAbierta', cols: 1, rows: 2, cuerpo: "hola"}
               ];
             })
           );

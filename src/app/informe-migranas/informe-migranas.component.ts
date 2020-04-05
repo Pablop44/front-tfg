@@ -21,7 +21,7 @@ export class InformeMigranasComponent implements OnInit {
   sub: Subscription;
   idInformeMigranas: String;
   datosInformeMigranas: InformeMigranas;
-
+  fecha: string;
   cards;
 
   constructor(loginService: LoginService, private breakpointObserver: BreakpointObserver, migranasService: MigranasService, private route : ActivatedRoute) {
@@ -42,6 +42,7 @@ export class InformeMigranasComponent implements OnInit {
       this.migranasService.informeMigranas(id)
       .subscribe(
         response =>{
+          this.fecha = response['fecha'];
           this.datosInformeMigranas = new InformeMigranas(response['id'],response['fecha'],response['frecuencia'], response['duracion'],
           response['horario'], response['finalizacion'], response['tipoEpisodio'], response['intensidad'], response['limitaciones'],
           response['despiertoNoche'], response['estadoGeneral'], response['sintomas'], response['factores']);
@@ -50,12 +51,14 @@ export class InformeMigranasComponent implements OnInit {
             map(({ matches }) => {
               if (matches) {
                 return [
-                  { title: 'migranas', cols: 2, rows: 3, cuerpo: "hola"},
+                  { title: 'respuestaCerrada', cols: 1, rows: 2, cuerpo: "hola"},
+                  { title: 'respuestaAbierta', cols: 1, rows: 2, cuerpo: "hola"}
                 ];
               }
         
               return [
-                { title: 'migranas', cols: 2, rows: 3, cuerpo: "hola"},
+                { title: 'respuestaCerrada', cols: 1, rows: 2, cuerpo: "hola"},
+                { title: 'respuestaAbierta', cols: 1, rows: 2, cuerpo: "hola"}
               ];
             })
           );
