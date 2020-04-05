@@ -11,7 +11,6 @@ export class FichaService {
   private restUrl = 'http://localhost:8765';  
 
   constructor(private http: HttpClient, private router: Router, private loginService : LoginService) { 
-
   }
 
   todasFichas(pagina, aMostrar, tipo, filtro){

@@ -7,11 +7,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription }   from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Component, OnInit, Inject} from '@angular/core';
-import {MAT_SNACK_BAR_DATA} from '@angular/material';
+import {MAT_SNACK_BAR_DATA, TransitionCheckState} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormBuilder} from '@angular/forms';
 import { AppComponent } from '../app.component';
 import { FichaService } from 'src/services/ficha.service';
+import { FichaEnfermedadService } from 'src/services/ficha-enfermedad.service';
 
 @Component({
   selector: 'notificacionVistaUser',
@@ -193,6 +194,7 @@ export class VistaUsuarioComponent implements OnInit {
   loginService: LoginService;
   userService: UserService;
   fichaService: FichaService;
+  fichaEnfermedadService: FichaEnfermedadService;
   datosUser: any = [];
   myForm : FormBuilder;
   appComponent:AppComponent;
@@ -205,6 +207,10 @@ export class VistaUsuarioComponent implements OnInit {
   diabetes = "";
   asma = "";
   migranas = "";
+
+  tieneAsma;
+  tieneDiabetes;
+  tieneMigranas;
 
   cards;
 
@@ -230,11 +236,13 @@ export class VistaUsuarioComponent implements OnInit {
     chosenItem3 = this.rol[0].value;
 
   constructor(private fb: FormBuilder,private breakpointObserver: BreakpointObserver,private _snackBar: MatSnackBar,private router : Router, public dialog: MatDialog,
-     private route : ActivatedRoute,loginService:LoginService, userService:UserService, appComponent: AppComponent, fichaService: FichaService) { 
+     private route : ActivatedRoute,loginService:LoginService, userService:UserService, appComponent: AppComponent, fichaService: FichaService,
+     fichaEnfermedadService: FichaEnfermedadService) { 
     this.loginService = loginService;
     this.userService = userService;
     this.appComponent = appComponent;
     this.fichaService = fichaService;
+    this.fichaEnfermedadService = fichaEnfermedadService;
     this.idMedico = "";
     }
 
@@ -339,18 +347,27 @@ export class VistaUsuarioComponent implements OnInit {
       .subscribe(
         response =>{   
           console.log(response);
+          this.tieneDiabetes = false;
+          this.tieneAsma = false;
+          this.tieneMigranas = false;
+          this.diabetes = "";
+          this.migranas = "";
+          this.asma = "";
           this.idMedico = response[0]['medico'];
           this.idFicha = response[0]['id'];      
           this.enfermedades = response[0]['enfermedad'];
           for(const element in this.enfermedades){
             if(this.enfermedades[element] == "diabetes"){
               this.diabetes = "Diabetes";
+              this.tieneDiabetes = true;
             }
             else if(this.enfermedades[element] == "asma"){
               this.asma = "Asma";
+              this.tieneAsma = true;
             }
             else{
               this.migranas = "Migrañas";
+              this.tieneMigranas = true;
             }
           }
           this.todosMedicos();
@@ -389,7 +406,8 @@ export class VistaUsuarioComponent implements OnInit {
             { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
             { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
             { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
-            { title: 'cambiarMedico', cols: 1, rows: 1, cuerpo: "hola"}
+            { title: 'cambiarMedico', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'enfermedades', cols: 1, rows: 1, cuerpo: "hola"},
           ];
         }
         if(this.datosUser.rol == 'administrador'){
@@ -666,4 +684,98 @@ export class VistaUsuarioComponent implements OnInit {
       return false;
     }
   }
+
+  checkValueAsma(event: any){
+    if(this.loginService.isLogged){ 
+      console.log(event)
+      if(event== "true"){
+        this.fichaEnfermedadService.anadirEnfermedad(this.idFicha, "asma")
+        .subscribe(
+          response =>{
+            this.datosUsuario(this.id);
+            this.openSnackBar("Se actualizado los datos con éxito");
+          },
+          error => {
+            this.datosUsuario(this.id);
+            this.openSnackBar("Error al actualizar los datos");
+          }
+        );
+      }else{
+        this.fichaEnfermedadService.eliminarEnfermedad(this.idFicha, "asma")
+        .subscribe(
+          response =>{
+            this.datosUsuario(this.id);
+            this.openSnackBar("Se actualizado los datos con éxito");
+          },
+          error => {
+            this.datosUsuario(this.id);
+            this.openSnackBar("Error al actualizar los datos");
+          }
+        );
+      }  
+    }
+  }
+
+  checkValueMigranas(event: any){
+    if(this.loginService.isLogged){ 
+      console.log(event)
+      if(event== "true"){
+        this.fichaEnfermedadService.anadirEnfermedad(this.idFicha, "migranas")
+        .subscribe(
+          response =>{
+            this.datosUsuario(this.id);
+            this.openSnackBar("Se actualizado los datos con éxito");
+          },
+          error => {
+            this.datosUsuario(this.id);
+            this.openSnackBar("Error al actualizar los datos");
+          }
+        );
+      }else{
+        this.fichaEnfermedadService.eliminarEnfermedad(this.idFicha, "migranas")
+        .subscribe(
+          response =>{
+            this.datosUsuario(this.id);
+            this.openSnackBar("Se actualizado los datos con éxito");
+          },
+          error => {
+            this.datosUsuario(this.id);
+            this.openSnackBar("Error al actualizar los datos");
+          }
+        );
+      }  
+    }
+  }
+
+  checkValueDiabetes(event: any){
+    if(this.loginService.isLogged){ 
+      console.log(event)
+      if(event== "true"){
+        this.fichaEnfermedadService.anadirEnfermedad(this.idFicha, "diabetes")
+        .subscribe(
+          response =>{
+            this.datosUsuario(this.id);
+            this.openSnackBar("Se actualizado los datos con éxito");
+          },
+          error => {
+            this.datosUsuario(this.id);
+            this.openSnackBar("Error al actualizar los datos");
+          }
+        );
+      }else{
+        this.fichaEnfermedadService.eliminarEnfermedad(this.idFicha, "diabetes")
+        .subscribe(
+          response =>{
+            this.datosUsuario(this.id);
+            this.openSnackBar("Se actualizado los datos con éxito");
+          },
+          error => {
+            this.datosUsuario(this.id);
+            this.openSnackBar("Error al actualizar los datos");
+          }
+        );
+      }  
+    }
+  }
+  
 }
