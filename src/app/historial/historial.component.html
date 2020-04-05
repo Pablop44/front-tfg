@@ -110,11 +110,6 @@
                         <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('fechaCreacion')"> Fecha de Creación </th>
                         <td mat-cell *matCellDef="let row"> {{row.fechaCreacion}} </td>
                       </ng-container>
-
-                      <ng-container matColumnDef="enfermedad">
-                        <th mat-header-cell *matHeaderCellDef> Enfermedad</th>
-                        <td mat-cell *matCellDef="let row"> {{row.enfermedad}}</td>
-                      </ng-container>
                   
                       <!-- Name Column -->
                       <ng-container matColumnDef="dniPaciente">

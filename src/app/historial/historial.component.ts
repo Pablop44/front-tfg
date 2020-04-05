@@ -7,9 +7,8 @@ import { FichaService } from 'src/services/ficha.service';
 import { Ficha } from 'src/app/models/Ficha';
 import {MatTableDataSource} from '@angular/material/table';
 import { FiltroHistorial } from 'src/app/models/FiltroHistorial';
-import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MAT_SNACK_BAR_DATA, MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material';
+import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 import * as _moment from 'moment';
@@ -109,11 +108,11 @@ export class HistorialComponent implements OnInit {
 
   ngOnInit() {
     if(this.loginService.loggedUser.rol == 'administrador' && this.loginService.isLogged){
-      this.displayedColumns = ['numero', 'fecha', 'enfermedad', 'dniPaciente', 'nombrePaciente', 'dniMedico', 'nombreMedico', 'colegiado', 'acciones'];
+      this.displayedColumns = ['numero', 'fecha', 'dniPaciente', 'nombrePaciente', 'dniMedico', 'nombreMedico', 'colegiado', 'acciones'];
       this.fichas();
       this.numeroFichas();
     }else if(this.loginService.loggedUser.rol == 'medico' && this.loginService.isLogged){
-      this.displayedColumns = ['numero', 'fecha', 'enfermedad', 'dniPaciente', 'nombrePaciente', 'acciones'];
+      this.displayedColumns = ['numero', 'fecha', 'dniPaciente', 'nombrePaciente', 'acciones'];
       this.fichasMedico();
       this.numeroFichas();
     }

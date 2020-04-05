@@ -212,6 +212,8 @@ export class VistaUsuarioComponent implements OnInit {
   tieneDiabetes;
   tieneMigranas;
 
+  date;
+
   cards;
 
   estado: any[] = [
@@ -262,6 +264,7 @@ export class VistaUsuarioComponent implements OnInit {
       this.userService.datosUsuario(username)
       .subscribe(
         response =>{
+          console.log(response);
           this.datosUser = response;
           if(this.datosUser.estado == "desactivada"){
             this.chosenItem = this.estado[2].value;
@@ -346,7 +349,6 @@ export class VistaUsuarioComponent implements OnInit {
       this.fichaService.getFichaPaciente(this.datosUser.id)
       .subscribe(
         response =>{   
-          console.log(response);
           this.tieneDiabetes = false;
           this.tieneAsma = false;
           this.tieneMigranas = false;
@@ -425,7 +427,7 @@ export class VistaUsuarioComponent implements OnInit {
     );
   }
 
-  openDialog(datosUser, rol): void {
+  openDialogEliminar(datosUser, rol): void {
     const dialogRef = this.dialog.open(DialogoEliminarUsuarioVista, {
       width: '400px',
       data: {name: datosUser.username, rol: rol, id: datosUser.id, respuesta: "Si"}
@@ -438,7 +440,7 @@ export class VistaUsuarioComponent implements OnInit {
     });
   }
 
-  openDialog2(): void {
+  openDialogEditarUsuario(): void {
     if(this.datosUser.rol == 'administrador'){
       const dialogRef = this.dialog.open(DialogoEditarUsuario, {
         width: '500px',
@@ -474,6 +476,25 @@ export class VistaUsuarioComponent implements OnInit {
             poblacion: this.datosUser.poblacion,
             especialidad: this.datosUser.especialidad,
             cargo: this.datosUser.cargo,
+            rol: this.datosUser.rol
+          }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          this.editarUser(result);
+        });
+      }else{
+        const dialogRef = this.dialog.open(DialogoEditarUsuario, {
+          width: '500px',
+          data: {
+            id: this.datosUser.id,
+            username: this.datosUser.username,
+            email: this.datosUser.email, 
+            password: this.datosUser.password,
+            nombre: this.datosUser.nombre, 
+            apellidos: this.datosUser.apellidos, 
+            telefono: this.datosUser.telefono, 
+            dni: this.datosUser.dni,
+            poblacion: this.datosUser.poblacion,
             rol: this.datosUser.rol
           }
         });
@@ -611,7 +632,7 @@ export class VistaUsuarioComponent implements OnInit {
 
   validarPoblacion(usuario): Boolean{
     if(usuario.poblacion != null){
-      var nameRegex = /^[a-zA-Z\-]+$/;
+      var nameRegex = /^[a-zA-Z\s]+$/;
       if(nameRegex.test(usuario.poblacion) === true){
         return true;
       }else{
@@ -670,18 +691,21 @@ export class VistaUsuarioComponent implements OnInit {
   }
 
   validarColegiado(usuario): Boolean{
-  
-    if(usuario.colegiado != null){
-      var nameRegex = /^([0-9\-]){9}$/;
-      if(nameRegex.test(usuario.colegiado.toString()) === true){
-        return true;
+    if(this.datosUser.rol != "administrador" && this.datosUser.rol != "paciente"){
+      if(usuario.colegiado != null){
+        var nameRegex = /^([0-9\-]){9}$/;
+        if(nameRegex.test(usuario.colegiado.toString()) === true){
+          return true;
+        }else{
+          this.openSnackBar("Error en el formato del número de colegiado");
+          return false;
+        }
       }else{
-        this.openSnackBar("Error en el formato del número de colegiado");
+        this.openSnackBar("El número de colegiado debe estar cubierto");
         return false;
       }
     }else{
-      this.openSnackBar("El número de colegiado debe estar cubierto");
-      return false;
+      return true;
     }
   }
 

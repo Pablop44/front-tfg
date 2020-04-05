@@ -36,7 +36,7 @@
                         <p mat-line> {{datosUser.estado}}</p>
                       </mat-list-item>
                       <mat-divider></mat-divider>
-                      <h3 mat-subheader>
+                      <h3 mat-subheader *ngIf="datosUser.rol == 'paciente'">
                         <mat-icon mat-list-icon style="margin-right: 10px;">
                             <i class="material-icons">
                                 person
@@ -44,11 +44,11 @@
                           </mat-icon>
                             Datos Médicos
                     </h3>
-                    <mat-list-item >
+                    <mat-list-item *ngIf="datosUser.rol == 'paciente'" >
                         <h4 mat-line style="font-weight: bold;">Id del Historial</h4>
                         <a mat-line [routerLink]="['/ficha-individual', idFicha]">{{idFicha}}</a>
                       </mat-list-item>
-                      <mat-list-item >
+                      <mat-list-item *ngIf="datosUser.rol == 'paciente'" >
                         <h4 mat-line style="font-weight: bold;">Enfermedades Asociadas al paciente</h4>
                         <p mat-line> {{asma}} {{diabetes}} {{migranas}}</p>
                       </mat-list-item>
@@ -131,17 +131,14 @@
                 <mat-card class="dashboard-card">
                     <mat-card-header>
                       <mat-card-title>
-                        Editar Datos del Usuario
+                        Editar Datos
                       </mat-card-title>
                       <mat-card-subtitle>Modifica solo los campos necesarios</mat-card-subtitle>
                     </mat-card-header>
         
                     <mat-card-content class="dashboard-card-content">
-                        <button mat-flat-button *ngIf="datosUser.rol == 'medico'" color="primary" (click)="openDialog2()">Editar <i class="material-icons">
+                        <button mat-flat-button color="primary" (click)="openDialogEditarUsuario()">Editar <i class="material-icons">
                             edit
-                        </i></button>
-                        <button mat-flat-button *ngIf="datosUser.rol == 'paciente'" color="primary" (click)="openDialog2()">Editar <i class="material-icons">
-                          edit
                         </i></button>
                     </mat-card-content>
                 </mat-card>
@@ -159,7 +156,7 @@
                     </mat-card-header>
         
                     <mat-card-content class="dashboard-card-content">
-                            <button mat-flat-button color="warn" (click)="openDialog(datosUser, datosUser.rol)">Eliminar <i class="material-icons">
+                            <button mat-flat-button color="warn" (click)="openDialogEliminar(datosUser, datosUser.rol)">Eliminar <i class="material-icons">
                                 remove_circle
                                 </i></button>
                     </mat-card-content>
