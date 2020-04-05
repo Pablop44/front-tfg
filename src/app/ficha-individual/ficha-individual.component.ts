@@ -730,17 +730,34 @@ export class FichaIndividualComponent implements OnInit {
 
   crearNota(respuesta){
     if(this.loginService.isLogged){
-      this.notaService.crearNota(respuesta, this.id, moment().format('YYYY-MM-DD'))
-      .subscribe(
-        response =>{
-          console.log(response);
-          this.datosNotas();
-          this.openSnackBar("Se ha creado la nota");
-        },
-        error => {
-          console.log(error);
-        }
-      );
+      if(this.validarNota(respuesta)){
+        this.notaService.crearNota(respuesta, this.id, moment().format('YYYY-MM-DD'))
+        .subscribe(
+          response =>{
+            console.log(response);
+            this.datosNotas();
+            this.openSnackBar("Se ha creado la nota");
+          },
+          error => {
+            console.log(error);
+            this.datosNotas();
+            this.openSnackBar("No se ha podido crear la nota");
+          }
+        );
+      }
+    }
+  }
+
+  validarNota(respuesta){
+    return this.validarTextoNota(respuesta);
+  }
+
+  validarTextoNota(respuesta) : Boolean{
+    if(respuesta == undefined){
+      this.openSnackBar("Es necesario introducir texto");
+      return false;
+    }else{
+      return true;
     }
   }
 

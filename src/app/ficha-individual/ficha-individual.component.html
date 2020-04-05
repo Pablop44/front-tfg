@@ -11,7 +11,7 @@
                     <mat-tab label="Datos del Paciente"> 
 
                       <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuDatosPaciente" aria-label="Toggle menu">
-                        <mat-icon>more_vert</mat-icon>
+                        <mat-icon>account_circle</mat-icon>
                       </button>
                       <mat-menu #menuDatosPaciente="matMenu" xPosition="before">
                         <a [routerLink]="['/vista-usuario', paciente.id]" mat-menu-item>Ver el paciente "{{paciente.username}}"</a>
@@ -87,7 +87,7 @@
 
                     <mat-tab  *ngIf="loginService.loggedUser.rol == 'administrador'" label="Datos del Médico"> 
                       <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuDatosMedico" aria-label="Toggle menu">
-                        <mat-icon>more_vert</mat-icon>
+                        <mat-icon>account_circle</mat-icon>
                       </button>
                       <mat-menu #menuDatosMedico="matMenu" xPosition="before">
                         <a [routerLink]="['/vista-usuario', medico.id]" mat-menu-item>Ver el médico "{{medico.username}}"</a>
@@ -155,7 +155,7 @@
                     <mat-tab *ngIf="asma != ''" label="Informes de Asma"> 
 
                       <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuInformeAsma" aria-label="Toggle menu">
-                        <mat-icon>more_vert</mat-icon>
+                        <mat-icon>save_alt</mat-icon>
                       </button>
                       <mat-menu #menuInformeAsma="matMenu" xPosition="before">
                         <a mat-menu-item (click)="generarCSVAsma()">Descargar Informes como CSV</a>
@@ -221,7 +221,7 @@
                     <mat-tab *ngIf="diabetes != ''" label="Informes de Diabetes"> 
 
                       <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuInformeDiabetes" aria-label="Toggle menu">
-                        <mat-icon>more_vert</mat-icon>
+                        <mat-icon>save_alt</mat-icon>
                       </button>
                       <mat-menu #menuInformeDiabetes="matMenu" xPosition="before">
                         <a mat-menu-item (click)="generarCSVDiabetes()">Descargar Informes como CSV</a>
@@ -292,7 +292,7 @@
                     <mat-tab *ngIf="migranas != ''" label="Informes de Migrañas"> 
 
                       <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuInformeMigranas" aria-label="Toggle menu">
-                        <mat-icon>more_vert</mat-icon>
+                        <mat-icon>save_alt</mat-icon>
                       </button>
                       <mat-menu #menuInformeMigranas="matMenu" xPosition="before">
                         <a mat-menu-item (click)="generarCSVMigranas()">Descargar Informes como CSV</a>
@@ -452,7 +452,7 @@
                       </mat-card>
 
                       <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuConsulta" aria-label="Toggle menu">
-                        <mat-icon>more_vert</mat-icon>
+                        <mat-icon>date_range</mat-icon>
                       </button>
                       <mat-menu #menuConsulta="matMenu" xPosition="before">
                         <a (click)="openDialog()" mat-menu-item>Añadir Consulta</a>
@@ -502,7 +502,6 @@
                             <th mat-header-cell *matHeaderCellDef> Acciones</th>
                             <td mat-cell *matCellDef="let row"> 
                               <button mat-stroked-button color="primary" ><i class="material-icons"> remove_red_eye </i></button>
-                              <button mat-stroked-button color="primary" ><i class="material-icons"> edit </i> </button>
                               <button  *ngIf="loginService.loggedUser.rol == 'administrador'" mat-stroked-button color="primary" (click)="openDialog4(row, 'administrador')"><i class="material-icons"> remove_circle </i></button>
                             </td>
                           </ng-container>
@@ -564,7 +563,7 @@
                       </mat-card>
 
                       <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuNota" aria-label="Toggle menu">
-                        <mat-icon>more_vert</mat-icon>
+                        <mat-icon>note_add</mat-icon>
                       </button>
                       <mat-menu #menuNota="matMenu" xPosition="before">
                         <a (click)="openDialogNota()" mat-menu-item>Añadir Nota</a>

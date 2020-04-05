@@ -236,19 +236,19 @@ export class HistorialComponent implements OnInit {
       .subscribe(
         response =>{
             this.fichas();
-            this.openSnackBar("Se ha eliminado correctamente el historial"+response['id']);
+            this.openSnackBar("Se ha eliminado correctamente el historial "+response['id']);
           },
         error => {
-          console.log(error)
+          console.log(error);
+          this.fichas();
+          this.openSnackBar("No se ha eliminado correctamente el historial "+id);
         }
       );
   }
 
   ordenar(tipo){
-    if(this.loginService.isLogged){
-      
+    if(this.loginService.isLogged){   
       this.orden = tipo;
-
       if(this.loginService.loggedUser.rol == "administrador"){
         this.fichas();
       }else{
