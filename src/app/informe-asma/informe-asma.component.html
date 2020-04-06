@@ -1,5 +1,7 @@
 <div class="grid-container">
-    <h1 class="mat-h1">Informe de Asma con Fecha: {{fecha}}</h1>
+    <h1 class="mat-h1">Informe de Asma con Fecha: {{fecha}}
+      <button mat-raised-button style="float: right;" [routerLink]="['/ficha-individual', idFicha]" color="primary">Volver al Historial {{idFicha}}</button>
+    </h1>
     <mat-grid-list cols="2" rowHeight="350px">
       <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
         <div [ngSwitch]="card.title">

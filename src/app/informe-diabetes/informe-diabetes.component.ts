@@ -22,6 +22,7 @@ export class InformeDiabetesComponent implements OnInit {
   idInformeDiabetes: String;
   datosInformeDiabetes: InformeDiabetes;
   fecha: String;
+  idFicha:string;
 
   cards;
 
@@ -44,6 +45,7 @@ export class InformeDiabetesComponent implements OnInit {
       .subscribe(
         response =>{
           this.fecha = response['fecha'];
+          this.idFicha = response['ficha'];
           this.datosInformeDiabetes = new InformeDiabetes(response['id'],response['fecha'],response['numeroControles'], response['nivelBajo'],
           response['frecuenciaBajo'], response['horarioBajo'], response['perdidaConocimiento'], response['nivelAlto'], response['frecuenciaAlto'],
           response['horarioAlto'], response['actividadFisica'], response['problemaDieta'], response['estadoGeneral'], response['momentos']);

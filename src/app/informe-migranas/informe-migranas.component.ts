@@ -8,6 +8,7 @@ import { MigranasService } from 'src/services/migranas.service';
 import { InformeMigranas } from '../models/InformeMigranas';
 import * as jsPDF from 'jspdf';
 import { ExportToCsv } from 'export-to-csv';
+import { FichaIndividualComponent } from '../ficha-individual/ficha-individual.component';
 
 @Component({
   selector: 'app-informe-migranas',
@@ -18,10 +19,12 @@ export class InformeMigranasComponent implements OnInit {
 
   loginService: LoginService;
   migranasService: MigranasService;
+  fichaIndividual: FichaIndividualComponent;
   sub: Subscription;
   idInformeMigranas: String;
   datosInformeMigranas: InformeMigranas;
   fecha: string;
+  idFicha : number;
   cards;
 
   constructor(loginService: LoginService, private breakpointObserver: BreakpointObserver, migranasService: MigranasService, private route : ActivatedRoute) {
@@ -43,6 +46,7 @@ export class InformeMigranasComponent implements OnInit {
       .subscribe(
         response =>{
           this.fecha = response['fecha'];
+          this.idFicha = response['ficha'];
           this.datosInformeMigranas = new InformeMigranas(response['id'],response['fecha'],response['frecuencia'], response['duracion'],
           response['horario'], response['finalizacion'], response['tipoEpisodio'], response['intensidad'], response['limitaciones'],
           response['despiertoNoche'], response['estadoGeneral'], response['sintomas'], response['factores']);

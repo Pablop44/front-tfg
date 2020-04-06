@@ -22,6 +22,7 @@ export class InformeAsmaComponent implements OnInit {
   idInformeAsma: String;
   datosInformeAsma: InformeAsma;
   fecha:String;
+  idFicha: String;
 
   cards; 
 
@@ -42,6 +43,7 @@ export class InformeAsmaComponent implements OnInit {
       this.asmaService.informeAsma(id)
       .subscribe(
         response =>{
+          this.idFicha = response['ficha'];
           this.fecha = response['fecha'];
           this.datosInformeAsma = new InformeAsma(response['id'],response['fecha'],response['calidadSueno'], response['dificultadRespirar'],
           response['tos'], response['gravedadTos'], response['limitaciones'], response['silbidos'], response['usoMedicacion'],
