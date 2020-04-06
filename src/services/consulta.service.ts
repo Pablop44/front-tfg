@@ -20,8 +20,15 @@ export class ConsultaService {
     });
   }
 
-  public numeroConsultas(id,filtro){
+  public getDatosConsulta(id){
+    return this.httpClient.get(this.restUrl+`/view/`+id+`.json`, {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
 
+  public numeroConsultas(id,filtro){
 
     let array = [{
       Field: 'filtro',
@@ -50,7 +57,6 @@ export class ConsultaService {
 
 
   public consultasFicha(id, pagina, aMostrar, tipo, filtro){
-
     if(filtro.id == null && filtro.lugar == "" && filtro.fechaFin == null && filtro.fechaInicio == null && filtro.diagnostico == null &&
      filtro.observaciones == null && filtro.tiempo == null && filtro.cancelada == null && filtro.aplazada == null && filtro.realizada == null){
       filtro = null;
@@ -168,6 +174,5 @@ export class ConsultaService {
     };
 
     return this.httpClient.post(this.restUrl+"/add.json", JSON.stringify(datos), httpOptions);
-
   }
 }

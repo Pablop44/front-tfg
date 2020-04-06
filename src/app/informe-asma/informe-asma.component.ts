@@ -23,7 +23,6 @@ export class InformeAsmaComponent implements OnInit {
   datosInformeAsma: InformeAsma;
   fecha:String;
   idFicha: String;
-
   cards; 
 
   constructor(loginService: LoginService, asmaService: AsmaService, private breakpointObserver: BreakpointObserver, private route : ActivatedRoute) {

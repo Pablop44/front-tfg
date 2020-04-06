@@ -158,7 +158,6 @@ export class DialogoAnadirConsulta {
           var newHora = new Hora('16:00',response['16:00']);
           this.horas.push(newHora);
           this.dataSource = this.horas;
-          console.log(this.horas);
         },
         error => {
           console.log(error);
@@ -511,7 +510,6 @@ export class FichaIndividualComponent implements OnInit {
       this.fichaService.datosFicha(idFicha)
       .subscribe(
         response =>{      
-          console.log(response);   
           this.enfermedades = response['enfermedad'];
           for(const element in this.enfermedades){
             if(this.enfermedades[element] == "diabetes"){
@@ -551,7 +549,6 @@ export class FichaIndividualComponent implements OnInit {
           this.filtroNota.fechaFin = null;
           this.filtroNota.fechaInicio = null;
           this.filtroNota.texto = null;
-          console.log(this.notas);
         },
         error => {
           console.log(error);
@@ -579,7 +576,6 @@ export class FichaIndividualComponent implements OnInit {
           this.filtroDiabetes.nivelAlto = null;
           this.filtroDiabetes.nivelBajo = null;
           this.filtroDiabetes.estadoGeneral = null;
-          console.log(this.informeDiabetes);
         },
         error => {
           console.log(error);
@@ -606,7 +602,6 @@ export class FichaIndividualComponent implements OnInit {
           this.filtroAsma.fecha = null;
           this.filtroAsma.limitaciones = null;
           this.filtroAsma.estadoGeneral = null;
-          console.log(this.informeAsma);
         },
         error => {
           console.log(error);
@@ -635,7 +630,6 @@ export class FichaIndividualComponent implements OnInit {
           this.filtroMigranas.frecuencia = null;
           this.filtroMigranas.intensidad = null;
           this.filtroMigranas.tipoEpisodio = null;
-          console.log(this.informeMigranas);
         },
         error => {
           console.log(error);
@@ -692,8 +686,6 @@ export class FichaIndividualComponent implements OnInit {
           this.filtroConsulta.realizada = null,
           this.filtroConsulta.tiempo = null;
 
-          console.log(this.consultas);
-
           },
         error => {
           console.log(error);
@@ -717,7 +709,6 @@ export class FichaIndividualComponent implements OnInit {
       this.consultaService.crearConsulta(respuesta)
       .subscribe(
         response =>{
-          console.log(response);
           this.datosConsultas();
           this.openSnackBar("Se ha creado la consulta para el paciente "+this.paciente.username+" con fecha: "+response['fecha']);
         },
@@ -734,7 +725,6 @@ export class FichaIndividualComponent implements OnInit {
         this.notaService.crearNota(respuesta, this.id, moment().format('YYYY-MM-DD'))
         .subscribe(
           response =>{
-            console.log(response);
             this.datosNotas();
             this.openSnackBar("Se ha creado la nota");
           },
@@ -824,7 +814,6 @@ export class FichaIndividualComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if(result.respuesta == "Si"){
         this.eliminarNota(nota);
       }
@@ -838,7 +827,6 @@ export class FichaIndividualComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       this.editarNota(result);
     });
   }
@@ -1048,7 +1036,6 @@ export class FichaIndividualComponent implements OnInit {
       this.notaService.eliminarNota(nota.id)
       .subscribe(
         response =>{
-          console.log(response);
           this.datosNotas();
           this.openSnackBar("Se ha eliminado la nota");
         },
@@ -1064,7 +1051,6 @@ export class FichaIndividualComponent implements OnInit {
       this.notaService.editarNota(nota)
       .subscribe(
         response =>{
-          console.log(response);
           this.datosNotas();
           this.openSnackBar("Se ha actualizado los datos con éxito");
         },

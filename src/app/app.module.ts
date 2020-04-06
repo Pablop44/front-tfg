@@ -64,6 +64,7 @@ import { HistorialComponent, DialogoEliminarHistorial, notificacionEliminarHisto
 import { InformeDiabetesComponent } from './informe-diabetes/informe-diabetes.component';
 import { InformeAsmaComponent } from './informe-asma/informe-asma.component';
 import { InformeMigranasComponent } from './informe-migranas/informe-migranas.component';
+import { ConsultaComponent } from './consulta/consulta.component';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import { InformeMigranasComponent } from './informe-migranas/informe-migranas.co
     DialogoEditarNota,
     InformeDiabetesComponent,
     InformeAsmaComponent,
-    InformeMigranasComponent
+    InformeMigranasComponent,
+    ConsultaComponent
   ],
   imports: [
     BrowserModule,
