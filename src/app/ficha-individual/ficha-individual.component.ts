@@ -769,9 +769,53 @@ export class FichaIndividualComponent implements OnInit {
 
 
     dialogRef.afterClosed().subscribe(response => {
-      this.crearConsulta(response);
+      if(this.validarConsulta(response)){
+        this.crearConsulta(response);
+      }
     });
   }
+
+  validarConsulta(response): Boolean{
+    return (this.validarFecha(response) && this.validarLugar(response) && 
+    this.validarMotivo(response) && this.validarHora(response));
+  }
+
+  validarFecha(response): Boolean{
+    if(response.fecha != null){
+      return true;
+    }else{
+        this.openSnackBar("Es necesario introducir una fecha");
+        return false;
+    }
+  }
+
+  validarLugar(response): Boolean{
+    if(response.lugar != null){
+      return true;
+    }else{
+        this.openSnackBar("Es necesario introducir un lugar");
+        return false;
+    }
+  }
+
+  validarMotivo(response): Boolean{
+    if(response.motivo != null){
+      return true;
+    }else{
+        this.openSnackBar("Es necesario introducir un motivo");
+        return false;
+    }
+  }
+
+  validarHora(response): Boolean{
+    if(response.hora != null){
+      return true;
+    }else{
+        this.openSnackBar("Es necesario introducir una hora");
+        return false;
+    }
+  }
+  
 
   openDialogEliminarNota(nota): void {
     const dialogRef = this.dialog.open(DialogoEliminarNota, {
