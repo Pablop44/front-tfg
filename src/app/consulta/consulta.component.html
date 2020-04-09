@@ -101,9 +101,9 @@
 
         </div>
 
-        <div *ngSwitchCase="'cambioEstado'" >
+        <div *ngSwitchCase="'cambioEstado'">
 
-          <mat-card class="dashboard-card">
+          <mat-card class="dashboard-card" [ngClass]="{'estadoAplazada': consulta.estado == 'aplazada', 'estadoEnTiempo': consulta.estado == 'realizada', 'estadoCancelada': consulta.estado == 'cancelada' }">
               <mat-card-header>
                 <mat-card-title>
                   Cambiar el Estado de la Consulta

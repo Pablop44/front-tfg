@@ -37,6 +37,7 @@ import { FiltroAsma } from '../models/filtroAsma';
 import { FiltroMigranas } from '../models/filtroMigranas';
 import * as jsPDF from 'jspdf';
 import { ExportToCsv } from 'export-to-csv';
+import { Tratamiento } from '../models/Tratamiento';
 
 const moment = _rollupMoment || _moment;
 
@@ -252,11 +253,14 @@ export class FichaIndividualComponent implements OnInit {
 
   displayedColumnsMigranas: string[] = ['fecha', 'tipoEpisodio', 'intensidad', 'frecuencia', 'estadoGeneral', 'acciones'];
 
+  displayedColumnsTratamientos: string[] = ['posologia', 'fechaInicio', 'fechaFin', 'enfermedades', 'acciones'];
+
   dataSource: any;
   dataSourceNotas: any;
   dataSourceInformeDiabetes: any;
   dataSourceInformeAsma: any;
   dataSourceInformeMigranas: any;
+  dataSourceTratamientos: any;
   ficha : any = [];
   medico: any = [];
   paciente: any = [];
@@ -265,6 +269,7 @@ export class FichaIndividualComponent implements OnInit {
   informeDiabetes:InformeDiabetes[] = [];
   informeAsma: InformeAsma[] = [];
   informeMigranas: InformeMigranas[] = [];
+  tratamientos: Tratamiento[] = [];
 
   consultaService: ConsultaService;
   loginService: LoginService;
@@ -441,6 +446,12 @@ export class FichaIndividualComponent implements OnInit {
       this.currentPageDiabetes = e.pageIndex;
       this.pageSizeDiabetes = e.pageSize;
       this.datosDiabetes();
+    }
+
+    public handlePageTratamiento(e: any) {
+      this.currentPageTratamiento = e.pageIndex;
+      this.pageSizeTratamiento = e.pageSize;
+      this.datosTratamientos();
     }
 
     public handlePageAsma(e: any) {
@@ -640,10 +651,18 @@ export class FichaIndividualComponent implements OnInit {
 
   datosTratamientos(){
     if(this.loginService.isLogged){
+      this.numeroTratamientos(this.id, null);
       this.tratamientoService.todosTratamientos(this.id, this.currentPageTratamiento, this.pageSizeTratamiento, this.ordenTratamiento, null)
       .subscribe(
         response =>{       
-          console.log(response);
+          this.tratamientos = [];  
+          for (let i in response) {
+            const newTratamiento = new Tratamiento(response[i]['id'],response[i]['posologia'],response[i]['fechaInicio'], response[i]['fechaFin'],
+            response[i]['horario'], response[i]['enfermedad'], response[i]['medicamentos']);
+            this.tratamientos.push(newTratamiento);
+          } 
+          this.dataSourceTratamientos = new MatTableDataSource<Tratamiento>(this.tratamientos);
+          this.dataSourceTratamientos.data = this.tratamientos;
         },
         error => {
           console.log(error);
@@ -889,6 +908,20 @@ export class FichaIndividualComponent implements OnInit {
       .subscribe(
         response =>{         
           this.totalSize = response['numero'];
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  numeroTratamientos(id, filtro){
+    if(this.loginService.isLogged){
+      this.tratamientoService.numeroTratamientos(id, filtro)
+      .subscribe(
+        response =>{         
+          this.totalSizeTratamiento = response['numero'];
         },
         error => {
           console.log(error);
