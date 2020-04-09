@@ -56,7 +56,7 @@ import {MatTreeModule} from '@angular/material/tree';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
 import { UsersComponent, DialogoEliminarUsuario, notificacionComponent, DialogoAceptarUsuario } from './users/users.component';
 import { loginNotificacionComponent } from './login/login.component';
-import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta, DialogoAnadirNota, DialogoEliminarNota, DialogoEditarNota } from './ficha-individual/ficha-individual.component';
+import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta, DialogoAnadirNota, DialogoEliminarNota, DialogoEditarNota, DialogoAnadirTratamiento } from './ficha-individual/ficha-individual.component';
 import { VistaUsuarioComponent, notificacionVistaUserComponent, DialogoEliminarUsuarioVista, DialogoEditarUsuario } from './vista-usuario/vista-usuario.component';
 import { DashboardMedicoComponent} from './dashboard-medico/dashboard-medico.component';
 import { MedicamentosComponent, DialogoAnadirMedicamento, notificacionComponentMedicamento, DialogoAnadirMarca, dialogoEliminarMedicamento } from './medicamentos/medicamentos.component';
@@ -65,6 +65,7 @@ import { InformeDiabetesComponent } from './informe-diabetes/informe-diabetes.co
 import { InformeAsmaComponent } from './informe-asma/informe-asma.component';
 import { InformeMigranasComponent } from './informe-migranas/informe-migranas.component';
 import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones } from './consulta/consulta.component';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 
 @NgModule({
@@ -103,7 +104,8 @@ import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones
     InformeMigranasComponent,
     ConsultaComponent,
     DialogoAnadirDiagnostico,
-    DialogoAnadirObservaciones
+    DialogoAnadirObservaciones,
+    DialogoAnadirTratamiento
   ],
   imports: [
     BrowserModule,
@@ -161,6 +163,7 @@ import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones
     MatTreeModule,
     PortalModule,
     ScrollingModule,
+    NgxMaterialTimepickerModule
   ],
   exports: [
     A11yModule,
@@ -226,7 +229,8 @@ import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones
     DialogoEliminarNota,
     DialogoEditarNota,
     DialogoAnadirObservaciones,
-    DialogoAnadirDiagnostico
+    DialogoAnadirDiagnostico,
+    DialogoAnadirTratamiento
   ],
   providers: [],
   bootstrap: [AppComponent]

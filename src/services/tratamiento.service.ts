@@ -121,4 +121,20 @@ export class TratamientoService {
       return this.http.post(this.restUrl+"/tratamiento/numeroTratramientosFicha.json", json,
        httpOptions);
   }
+
+  public crearTratamiento(tratamiento){
+    
+    let json = JSON.stringify(tratamiento);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+    console.log(json);
+
+      return this.http.post(this.restUrl+"/tratamiento/crearTratamiento.json", json,
+       httpOptions);
+  }
 }

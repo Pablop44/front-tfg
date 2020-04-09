@@ -5,8 +5,9 @@ export class Tratamiento {
     fechaFin:string
     horario:string
     enfermedad:string;
-    medicamentos: any
-    constructor(id, posologia, fechaInicio, fechaFin, horario, enfermedad, medicamentos){
+    medicamentos: any;
+    ficha:string
+    constructor(id, posologia, fechaInicio, fechaFin, horario, enfermedad, medicamentos, ficha){
       this.id = id;
       this.posologia = posologia;
       this.fechaInicio = fechaInicio;
@@ -14,5 +15,6 @@ export class Tratamiento {
       this.horario = horario;
       this.enfermedad = enfermedad;
       this.medicamentos = medicamentos;
+      this.ficha = ficha;
     }
   }

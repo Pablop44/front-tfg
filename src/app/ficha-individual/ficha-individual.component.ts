@@ -203,6 +203,24 @@ export class DialogoAnadirNota{
 }
 
 @Component({
+  selector: 'dialogoAnadirTratamiento',
+  templateUrl: 'dialogoAnadirTratamiento.html',
+})
+export class DialogoAnadirTratamiento{
+
+  
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoAnadirTratamiento>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+  
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
   selector: 'dialogoEliminarNota',
   templateUrl: 'dialogoEliminarNota.html',
 })
@@ -329,6 +347,7 @@ export class FichaIndividualComponent implements OnInit {
   filteredEstado: Observable<string[]>;
   estado: string[] = [];
   allEstados: string[] = ['En Tiempo', 'Cancelada', 'Aplazada', 'Realizada'];
+  enfermedadesArray: any[] = [];
 
   filtroConsulta: FiltroConsulta = {
     id: null,
@@ -520,19 +539,22 @@ export class FichaIndividualComponent implements OnInit {
     if(this.loginService.isLogged){
       this.fichaService.datosFicha(idFicha)
       .subscribe(
-        response =>{      
+        response =>{     
           this.enfermedades = response['enfermedad'];
           for(const element in this.enfermedades){
             if(this.enfermedades[element] == "diabetes"){
               this.diabetes = "Diabetes";
+              this.enfermedadesArray.push({"name": "Diabetes", ID: "D1", "value": "diabetes"})
               this.datosDiabetes();
             }
             else if(this.enfermedades[element] == "asma"){
               this.asma = "Asma";
+              this.enfermedadesArray.push({"name": "Asma", ID: "D1", "value": "asma"})
               this.datosAsma();
             }
             else{
               this.migranas = "Migrañas";
+              this.enfermedadesArray.push({"name": "Migrañas", ID: "D1", "value": "migranas"})
               this.datosMigranas();
             }
           }
@@ -658,7 +680,7 @@ export class FichaIndividualComponent implements OnInit {
           this.tratamientos = [];  
           for (let i in response) {
             const newTratamiento = new Tratamiento(response[i]['id'],response[i]['posologia'],response[i]['fechaInicio'], response[i]['fechaFin'],
-            response[i]['horario'], response[i]['enfermedad'], response[i]['medicamentos']);
+            response[i]['horario'], response[i]['enfermedad'], response[i]['medicamentos'], null);
             this.tratamientos.push(newTratamiento);
           } 
           this.dataSourceTratamientos = new MatTableDataSource<Tratamiento>(this.tratamientos);
@@ -860,6 +882,19 @@ export class FichaIndividualComponent implements OnInit {
     });
   }
 
+  openDialogTratamiento(): void {
+    const dialogRef = this.dialog.open(DialogoAnadirTratamiento, {
+      width: '500px',
+      data: {enfermedadesArray: this.enfermedadesArray}
+    });
+    dialogRef.afterClosed().subscribe(response => {
+      delete response['enfermedadesArray'];
+      response['fechaInicio'] = moment(response['fechaInicio']).format('YYYY-MM-DD');
+      response['fechaFin'] = moment(response['fechaFin']).format('YYYY-MM-DD');
+      this.crearTratamiento(response);
+    });
+  }
+
   openSnackBar(mensaje: String) {
     this._snackBar.openFromComponent(notificacionComponentCrearConsulta, {
       duration: 4 * 1000, data: mensaje
@@ -910,6 +945,24 @@ export class FichaIndividualComponent implements OnInit {
           this.totalSize = response['numero'];
         },
         error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  crearTratamiento(response){
+    if(this.loginService.isLogged){
+      const tratamientoAEnviar = new Tratamiento(response['id'], response['posologia'], response['fechaInicio'], response['fechaFin'], 
+      response['horario']+":00", response['enfermedad'], null, this.id)
+      this.tratamientoService.crearTratamiento(tratamientoAEnviar)
+      .subscribe(
+        response =>{  
+          this.openSnackBar("Se ha creado correctamente el tratamiento");       
+          console.log(response);
+        },
+        error => {
+          this.openSnackBar("Se ha producido un error al crear el tratamiento");
           console.log(error);
         }
       );

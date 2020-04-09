@@ -520,6 +520,13 @@
 
                     <mat-tab label="Tratamientos"> 
 
+                      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuConsulta" aria-label="Toggle menu">
+                        <mat-icon>local_hospital</mat-icon>
+                      </button>
+                      <mat-menu #menuConsulta="matMenu" xPosition="before">
+                        <a (click)="openDialogTratamiento()" mat-menu-item>Añadir Tratamiento</a>
+                      </mat-menu>
+
                       <mat-card class="cartaFiltro">
                         <mat-card-header>
                           <mat-card-subtitle>

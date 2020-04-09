@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Añadir un Tratamiento</h1>
+<div mat-dialog-content>
+  <p>Introduce los datos básicos del tratamiento</p>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Posología</mat-label>
+    <textarea matInput required id="posologia" name="posologia" placeholder="Posología" [(ngModel)]="data.posologia"></textarea>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Fecha de Inicio del Tratamiento</mat-label>
+    <input matInput [matDatepicker]="dp"  name="fechaInicio" id="fechaInicio" [(ngModel)]="data.fechaInicio"  required>
+    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+    <mat-datepicker #dp></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Fecha de Fin del Tratamiento</mat-label>
+    <input matInput [matDatepicker]="dp1"  name="fechaFin" id="fechaFin" [(ngModel)]="data.fechaFin"  required>
+    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+    <mat-datepicker #dp1></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Horario (hh:mm)</mat-label>
+    <input matInput id="horario" name="horario" placeholder="horario" [(ngModel)]="data.horario" required>
+  </mat-form-field>
+
+
+  <mat-label>Enfermedad a tratar</mat-label>
+  <section class="example-full-width">
+    <mat-radio-group name="opList"  fxLayout="column" [(ngModel)]="data.enfermedad">
+      <mat-radio-button style="margin: 10px;" *ngFor="let op of data.enfermedadesArray" [value]="op.value" name="opList" >{{op.name}}</mat-radio-button>
+    </mat-radio-group>
+  </section>
+  
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">Añadir</button>
+  <button mat-button style="float:right;" (click)="onNoClick()">Cancelar</button>
+</div>
