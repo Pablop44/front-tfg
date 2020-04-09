@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Añadir Diagnostico</h1>
+<div mat-dialog-content>
+  <p>Introduce la información</p>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Información</mat-label>
+    <textarea matInput required id="diagnostico" name="diagnostico" placeholder="Diagnóstico" [(ngModel)]="data.diagnostico"></textarea>
+  </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">Añadir</button>
+  <button mat-button style="float:right;" (click)="onNoClick()">Cancelar</button>
+</div>

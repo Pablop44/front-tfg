@@ -175,4 +175,19 @@ export class ConsultaService {
 
     return this.httpClient.post(this.restUrl+"/add.json", JSON.stringify(datos), httpOptions);
   }
+
+
+  public editarConsulta(consulta){
+    
+    let json = JSON.stringify(consulta);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.httpClient.post(this.restUrl+"/editarConsulta.json", json,
+       httpOptions);
+  }
 }

@@ -44,3 +44,7 @@ h4{
 p{
   text-align: left;
 }
+
+.example-margin {
+  margin: 10px;
+}

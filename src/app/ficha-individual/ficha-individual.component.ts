@@ -11,7 +11,7 @@ import {FormControl} from '@angular/forms';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {Component, OnInit, ViewChild, Inject, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, Inject} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MAT_SNACK_BAR_DATA, MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';

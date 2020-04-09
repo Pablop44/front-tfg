@@ -2,7 +2,7 @@
     <h1 class="mat-h1">Consulta con fecha {{fecha}}
         <button mat-raised-button style="float: right;" [routerLink]="['/ficha-individual', idFicha]" color="primary">Volver al Historial {{idFicha}}</button>
     </h1>
-    <mat-grid-list cols="2" rowHeight="350px">
+    <mat-grid-list cols="2" rowHeight="300px">
       <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
         <div [ngSwitch]="card.title">
 
@@ -18,20 +18,112 @@
                   <h3 mat-subheader>
                       <mat-icon mat-list-icon style="margin-right: 10px;">
                           <i class="material-icons">
-                              lock
+                              info
                               </i>
                         </mat-icon>
-                          Preguntas de Respuesta Cerrada
+                          Información de la consulta
                   </h3>
                   <mat-list-item >
-                      <h4 mat-line style="font-weight: bold;">Calidad del Sueño</h4>
-                      <p mat-line>asdfaf </p>
-                    </mat-list-item>
+                      <h4 mat-line style="font-weight: bold;">Lugar de la Consulta</h4>
+                      <p mat-line>{{consulta.lugar}}</p>
+                  </mat-list-item>
+                  <mat-list-item >
+                      <h4 mat-line style="font-weight: bold;">Motivo de la Consulta</h4>
+                      <p mat-line>{{consulta.motivo}}</p>
+                  </mat-list-item>
+                  <mat-list-item >
+                    <h4 mat-line style="font-weight: bold;">Fecha de la Consulta</h4>
+                    <p mat-line>{{horaFecha[0]}}</p>
+                  </mat-list-item>
+                  <mat-list-item >
+                    <h4 mat-line style="font-weight: bold;">Hora de la Consulta</h4>
+                    <p mat-line>{{horaFecha[1]}}</p>
+                  </mat-list-item>
+                  <mat-list-item *ngIf="consulta.observaciones == null">
+                    <h4 mat-line style="font-weight: bold;">Observaciones</h4>
+                    <p mat-line>Esta consulta aún no tiene observaciones</p>
+                  </mat-list-item>
+                  <mat-list-item *ngIf="consulta.observaciones != null">
+                    <h4 mat-line style="font-weight: bold;">Observaciones</h4>
+                    <p mat-line>{{consulta.observaciones}}</p>
+                  </mat-list-item>
+                  <mat-list-item *ngIf="consulta.diagnostico == null">
+                    <h4 mat-line style="font-weight: bold;">Diagnóstico</h4>
+                    <p mat-line>Esta consulta aún no tiene diagnóstico</p>
+                  </mat-list-item>
+                  <mat-list-item *ngIf="consulta.diagnostico != null">
+                    <h4 mat-line style="font-weight: bold;">Diagnóstico</h4>
+                    <p mat-line>{{consulta.diagnostico}}</p>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <h4 mat-line style="font-weight: bold;">Estado de la consulta</h4>
+                    <p mat-line>{{consulta.estado}}</p>
+                  </mat-list-item>
                   </mat-list>
                    
               </mat-card-content>
                 </mat-card>
           </div>
+
+          <div *ngSwitchCase="'observaciones'">
+
+              <mat-card class="dashboard-card">
+                  <mat-card-header>
+                    <mat-card-title>
+                      Añadir Observaciones
+                    </mat-card-title>
+                  </mat-card-header>
+      
+                  <mat-card-content class="dashboard-card-content">
+                      <button mat-flat-button color="primary" (click)="openDialogObservaciones()">Añadir Observaciones<i class="material-icons">
+                          edit
+                      </i></button>
+                  </mat-card-content>
+              </mat-card>
+
+          </div>
+
+        <div *ngSwitchCase="'diagnostico'">
+
+            <mat-card class="dashboard-card">
+                <mat-card-header>
+                  <mat-card-title>
+                    Añadir Diagnóstico
+                  </mat-card-title>
+                </mat-card-header>
+    
+                <mat-card-content class="dashboard-card-content">
+                    <button mat-flat-button color="primary" (click)="openDialogDiagnostico()">Añadir Diagnóstico<i class="material-icons">
+                        edit
+                    </i></button>
+                </mat-card-content>
+            </mat-card>
+
+        </div>
+
+        <div *ngSwitchCase="'cambioEstado'" >
+
+          <mat-card class="dashboard-card">
+              <mat-card-header>
+                <mat-card-title>
+                  Cambiar el Estado de la Consulta
+                </mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="dashboard-card-content">
+                   
+                  <section class="example-section">
+                      <mat-radio-group name="opList"  fxLayout="column" [(ngModel)]="chosenItem">
+                        <mat-radio-button (click)="cambiarEstado(op.value)" class="example-margin" *ngFor="let op of estado" [value]="op.value" name="opList" >{{op.name}}</mat-radio-button>
+                      </mat-radio-group>
+                    </section>
+
+              </mat-card-content>
+                </mat-card>
+
+      </div>
+
+
         </div>
 
       </mat-grid-tile>

@@ -64,7 +64,7 @@ import { HistorialComponent, DialogoEliminarHistorial, notificacionEliminarHisto
 import { InformeDiabetesComponent } from './informe-diabetes/informe-diabetes.component';
 import { InformeAsmaComponent } from './informe-asma/informe-asma.component';
 import { InformeMigranasComponent } from './informe-migranas/informe-migranas.component';
-import { ConsultaComponent } from './consulta/consulta.component';
+import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones } from './consulta/consulta.component';
 
 
 @NgModule({
@@ -101,7 +101,9 @@ import { ConsultaComponent } from './consulta/consulta.component';
     InformeDiabetesComponent,
     InformeAsmaComponent,
     InformeMigranasComponent,
-    ConsultaComponent
+    ConsultaComponent,
+    DialogoAnadirDiagnostico,
+    DialogoAnadirObservaciones
   ],
   imports: [
     BrowserModule,
@@ -222,7 +224,9 @@ import { ConsultaComponent } from './consulta/consulta.component';
     notificacionEliminarHistorial,
     DialogoAnadirNota,
     DialogoEliminarNota,
-    DialogoEditarNota
+    DialogoEditarNota,
+    DialogoAnadirObservaciones,
+    DialogoAnadirDiagnostico
   ],
   providers: [],
   bootstrap: [AppComponent]
