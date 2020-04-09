@@ -13,6 +13,8 @@ import { InformeMigranasComponent } from './informe-migranas/informe-migranas.co
 import { InformeDiabetesComponent } from './informe-diabetes/informe-diabetes.component';
 import { InformeAsmaComponent } from './informe-asma/informe-asma.component';
 import { ConsultaComponent } from './consulta/consulta.component';
+import { TratamientoService } from 'src/services/tratamiento.service';
+import { TratamientoComponent } from './tratamiento/tratamiento.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -29,6 +31,7 @@ const routes: Routes = [
   { path: 'migranas/:id', component : InformeMigranasComponent },
   { path: 'asma/:id', component : InformeAsmaComponent },
   { path: 'consulta/:id', component : ConsultaComponent },
+  { path: 'tratamiento/:id', component : TratamientoComponent }
 ];
 
 @NgModule({

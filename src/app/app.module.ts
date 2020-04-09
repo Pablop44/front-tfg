@@ -66,6 +66,7 @@ import { InformeAsmaComponent } from './informe-asma/informe-asma.component';
 import { InformeMigranasComponent } from './informe-migranas/informe-migranas.component';
 import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones } from './consulta/consulta.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { TratamientoComponent } from './tratamiento/tratamiento.component';
 
 
 @NgModule({
@@ -105,7 +106,8 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     ConsultaComponent,
     DialogoAnadirDiagnostico,
     DialogoAnadirObservaciones,
-    DialogoAnadirTratamiento
+    DialogoAnadirTratamiento,
+    TratamientoComponent
   ],
   imports: [
     BrowserModule,

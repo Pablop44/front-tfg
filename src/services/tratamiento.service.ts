@@ -132,8 +132,6 @@ export class TratamientoService {
       })
     };
 
-    console.log(json);
-
       return this.http.post(this.restUrl+"/tratamiento/crearTratamiento.json", json,
        httpOptions);
   }

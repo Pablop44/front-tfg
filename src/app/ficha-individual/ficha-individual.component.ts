@@ -953,21 +953,89 @@ export class FichaIndividualComponent implements OnInit {
 
   crearTratamiento(response){
     if(this.loginService.isLogged){
+      
       const tratamientoAEnviar = new Tratamiento(response['id'], response['posologia'], response['fechaInicio'], response['fechaFin'], 
-      response['horario']+":00", response['enfermedad'], null, this.id)
-      this.tratamientoService.crearTratamiento(tratamientoAEnviar)
-      .subscribe(
-        response =>{  
-          this.openSnackBar("Se ha creado correctamente el tratamiento");       
-          console.log(response);
-        },
-        error => {
-          this.openSnackBar("Se ha producido un error al crear el tratamiento");
-          console.log(error);
-        }
-      );
+      response['horario']+":00", response['enfermedad'], null, this.id);
+      if(this.validarTratamiento(tratamientoAEnviar)){
+        this.tratamientoService.crearTratamiento(tratamientoAEnviar)
+        .subscribe(
+          response =>{  
+            this.openSnackBar("Se ha creado correctamente el tratamiento");       
+            console.log(response);
+          },
+          error => {
+            this.openSnackBar("Se ha producido un error al crear el tratamiento");
+            console.log(error);
+          }
+        );
+      }
     }
   }
+
+  validarTratamiento(tratamientoAEnviar) : Boolean{
+    return (this.validarPosologia(tratamientoAEnviar) && this.validarFechaInicio(tratamientoAEnviar) && this.validarFechaFin(tratamientoAEnviar) &&
+    this.validarHorario(tratamientoAEnviar) && this.validarEnfermedad(tratamientoAEnviar));
+  }
+
+  validarPosologia(respuesta) : Boolean{
+    if(respuesta.posologia == undefined){
+      this.openSnackBar("Es necesario introducir una posología");
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  validarFechaInicio(respuesta) : Boolean{
+    if(respuesta.fechaInicio == undefined){
+      this.openSnackBar("Es necesario introducir una posología");
+      return false;
+    }else{
+      let now = moment();
+      if(now.diff(moment(respuesta.fechaInicio)) < 0){
+        return true;
+      }else{
+        this.openSnackBar("La fecha de inicio del tratamiento es incorrecta");
+        return false;
+      }
+    }
+  }
+
+  validarFechaFin(respuesta) : Boolean{
+    if(respuesta.fechaFin == undefined){
+      this.openSnackBar("Es necesario introducir una posología");
+      return false;
+    }else{
+      let now = moment();
+      if(now.diff(moment(respuesta.fechaFin)) < 0 && (moment(respuesta.fechaInicio)).diff(moment(respuesta.fechaFin)) < 0){
+        return true;
+      }else{
+        this.openSnackBar("La fecha de fin del tratamiento es incorrecta");
+        return false;
+      }
+    }
+  }
+
+  validarEnfermedad(respuesta) : Boolean{
+    if(respuesta.enfermedad == undefined){
+      this.openSnackBar("Es necesario introducir una enfermedad");
+      return false;
+    }else{
+        return true;
+    }
+  }
+
+  validarHorario(respuesta): Boolean {
+    var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(respuesta.horario);
+    if (isValid) {
+       return true;
+    } else {
+      this.openSnackBar("El formato del horario es erróneo");
+      return false;
+    }
+}
+
+  
 
   numeroTratamientos(id, filtro){
     if(this.loginService.isLogged){
