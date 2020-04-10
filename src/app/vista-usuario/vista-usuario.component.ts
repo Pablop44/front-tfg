@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription }   from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Component, OnInit, Inject} from '@angular/core';
-import {MAT_SNACK_BAR_DATA, TransitionCheckState} from '@angular/material';
+import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormBuilder} from '@angular/forms';
 import { AppComponent } from '../app.component';

@@ -4,14 +4,27 @@ import { ActivatedRoute } from '@angular/router';
 import { LoginService } from 'src/services/login.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
-import { Consulta } from '../models/Consulta';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { TratamientoService } from 'src/services/tratamiento.service';
 import { Tratamiento } from '../models/Tratamiento';
 import { Medicamento } from '../medicamentos/medicamentos.component';
 import {MatTableDataSource} from '@angular/material/table';
 import { MedicamentoService } from 'src/services/medicamento.service';
+import {MAT_SNACK_BAR_DATA} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
+@Component({
+  selector: 'notificacionTratamientoMedicamento',
+  templateUrl: 'notificacionTratamientoMedicamento.html',
+  styles: [`
+    .example-pizza-party {
+      color: hotpink;
+    }
+  `],
+})
+export class notificacionTratamientoMedicamento {
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
+}
 
 @Component({
   selector: 'dialogoEliminarMedicamentoTratamiento',
@@ -88,7 +101,7 @@ export class TratamientoComponent implements OnInit {
 
   cards;
 
-  constructor(private route : ActivatedRoute, loginService: LoginService, private breakpointObserver: BreakpointObserver,
+  constructor(private route : ActivatedRoute,private _snackBar: MatSnackBar, loginService: LoginService, private breakpointObserver: BreakpointObserver,
      tratamientoService: TratamientoService, public dialog: MatDialog, medicamentoService: MedicamentoService) {
     this.loginService = loginService;
     this.tratamientoService = tratamientoService;
@@ -169,14 +182,22 @@ export class TratamientoComponent implements OnInit {
       this.tratamientoService.eliminarTratamientoMedicamento(medicamento, this.idTratamiento)
       .subscribe(
         response =>{
+          this.openSnackBar("Se ha eliminado con éxito");
           console.log(response);
           this.getDatosTratamiento();
         },
         error => {
+          this.openSnackBar("Error al eliminar");
           console.log(error);
         }
       );
     }
+  }
+
+  openSnackBar(mensaje: String) {
+    this._snackBar.openFromComponent(notificacionTratamientoMedicamento, {
+      duration: 4 * 1000, data: mensaje
+    });
   }
 
   openDialogAnadirMedicamentoTratamiento(): void {
@@ -197,10 +218,12 @@ export class TratamientoComponent implements OnInit {
       this.tratamientoService.anadirTratamientoMedicamento(medicamento, this.idTratamiento)
       .subscribe(
         response =>{
+          this.openSnackBar("Se ha añadido con éxito");
           console.log(response);
           this.getDatosTratamiento();
         },
         error => {
+          this.openSnackBar("No se ha podido añadir");
           console.log(error);
         }
       );
