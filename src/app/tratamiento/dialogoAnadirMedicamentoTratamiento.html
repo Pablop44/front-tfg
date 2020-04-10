@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Añadir Medicamento</h1>
+<div mat-dialog-content>
+  <p>Introduce el nombre medicamento para obtener sus datos</p>
+</div>
+<mat-form-field class="example-full-width">
+    <mat-label>Nombre del medicamento</mat-label>
+    <input matInput id="medicamento" name="medicamento" [(ngModel)]="data.medicamento"  required>
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="buscarMedicamento()">Buscar</button>
+<div *ngIf="data.datosMedicamentos != undefined" style="margin-top: 10px;">
+    <mat-label>Nombre del medicamento: {{data.datosMedicamentos.nombre}}</mat-label><br>
+    <mat-label>Marca del medicamento: {{data.datosMedicamentos.marca}}</mat-label><br>
+    <mat-label>Dosis del medicamento: {{data.datosMedicamentos.dosis}}</mat-label><br>
+    <mat-label>Vía de Administración: {{data.datosMedicamentos.viaAdministracion}}</mat-label>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">Añadir</button>
+  <button mat-button style="float:right;" (click)="onNoClick()">Cancelar</button>
+</div>

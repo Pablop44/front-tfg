@@ -1,0 +1,108 @@
+.grid-container {
+    margin: 20px;
+  }
+  
+  .dashboard-card {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+  }
+  
+  .more-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+  }
+  
+  .dashboard-card-content {
+    text-align: center;
+  }
+  
+  
+  table {
+    width: 100%;
+  }
+  
+  .cartaFiltro{
+    margin-top: 20px;
+    width: 85%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  ::ng-deep .mat-list .mat-list-item .mat-line{
+    word-wrap: break-word;
+   white-space: pre-wrap;
+}
+
+h4{
+  text-align: left;
+}
+
+p{
+  text-align: left;
+}
+
+.example-margin {
+  margin: 10px;
+}
+
+::ng-deep .mat-list .mat-list-item .mat-line{
+    word-wrap: break-word;
+   white-space: pre-wrap;
+}
+
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 50%;
+}
+
+td, th {
+  width: 25%;
+  text-align: center;
+}
+
+td{
+  text-align: left;
+}
+
+
+th.mat-header-cell {
+  color: black;
+  font-weight: bold;
+  word-wrap: break-word;
+  word-break:break-all;
+}  
+
+td.mat-cell {
+  word-wrap: break-word;
+  word-break:break-all;
+}       
+
+table {
+  /* text-align: center !important; */
+  width: 100%;
+  /* table-layout: fixed; */
+  table-layout: fixed;
+  /* white-space: nowrap;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis; */
+} 

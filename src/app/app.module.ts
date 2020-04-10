@@ -66,7 +66,7 @@ import { InformeAsmaComponent } from './informe-asma/informe-asma.component';
 import { InformeMigranasComponent } from './informe-migranas/informe-migranas.component';
 import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones } from './consulta/consulta.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
-import { TratamientoComponent } from './tratamiento/tratamiento.component';
+import { TratamientoComponent, DialogoEliminarMedicamentoTratamiento, DialogoAnadirMedicamentoTratamiento } from './tratamiento/tratamiento.component';
 
 
 @NgModule({
@@ -107,7 +107,9 @@ import { TratamientoComponent } from './tratamiento/tratamiento.component';
     DialogoAnadirDiagnostico,
     DialogoAnadirObservaciones,
     DialogoAnadirTratamiento,
-    TratamientoComponent
+    TratamientoComponent,
+    DialogoEliminarMedicamentoTratamiento,
+    DialogoAnadirMedicamentoTratamiento
   ],
   imports: [
     BrowserModule,
@@ -232,7 +234,9 @@ import { TratamientoComponent } from './tratamiento/tratamiento.component';
     DialogoEditarNota,
     DialogoAnadirObservaciones,
     DialogoAnadirDiagnostico,
-    DialogoAnadirTratamiento
+    DialogoAnadirTratamiento,
+    DialogoEliminarMedicamentoTratamiento,
+    DialogoAnadirMedicamentoTratamiento
   ],
   providers: [],
   bootstrap: [AppComponent]

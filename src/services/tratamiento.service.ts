@@ -13,6 +13,14 @@ export class TratamientoService {
   constructor(private http: HttpClient, private router: Router, private loginService : LoginService) { 
   }
 
+  getDatosTratamiento(id){
+    return this.http.get(this.restUrl+`/tratamiento/view/`+id+`.json`, {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
+
 
   todosTratamientos(id, pagina, aMostrar, tipo, filtro){
 
@@ -119,6 +127,63 @@ export class TratamientoService {
     };
 
       return this.http.post(this.restUrl+"/tratamiento/numeroTratramientosFicha.json", json,
+       httpOptions);
+  }
+
+
+  public eliminarTratamientoMedicamento(medicamento,tratamiento){
+
+    let array = [{
+      Field: 'medicamento',
+      Value: medicamento
+    },
+    {
+      Field: 'tratamiento',
+      Value: tratamiento
+    }
+    ];
+
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.http.post(this.restUrl+"/tratamientoMedicamento/delete.json", json,
+       httpOptions);
+  }
+
+  public anadirTratamientoMedicamento(medicamento,tratamiento){
+
+    let array = [{
+      Field: 'medicamento',
+      Value: medicamento
+    },
+    {
+      Field: 'tratamiento',
+      Value: tratamiento
+    }
+    ];
+
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+
+    console.log(json);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.http.post(this.restUrl+"/tratamientoMedicamento/add.json", json,
        httpOptions);
   }
 

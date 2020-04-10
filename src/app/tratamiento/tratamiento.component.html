@@ -1,1 +1,113 @@
-<p>tratamiento works!</p>
+<div class="grid-container">
+    <h1 class="mat-h1">Tratamiento para {{enfermedad}}
+        <button mat-raised-button style="float: right;" [routerLink]="['/ficha-individual', idFicha]" color="primary">Volver al Historial {{idFicha}}</button>
+    </h1>
+    <mat-grid-list cols="2" rowHeight="400px">
+      <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
+        <div [ngSwitch]="card.title">
+
+          <div *ngSwitchCase="'datosTratamiento'">
+            <mat-card class="dashboard-card">
+  
+              <mat-card-content class="dashboard-card-content">
+
+
+                <mat-tab-group [color]="'accent'" [backgroundColor]="'primary'">
+
+                    <mat-tab label="Datos del Tratamiento">     
+                        
+                        <mat-list id="datosratamiento">
+                            <h3 mat-subheader>
+                                <mat-icon mat-list-icon style="margin-right: 10px;">
+                                    <i class="material-icons">
+                                        info
+                                        </i>
+                                  </mat-icon>
+                                    Información del Tratamiento
+                            </h3>
+                            <mat-list-item >
+                                <h4 mat-line style="font-weight: bold;">Posologia</h4>
+                                <p mat-line>{{tratamiento.posologia}}</p>
+                            </mat-list-item>
+                            <mat-list-item >
+                                <h4 mat-line style="font-weight: bold;">Fecha de Inicio</h4>
+                                <p mat-line>{{tratamiento.fechaInicio}}</p>
+                            </mat-list-item>
+                            <mat-list-item >
+                              <h4 mat-line style="font-weight: bold;">Fecha de Fin</h4>
+                              <p mat-line>{{tratamiento.fechaFin}}</p>
+                            </mat-list-item>
+                            <mat-list-item >
+                              <h4 mat-line style="font-weight: bold;">Enfermedad a tratar</h4>
+                              <p mat-line>{{tratamiento.enfermedad}}</p>
+                            </mat-list-item>
+                            </mat-list>
+                    
+                    </mat-tab>
+  
+                     
+  
+                    <mat-tab label="Medicamentos asociados al Tratamiento"> 
+
+                        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuConsulta" aria-label="Toggle menu">
+                            <mat-icon>add_circle</mat-icon>
+                          </button>
+                          <mat-menu #menuConsulta="matMenu" xPosition="before">
+                            <a (click)="openDialogAnadirMedicamentoTratamiento()" mat-menu-item>Añadir Medicamento</a>
+                          </mat-menu>
+                          
+                        <div class="mat-elevation-z8">
+                            <table mat-table [dataSource]="dataSourceMedicamentos" matSort>
+                        
+                              <!-- Progress Column -->
+                              <ng-container matColumnDef="nombre">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                                <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+                              </ng-container>
+                          
+                              <!-- Name Column -->
+                              <ng-container matColumnDef="viaAdministracion">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Vía de Administración</th>
+                                <td mat-cell *matCellDef="let row"> {{row.viaAdministracion}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="marca">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Marca </th>
+                                <td mat-cell *matCellDef="let row"> {{row.marca}} </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="dosis">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Dosis </th>
+                                <td mat-cell *matCellDef="let row"> {{row.dosis}} </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="acciones">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones</th>
+                                <td mat-cell *matCellDef="let row"> 
+                                  <button mat-stroked-button color="primary" (click)="openDialogEliminarMedicamentoTratamiento(row)"><i class="material-icons"> remove_circle </i></button>
+                                </td>
+                              </ng-container>
+                          
+                              <tr mat-header-row *matHeaderRowDef="displayedColumnsMedicamentos"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumnsMedicamentos;">
+                              </tr>
+                            </table>
+                          
+                            <mat-paginator #paginator [pageSize]="pageSizeMedicamentos" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true" [length]="totalSizeMedicamentos"
+                                [pageIndex]="currentPageMedicamentos" (page)="pageEvent = handlePageMedicamentos($event)">
+                            </mat-paginator>
+                          </div>
+                          
+                    </mat-tab>
+  
+                  </mat-tab-group>
+            
+              </mat-card-content>
+                </mat-card>
+          </div>
+        </div>
+
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  

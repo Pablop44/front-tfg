@@ -42,7 +42,6 @@ export class MedicamentoService {
     
     let json = JSON.stringify(obj);
     
-    console.log(json);
 
     const httpOptions = {
       headers: new HttpHeaders({ 
@@ -76,8 +75,7 @@ export class MedicamentoService {
     array.forEach(item => obj[item.Field] = item.Value);
     
     let json = JSON.stringify(obj);
-    
-    console.log(json);
+
 
     const httpOptions = {
       headers: new HttpHeaders({ 
@@ -123,8 +121,6 @@ export class MedicamentoService {
     array.forEach(item => obj[item.Field] = item.Value);
     
     let json = JSON.stringify(obj);
-    
-    console.log(json);
 
     const httpOptions = {
       headers: new HttpHeaders({ 
@@ -132,7 +128,6 @@ export class MedicamentoService {
       })
     };
 
-    console.log(json);
 
       return this.http.post(this.restUrl+"/medicamento/delete.json", json,
        httpOptions);
@@ -155,8 +150,6 @@ export class MedicamentoService {
       
       let json = JSON.stringify(obj);
       
-      console.log(json);
-  
       const httpOptions = {
         headers: new HttpHeaders({ 
           'Content-Type': 'application/json',
@@ -165,5 +158,29 @@ export class MedicamentoService {
   
         return this.http.post(this.restUrl+"/medicamento/numeroMedicamentos.json", json,
          httpOptions);
+  }
+
+  buscarMedicamento(nombre){
+    let array = [
+      {
+        Field: 'nombre',
+        Value: nombre
+      }
+      ];
+      let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+    
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+    console.log(json);
+      return this.http.post(this.restUrl+"/medicamento/buscarMedicamento.json", json,
+       httpOptions);
   }
 }
