@@ -288,6 +288,7 @@ export class FichaIndividualComponent implements OnInit {
   informeAsma: InformeAsma[] = [];
   informeMigranas: InformeMigranas[] = [];
   tratamientos: Tratamiento[] = [];
+  now = moment();
 
   consultaService: ConsultaService;
   loginService: LoginService;
