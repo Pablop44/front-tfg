@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Subscription }   from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from 'src/services/login.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
@@ -12,6 +12,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MedicamentoService } from 'src/services/medicamento.service';
 import {MAT_SNACK_BAR_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { FichaService } from 'src/services/ficha.service';
 
 @Component({
   selector: 'notificacionTratamientoMedicamento',
@@ -92,6 +93,7 @@ export class TratamientoComponent implements OnInit {
   enfermedad: String;
   medicamentos: Medicamento[] = [];
   dataSourceMedicamentos: any;
+  fichaService: FichaService;
   displayedColumnsMedicamentos: string[] = ['nombre', 'viaAdministracion', 'marca', 'dosis','acciones'];
 
   public pageSizeMedicamentos = 15;
@@ -102,10 +104,12 @@ export class TratamientoComponent implements OnInit {
   cards;
 
   constructor(private route : ActivatedRoute,private _snackBar: MatSnackBar, loginService: LoginService, private breakpointObserver: BreakpointObserver,
-     tratamientoService: TratamientoService, public dialog: MatDialog, medicamentoService: MedicamentoService) {
+     tratamientoService: TratamientoService, public dialog: MatDialog, medicamentoService: MedicamentoService, fichaService: FichaService, 
+     private router: Router) {
     this.loginService = loginService;
     this.tratamientoService = tratamientoService;
     this.medicamentoService = medicamentoService;
+    this.fichaService = fichaService;
    }
 
   ngOnInit() {
@@ -121,6 +125,7 @@ export class TratamientoComponent implements OnInit {
       .subscribe(
         response =>{
           this.idFicha = response['ficha'];
+          this.mirarPermiso();
           this.enfermedad = response['enfermedad'];
           this.tratamiento = new Tratamiento(response['id'],response['posologia'],response['fechaInicio'], response['fechaFin'],response['horario'], response['enfermedad'],response['medicamento'], response['ficha']);
           console.log(this.tratamiento);
@@ -224,6 +229,25 @@ export class TratamientoComponent implements OnInit {
         },
         error => {
           this.openSnackBar("No se ha podido añadir");
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  mirarPermiso(){
+    if(this.loginService.isLogged){
+      this.fichaService.datosFicha(this.idFicha)
+      .subscribe(
+        response =>{
+          console.log(response);
+            if(this.loginService.loggedUser.rol == 'medico'){
+              if(this.loginService.loggedUser.id != response['medico']){
+               this.router.navigateByUrl("/dashboardMedico");
+              }
+            }
+          },
+        error => {
           console.log(error);
         }
       );

@@ -356,23 +356,29 @@ export class VistaUsuarioComponent implements OnInit {
           this.migranas = "";
           this.asma = "";
           this.idMedico = response[0]['medico'];
-          this.idFicha = response[0]['id'];      
-          this.enfermedades = response[0]['enfermedad'];
-          for(const element in this.enfermedades){
-            if(this.enfermedades[element] == "diabetes"){
-              this.diabetes = "Diabetes";
-              this.tieneDiabetes = true;
+          if(this.loginService.loggedUser.rol == "medico"){
+            if(this.loginService.loggedUser.id != response[0]['medico']){
+              this.router.navigateByUrl("/dashboardMedico");
             }
-            else if(this.enfermedades[element] == "asma"){
-              this.asma = "Asma";
-              this.tieneAsma = true;
+          }else{
+            this.idFicha = response[0]['id'];      
+            this.enfermedades = response[0]['enfermedad'];
+            for(const element in this.enfermedades){
+              if(this.enfermedades[element] == "diabetes"){
+                this.diabetes = "Diabetes";
+                this.tieneDiabetes = true;
+              }
+              else if(this.enfermedades[element] == "asma"){
+                this.asma = "Asma";
+                this.tieneAsma = true;
+              }
+              else{
+                this.migranas = "Migrañas";
+                this.tieneMigranas = true;
+              }
             }
-            else{
-              this.migranas = "Migrañas";
-              this.tieneMigranas = true;
-            }
+            this.todosMedicos();
           }
-          this.todosMedicos();
         },
         error => {
           console.log(error);

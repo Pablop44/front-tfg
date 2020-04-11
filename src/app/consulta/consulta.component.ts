@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Subscription }   from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConsultaService } from 'src/services/consulta.service';
 import { LoginService } from 'src/services/login.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
@@ -66,7 +66,8 @@ export class ConsultaComponent implements OnInit {
 
   cards;
 
-  constructor(private route : ActivatedRoute,public dialog: MatDialog, consultaService: ConsultaService, private breakpointObserver: BreakpointObserver, loginService: LoginService) { 
+  constructor(private route : ActivatedRoute,public dialog: MatDialog, consultaService: ConsultaService, private breakpointObserver: BreakpointObserver,
+     loginService: LoginService, private router: Router) { 
     this.consultaService = consultaService;
     this.loginService = loginService;
   }
@@ -88,7 +89,11 @@ export class ConsultaComponent implements OnInit {
           this.horaFecha = this.fecha.split(' ');
           this.consulta = new Consulta(response['id'],response['lugar'],response['motivo'], response['fecha'],response['diagnostico'],response['observaciones'], response['medico'], response['paciente'],
           response['ficha'], response['estado']);
-          console.log(this.consulta);
+          if(this.loginService.loggedUser.rol == 'medico'){
+            if(this.loginService.loggedUser.id != response['medico']){
+              this.router.navigateByUrl("/dashboardMedico");
+            }
+          }
           if(this.consulta.estado == "realizada"){
             this.chosenItem = this.estado[1].value;
           }else if(this.consulta.estado == "en tiempo"){
