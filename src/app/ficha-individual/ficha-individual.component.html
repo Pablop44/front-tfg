@@ -519,10 +519,10 @@
 
                     <mat-tab label="Tratamientos"> 
 
-                      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuConsulta" aria-label="Toggle menu">
+                      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuTratamiento" aria-label="Toggle menu">
                         <mat-icon>local_hospital</mat-icon>
                       </button>
-                      <mat-menu #menuConsulta="matMenu" xPosition="before">
+                      <mat-menu #menuTratamiento="matMenu" xPosition="before">
                         <a (click)="openDialogTratamiento()" mat-menu-item>Añadir Tratamiento</a>
                       </mat-menu>
 

@@ -57,7 +57,7 @@ export class ConsultaService {
 
 
   public consultasFicha(id, pagina, aMostrar, tipo, filtro){
-    if(filtro.id == null && filtro.lugar == "" && filtro.fechaFin == null && filtro.fechaInicio == null && filtro.diagnostico == null &&
+    if(filtro.id == null && filtro.lugar == null && filtro.fechaFin == null && filtro.fechaInicio == null && filtro.diagnostico == null &&
      filtro.observaciones == null && filtro.tiempo == null && filtro.cancelada == null && filtro.aplazada == null && filtro.realizada == null){
       filtro = null;
     }

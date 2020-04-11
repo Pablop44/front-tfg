@@ -64,22 +64,7 @@ export class ConsultaComponent implements OnInit {
     ];
   chosenItem = this.estado[0].value;
 
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'datosConsulta', cols: 2, rows: 2, cuerpo: "hola"}
-        ];
-      } 
-
-      return [
-        { title: 'datosConsulta', cols: 1, rows: 3, cuerpo: "hola"},
-        { title: 'diagnostico', cols: 1, rows: 1, cuerpo: "hola"},
-        { title: 'observaciones', cols: 1, rows: 1, cuerpo: "hola"},
-        { title: 'cambioEstado', cols: 1, rows: 1, cuerpo: "hola"}
-      ];
-    })
-  );
+  cards;
 
   constructor(private route : ActivatedRoute,public dialog: MatDialog, consultaService: ConsultaService, private breakpointObserver: BreakpointObserver, loginService: LoginService) { 
     this.consultaService = consultaService;
@@ -113,6 +98,22 @@ export class ConsultaComponent implements OnInit {
           }else{
             this.chosenItem = this.estado[3].value;
           }
+          this.cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+            map(({ matches }) => {
+              if (matches) {
+                return [
+                  { title: 'datosConsulta', cols: 2, rows: 2, cuerpo: "hola"}
+                ];
+              } 
+        
+              return [
+                { title: 'datosConsulta', cols: 1, rows: 3, cuerpo: "hola"},
+                { title: 'diagnostico', cols: 1, rows: 1, cuerpo: "hola"},
+                { title: 'observaciones', cols: 1, rows: 1, cuerpo: "hola"},
+                { title: 'cambioEstado', cols: 1, rows: 1, cuerpo: "hola"}
+              ];
+            })
+          );
         },
         error => {
           console.log(error);

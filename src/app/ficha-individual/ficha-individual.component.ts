@@ -18,6 +18,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { Hora } from 'src/app/models/Hora';
 import { Nota } from 'src/app/models/Nota';
+import { Router } from '@angular/router';
 import { FiltroNota } from 'src/app/models/FiltroNota';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -424,7 +425,7 @@ export class FichaIndividualComponent implements OnInit {
     private route : ActivatedRoute, notaService:NotaService,
     loginService:LoginService, userService:UserService, fichaService:FichaService,
      public dialog: MatDialog,private _snackBar: MatSnackBar, tratamientoService:TratamientoService,
-     diabetesService: DiabetesService, asmaService: AsmaService, migranasService: MigranasService) {
+     diabetesService: DiabetesService, asmaService: AsmaService, migranasService: MigranasService, private router : Router) {
       this.consultaService = consultaService;
       this.tratamientoService = tratamientoService;
       this.loginService = loginService;
@@ -520,18 +521,32 @@ export class FichaIndividualComponent implements OnInit {
       this.fichaService.datosFicha(idFicha)
       .subscribe(
         response =>{
-          
-          this.ficha = response;
-          this.datosFicha2(idFicha);
-          this.datosMedico(response['medico']);
-          this.datosPaciente(response['paciente']);
-          this.datosConsultas();
-          this.datosNotas();
-          this.datosTratamientos();
-
+          if(this.loginService.loggedUser.rol == "medico"){
+            if(response['medico'] == this.loginService.loggedUser.id){
+              this.ficha = response;
+              this.datosFicha2(idFicha);
+              this.datosMedico(response['medico']);
+              this.datosPaciente(response['paciente']);
+              this.datosConsultas();
+              this.datosNotas();
+              this.datosTratamientos();
+            }else{
+              this.openSnackBar("No tiene el permiso para acceder a esa direccion");
+              this.router.navigateByUrl("/dashboardMedico");
+            }
+          }else{
+            this.ficha = response;
+            this.datosFicha2(idFicha);
+            this.datosMedico(response['medico']);
+            this.datosPaciente(response['paciente']);
+            this.datosConsultas();
+            this.datosNotas();
+            this.datosTratamientos();
+          }
         },
         error => {
-          console.log(error);
+          this.openSnackBar("No existe el historial");
+          this.router.navigateByUrl("/historial");
         }
       );
     }
@@ -961,11 +976,12 @@ export class FichaIndividualComponent implements OnInit {
         this.tratamientoService.crearTratamiento(tratamientoAEnviar)
         .subscribe(
           response =>{  
-            this.openSnackBar("Se ha creado correctamente el tratamiento");       
-            console.log(response);
+            this.openSnackBar("Se ha creado correctamente el tratamiento");
+            this.router.navigate(['/tratamiento', response['id']]);       
           },
           error => {
             this.openSnackBar("Se ha producido un error al crear el tratamiento");
+            this.datosTratamientos();
             console.log(error);
           }
         );

@@ -1,6 +1,6 @@
 import { map } from 'rxjs/operators';
 import { LoginService } from 'src/services/login.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription }   from 'rxjs';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import {Component, OnInit} from '@angular/core';
@@ -8,6 +8,7 @@ import { AsmaService } from 'src/services/asma.service';
 import { InformeAsma } from '../models/InformeAsma';
 import * as jsPDF from 'jspdf';
 import { ExportToCsv } from 'export-to-csv';
+import { FichaService } from 'src/services/ficha.service';
 
 @Component({
   selector: 'app-informe-asma',
@@ -17,6 +18,7 @@ import { ExportToCsv } from 'export-to-csv';
 export class InformeAsmaComponent implements OnInit {
 
   loginService: LoginService;
+  fichaService: FichaService;
   asmaService: AsmaService;
   sub: Subscription;
   idInformeAsma: String;
@@ -25,9 +27,11 @@ export class InformeAsmaComponent implements OnInit {
   idFicha: String;
   cards; 
 
-  constructor(loginService: LoginService, asmaService: AsmaService, private breakpointObserver: BreakpointObserver, private route : ActivatedRoute) {
+  constructor(loginService: LoginService, asmaService: AsmaService, private breakpointObserver: BreakpointObserver,
+     private route : ActivatedRoute, fichaService: FichaService, private router : Router) {
     this.loginService = loginService;
     this.asmaService = asmaService;
+    this.fichaService = fichaService;
    }
 
   ngOnInit() {
@@ -47,7 +51,6 @@ export class InformeAsmaComponent implements OnInit {
           this.datosInformeAsma = new InformeAsma(response['id'],response['fecha'],response['calidadSueno'], response['dificultadRespirar'],
           response['tos'], response['gravedadTos'], response['limitaciones'], response['silbidos'], response['usoMedicacion'],
           response['espirometria'], response['factoresCrisis'], response['estadoGeneral']);
-          console.log(this.datosInformeAsma);
           this.cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
             map(({ matches }) => {
               if (matches) {
@@ -63,6 +66,26 @@ export class InformeAsmaComponent implements OnInit {
               ];
             })
           );
+          this.mirarPermiso();
+          },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  mirarPermiso(){
+    if(this.loginService.isLogged){
+      this.fichaService.datosFicha(this.idFicha)
+      .subscribe(
+        response =>{
+          console.log(response);
+            if(this.loginService.loggedUser.rol == 'medico'){
+              if(this.loginService.loggedUser.id != response['medico']){
+               this.router.navigateByUrl("/dashboardMedico");
+              }
+            }
           },
         error => {
           console.log(error);

@@ -394,34 +394,42 @@ export class VistaUsuarioComponent implements OnInit {
           ];
         }
   
-        if(this.datosUser.rol == 'medico')
-        var obj = [
-          { title: 'Usuario', cols: 1, rows: 5, cuerpo: "hola"},
-          { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
-          { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
-          { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
-          { title: 'especialidad', cols: 1, rows: 1, cuerpo: "hola"}
-        ];
-        if(this.datosUser.rol == 'paciente'){
+        if(this.datosUser.rol == 'medico'){
           var obj = [
             { title: 'Usuario', cols: 1, rows: 5, cuerpo: "hola"},
             { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
             { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
             { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
-            { title: 'cambiarMedico', cols: 1, rows: 1, cuerpo: "hola"},
-            { title: 'enfermedades', cols: 1, rows: 1, cuerpo: "hola"},
+            { title: 'especialidad', cols: 1, rows: 1, cuerpo: "hola"}
           ];
+        }
+        if(this.datosUser.rol == 'paciente'){
+          if(this.loginService.loggedUser.rol == "administrador"){
+            var obj = [
+              { title: 'Usuario', cols: 1, rows: 5, cuerpo: "hola"},
+              { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
+              { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
+              { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
+              { title: 'cambiarMedico', cols: 1, rows: 1, cuerpo: "hola"},
+              { title: 'enfermedades', cols: 1, rows: 1, cuerpo: "hola"},
+            ];
+          }else{
+            var obj = [
+              { title: 'Usuario', cols: 1, rows: 5, cuerpo: "hola"},
+              { title: 'enfermedades', cols: 1, rows: 1, cuerpo: "hola"},
+            ];
+          }
         }
         if(this.datosUser.rol == 'administrador'){
-          var obj = [
-            { title: 'Usuario', cols: 1, rows: 5, cuerpo: "hola"},
-            { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
-            { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
-            { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
-          ];
+          if(this.loginService.loggedUser.rol == "administrador"){
+            var obj = [
+              { title: 'Usuario', cols: 1, rows: 5, cuerpo: "hola"},
+              { title: 'editar', cols: 1, rows: 1, cuerpo: "hola"},
+              { title: 'eliminar', cols: 1, rows: 1, cuerpo: "hola"},
+              { title: 'accionCuenta', cols: 1, rows: 1, cuerpo: "hola"},
+            ];
+          }
         }
-        
-  
         return obj;
       })
     );

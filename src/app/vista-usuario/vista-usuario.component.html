@@ -147,7 +147,7 @@
 
             <div *ngSwitchCase="'eliminar'">
 
-                <mat-card class="dashboard-card">
+                <mat-card class="dashboard-card" *ngIf="loginService.loggedUser.rol == 'administrador'">
                     <mat-card-header>
                       <mat-card-title>
                         Eliminar Usuario
