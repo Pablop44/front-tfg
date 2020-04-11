@@ -114,7 +114,7 @@ export class HistorialComponent implements OnInit {
     }else if(this.loginService.loggedUser.rol == 'medico' && this.loginService.isLogged){
       this.displayedColumns = ['numero', 'fecha', 'dniPaciente', 'nombrePaciente', 'acciones'];
       this.fichasMedico();
-      this.numeroFichas();
+      this.numeroFichasMedico();
     }
   }
 
@@ -180,6 +180,7 @@ export class HistorialComponent implements OnInit {
     if(this.loginService.loggedUser.rol == 'administrador' && this.loginService.isLogged){
       this.fichas();
     }else if(this.loginService.loggedUser.rol == 'medico' && this.loginService.isLogged){
+      this.fichasMedico();
     }
   }
 
@@ -195,6 +196,19 @@ export class HistorialComponent implements OnInit {
         }
       );
     }
+
+    numeroFichasMedico(){
+      
+      this.fichaService.numeroFichasMedico(this.filtroHistorial)
+        .subscribe(
+          response =>{
+              this.totalSize = response['numero'];
+            },
+          error => {
+            console.log(error)
+          }
+        );
+      }
 
   aplicarFiltro(){
 

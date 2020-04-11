@@ -177,6 +177,42 @@ export class FichaService {
     }
   }
 
+
+  numeroFichasMedico(filtro){
+
+      if(filtro.id == null && filtro.fechaInicio == null && filtro.fechaFin == null && filtro.dniPaciente == null && filtro.nombrePaciente == null 
+        && filtro.apellidosPaciente == null && filtro.dniMedico == null && filtro.nombreMedico == null 
+        && filtro.apellidosMedico == null && filtro.colegiado == null && filtro.asma == null && filtro.diabetes == null && filtro.migranas == null){
+        filtro = null;
+      }
+
+      let array = [
+        {
+          Field: 'filtro',
+          Value: filtro
+        },
+        {
+          Field: 'medico',
+          Value: this.loginService.loggedUser.username
+        }
+        ];
+        let obj = {};
+      array.forEach(item => obj[item.Field] = item.Value);
+      
+      let json = JSON.stringify(obj);
+      
+      console.log(json);
+  
+      const httpOptions = {
+        headers: new HttpHeaders({ 
+          'Content-Type': 'application/json',
+        })
+      };
+  
+        return this.http.post(this.restUrl+"/ficha/numeroFichasMedico.json", json,
+         httpOptions);
+  }
+
   numeroFichas(){
     return this.http.get(this.restUrl+"/ficha/numeroFichas.json", {
       headers: new HttpHeaders({
