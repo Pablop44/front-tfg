@@ -1,85 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
-import { ConsultaService } from 'src/services/consulta.service';
 import { LoginService } from 'src/services/login.service';
-import { UserService } from 'src/services/user.service';
-import { FichaService } from 'src/services/ficha.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import { Ficha } from 'src/app/models/Ficha';
+import { StatisticsService } from 'src/services/statistics.service';
+import * as CanvasJS from 'src/assets/canvasjs.min';
 
 @Component({
   selector: 'app-dashboard-home',
   templateUrl: './dashboard-home.component.html',
   styleUrls: ['./dashboard-home.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
 
 export class DashboardHomeComponent {
-  dataSource;
-  columnsToDisplay = ['id' ,'Paciente', 'Medico', 'enfermedad', 'fechaCreacion'];
-  expandedElement: Ficha | null;
-  fichasArray : Ficha[] = [];
-  todasConsultas: any = [];
-  todosUsuarios: any = [];
-  consultaService: ConsultaService;
-  loginService: LoginService;
-  userService:UserService;
-  fichaService:FichaService;
+  
+  loginService:LoginService;
+  statisticsService: StatisticsService;
 
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
         return [
-          { title: 'Fichas', cols: 2, rows: 3, cuerpo: "hola"},
-          { title: 'Consultas', cols: 1, rows: 1, cuerpo: this.todasConsultas},
-          { title: 'Usuarios', cols: 1, rows: 1, cuerpo: this.todosUsuarios },
-          { title: 'Medicamentos', cols: 1, rows: 1, cuerpo: 'cuerpo3' },
+          { title: 'Fichas', cols: 1, rows: 2, cuerpo: "hola"},
+          { title: 'Consultas', cols: 1, rows: 2, cuerpo: "hola"}
         ];
       }
 
       return [
-        { title: 'Fichas', cols: 2, rows: 3, cuerpo: "hola"},
-        { title: 'Consultas', cols: 1, rows: 2, cuerpo: this.todasConsultas },
-        { title: 'Usuarios', cols: 1, rows: 2, cuerpo: this.todosUsuarios },
-        { title: 'Medicamentos', cols: 1, rows: 2, cuerpo: 'cuerpo3' },
+        { title: 'Fichas', cols: 1, rows: 2, cuerpo: "hola"},
+        { title: 'Consultas', cols: 1, rows: 2, cuerpo: "hola" }
       ];
     })
   );
 
-  constructor(private breakpointObserver: BreakpointObserver, consultaService:ConsultaService,
-    private router : Router,
-    loginService:LoginService, userService:UserService, fichaService:FichaService) {
-      this.consultaService = consultaService;
+  constructor(private breakpointObserver: BreakpointObserver,
+    private router : Router,  statisticsService: StatisticsService,
+    loginService:LoginService) {
       this.loginService = loginService;
-      this.userService = userService;
-      this.fichaService = fichaService;
+      this.statisticsService = statisticsService;
     }
 
   ngOnInit() {
-    if(this.loginService.isLogged){
-      this.consultas();
-      this.usuarios();
-    }else{
-      this.router.navigateByUrl("/login");
-    }
+    this.estadisticasUsuarios();
+    this.estadisticaEnfermedades();
   }
-  
-  consultas(){
+
+  estadisticasUsuarios(){
     if(this.loginService.isLogged){
-      this.consultaService.todasConsultas()
+      this.statisticsService.estadisticasUsuarios()
       .subscribe(
         response =>{
-          console.log(response);
-          this.todasConsultas = response;
+            this.crearDiagramaBarrasUsuarios(response);
+            this.crearDiagramaCircularUsuarios(response);
         },
         error => {
           console.log(error);
@@ -88,13 +61,57 @@ export class DashboardHomeComponent {
     }
   }
 
-  usuarios(){
+  crearDiagramaBarrasUsuarios(response){
+    let chart = new CanvasJS.Chart("diagramaBarrasUsuarios", {
+      animationEnabled: true,
+      exportEnabled: true,
+      title: {
+        text: "Diagrama de barras de los roles de lo usuarios"
+      },
+      data: [{
+        type: "column",
+        dataPoints: [
+          { y: response['administradores'], label: "Administradores" },
+          { y: response['medicos'], label: "Médicos" },
+          { y: response['pacientes'], label: "Pacientes" },
+        ]
+      }]
+    }); 
+    chart.render();
+  }
+
+  crearDiagramaCircularUsuarios(response){
+    let chart = new CanvasJS.Chart("diagramaCircularUsuarios", {
+      theme: "light2",
+      animationEnabled: true,
+      exportEnabled: true,
+      title:{
+        text: "Porcentaje de roles en el sistema"
+      },
+      data: [{
+        type: "pie",
+        showInLegend: true,
+        toolTipContent: "<b>{name}</b>: {y} (#percent%)",
+        indexLabel: "{name} - #percent%",
+        dataPoints: [
+          { y: response['administradores'], name: "Administradores" },
+          { y: response['medicos'], name: "Médicos" },
+          { y: response['pacientes'], name: "Pacientes" },
+        ]
+      }]
+    });
+      
+    chart.render();
+  }
+
+
+  estadisticaEnfermedades(){
     if(this.loginService.isLogged){
-      this.userService.todosUsuarios()
+      this.statisticsService.estadisticasEnfermedades()
       .subscribe(
         response =>{
-          console.log(response);
-          this.todosUsuarios = response;
+          this.crearDiagramaBarrasEnfermedades(response);
+          this.crearDiagramaCircularEnfermedades(response);
         },
         error => {
           console.log(error);
@@ -103,6 +120,48 @@ export class DashboardHomeComponent {
     }
   }
 
+  crearDiagramaBarrasEnfermedades(response){
+    let chart = new CanvasJS.Chart("diagramaBarrasEnfermedades", {
+      animationEnabled: true,
+      exportEnabled: true,
+      title: {
+        text: "Diagrama de barras de las Enfermedades"
+      },
+      data: [{
+        type: "column",
+        dataPoints: [
+          { y: response['migranas'], label: "Migrañas" },
+          { y: response['diabetes'], label: "Diabetes" },
+          { y: response['asma'], label: "asma" },
+        ]
+      }]
+    }); 
+    chart.render();
+  }
+
+  crearDiagramaCircularEnfermedades(response){
+    let chart = new CanvasJS.Chart("diagramaCircularEnfermedades", {
+      theme: "light2",
+      animationEnabled: true,
+      exportEnabled: true,
+      title:{
+        text: "Porcentaje de enfermedades en el sistema"
+      },
+      data: [{
+        type: "pie",
+        showInLegend: true,
+        toolTipContent: "<b>{name}</b>: {y} (#percent%)",
+        indexLabel: "{name} - #percent%",
+        dataPoints: [
+          { y: response['migranas'], name: "Migrañas" },
+          { y: response['diabetes'], name: "Diabetes" },
+          { y: response['asma'], name: "asma" },
+        ]
+      }]
+    });
+      
+    chart.render();
+  }
 }
 
 

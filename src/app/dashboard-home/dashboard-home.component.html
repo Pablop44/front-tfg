@@ -8,47 +8,16 @@
           <mat-card class="dashboard-card">
             <mat-card-header>
               <mat-card-title>
-                Historiales Clínicos
-                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu" xPosition="before">
-                  <a [routerLink]="'/fichas'" mat-menu-item>Ver todos los Historiales Clínicos</a>
-                </mat-menu>
+                 Usuarios
               </mat-card-title>
             </mat-card-header>
 
             <mat-card-content>
-              <div class="table-wrapper-scroll-y my-custom-scrollbar2">
-              <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
-                <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-                  <th style="text-align: center;" mat-header-cell *matHeaderCellDef> {{column}} </th>
-                  <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-                </ng-container>
-
-                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-                <ng-container matColumnDef="expandedDetail">
-                  <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                    <div class="example-element-detail"
-                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                      <div class="example-element-description">
-                          Ver el Historial clínico en detalle
-                        <a [routerLink]="['/ficha-individual', element.id]" mat-stroked-button color="primary">Historial Número {{element.id}}</a>
-                      </div>
-                    </div>
-                  </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-                    class="example-element-row"
-                    [class.example-expanded-row]="expandedElement === element"
-                    (click)="expandedElement = expandedElement === element ? null : element">
-                </tr>
-                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-              </table>
-            </div>
-                 
+              <div id="diagramaBarrasUsuarios" style="height: 260px; width: 100%;"></div>
+              <br>
+              <br>
+              <br>
+              <div id="diagramaCircularUsuarios" style="height: 260px; width: 100%; margin-left:auto;margin-right:auto;"></div>
             </mat-card-content>
           </mat-card>
       </div>
@@ -57,93 +26,19 @@
             <mat-card class="dashboard-card">
               <mat-card-header>
                 <mat-card-title>
-                  {{card.title}}
-                  <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu" xPosition="before">
-                    <a [routerLink]="'/consultas'" mat-menu-item>Ver todos los consultas</a>
-                  </mat-menu>
+                  Enfermedades
                 </mat-card-title>
               </mat-card-header>
 
               <mat-card-content class="dashboard-card-content">
-               
-              <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Número Consulta</th>
-                      <th scope="col">Lugar</th>
-                      <th scope="col">Fecha</th>
-                      <th scope="col">Motivo</th>
-                      <th scope="col">Medico (Número Colegiado)</th>
-                      <th scope="col">Paciente (DNI)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                      <tr *ngFor="let item of todasConsultas">
-                      <th scope="row">{{item.id}}</th>
-                      <td>{{item.lugar}}</td>
-                      <td>{{item.fecha}}</td>
-                      <td>{{item.motivo}}</td>
-                      <td>{{item.medico}} ({{item.colegiado}})</td>
-                      <td>{{item.paciente}} ({{item.dniPaciente}})</td>
-                      </tr>
-                   
-                  </tbody>
-                </table>
-              </div>
-                   
+                <div id="diagramaBarrasEnfermedades" style="height: 260px; width: 100%;"></div>
+                <br>
+                <br>
+                <br>
+                <div id="diagramaCircularEnfermedades" style="height: 260px; width: 100%; margin-left:auto;margin-right:auto;"></div>
               </mat-card-content>
             </mat-card>
         </div>
-
-        <div *ngSwitchCase="'Usuarios'">
-          <mat-card class="dashboard-card">
-            <mat-card-header>
-              <mat-card-title>
-                {{card.title}}
-                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu" xPosition="before">
-                  <a [routerLink]="'/users'" mat-menu-item>Ver todos los usuarios</a>
-                </mat-menu>
-              </mat-card-title>
-            </mat-card-header>
-
-            <mat-card-content class="dashboard-card-content">
-             
-              <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">DNI</th>
-                      <th scope="col">Nombre Apellidos</th>
-                      <th scope="col">Usuario</th>
-                      <th scope="col">Rol</th>
-                      <th scope="col">Estado Cuenta</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                      <tr *ngFor="let item of todosUsuarios">
-                      <td>{{item.dni}}</td>
-                      <td>{{item.nombre}} {{item.apellidos}}</td>
-                      <td>{{item.username}}</td>
-                      <td>{{item.rol}}</td>
-                      <td>{{item.estado}}</td>
-                      </tr>
-                  
-                  </tbody>
-                </table>
-              </div>
-                 
-            </mat-card-content>
-          </mat-card>
-      </div>
 
       </div>
     </mat-grid-tile>
