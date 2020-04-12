@@ -25,7 +25,14 @@ export class HistorialConsultaComponent implements OnInit {
   public pageSize = 15;
   public currentPage = 0;
   public totalSize = 0;
+
+  public pageSizeHistorial = 15;
+  public currentPageHistorial = 0;
+  public totalSizeHistorial = 0;
+
+
   orden = null;
+  ordenHistorial = null;
 
   filtroConsulta: FiltroConsulta = {
     id: null,
@@ -108,7 +115,7 @@ export class HistorialConsultaComponent implements OnInit {
     this.consultaService.consultasMedico(this.loginService.loggedUser.id, this.currentPage, this.pageSize, this.orden, this.filtroConsulta)
       .subscribe(
         response =>{
-          this.numeroConsultas(this.loginService.loggedUser.id, this.filtroConsulta);
+          this.numeroConsultasMedico(this.loginService.loggedUser.id, this.filtroConsulta);
           this.consultasMedico = [];
           for (let i in response) {
               if(response[i]['diagnostico']  !==  null){
@@ -146,11 +153,11 @@ export class HistorialConsultaComponent implements OnInit {
       );
     }
 
-    numeroConsultas(id, filtro){
+    numeroConsultasMedico(id, filtro){
       if(this.loginService.isLogged){
-        this.consultaService.numeroConsultas(id, filtro)
+        this.consultaService.numeroConsultasMedico(id, filtro)
         .subscribe(
-          response =>{         
+          response =>{
             this.totalSize = response['numero'];
           },
           error => {

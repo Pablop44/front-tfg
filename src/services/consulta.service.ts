@@ -63,6 +63,33 @@ export class ConsultaService {
        httpOptions);
   }
 
+  public numeroConsultasMedico(medico,filtro){
+
+    let array = [{
+      Field: 'filtro',
+      Value: filtro
+    },
+    {
+      Field: 'medico',
+      Value: medico
+    }
+    ];
+
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.httpClient.post(this.restUrl+"/numeroConsultasMedico.json", json,
+       httpOptions);
+  }
+
 
   public consultasFicha(id, pagina, aMostrar, tipo, filtro){
     if(filtro.id == null && filtro.lugar == null && filtro.fechaFin == null && filtro.fechaInicio == null && filtro.diagnostico == null &&
