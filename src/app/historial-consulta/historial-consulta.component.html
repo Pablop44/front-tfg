@@ -1,0 +1,72 @@
+<div class="grid-container">
+    <mat-grid-list cols="2" rowHeight="450px">
+      <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
+  
+            <mat-card class="dashboard-card">
+              <mat-card-header>
+                <mat-card-title *ngIf="loginService.loggedUser.rol == 'medico'">
+                  Consultas e Historial de Consultas
+                </mat-card-title>
+                <mat-card-title *ngIf="loginService.loggedUser.rol == 'administrador'">
+                   Historial de Consultas
+                </mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content>
+
+                <mat-tab-group [color]="'accent'" [backgroundColor]="'primary'">
+
+                    <mat-tab *ngIf="loginService.loggedUser.rol == 'medico'" label="Consultas para hoy">    
+                        
+                        <table  mat-table matSort [dataSource]="dataSource" >
+                  
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="lugar">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('id')"> Lugar de la Consulta </th>
+                              <td mat-cell *matCellDef="let row"> {{row.lugar}} </td>
+                            </ng-container>
+      
+                            <ng-container matColumnDef="motivo">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('fechaCreacion')"> Motivo de la consulta </th>
+                              <td mat-cell *matCellDef="let row"> {{row.motivo}} </td>
+                            </ng-container>
+                        
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="fecha">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('pacienteDni')"> Hora</th>
+                              <td mat-cell *matCellDef="let row"> {{row.fecha}}</td>
+                            </ng-container>
+      
+                            <ng-container matColumnDef="paciente">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="ordenar('nombrePaciente')"> Nombre del Paciente </th>
+                              <td mat-cell *matCellDef="let row"> {{row.paciente}}</td>
+                            </ng-container>
+      
+                            <ng-container matColumnDef="acciones">
+                              <th mat-header-cell *matHeaderCellDef> Acciones</th>
+                              <td mat-cell *matCellDef="let row"> 
+                                <a [routerLink]="['/consulta', row.id]" mat-stroked-button color="primary" ><i class="material-icons"> remove_red_eye </i></a>
+                              </td>
+                            </ng-container>
+      
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </tr>
+                          </table>
+                        
+                    </mat-tab>
+  
+                    <mat-tab label="Historial de consultas"> 
+                          
+                          
+                    </mat-tab>
+  
+                  </mat-tab-group>
+                   
+              </mat-card-content>
+            </mat-card>
+        
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  

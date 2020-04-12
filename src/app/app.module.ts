@@ -67,6 +67,7 @@ import { InformeMigranasComponent } from './informe-migranas/informe-migranas.co
 import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones } from './consulta/consulta.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { TratamientoComponent, DialogoEliminarMedicamentoTratamiento, DialogoAnadirMedicamentoTratamiento, notificacionTratamientoMedicamento } from './tratamiento/tratamiento.component';
+import { HistorialConsultaComponent } from './historial-consulta/historial-consulta.component';
 
 
 @NgModule({
@@ -110,7 +111,8 @@ import { TratamientoComponent, DialogoEliminarMedicamentoTratamiento, DialogoAna
     TratamientoComponent,
     DialogoEliminarMedicamentoTratamiento,
     DialogoAnadirMedicamentoTratamiento,
-    notificacionTratamientoMedicamento
+    notificacionTratamientoMedicamento,
+    HistorialConsultaComponent
   ],
   imports: [
     BrowserModule,

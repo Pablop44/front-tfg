@@ -20,6 +20,14 @@ export class ConsultaService {
     });
   }
 
+  public getConsultasHoy(id){
+    return this.httpClient.get(this.restUrl+`/consultasHoy/`+id+`.json`, {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+      })
+    });
+  }
+
   public getDatosConsulta(id){
     return this.httpClient.get(this.restUrl+`/view/`+id+`.json`, {
       headers: new HttpHeaders({
@@ -133,6 +141,88 @@ export class ConsultaService {
     };
 
       return this.httpClient.post(this.restUrl+"/consultaFicha.json", json,
+       httpOptions);
+    }
+  }
+
+
+  public consultasMedico(idMedico, pagina, aMostrar, tipo, filtro){
+    if(filtro.id == null && filtro.lugar == null && filtro.fechaFin == null && filtro.fechaInicio == null && filtro.diagnostico == null &&
+     filtro.observaciones == null && filtro.tiempo == null && filtro.cancelada == null && filtro.aplazada == null && filtro.realizada == null){
+      filtro = null;
+    }
+
+    if(tipo == null){
+      let array = [{
+        Field: 'medico',
+        Value: idMedico
+      },
+      {
+        Field: 'page',
+        Value: pagina
+      },
+      {
+        Field: 'limit',
+        Value: aMostrar
+      },
+      {
+        Field: 'filtro',
+        Value: filtro
+      }
+      ];
+
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+    
+    console.log(json);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.httpClient.post(this.restUrl+"/consultaMedico.json", json,
+       httpOptions);
+
+    }else{
+      let array = [{
+        Field: 'medico',
+        Value: idMedico
+      },
+      {
+        Field: 'page',
+        Value: pagina
+      },
+      {
+        Field: 'limit',
+        Value: aMostrar
+      }, 
+      {
+        Field: 'tipo',
+        Value: tipo
+      },
+      {
+        Field: 'filtro',
+        Value: filtro
+      }
+      ];
+      let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+    
+    console.log(json);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.httpClient.post(this.restUrl+"/consultaMedico.json", json,
        httpOptions);
     }
   }
