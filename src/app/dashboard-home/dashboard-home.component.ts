@@ -44,6 +44,7 @@ export class DashboardHomeComponent {
   ngOnInit() {
     this.estadisticasUsuarios();
     this.estadisticaEnfermedades();
+    this.getLoggedUser();
   }
 
   estadisticasUsuarios(){
@@ -112,6 +113,21 @@ export class DashboardHomeComponent {
         response =>{
           this.crearDiagramaBarrasEnfermedades(response);
           this.crearDiagramaCircularEnfermedades(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+
+  getLoggedUser(){
+    if(this.loginService.isLogged){
+      this.loginService.getLoggedUser()
+      .subscribe(
+        response =>{
+          console.log(response);
         },
         error => {
           console.log(error);

@@ -31,6 +31,14 @@ export class LoginService {
     
   }
 
+  getLoggedUser(){
+    return this.http.get(this.restUrl+"/user/getLoggedUser.json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(this.loggedUser.username+':'+this.loggedUser.password)
+      })
+    });
+  }
+
   setLoggedUser(username, password, rol, id){
     this.isLogged = true;
     this.loggedUser.username = username;
