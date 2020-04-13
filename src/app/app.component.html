@@ -6,7 +6,6 @@
       <div *ngIf="loginService.isLogged" >
         
         <button mat-button *ngIf="loginService.loggedUser.rol == 'administrador'" [routerLink]="'/dashboardHome'"> Panel de Control </button>
-        <button mat-button *ngIf="loginService.loggedUser.rol == 'medico'" [routerLink]="'/dashboardMedico'"> Panel de Control </button>
         <button mat-button mat-raised-button *ngIf="peticiones > '0' && loginService.loggedUser.rol == 'administrador'"
         [matBadge]="peticiones" matBadgePosition="before" matBadgeColor="accent" [routerLink]="'/users'"> Usuarios </button>
         <button mat-button *ngIf="peticiones == '0' && loginService.loggedUser.rol == 'administrador'" [routerLink]="'/users'"> Usuarios </button>

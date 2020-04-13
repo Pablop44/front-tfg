@@ -6,14 +6,12 @@ import { DashboardHomeComponent } from './dashboard-home/dashboard-home.componen
 import { UsersComponent } from './users/users.component';
 import { FichaIndividualComponent } from './ficha-individual/ficha-individual.component';
 import { VistaUsuarioComponent } from './vista-usuario/vista-usuario.component';
-import { DashboardMedicoComponent } from './dashboard-medico/dashboard-medico.component';
 import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 import { HistorialComponent } from './historial/historial.component';
 import { InformeMigranasComponent } from './informe-migranas/informe-migranas.component';
 import { InformeDiabetesComponent } from './informe-diabetes/informe-diabetes.component';
 import { InformeAsmaComponent } from './informe-asma/informe-asma.component';
 import { ConsultaComponent } from './consulta/consulta.component';
-import { TratamientoService } from 'src/services/tratamiento.service';
 import { TratamientoComponent } from './tratamiento/tratamiento.component';
 import { HistorialConsultaComponent } from './historial-consulta/historial-consulta.component';
 
@@ -22,7 +20,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegisterComponent },
   { path: 'dashboardHome', component: DashboardHomeComponent },
-  { path: 'dashboardMedico', component: DashboardMedicoComponent },
   { path: 'users', component: UsersComponent },
   { path: 'ficha-individual/:id', component : FichaIndividualComponent },
   { path: 'vista-usuario/:id', component : VistaUsuarioComponent },

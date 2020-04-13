@@ -48,7 +48,8 @@ export class HistorialConsultaComponent implements OnInit {
   }
 
 
-  displayedColumns = ['lugar', 'motivo', 'fecha', 'paciente', 'acciones'];
+  displayedColumns1 = ['lugar', 'motivo', 'fecha', 'paciente', 'acciones'];
+  displayedColumns: string[] = ['numeroConsulta', 'lugar', 'fecha', 'motivo', 'estado', 'diagnostico', 'observaciones', 'acciones'];
 
 
   constructor(consultaService: ConsultaService, private breakpointObserver: BreakpointObserver, loginService: LoginService) {
@@ -143,7 +144,6 @@ export class HistorialConsultaComponent implements OnInit {
           this.filtroConsulta.fechaInicio = null;
           this.filtroConsulta.realizada = null,
           this.filtroConsulta.tiempo = null;
-
           console.log(response);
 
           },
@@ -167,8 +167,72 @@ export class HistorialConsultaComponent implements OnInit {
       }
     }
 
-  getHistorial(){
+    public handlePage(e: any) {
+      this.currentPage = e.pageIndex;
+      this.pageSize = e.pageSize;
+      if(this.loginService.loggedUser.rol == "administrador"){
+        this.getHistorial();
+      }else{
+        this.getHistorialMedico();
+      }
+    }
 
+
+  getHistorial(){
+    this.consultaService.todasConsultas(this.currentPage, this.pageSize, this.orden)
+      .subscribe(
+        response =>{
+          this.numeroConsultas();
+          this.consultasMedico = [];
+          for (let i in response) {
+              if(response[i]['diagnostico']  !==  null){
+                response[i]['diagnostico'] = "Sí"
+              }else{
+                response[i]['diagnostico'] = "No"
+              }
+              if(response[i]['observaciones'] !==  null){
+                response[i]['observaciones'] = "Sí"
+              }else{
+                response[i]['observaciones'] = "No"
+              }
+              const newConsultaData = new Consulta(response[i]['id'],response[i]['lugar'],response[i]['motivo'], response[i]['fecha'],response[i]['diagnostico'],response[i]['observaciones'], response[i]['medico'], response[i]['paciente'], response[i]['ficha'], response[i]['estado']);
+              this.consultasMedico.push(newConsultaData);
+            } 
+
+          this.dataSourceConsultasMedico = new MatTableDataSource<Consulta>(this.consultasMedico);
+          this.dataSourceConsultasMedico.data = this.consultasMedico;
+          this.filtroConsulta.aplazada = null;
+          this.filtroConsulta.cancelada = null;
+          this.filtroConsulta.diagnostico = null;
+          this.filtroConsulta.id = null;
+          this.filtroConsulta.lugar = null;
+          this.filtroConsulta.fechaFin = null;
+          this.filtroConsulta.fechaInicio = null;
+          this.filtroConsulta.realizada = null,
+          this.filtroConsulta.tiempo = null;
+          console.log(response);
+
+          },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+
+
+
+  numeroConsultas(){
+    if(this.loginService.isLogged){
+      this.consultaService.numeroConsultasTodas()
+      .subscribe(
+        response =>{
+          this.totalSize = response['numero'];
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
 }

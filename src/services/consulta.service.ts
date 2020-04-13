@@ -12,8 +12,8 @@ export class ConsultaService {
 
   constructor(private httpClient: HttpClient, private loginService : LoginService) { }
 
-  public todasConsultas(){
-    return this.httpClient.get(this.restUrl+`/consultas.json`, {
+  public numeroConsultasTodas(){
+    return this.httpClient.get(this.restUrl+`/numeroConsultasTodas.json`, {
       headers: new HttpHeaders({
         'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
       })
@@ -234,6 +234,70 @@ export class ConsultaService {
       {
         Field: 'filtro',
         Value: filtro
+      }
+      ];
+      let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+    
+    console.log(json);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.httpClient.post(this.restUrl+"/consultaMedico.json", json,
+       httpOptions);
+    }
+  }
+
+
+  public todasConsultas( pagina, aMostrar, tipo){
+
+    if(tipo == null){
+      let array = [
+      {
+        Field: 'page',
+        Value: pagina
+      },
+      {
+        Field: 'limit',
+        Value: aMostrar
+      },
+      ];
+
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+    
+    console.log(json);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+      return this.httpClient.post(this.restUrl+"/consultas.json", json,
+       httpOptions);
+
+    }else{
+      let array = [
+      {
+        Field: 'page',
+        Value: pagina
+      },
+      {
+        Field: 'limit',
+        Value: aMostrar
+      }, 
+      {
+        Field: 'tipo',
+        Value: tipo
       }
       ];
       let obj = {};

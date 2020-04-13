@@ -58,7 +58,6 @@ import { UsersComponent, DialogoEliminarUsuario, notificacionComponent, DialogoA
 import { loginNotificacionComponent } from './login/login.component';
 import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta, DialogoAnadirNota, DialogoEliminarNota, DialogoEditarNota, DialogoAnadirTratamiento } from './ficha-individual/ficha-individual.component';
 import { VistaUsuarioComponent, notificacionVistaUserComponent, DialogoEliminarUsuarioVista, DialogoEditarUsuario } from './vista-usuario/vista-usuario.component';
-import { DashboardMedicoComponent} from './dashboard-medico/dashboard-medico.component';
 import { MedicamentosComponent, DialogoAnadirMedicamento, notificacionComponentMedicamento, DialogoAnadirMarca, dialogoEliminarMedicamento } from './medicamentos/medicamentos.component';
 import { HistorialComponent, DialogoEliminarHistorial, notificacionEliminarHistorial } from './historial/historial.component';
 import { InformeDiabetesComponent } from './informe-diabetes/informe-diabetes.component';
@@ -85,7 +84,6 @@ import { HistorialConsultaComponent } from './historial-consulta/historial-consu
     DialogoAnadirConsulta,
     notificacionComponentCrearConsulta,
     VistaUsuarioComponent,
-    DashboardMedicoComponent,
     notificacionVistaUserComponent,
     DialogoEliminarUsuarioVista,
     DialogoEditarUsuario,

@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
           if(this.loginService.loggedUser.rol == "administrador"){
             this.router.navigateByUrl("/dashboardHome");
           }else{
-            this.router.navigateByUrl("/dashboardMedico");
+            this.router.navigateByUrl("/historial");
           }
          
         },
