@@ -20,15 +20,30 @@ export class LoginService {
 
   }
 
-  login(username, password){
-
-    return this.http.get(this.restUrl+"/user/login.json", {
-      responseType:'text',
-      headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(username+':'+password)
-      })
-    });
+  public login(username, password){
+    let array = [{
+      Field: 'username',
+      Value: username
+    },
+    {
+      Field: 'password',
+      Value: password
+    }
+    ];
     
+    let obj = {};
+    array.forEach(item => obj[item.Field] = item.Value);
+    
+    let json = JSON.stringify(obj);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+      })
+    };
+
+    return this.http.post(this.restUrl+"/user/login.json", json
+    , httpOptions);
   }
 
   getLoggedUser(){

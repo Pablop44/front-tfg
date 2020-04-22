@@ -66,8 +66,7 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.formUser.username, this.formUser.password)
       .subscribe(
         response=>{
-          var obj = JSON.parse(response);
-          this.loginService.setLoggedUser(this.formUser.username, this.formUser.password, obj.rol, obj.id);
+          this.loginService.setLoggedUser(this.formUser.username, this.formUser.password, response['rol'], response['id']);
           this.openSnackBar("Bienvenido "+this.formUser.username);
           if(this.loginService.loggedUser.rol == "administrador"){
             this.router.navigateByUrl("/dashboardHome");
