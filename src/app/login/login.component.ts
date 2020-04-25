@@ -66,14 +66,15 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.formUser.username, this.formUser.password)
       .subscribe(
         response=>{
-          this.loginService.setLoggedUser(this.formUser.username, this.formUser.password, response['rol'], response['id']);
+          console.log(response);
+          this.loginService.setLoggedUser(this.formUser.username, response['token'], response['rol'], response['id']);
           this.openSnackBar("Bienvenido "+this.formUser.username);
           if(this.loginService.loggedUser.rol == "administrador"){
             this.router.navigateByUrl("/dashboardHome");
           }else{
             this.router.navigateByUrl("/historial");
           }
-         
+          console.log(this.loginService.loggedUser.password);
         },
         error=>{
           this.openSnackBar("Error al Iniciar Sesión, Intentelo de Nuevo");

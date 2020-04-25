@@ -42,6 +42,7 @@ export class AsmaService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 
@@ -80,6 +81,7 @@ export class AsmaService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 
@@ -109,6 +111,7 @@ export class AsmaService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 
@@ -136,6 +139,7 @@ export class AsmaService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 
@@ -146,7 +150,7 @@ export class AsmaService {
   public informeAsma(id){
     return this.httpClient.get(this.restUrl+'/view/'+id+'.json', {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }

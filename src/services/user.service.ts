@@ -19,7 +19,7 @@ export class UserService {
   todosUsuarios(){
     return this.http.get(this.restUrl+"/user/usuarios.json", {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }
@@ -27,7 +27,7 @@ export class UserService {
   usuariosAutorizar(){
     return this.http.get(this.restUrl+"/user/userActivados.json", {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }
@@ -35,7 +35,7 @@ export class UserService {
   eliminarUser(id){
     return this.http.delete(this.restUrl+"/user/delete/"+id+".json", {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }
@@ -43,7 +43,7 @@ export class UserService {
   autorizarUser(id){
     return this.http.get(this.restUrl+"/user/autorizar/"+id+".json", {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }
@@ -51,7 +51,7 @@ export class UserService {
   datosUsuario(id){
     return this.http.get(this.restUrl+"/user/view/"+id+".json", {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }
@@ -59,7 +59,7 @@ export class UserService {
   todosMedicos(){
     return this.http.get(this.restUrl+"/user/todosMedicos.json", {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }
@@ -67,7 +67,7 @@ export class UserService {
   peticionesAutorizar(){
     return this.http.get(this.restUrl+"/user/longitudUserActivados.json", {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }
@@ -77,6 +77,7 @@ export class UserService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 
@@ -106,6 +107,7 @@ export class UserService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 
@@ -136,6 +138,7 @@ export class UserService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 
@@ -184,6 +187,7 @@ export class UserService {
       const httpOptions = {
         headers: new HttpHeaders({ 
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.loginService.loggedUser.password
         })
       };
   
@@ -213,6 +217,7 @@ export class UserService {
       const httpOptions = {
         headers: new HttpHeaders({ 
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.loginService.loggedUser.password
         })
       };
   
@@ -243,6 +248,7 @@ export class UserService {
       const httpOptions = {
         headers: new HttpHeaders({ 
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.loginService.loggedUser.password
         })
       };
   
@@ -272,6 +278,7 @@ export class UserService {
       const httpOptions = {
         headers: new HttpHeaders({ 
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.loginService.loggedUser.password
         })
       };
   
@@ -301,6 +308,7 @@ export class UserService {
         const httpOptions = {
           headers: new HttpHeaders({ 
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.loginService.loggedUser.password
           })
         };
     
@@ -330,6 +338,7 @@ export class UserService {
         const httpOptions = {
           headers: new HttpHeaders({ 
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.loginService.loggedUser.password
           })
         };
     
@@ -341,7 +350,7 @@ export class UserService {
       getNumeroAdministradores(){
         return this.http.get(this.restUrl+"/user/getNumeroAdministradores.json", {
           headers: new HttpHeaders({
-            'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+            'Authorization': 'Bearer ' + this.loginService.loggedUser.password
           })
         });
       }
@@ -349,7 +358,7 @@ export class UserService {
       getNumeroPacientes(){
         return this.http.get(this.restUrl+"/user/getNumeroPacientes.json", {
           headers: new HttpHeaders({
-            'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+            'Authorization': 'Bearer ' + this.loginService.loggedUser.password
           })
         });
       }
@@ -357,7 +366,7 @@ export class UserService {
       getNumeroMedicos(){
         return this.http.get(this.restUrl+"/user/getNumeroMedicos.json", {
           headers: new HttpHeaders({
-            'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+            'Authorization': 'Bearer ' + this.loginService.loggedUser.password
           })
         });
       }

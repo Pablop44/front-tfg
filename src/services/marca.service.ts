@@ -16,7 +16,7 @@ export class MarcaService {
   todasMarcas(){
     return this.http.get(this.restUrl+"/marca/todasMarcas.json", {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }
@@ -26,6 +26,7 @@ export class MarcaService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 

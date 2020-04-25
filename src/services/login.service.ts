@@ -46,22 +46,14 @@ export class LoginService {
     , httpOptions);
   }
 
-  getLoggedUser(){
-    return this.http.get(this.restUrl+"/user/getLoggedUser.json", {
-      headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loggedUser.username+':'+this.loggedUser.password)
-      })
-    });
-  }
-
-  setLoggedUser(username, password, rol, id){
+  setLoggedUser(username, token, rol, id){
     this.isLogged = true;
     this.loggedUser.username = username;
-    this.loggedUser.password = password;
+    this.loggedUser.password = token;
     this.loggedUser.rol = rol;
     this.loggedUser.id = id;
     localStorage.setItem("username", username);
-    localStorage.setItem("password", password);
+    localStorage.setItem("token", token);
     localStorage.setItem("rol", rol);
     localStorage.setItem("id", id);
   }
@@ -70,7 +62,7 @@ export class LoginService {
     if(localStorage.getItem("username")!= null){
       this.isLogged = true;
       this.loggedUser.username = localStorage.getItem("username");
-      this.loggedUser.password = localStorage.getItem("password");
+      this.loggedUser.password = localStorage.getItem("token");
       this.loggedUser.rol = localStorage.getItem("rol");
       this.loggedUser.id = parseInt(localStorage.getItem("id"));
       return true;
@@ -83,10 +75,14 @@ export class LoginService {
   logout(){
     this.isLogged = false;
     localStorage.removeItem("username");
-    localStorage.removeItem("password");
+    localStorage.removeItem("token");
     localStorage.removeItem("rol");
     localStorage.removeItem("id");
-    return this.http.get(this.restUrl+"/user/logout.json");
+    return this.http.get(this.restUrl+"/user/logout/"+this.loggedUser.id+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.loggedUser.password
+      })
+    });
   }
   
 }

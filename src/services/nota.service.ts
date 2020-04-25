@@ -50,6 +50,7 @@ export class NotaService {
       const httpOptions = {
         headers: new HttpHeaders({ 
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.loginService.loggedUser.password
         })
       };
   
@@ -89,6 +90,7 @@ export class NotaService {
       const httpOptions = {
         headers: new HttpHeaders({ 
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.loginService.loggedUser.password
         })
       };
   
@@ -122,6 +124,7 @@ export class NotaService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 
@@ -156,6 +159,7 @@ export class NotaService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 
@@ -166,7 +170,7 @@ export class NotaService {
   eliminarNota(id){
     return this.http.delete(this.restUrl+"/nota/delete/"+id+".json", {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }
@@ -176,6 +180,7 @@ export class NotaService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 

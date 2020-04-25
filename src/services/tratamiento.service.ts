@@ -16,7 +16,7 @@ export class TratamientoService {
   getDatosTratamiento(id){
     return this.http.get(this.restUrl+`/tratamiento/view/`+id+`.json`, {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }
@@ -56,6 +56,7 @@ export class TratamientoService {
       const httpOptions = {
         headers: new HttpHeaders({ 
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.loginService.loggedUser.password
         })
       };
   
@@ -95,6 +96,7 @@ export class TratamientoService {
       const httpOptions = {
         headers: new HttpHeaders({ 
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.loginService.loggedUser.password
         })
       };
   
@@ -123,6 +125,7 @@ export class TratamientoService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 
@@ -151,6 +154,7 @@ export class TratamientoService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 
@@ -180,6 +184,7 @@ export class TratamientoService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 
@@ -194,6 +199,7 @@ export class TratamientoService {
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     };
 

@@ -16,7 +16,7 @@ export class StatisticsService {
   estadisticasUsuarios(){
     return this.http.get(this.restUrl+"/estatistics/estadisticasUsuario.json", {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }
@@ -24,7 +24,7 @@ export class StatisticsService {
   estadisticasEnfermedades(){
     return this.http.get(this.restUrl+"/estatistics/estadisticasEnfermedades.json", {
       headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(this.loginService.loggedUser.username+':'+this.loginService.loggedUser.password)
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })
     });
   }
