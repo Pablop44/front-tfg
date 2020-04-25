@@ -1,0 +1,29 @@
+<body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-10 col-md-10 col-lg-7 mx-auto">
+          <div class="card card-signin my-5">
+            <div class="card-body">
+              <mat-card-title>Instrucciones para activar su cuenta</mat-card-title>
+              
+              <form class="form-signin" #loginForm="ngForm">
+                <br>
+                <p>
+                    <mat-label>1. Acceda a su correo electrónico.</mat-label>
+                </p>
+                <p>
+                    <mat-label>2. Haga click en el enlace que le hemos facilitado, con esto activará su cuenta.</mat-label>
+                </p>
+                <p>
+                    <mat-label>2. Una vez activada el usuario deberá autorizar su cuenta.</mat-label>
+                </p>  
+                <br>
+                <br>
+                <button mat-raised-button [routerLink]="'/login'" color="primary">Volver al login</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>

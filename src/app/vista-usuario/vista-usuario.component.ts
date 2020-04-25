@@ -103,7 +103,7 @@ export class DialogoEditarUsuario {
 
   validarApellidos(){
     if(this.data.apellidos != null){
-      var nameRegex = /^[a-zA-Z\s]*$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(this.data.apellidos) === true){
         this.errorApellidos = false;
       }else{
@@ -116,7 +116,7 @@ export class DialogoEditarUsuario {
 
   validarPoblacion(){
     if(this.data.poblacion != null){
-      var nameRegex = /^[a-zA-Z\-]+$/;
+      var nameRegex =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(this.data.poblacion) === true){
         this.errorPoblacion = false;
       }else{
@@ -158,7 +158,7 @@ export class DialogoEditarUsuario {
 
   validarNombre(){
     if(this.data.nombre != null){
-      var nameRegex = /^[a-zA-Z\s]*$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(this.data.nombre) === true){
         this.errorNombre = false;
       }else{
@@ -631,7 +631,7 @@ export class VistaUsuarioComponent implements OnInit {
 
   validarApellidos(usuario): Boolean{
     if(usuario.apellidos != null){
-      var nameRegex = /^[a-zA-Z\s]*$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(usuario.apellidos) === true){
         return true;
       }else{
@@ -646,7 +646,7 @@ export class VistaUsuarioComponent implements OnInit {
 
   validarPoblacion(usuario): Boolean{
     if(usuario.poblacion != null){
-      var nameRegex = /^[a-zA-Z\s]+$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(usuario.poblacion) === true){
         return true;
       }else{
@@ -691,7 +691,7 @@ export class VistaUsuarioComponent implements OnInit {
 
   validarNombre(usuario): Boolean{
     if(usuario.nombre != null){
-      var nameRegex = /^[a-zA-Z\s]*$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(usuario.nombre) === true){
         return true;
       }else{

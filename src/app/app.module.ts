@@ -67,6 +67,7 @@ import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { TratamientoComponent, DialogoEliminarMedicamentoTratamiento, DialogoAnadirMedicamentoTratamiento, notificacionTratamientoMedicamento } from './tratamiento/tratamiento.component';
 import { HistorialConsultaComponent } from './historial-consulta/historial-consulta.component';
+import { IntructionsActivateComponent } from './intructions-activate/intructions-activate.component';
 
 
 @NgModule({
@@ -110,7 +111,8 @@ import { HistorialConsultaComponent } from './historial-consulta/historial-consu
     DialogoEliminarMedicamentoTratamiento,
     DialogoAnadirMedicamentoTratamiento,
     notificacionTratamientoMedicamento,
-    HistorialConsultaComponent
+    HistorialConsultaComponent,
+    IntructionsActivateComponent
   ],
   imports: [
     BrowserModule,

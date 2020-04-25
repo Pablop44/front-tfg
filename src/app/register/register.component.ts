@@ -53,7 +53,7 @@ export class RegisterComponent implements OnInit {
         response=>{
           this.loginNotification = "";
           console.log(response);
-          this.router.navigateByUrl("/login");
+          this.router.navigateByUrl("/intructionsActivate");
         },
         error=>{
           console.log(error);
@@ -70,7 +70,7 @@ export class RegisterComponent implements OnInit {
   validar(): Boolean{
     return (this.validarDni() && this.validarUsername() && 
     this.validarPoblacion() && this.validarPassword() && this.validarNombre() &&
-    this.validarNumeroColegiado() && this.validarTelefono() && this.validarEmail()
+    this.validarColegiado() && this.validarTelefono() && this.validarEmail()
     && this.validarApellidos());
   }
 
@@ -134,7 +134,7 @@ export class RegisterComponent implements OnInit {
 
   validarApellidos(): Boolean{
     if(this.formRegistro.apellidos != null){
-      var nameRegex = /^[a-zA-Z\s]*$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(this.formRegistro.apellidos) === true){
         this.errorApellidos = false;
         return true;
@@ -147,7 +147,7 @@ export class RegisterComponent implements OnInit {
 
   validarPoblacion(): Boolean{
     if(this.formRegistro.poblacion != null){
-      var nameRegex = /^[a-zA-Z\-]+$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(this.formRegistro.poblacion) === true){
         this.errorPoblacion = false;
         return true;
@@ -187,7 +187,7 @@ export class RegisterComponent implements OnInit {
 
   validarNombre(): Boolean{
     if(this.formRegistro.nombre != null){
-      var nameRegex = /^[a-zA-Z\s]*$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(this.formRegistro.nombre) === true){
         this.errorNombre = false;
         return true;
@@ -198,7 +198,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  validarNumeroColegiado(): Boolean{
+  validarColegiado(): Boolean{
     if(this.formRegistro.colegiado != null){
       var nameRegex = /^([0-9\-]){9}$/;
       if(nameRegex.test(this.formRegistro.colegiado.toString()) === true){

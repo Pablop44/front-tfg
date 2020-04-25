@@ -1,6 +1,8 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <button mat-button [routerLink]="'/dashboardHome'"><h1>SSEC</h1></button>
+      <button mat-button *ngIf="loginService.loggedUser.rol == 'administrador'" [routerLink]="'/dashboardHome'"><h1>SSEC</h1></button>
+      <button mat-button *ngIf="loginService.loggedUser.rol == null" [routerLink]="'/login'"><h1>SSEC</h1></button>
+      <button mat-button *ngIf="loginService.loggedUser.rol == 'medico'" [routerLink]="'/historial'"><h1>SSEC</h1></button>
       <span class="menu-spacer"></span>
       <a mat-button > </a>
       <div *ngIf="loginService.isLogged" >

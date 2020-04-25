@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LoginService } from 'src/services/login.service';
 import { StatisticsService } from 'src/services/statistics.service';
 import * as CanvasJS from 'src/assets/canvasjs.min';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-dashboard-home',
@@ -16,6 +17,7 @@ export class DashboardHomeComponent {
   
   loginService:LoginService;
   statisticsService: StatisticsService;
+  appComponent: AppComponent;
 
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -36,14 +38,20 @@ export class DashboardHomeComponent {
 
   constructor(private breakpointObserver: BreakpointObserver,
     private router : Router,  statisticsService: StatisticsService,
-    loginService:LoginService) {
+    loginService:LoginService, appComponent:AppComponent) {
+      this.appComponent = appComponent;
       this.loginService = loginService;
       this.statisticsService = statisticsService;
     }
 
   ngOnInit() {
-    this.estadisticasUsuarios();
-    this.estadisticaEnfermedades();
+    if(this.loginService.loggedUser.rol != "administrador"){
+      this.router.navigateByUrl("/login");
+    }else{
+      this.appComponent.peticionesAutorizar();
+      this.estadisticasUsuarios();
+      this.estadisticaEnfermedades();
+    }
   }
 
   estadisticasUsuarios(){

@@ -97,7 +97,7 @@ export class DialogoAnadirMedicamento{
 
   validarNombre(): Boolean{
     if(this.data['nombre'] != null){
-      var nameRegex = /^[a-zA-Z0-9\s]*$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(this.data['nombre']) === true){
         this.errorNombre = false;
         return true;
@@ -153,7 +153,7 @@ export class DialogoAnadirMarca{
 
   validarNombre(): Boolean{
     if(this.data['nombre'] != null){
-      var nameRegex = /^[a-zA-Z0-9\s]*$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(this.data['nombre']) === true){
         this.errorNombre = false;
         return true;
@@ -169,7 +169,7 @@ export class DialogoAnadirMarca{
 
   validarPais(): Boolean{
     if(this.data['pais'] != null){
-      var nameRegex = /^[a-zA-Z\s]*$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(this.data['pais']) === true){
         this.errorPais = false;
         return true;
@@ -342,7 +342,7 @@ export class MedicamentosComponent implements OnInit {
 
   validarNombre(response): Boolean{
     if(response['nombre'] != null){
-      var nameRegex = /^[a-zA-Z0-9\s]*$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(response['nombre']) === true){
         return true;
       }else{
@@ -371,7 +371,7 @@ export class MedicamentosComponent implements OnInit {
 
   validarNombreMarca(response): Boolean{
     if(response['nombre'] != null){
-      var nameRegex = /^[a-zA-Z0-9\s]*$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(response['nombre']) === true){
         return true;
       }else{
@@ -386,7 +386,7 @@ export class MedicamentosComponent implements OnInit {
 
   validarPais(response): Boolean{
     if(response['pais'] != null){
-      var nameRegex = /^[a-zA-Z\s]*$/;
+      var nameRegex = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(nameRegex.test(response['pais']) === true){
         return true;
       }else{

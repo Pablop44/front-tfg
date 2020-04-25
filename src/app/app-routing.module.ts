@@ -14,6 +14,7 @@ import { InformeAsmaComponent } from './informe-asma/informe-asma.component';
 import { ConsultaComponent } from './consulta/consulta.component';
 import { TratamientoComponent } from './tratamiento/tratamiento.component';
 import { HistorialConsultaComponent } from './historial-consulta/historial-consulta.component';
+import { IntructionsActivateComponent } from './intructions-activate/intructions-activate.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'asma/:id', component : InformeAsmaComponent },
   { path: 'consulta/:id', component : ConsultaComponent },
   { path: 'tratamiento/:id', component : TratamientoComponent },
-  { path: 'consultas', component : HistorialConsultaComponent }
+  { path: 'consultas', component : HistorialConsultaComponent },
+  { path: 'intructionsActivate', component : IntructionsActivateComponent }
 ];
 
 @NgModule({
