@@ -36,7 +36,6 @@ import { MigranasService } from 'src/services/migranas.service';
 import { FiltroDiabetes } from '../models/filtroDiabetes';
 import { FiltroAsma } from '../models/filtroAsma';
 import { FiltroMigranas } from '../models/filtroMigranas';
-import * as jsPDF from 'jspdf';
 import { ExportToCsv } from 'export-to-csv';
 import { Tratamiento } from '../models/Tratamiento';
 
