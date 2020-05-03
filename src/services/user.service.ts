@@ -65,7 +65,6 @@ export class UserService {
   }
 
   peticionesAutorizar(){
-    console.log("sid");
     return this.http.get(this.restUrl+"/user/longitudUserActivados.json", {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.loginService.loggedUser.password

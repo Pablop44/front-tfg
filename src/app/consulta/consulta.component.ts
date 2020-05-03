@@ -41,6 +41,23 @@ export class DialogoAnadirDiagnostico{
 }
 
 @Component({
+  selector: 'dialogoAnadirLugar',
+  templateUrl: 'dialogoAnadirLugar.html',
+})
+export class DialogoAnadirLugar{
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoAnadirLugar>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+
+@Component({
   selector: 'app-consulta',
   templateUrl: './consulta.component.html',
   styleUrls: ['./consulta.component.css']
@@ -112,10 +129,11 @@ export class ConsultaComponent implements OnInit {
               } 
         
               return [
-                { title: 'datosConsulta', cols: 1, rows: 3, cuerpo: "hola"},
+                { title: 'datosConsulta', cols: 1, rows: 2, cuerpo: "hola"},
                 { title: 'diagnostico', cols: 1, rows: 1, cuerpo: "hola"},
                 { title: 'observaciones', cols: 1, rows: 1, cuerpo: "hola"},
-                { title: 'cambioEstado', cols: 1, rows: 1, cuerpo: "hola"}
+                { title: 'cambioEstado', cols: 1, rows: 1, cuerpo: "hola"},
+                { title: 'lugar', cols: 1, rows: 1, cuerpo: "hola"}
               ];
             })
           );
@@ -145,6 +163,17 @@ export class ConsultaComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(response => {
       this.consulta.diagnostico = response['diagnostico'];
+      this.editarConsulta();
+    });
+  }
+
+  openDialogLugar(): void {
+    const dialogRef = this.dialog.open(DialogoAnadirLugar, {
+      width: '500px',
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(response => {
+      this.consulta.lugar = response['lugar'];
       this.editarConsulta();
     });
   }

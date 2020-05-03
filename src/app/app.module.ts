@@ -63,7 +63,7 @@ import { HistorialComponent, DialogoEliminarHistorial, notificacionEliminarHisto
 import { InformeDiabetesComponent } from './informe-diabetes/informe-diabetes.component';
 import { InformeAsmaComponent } from './informe-asma/informe-asma.component';
 import { InformeMigranasComponent } from './informe-migranas/informe-migranas.component';
-import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones } from './consulta/consulta.component';
+import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones, DialogoAnadirLugar } from './consulta/consulta.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { TratamientoComponent, DialogoEliminarMedicamentoTratamiento, DialogoAnadirMedicamentoTratamiento, notificacionTratamientoMedicamento } from './tratamiento/tratamiento.component';
 import { HistorialConsultaComponent } from './historial-consulta/historial-consulta.component';
@@ -112,7 +112,8 @@ import { IntructionsActivateComponent } from './intructions-activate/intructions
     DialogoAnadirMedicamentoTratamiento,
     notificacionTratamientoMedicamento,
     HistorialConsultaComponent,
-    IntructionsActivateComponent
+    IntructionsActivateComponent,
+    DialogoAnadirLugar
   ],
   imports: [
     BrowserModule,
@@ -240,7 +241,8 @@ import { IntructionsActivateComponent } from './intructions-activate/intructions
     DialogoAnadirTratamiento,
     DialogoEliminarMedicamentoTratamiento,
     DialogoAnadirMedicamentoTratamiento,
-    notificacionTratamientoMedicamento
+    notificacionTratamientoMedicamento,
+    DialogoAnadirLugar
   ],
   providers: [],
   bootstrap: [AppComponent]

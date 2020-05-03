@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Añadir Lugar</h1>
+<div mat-dialog-content>
+  <p>Introduce el lugar</p>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Lugar</mat-label>
+    <textarea matInput required id="lugar" name="lugar" placeholder="Lugar" [(ngModel)]="data.lugar"></textarea>
+  </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">Añadir</button>
+  <button mat-button style="float:right;" (click)="onNoClick()">Cancelar</button>
+</div>
