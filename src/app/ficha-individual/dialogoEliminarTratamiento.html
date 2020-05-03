@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Eliminar Tratamiento</h1>
+<div mat-dialog-content>
+  <p>¿Quieres eliminar el tratramiento con los siguientes datos:</p>
+  <p>Posologia: "{{data.posologia}}"</p>
+  <p>Fecha Inicio: "{{data.fechaInicio}}"</p>
+  <p>Fecha Fin: "{{data.fechaFin}}"</p>
+  <p>Enfermedad: "{{data.enfermedad}}"</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" [mat-dialog-close]="data">Eliminar</button>
+  <button mat-button style="float:right;" (click)="onNoClick()">Cancelar</button>
+</div>

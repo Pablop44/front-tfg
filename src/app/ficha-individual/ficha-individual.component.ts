@@ -236,6 +236,22 @@ export class DialogoEliminarNota{
   }
 }
 
+@Component({
+  selector: 'dialogoEliminarTratamiento',
+  templateUrl: 'dialogoEliminarTratamiento.html',
+})
+export class DialogoEliminarTratamiento{
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoEliminarTratamiento>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
 
 @Component({
   selector: 'dialogoEditarNota',
@@ -876,6 +892,24 @@ export class FichaIndividualComponent implements OnInit {
     });
   }
 
+  openDialogEliminarTratamiento(tratamiento): void {
+    const dialogRef = this.dialog.open(DialogoEliminarTratamiento, {
+      width: '300px',
+      data: {
+        fechaInicio :tratamiento.fechaInicio,
+        fechaFin :tratamiento.fechaFin,
+        posologia :tratamiento.posologia,
+        enfermedad :tratamiento.enfermedad,
+        respuesta: "Si"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        if(result.respuesta == "Si"){
+          this.eliminarTratamiento(tratamiento);
+        }
+    });
+  }
+
   openDialogEditarNota(nota): void {
     const dialogRef = this.dialog.open(DialogoEditarNota, {
       width: '1000px',
@@ -1211,6 +1245,22 @@ export class FichaIndividualComponent implements OnInit {
         },
         error => {
           console.log(error);
+        }
+      );
+    }
+  }
+
+  eliminarTratamiento(tratamiento){
+    if(this.loginService.isLogged){
+      this.tratamientoService.eliminarTratamiento(tratamiento.id)
+      .subscribe(
+        response =>{
+          this.datosTratamientos();
+          this.openSnackBar("Se ha eliminado el Tratamiento");
+        },
+        error => {
+          console.log(error);
+          this.openSnackBar("Error al eliminar el tratamiento");
         }
       );
     }

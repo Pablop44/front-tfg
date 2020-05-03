@@ -206,4 +206,12 @@ export class TratamientoService {
       return this.http.post(this.restUrl+"/tratamiento/crearTratamiento.json", json,
        httpOptions);
   }
+
+  eliminarTratamiento(id){
+    return this.http.delete(this.restUrl+"/tratamiento/delete/"+id+".json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
+      })
+    });
+  }
 }
