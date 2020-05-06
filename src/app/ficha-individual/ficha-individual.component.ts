@@ -831,8 +831,10 @@ export class FichaIndividualComponent implements OnInit {
 
 
     dialogRef.afterClosed().subscribe(response => {
-      if(this.validarConsulta(response)){
-        this.crearConsulta(response);
+      if(response != undefined){
+        if(this.validarConsulta(response)){
+          this.crearConsulta(response);
+        }
       }
     });
   }
@@ -886,8 +888,10 @@ export class FichaIndividualComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result.respuesta == "Si"){
-        this.eliminarNota(nota);
+      if(result != undefined){
+        if(result.respuesta == "Si"){
+          this.eliminarNota(nota);
+        }
       }
     });
   }
@@ -904,9 +908,11 @@ export class FichaIndividualComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(result != undefined){
         if(result.respuesta == "Si"){
           this.eliminarTratamiento(tratamiento);
         }
+      } 
     });
   }
 
@@ -917,7 +923,9 @@ export class FichaIndividualComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.editarNota(result);
+      if(result != undefined){
+        this.editarNota(result);
+      }    
     });
   }
 
@@ -927,7 +935,9 @@ export class FichaIndividualComponent implements OnInit {
       data: {}
     });
     dialogRef.afterClosed().subscribe(response => {
-      this.crearNota(response['texto']);
+      if(response != undefined){
+        this.crearNota(response['texto']);
+      }
     });
   }
 
@@ -937,10 +947,12 @@ export class FichaIndividualComponent implements OnInit {
       data: {enfermedadesArray: this.enfermedadesArray}
     });
     dialogRef.afterClosed().subscribe(response => {
-      delete response['enfermedadesArray'];
-      response['fechaInicio'] = moment(response['fechaInicio']).format('YYYY-MM-DD');
-      response['fechaFin'] = moment(response['fechaFin']).format('YYYY-MM-DD');
-      this.crearTratamiento(response);
+      if(response != undefined){
+        delete response['enfermedadesArray'];
+        response['fechaInicio'] = moment(response['fechaInicio']).format('YYYY-MM-DD');
+        response['fechaFin'] = moment(response['fechaFin']).format('YYYY-MM-DD');
+        this.crearTratamiento(response);
+      }
     });
   }
 

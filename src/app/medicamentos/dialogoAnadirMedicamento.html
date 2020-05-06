@@ -23,7 +23,7 @@
     <mat-error *ngIf="errorVia">
       Es necesario introducir la vía de administración
     </mat-error>
-
+    
     <mat-form-field class="example-full-width">
         <mat-label>Dosis en Mg</mat-label>
         <input matInput type="number" id="dosis" name="dosis" [(ngModel)]="data.dosis"  required  (focusout)="validarMarca()">

@@ -176,8 +176,10 @@ export class TratamientoComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result.respuesta == "Si"){
-        this.eliminarMedicamentoTratamiento(medicamento.nombre);
+      if(result != undefined){
+        if(result.respuesta == "Si"){
+          this.eliminarMedicamentoTratamiento(medicamento.nombre);
+        }
       }
     });
   }
@@ -212,9 +214,10 @@ export class TratamientoComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      delete result['medicamento'];
-      this.anadirMedicamentoTratamiento(result['datosMedicamentos']['nombre']);
-      console.log(result);
+      if(result != undefined){
+        delete result['medicamento'];
+        this.anadirMedicamentoTratamiento(result['datosMedicamentos']['nombre']);
+      }
     });
   }
 

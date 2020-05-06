@@ -6,8 +6,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from '../app.component';
 import { DashboardHomeComponent } from './dashboard-home.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('DashboardHomeComponent', () => {
   let component: DashboardHomeComponent;
@@ -17,6 +19,8 @@ describe('DashboardHomeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DashboardHomeComponent],
       imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
         NoopAnimationsModule,
         LayoutModule,
         MatButtonModule,
@@ -24,7 +28,8 @@ describe('DashboardHomeComponent', () => {
         MatGridListModule,
         MatIconModule,
         MatMenuModule,
-      ]
+      ],
+      providers: [AppComponent]
     }).compileComponents();
   }));
 

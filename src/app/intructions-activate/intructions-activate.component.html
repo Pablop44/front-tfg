@@ -6,7 +6,7 @@
             <div class="card-body">
               <mat-card-title>Instrucciones para activar su cuenta</mat-card-title>
               
-              <form class="form-signin" #loginForm="ngForm">
+              <div class="form-signin">
                 <br>
                 <p>
                     <mat-label>1. Acceda a su correo electrónico.</mat-label>
@@ -19,8 +19,8 @@
                 </p>  
                 <br>
                 <br>
-                <button mat-raised-button [routerLink]="'/login'" color="primary">Volver al login</button>
-              </form>
+                <button mat-raised-button (click)="goToLogin()" color="primary">Volver al login</button>
+              </div>
             </div>
           </div>
         </div>

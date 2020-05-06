@@ -151,8 +151,10 @@ export class ConsultaComponent implements OnInit {
       data: {}
     });
     dialogRef.afterClosed().subscribe(response => {
-      this.consulta.observaciones = response['observaciones'];
-      this.editarConsulta();
+      if(response != undefined){
+        this.consulta.observaciones = response['observaciones'];
+        this.editarConsulta();
+      }
     });
   }
 
@@ -162,8 +164,10 @@ export class ConsultaComponent implements OnInit {
       data: {}
     });
     dialogRef.afterClosed().subscribe(response => {
-      this.consulta.diagnostico = response['diagnostico'];
-      this.editarConsulta();
+      if(response != undefined){
+        this.consulta.diagnostico = response['diagnostico'];
+        this.editarConsulta();
+      }
     });
   }
 
@@ -173,8 +177,10 @@ export class ConsultaComponent implements OnInit {
       data: {}
     });
     dialogRef.afterClosed().subscribe(response => {
-      this.consulta.lugar = response['lugar'];
-      this.editarConsulta();
+      if(response != undefined){
+        this.consulta.lugar = response['lugar'];
+        this.editarConsulta();
+      }
     });
   }
 

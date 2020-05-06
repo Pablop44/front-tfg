@@ -448,8 +448,10 @@ export class VistaUsuarioComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result.respuesta == "Si"){
-        this.eliminarUsuario(datosUser.id, datosUser.rol, datosUser.username);
+      if(result != undefined){
+        if(result.respuesta == "Si"){
+          this.eliminarUsuario(datosUser.id, datosUser.rol, datosUser.username);
+        }
       }
     });
   }
@@ -472,7 +474,9 @@ export class VistaUsuarioComponent implements OnInit {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        this.editarUser(result);
+        if(result != undefined){
+          this.editarUser(result);
+        }
       });
     }else if(this.datosUser.rol == "medico"){
         const dialogRef = this.dialog.open(DialogoEditarUsuario, {
@@ -494,7 +498,9 @@ export class VistaUsuarioComponent implements OnInit {
           }
         });
         dialogRef.afterClosed().subscribe(result => {
-          this.editarUser(result);
+          if(result != undefined){
+            this.editarUser(result);
+          }
         });
       }else{
         const dialogRef = this.dialog.open(DialogoEditarUsuario, {
@@ -513,7 +519,9 @@ export class VistaUsuarioComponent implements OnInit {
           }
         });
         dialogRef.afterClosed().subscribe(result => {
-          this.editarUser(result);
+          if(result != undefined){
+            this.editarUser(result);
+          }
         });
       }
     }

@@ -297,23 +297,23 @@ export class MedicamentosComponent implements OnInit {
       data: {marca: this.marcas}
     });
 
-
     dialogRef.afterClosed().subscribe(response => {
-      response['marca'] = marcaElegida;
-      if(this.validarMedicamento(response)){
-        if(this.loginService.isLogged){
-          this.medicamentoService.anadirMedicamento(response)
-          .subscribe(
-            response =>{
-                console.log(response);
-                this.todosMedicamentos();
-                this.openSnackBar("Se ha añadido el medicamento: \""+response['nombre']+"\"");
-            },
-            error => {
-              this.openSnackBar("No se ha podido añadir el medicamento");
-              console.log(error);
-            }
-          );
+      if(response != undefined){
+        response['marca'] = marcaElegida;
+        if(this.validarMedicamento(response)){
+          if(this.loginService.isLogged){
+            this.medicamentoService.anadirMedicamento(response)
+            .subscribe(
+              response =>{
+                  this.todosMedicamentos();
+                  this.openSnackBar("Se ha añadido el medicamento: \""+response['nombre']+"\"");
+              },
+              error => {
+                this.openSnackBar("No se ha podido añadir el medicamento");
+                console.log(error);
+              }
+            );
+          }
         }
       }
     });
@@ -411,18 +411,20 @@ export class MedicamentosComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(response => {
-      if(this.loginService.isLogged){
-        if(this.validarMarcaMedicamento(response)){
-          this.marcaService.anadirMarca(response)
-          .subscribe(
-            response =>{
-              this.todasMarcas();
-                this.openSnackBar("Se ha añadido el medicamento: \""+response['nombre']+"\"")
-            },
-            error => {
-              console.log(error);
-            }
-          );
+      if(response != undefined){
+        if(this.loginService.isLogged){
+          if(this.validarMarcaMedicamento(response)){
+            this.marcaService.anadirMarca(response)
+            .subscribe(
+              response =>{
+                this.todasMarcas();
+                  this.openSnackBar("Se ha añadido el medicamento: \""+response['nombre']+"\"")
+              },
+              error => {
+                console.log(error);
+              }
+            );
+          }
         }
       }
     });
@@ -460,9 +462,10 @@ export class MedicamentosComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      if(result.respuesta == "Si"){
-        this.eliminarMedicamento(result['name']);
+      if(result != undefined){
+        if(result.respuesta == "Si"){
+          this.eliminarMedicamento(result['name']);
+        }
       }
     });
   }

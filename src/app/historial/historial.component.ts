@@ -235,7 +235,9 @@ export class HistorialComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(response => {
-      this.eliminarHistorial(data.id);
+      if(response != undefined){
+        this.eliminarHistorial(data.id);
+      }
     });
   }
 

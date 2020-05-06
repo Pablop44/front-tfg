@@ -235,8 +235,10 @@ export class UsersComponent implements OnInit {
       });
   
       dialogRef.afterClosed().subscribe(result => {
-        if(result.respuesta == "Si"){
-          this.eliminarUsuario(user, rol);
+        if(result != undefined){
+          if(result.respuesta == "Si"){
+            this.eliminarUsuario(user, rol);
+          }
         }
       });
     }
@@ -248,8 +250,10 @@ export class UsersComponent implements OnInit {
       });
   
       dialogRef.afterClosed().subscribe(result => {
-        if(result.respuesta == "Si"){
-          this.autorizarUsuario(user, rol);
+        if(result != undefined){
+          if(result.respuesta == "Si"){
+            this.autorizarUsuario(user, rol);
+          }
         }
       });
     }
