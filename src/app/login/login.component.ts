@@ -66,7 +66,6 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.formUser.username, this.formUser.password)
       .subscribe(
         response=>{
-          console.log(response);
           this.loginService.setLoggedUser(this.formUser.username, response['token'], response['rol'], response['id']);
           this.openSnackBar("Bienvenido "+this.formUser.username);
           if(this.loginService.loggedUser.rol == "administrador"){
@@ -74,7 +73,6 @@ export class LoginComponent implements OnInit {
           }else{
             this.router.navigateByUrl("/historial");
           }
-          console.log(this.loginService.loggedUser.password);
         },
         error=>{
           this.openSnackBar("Error al Iniciar Sesión, Intentelo de Nuevo");
