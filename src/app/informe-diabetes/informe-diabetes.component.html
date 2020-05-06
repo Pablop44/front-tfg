@@ -26,7 +26,9 @@
                           </mat-icon>
                             Preguntas de Respuesta Cerrada
                     </h3>
-                    <mat-list-item >
+                    <div id="respuestasCerradas">
+
+                      <mat-list-item >
                         <h4 mat-line style="font-weight: bold;">Número de Controles</h4>
                         <p mat-line> {{datosInformeDiabetes.numeroControles}} </p>
                       </mat-list-item>
@@ -67,6 +69,7 @@
                         <p mat-line>{{datosInformeDiabetes.problemaDieta}}</p>
                       </mat-list-item>
 
+                    </div>
                     </mat-list>
                      
                 </mat-card-content>
@@ -100,11 +103,15 @@
                                   </mat-icon>
                                   Preguntas de Respuesta Abierta
                             </h3>
+
+                          <div id="respuestasAbierta">
                             <mat-list-item >
                                 <h4 mat-line style="font-weight: bold;">Estado General del Paciente</h4>
                                 <p mat-line>{{datosInformeDiabetes.estadoGeneral}}</p>
                             </mat-list-item>
+                          </div>
                           </mat-list>
+                        
                            
                       </mat-card-content>
                         </mat-card>

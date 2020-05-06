@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Eliminar Informe</h1>
+<div mat-dialog-content>
+  <p>¿Quieres eliminar el informe de {{data.tipo}} con fecha: "{{data.fecha}}"</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" [mat-dialog-close]="data">Eliminar</button>
+  <button mat-button style="float:right;" (click)="onNoClick()">Cancelar</button>
+</div>

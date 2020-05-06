@@ -56,7 +56,7 @@ import {MatTreeModule} from '@angular/material/tree';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
 import { UsersComponent, DialogoEliminarUsuario, notificacionComponent, DialogoAceptarUsuario } from './users/users.component';
 import { loginNotificacionComponent } from './login/login.component';
-import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta, DialogoAnadirNota, DialogoEliminarNota, DialogoEditarNota, DialogoAnadirTratamiento, DialogoEliminarTratamiento } from './ficha-individual/ficha-individual.component';
+import { FichaIndividualComponent, DialogoAnadirConsulta, notificacionComponentCrearConsulta, DialogoAnadirNota, DialogoEliminarNota, DialogoEditarNota, DialogoAnadirTratamiento, DialogoEliminarTratamiento, DialogoEliminarInforme } from './ficha-individual/ficha-individual.component';
 import { VistaUsuarioComponent, notificacionVistaUserComponent, DialogoEliminarUsuarioVista, DialogoEditarUsuario } from './vista-usuario/vista-usuario.component';
 import { MedicamentosComponent, DialogoAnadirMedicamento, notificacionComponentMedicamento, DialogoAnadirMarca, dialogoEliminarMedicamento } from './medicamentos/medicamentos.component';
 import { HistorialComponent, DialogoEliminarHistorial, notificacionEliminarHistorial } from './historial/historial.component';
@@ -114,7 +114,8 @@ import { IntructionsActivateComponent } from './intructions-activate/intructions
     HistorialConsultaComponent,
     IntructionsActivateComponent,
     DialogoAnadirLugar,
-    DialogoEliminarTratamiento
+    DialogoEliminarTratamiento,
+    DialogoEliminarInforme
   ],
   imports: [
     BrowserModule,
@@ -244,7 +245,8 @@ import { IntructionsActivateComponent } from './intructions-activate/intructions
     DialogoAnadirMedicamentoTratamiento,
     notificacionTratamientoMedicamento,
     DialogoAnadirLugar,
-    DialogoEliminarTratamiento
+    DialogoEliminarTratamiento,
+    DialogoEliminarInforme
   ],
   providers: [],
   bootstrap: [AppComponent]

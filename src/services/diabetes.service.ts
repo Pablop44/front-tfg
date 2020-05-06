@@ -37,8 +37,6 @@ export class DiabetesService {
     array.forEach(item => obj[item.Field] = item.Value);
     
     let json = JSON.stringify(obj);
-    
-    console.log(json);
 
     const httpOptions = {
       headers: new HttpHeaders({ 
@@ -76,8 +74,6 @@ export class DiabetesService {
     array.forEach(item => obj[item.Field] = item.Value);
     
     let json = JSON.stringify(obj);
-    
-    console.log(json);
 
     const httpOptions = {
       headers: new HttpHeaders({ 
@@ -149,6 +145,13 @@ export class DiabetesService {
   
   public informeDiabetes(id){
     return this.httpClient.get(this.restUrl+'/view/'+id+'.json', {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
+      })
+    });
+  }
+  public eliminarInforme(id){
+    return this.httpClient.get(this.restUrl+'/delete/'+id+'.json', {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.loginService.loggedUser.password
       })

@@ -237,6 +237,22 @@ export class DialogoEliminarNota{
 }
 
 @Component({
+  selector: 'dialogoEliminarInforme',
+  templateUrl: 'dialogoEliminarInforme.html',
+})
+export class DialogoEliminarInforme{
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoEliminarInforme>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
   selector: 'dialogoEliminarTratamiento',
   templateUrl: 'dialogoEliminarTratamiento.html',
 })
@@ -896,6 +912,36 @@ export class FichaIndividualComponent implements OnInit {
     });
   }
 
+  openDialogEliminarInforme(datos, tipoInforme): void {
+    
+    let tipoAMostrar;
+    if(tipoInforme == "migranas"){
+      tipoAMostrar = "Migrañas";
+    }else if(tipoInforme == "diabetes"){
+      tipoAMostrar = "Diabetes";
+    }else{
+      tipoAMostrar = "Asma";
+    }
+    const dialogRef = this.dialog.open(DialogoEliminarInforme, {
+      width: '300px',
+      data: {fecha :datos.fecha, respuesta: "Si", tipo:tipoAMostrar}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != undefined){
+        if(result.respuesta == "Si"){
+          if(tipoInforme == "migranas"){
+            this.eliminarInformeMigranas(datos);
+          }else if(tipoInforme == "diabetes"){
+            this.eliminarInformeDiabetes(datos);
+          }else{
+            this.eliminarInformeAsma(datos);
+          }
+        }
+      }
+    });
+  }
+
   openDialogEliminarTratamiento(tratamiento): void {
     const dialogRef = this.dialog.open(DialogoEliminarTratamiento, {
       width: '300px',
@@ -1256,7 +1302,52 @@ export class FichaIndividualComponent implements OnInit {
           this.openSnackBar("Se ha eliminado la nota");
         },
         error => {
-          console.log(error);
+          this.openSnackBar("No se pudo eliminar la nota");
+        }
+      );
+    }
+  }
+
+  eliminarInformeMigranas(datos){
+    if(this.loginService.isLogged){
+      this.migranasService.eliminarInforme(datos.id)
+      .subscribe(
+        response =>{
+          this.datosMigranas();
+          this.openSnackBar("Se ha eliminado el Informe");
+        },
+        error => {
+          this.openSnackBar("No se ha eliminado el Informe");
+        }
+      );
+    }
+  }
+
+  eliminarInformeDiabetes(datos){
+    if(this.loginService.isLogged){
+      this.diabetesService.eliminarInforme(datos.id)
+      .subscribe(
+        response =>{
+          this.datosDiabetes();
+          this.openSnackBar("Se ha eliminado el Informe");
+        },
+        error => {
+          this.openSnackBar("No se ha eliminado el Informe");
+        }
+      );
+    }
+  }
+
+  eliminarInformeAsma(datos){
+    if(this.loginService.isLogged){
+      this.asmaService.eliminarInforme(datos.id)
+      .subscribe(
+        response =>{
+          this.datosDiabetes();
+          this.openSnackBar("Se ha eliminado el Informe");
+        },
+        error => {
+          this.openSnackBar("No se ha eliminado el Informe");
         }
       );
     }

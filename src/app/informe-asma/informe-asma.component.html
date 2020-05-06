@@ -23,7 +23,9 @@
                         </mat-icon>
                           Preguntas de Respuesta Cerrada
                   </h3>
-                  <mat-list-item >
+                  <div id="respuestasCerradas">
+
+                    <mat-list-item >
                       <h4 mat-line style="font-weight: bold;">Calidad del Sueño</h4>
                       <p mat-line> {{datosInformeAsma.calidadSueno}} </p>
                     </mat-list-item>
@@ -47,6 +49,9 @@
                       <h4 mat-line style="font-weight: bold;">¿El paciente ha necesitado medicación de rescate?</h4>
                       <p mat-line>{{datosInformeAsma.usoMedicacion}}</p>
                     </mat-list-item>
+
+                  </div>
+                 
                   </mat-list>
                    
               </mat-card-content>
@@ -69,7 +74,7 @@
 
               <mat-card-content class="dashboard-card-content">
                
-                <mat-list id="listaInformeAsma">
+                <mat-list>
                   <h3 mat-subheader>
                       <mat-icon mat-list-icon style="margin-right: 10px;">
                           <i class="material-icons">
@@ -78,19 +83,24 @@
                         </mat-icon>
                           Preguntas de Respuesta Abierta
                   </h3>
+                  <div id="respuestasAbierta">
                   <mat-list-item >
-                      <h4 mat-line style="font-weight: bold;">Espirometría</h4>
-                      <p mat-line> {{datosInformeAsma.espirometria}} </p>
-                    </mat-list-item>
-                    <mat-list-item >
-                      <h4 mat-line style="font-weight: bold;">Factores que propiciaron la crisis</h4>
-                      <p mat-line>{{datosInformeAsma.factoresCrisis}}</p>
-                    </mat-list-item>
-                    <mat-list-item >
-                      <h4 mat-line style="font-weight: bold;">Estado general del paciente</h4>
-                      <p mat-line>{{datosInformeAsma.estadoGeneral}}</p>
-                    </mat-list-item>
-                  </mat-list>
+                    <h4 mat-line style="font-weight: bold;">Espirometría</h4>
+                    <p mat-line> {{datosInformeAsma.espirometria}} </p>
+                  </mat-list-item>
+                  <mat-list-item >
+                    <h4 mat-line style="font-weight: bold;">Factores que propiciaron la crisis</h4>
+                    <p mat-line>{{datosInformeAsma.factoresCrisis}}</p>
+                  </mat-list-item>
+                  <mat-list-item >
+                    <h4 mat-line style="font-weight: bold;">Estado general del paciente</h4>
+                    <p mat-line>{{datosInformeAsma.estadoGeneral}}</p>
+                  </mat-list-item>
+                </div>
+                </mat-list>
+
+                  
+                  
                    
               </mat-card-content>
                 </mat-card>

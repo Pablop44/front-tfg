@@ -274,4 +274,21 @@ export class HistorialComponent implements OnInit {
     }
   }
 
+  limpiarFiltro(){
+    this.filtroHistorial = {
+      id:null,
+      fechaInicio:null,
+      fechaFin:null,
+      dniPaciente:null,
+      nombrePaciente:null,
+      apellidosPaciente:null,
+      dniMedico:null,
+      nombreMedico:null,
+      apellidosMedico:null,
+      colegiado:null,
+      migranas:null,
+      diabetes:null,
+      asma:null
+    }
+  }
 }

@@ -44,8 +44,6 @@ export class NotaService {
       array.forEach(item => obj[item.Field] = item.Value);
       
       let json = JSON.stringify(obj);
-      
-      console.log(json);
   
       const httpOptions = {
         headers: new HttpHeaders({ 
@@ -84,8 +82,6 @@ export class NotaService {
       array.forEach(item => obj[item.Field] = item.Value);
       
       let json = JSON.stringify(obj);
-      
-      console.log(json);
   
       const httpOptions = {
         headers: new HttpHeaders({ 
@@ -153,8 +149,6 @@ export class NotaService {
     array.forEach(item => obj[item.Field] = item.Value);
     
     let json = JSON.stringify(obj);
-
-    console.log(json);
 
     const httpOptions = {
       headers: new HttpHeaders({ 
