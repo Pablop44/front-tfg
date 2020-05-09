@@ -15,6 +15,7 @@ import { ConsultaComponent } from './consulta/consulta.component';
 import { TratamientoComponent } from './tratamiento/tratamiento.component';
 import { HistorialConsultaComponent } from './historial-consulta/historial-consulta.component';
 import { IntructionsActivateComponent } from './intructions-activate/intructions-activate.component';
+import { ActivatedUserComponent } from './activated-user/activated-user.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -32,7 +33,8 @@ const routes: Routes = [
   { path: 'consulta/:id', component : ConsultaComponent },
   { path: 'tratamiento/:id', component : TratamientoComponent },
   { path: 'consultas', component : HistorialConsultaComponent },
-  { path: 'intructionsActivate', component : IntructionsActivateComponent }
+  { path: 'intructionsActivate', component : IntructionsActivateComponent },
+  { path: 'activatedUser/:id', component : ActivatedUserComponent }
 ];
 
 @NgModule({

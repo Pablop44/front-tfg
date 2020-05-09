@@ -64,6 +64,10 @@ export class UserService {
     });
   }
 
+  activarUsuario(id){
+    return this.http.get(this.restUrl+"/user/confirmar/"+id+".json");
+  }
+
   peticionesAutorizar(){
     return this.http.get(this.restUrl+"/user/longitudUserActivados.json", {
       headers: new HttpHeaders({
