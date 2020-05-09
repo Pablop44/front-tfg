@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>Añadir una Consulta</h1>
+<div mat-dialog-content>
+  <p style="float: right;">Selecciones una fecha para ver los horarios disponibles</p>
+  <p>Introduce los Datos de la Consulta</p>
+  
+  <mat-form-field class="example-medium-width">
+    <mat-label>Fecha de la Consulta</mat-label>
+    <input matInput [matDatepicker]="dp"  name="fecha" id="fecha" [ngModel]="data.fecha"  required (dateInput)="getHoras('input', $event)">
+    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+    <mat-datepicker #dp></mat-datepicker>
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mediaAnchura">
+
+    <ng-container matColumnDef="hora">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Hora </th>
+      <td mat-cell *matCellDef="let element" (click)="horaElegida(element.hora)"> {{element.hora}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Estado </th>
+      <td mat-cell *matCellDef="let element"> {{element.estado}}</td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'estadoCancelada2': row.estado == true, 'estadoEnTiempo2': row.estado == false }"></tr>
+  </table>
+
+  <mat-form-field class="example-medium-width">
+    <mat-label>Hora</mat-label>
+    <input matInput id="hora" name="hora" disabled placeholder="Hora" [(ngModel)]="data.hora" required value="{{horaFinal}}" >
+  </mat-form-field>
+  <p style="color: red; font-size: 15px;">{{notificacion}}</p>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Lugar</mat-label>
+    <input matInput id="lugar" name="lugar" placeholder="Lugar" [(ngModel)]="data.lugar" required  >
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Motivo</mat-label>
+    <textarea matInput required id="motivo" name="motivo" placeholder="Motivo" [(ngModel)]="data.motivo"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">Añadir</button>
+  <button mat-button style="float:right;" (click)="onNoClick()">Cancelar</button>
+</div>

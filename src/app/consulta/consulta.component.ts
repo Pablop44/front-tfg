@@ -7,6 +7,120 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 import { Consulta } from '../models/Consulta';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Hora } from 'src/app/models/Hora';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import * as _moment from 'moment';
+import {default as _rollupMoment} from 'moment';
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+
+const moment = _rollupMoment || _moment;
+
+const ELEMENT_DATA: Hora[] = [
+  {hora: "09:00", estado:null},
+  {hora: "10:00", estado:null},
+  {hora: "11:00", estado:null},
+  {hora: "12:00", estado:null},
+  {hora: "13:00", estado:null},
+  {hora: "14:00", estado:null},
+  {hora: "15:00", estado:null},
+  {hora: "16:00", estado:null},
+];
+
+@Component({
+  selector: 'dialogoAnadirConsultaConsulta',
+  templateUrl: 'dialogoAnadirConsultaConsulta.html',
+  providers: [
+    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+    // `MatMomentDateModule` in your applications root module. We provide it at the component level
+    // here, due to limitations of our example generation script.
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
+})
+
+export class DialogoAnadirConsultaConsulta {
+
+  displayedColumns: string[] = ['hora'];
+  
+  horas: Hora[] = [];
+  dataSource : Hora[] = [];
+  banderaHora : boolean;
+  horaFinal : string;
+  notificacion : string;
+  fechaFinal: string;
+  consultaService: ConsultaService;
+  loginService: LoginService;
+
+  constructor(
+    consultaService: ConsultaService,
+    loginService: LoginService,
+    public dialogRef: MatDialogRef<DialogoAnadirConsultaConsulta>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+
+      this.consultaService = consultaService;
+      this.loginService = loginService;
+      this.dataSource = ELEMENT_DATA;
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  getHoras(type: string, event: MatDatepickerInputEvent<Date>) {
+
+   this.fechaFinal = moment(event.value).format('YYYY-MM-DD');
+   this.data.fecha = moment(event.value).format('YYYY-MM-DD');
+   (<HTMLInputElement>document.getElementById('fecha')).value = moment(event.value).format('DD-MM-YYYY');
+    if(this.loginService.isLogged){
+      this.consultaService.getHoras(moment(event.value).format('YYYY-MM-DD'))
+      .subscribe(
+        response =>{
+          this.horas = [];
+          this.notificacion = "";
+          var newHora = new Hora('09:00',response['09:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('10:00',response['10:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('11:00',response['11:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('12:00',response['12:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('13:00',response['13:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('14:00',response['14:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('15:00',response['15:00']);
+          this.horas.push(newHora);
+          var newHora = new Hora('16:00',response['16:00']);
+          this.horas.push(newHora);
+          this.dataSource = this.horas;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  horaElegida(hora){
+    this.banderaHora = false;
+    this.horas.forEach(element => {
+      if(element.hora == hora && element.estado == true){
+        this.banderaHora = true;
+      }
+    });
+    if(this.banderaHora){
+      this.horaFinal = null;
+      this.data.hora = null;
+      this.notificacion = "Error en la hora elegida";
+    }else{
+      this.notificacion = "";
+      this.data.hora = hora;
+      this.horaFinal = hora;
+    }
+  }
+}
 
 @Component({
   selector: 'dialogoAnadirObservaciones',
@@ -60,7 +174,8 @@ export class DialogoAnadirLugar{
 @Component({
   selector: 'app-consulta',
   templateUrl: './consulta.component.html',
-  styleUrls: ['./consulta.component.css']
+  styleUrls: ['./consulta.component.css'],
+  providers: [DialogoAnadirConsultaConsulta]
 })
 export class ConsultaComponent implements OnInit {
 
@@ -200,10 +315,27 @@ export class ConsultaComponent implements OnInit {
     }
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogoAnadirConsultaConsulta, {
+      width: '1000px',
+      data: {}
+    });
+
+
+    dialogRef.afterClosed().subscribe(response => {
+      if(response != undefined){
+      }
+    });
+  }
+
 
   cambiarEstado(valor){
     this.consulta.estado = valor;
-    this.editarConsulta();
+    if(valor == "aplazada"){
+      this.openDialog();
+    }else{
+      this.editarConsulta();
+    }
   }
 
 }
