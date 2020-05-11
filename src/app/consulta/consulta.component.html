@@ -75,7 +75,7 @@
                   </mat-card-header>
       
                   <mat-card-content class="dashboard-card-content">
-                      <button mat-flat-button color="primary" (click)="openDialogObservaciones()">Añadir Observaciones<i class="material-icons">
+                      <button mat-flat-button color="primary" (click)="openDialogObservaciones()" [disabled]="disabled">Añadir Observaciones<i class="material-icons">
                           edit
                       </i></button>
                   </mat-card-content>
@@ -93,7 +93,7 @@
                 </mat-card-header>
     
                 <mat-card-content class="dashboard-card-content">
-                    <button mat-flat-button color="primary" (click)="openDialogDiagnostico()">Añadir Diagnóstico<i class="material-icons">
+                    <button mat-flat-button color="primary" (click)="openDialogDiagnostico()" [disabled]="disabled">Añadir Diagnóstico<i class="material-icons">
                         edit
                     </i></button>
                 </mat-card-content>
@@ -114,7 +114,7 @@
                    
                   <section class="example-section">
                       <mat-radio-group name="opList"  fxLayout="column" [(ngModel)]="chosenItem">
-                        <mat-radio-button (click)="cambiarEstado(op.value)" class="example-margin" *ngFor="let op of estado" [value]="op.value" name="opList" >{{op.name}}</mat-radio-button>
+                        <mat-radio-button (click)="openDialogCambiarEstado(op.value)"  class="example-margin" *ngFor="let op of estado" [value]="op.value" name="opList" [disabled]="disabled">{{op.name}}</mat-radio-button>
                       </mat-radio-group>
                     </section>
 
@@ -133,7 +133,7 @@
                 </mat-card-header>
 
                 <mat-card-content class="dashboard-card-content">
-                    <button mat-flat-button color="primary" (click)="openDialogLugar()">Añadir Lugar<i class="material-icons">
+                    <button mat-flat-button color="primary" (click)="openDialogLugar()" [disabled]="disabled">Añadir Lugar<i class="material-icons">
                         edit
                     </i></button>
                 </mat-card-content>

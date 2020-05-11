@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Cambiar estado de la consulta</h1>
+<div mat-dialog-content>
+  <p>¿Quieres cambiar el estado de esta consulta?</p>
+  <p>Después no se podrán realizar mas cambios en la información de esta</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" [mat-dialog-close]="data">Cambiar Estado</button>
+  <button mat-button style="float:right;" (click)="onNoClick()">Cancelar</button>
+</div>

@@ -331,6 +331,8 @@ export class ConsultaService {
     
     let json = JSON.stringify(obj);
 
+    console.log(json);
+
     const httpOptions = {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',

@@ -63,7 +63,7 @@ import { HistorialComponent, DialogoEliminarHistorial, notificacionEliminarHisto
 import { InformeDiabetesComponent } from './informe-diabetes/informe-diabetes.component';
 import { InformeAsmaComponent } from './informe-asma/informe-asma.component';
 import { InformeMigranasComponent } from './informe-migranas/informe-migranas.component';
-import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones, DialogoAnadirLugar, DialogoAnadirConsultaConsulta } from './consulta/consulta.component';
+import { ConsultaComponent, DialogoAnadirDiagnostico, DialogoAnadirObservaciones, DialogoAnadirLugar, DialogoAnadirConsultaConsulta, notificacionComponentAplazarConsulta, DialogoCambiarEstado } from './consulta/consulta.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { TratamientoComponent, DialogoEliminarMedicamentoTratamiento, DialogoAnadirMedicamentoTratamiento, notificacionTratamientoMedicamento } from './tratamiento/tratamiento.component';
 import { HistorialConsultaComponent } from './historial-consulta/historial-consulta.component';
@@ -118,7 +118,9 @@ import { ActivatedUserComponent } from './activated-user/activated-user.componen
     DialogoEliminarTratamiento,
     DialogoEliminarInforme,
     DialogoAnadirConsultaConsulta,
-    ActivatedUserComponent
+    ActivatedUserComponent,
+    notificacionComponentAplazarConsulta,
+    DialogoCambiarEstado
   ],
   imports: [
     BrowserModule,
@@ -176,7 +178,7 @@ import { ActivatedUserComponent } from './activated-user/activated-user.componen
     MatTreeModule,
     PortalModule,
     ScrollingModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
   ],
   exports: [
     A11yModule,
@@ -250,7 +252,9 @@ import { ActivatedUserComponent } from './activated-user/activated-user.componen
     DialogoAnadirLugar,
     DialogoEliminarTratamiento,
     DialogoEliminarInforme,
-    DialogoAnadirConsultaConsulta
+    DialogoAnadirConsultaConsulta,
+    notificacionComponentAplazarConsulta,
+    DialogoCambiarEstado
   ],
   providers: [],
   bootstrap: [AppComponent]

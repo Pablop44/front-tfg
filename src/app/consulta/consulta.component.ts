@@ -13,6 +13,8 @@ import * as _moment from 'moment';
 import {default as _rollupMoment} from 'moment';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MAT_SNACK_BAR_DATA, MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material';
 
 const moment = _rollupMoment || _moment;
 
@@ -26,6 +28,19 @@ const ELEMENT_DATA: Hora[] = [
   {hora: "15:00", estado:null},
   {hora: "16:00", estado:null},
 ];
+
+@Component({
+  selector: 'notificacionAplazarConsulta',
+  templateUrl: 'notificacionAplazarConsulta.html',
+  styles: [`
+    .example-pizza-party {
+      color: hotpink;
+    }
+  `],
+})
+export class notificacionComponentAplazarConsulta {
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
+}
 
 @Component({
   selector: 'dialogoAnadirConsultaConsulta',
@@ -139,6 +154,22 @@ export class DialogoAnadirObservaciones{
 }
 
 @Component({
+  selector: 'dialogoConfirmacionCambioEstado.html',
+  templateUrl: 'dialogoConfirmacionCambioEstado.html',
+})
+export class DialogoCambiarEstado{
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoCambiarEstado>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
   selector: 'dialogoAnadirDiagnostico',
   templateUrl: 'dialogoAnadirDiagnostico.html',
 })
@@ -187,6 +218,7 @@ export class ConsultaComponent implements OnInit {
   fecha: string;
   consulta: Consulta
   horaFecha: any;
+  disabled = false;
 
   estado: any[] = [
     {"name": "En tiempo", ID: "D1", "value": "en tiempo"},
@@ -198,7 +230,7 @@ export class ConsultaComponent implements OnInit {
 
   cards;
 
-  constructor(private route : ActivatedRoute,public dialog: MatDialog, consultaService: ConsultaService, private breakpointObserver: BreakpointObserver,
+  constructor(private route : ActivatedRoute,public dialog: MatDialog, private _snackBar: MatSnackBar, consultaService: ConsultaService, private breakpointObserver: BreakpointObserver,
      loginService: LoginService, private router: Router) { 
     this.consultaService = consultaService;
     this.loginService = loginService;
@@ -218,6 +250,7 @@ export class ConsultaComponent implements OnInit {
         response =>{
           this.idFicha = response['ficha'];
           this.fecha = response['fecha'];
+          this.consultaService.medico = response['medico'];
           this.horaFecha = this.fecha.split(' ');
           this.consulta = new Consulta(response['id'],response['lugar'],response['motivo'], response['fecha'],response['diagnostico'],response['observaciones'], response['medico'], response['paciente'],
           response['ficha'], response['estado']);
@@ -228,12 +261,16 @@ export class ConsultaComponent implements OnInit {
           }
           if(this.consulta.estado == "realizada"){
             this.chosenItem = this.estado[1].value;
+            this.disabled = true;
           }else if(this.consulta.estado == "en tiempo"){
             this.chosenItem = this.estado[0].value;
+            this.disabled = false;
           }else if(this.consulta.estado == "aplazada"){
             this.chosenItem = this.estado[2].value;
+            this.disabled = true;
           }else{
             this.chosenItem = this.estado[3].value;
+            this.disabled = true;
           }
           this.cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
             map(({ matches }) => {
@@ -261,42 +298,54 @@ export class ConsultaComponent implements OnInit {
   }
 
   openDialogObservaciones(): void {
-    const dialogRef = this.dialog.open(DialogoAnadirObservaciones, {
-      width: '500px',
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(response => {
-      if(response != undefined){
-        this.consulta.observaciones = response['observaciones'];
-        this.editarConsulta();
-      }
-    });
+    if(!this.disabled){
+      const dialogRef = this.dialog.open(DialogoAnadirObservaciones, {
+        width: '500px',
+        data: {}
+      });
+      dialogRef.afterClosed().subscribe(response => {
+        if(response != undefined){
+          this.consulta.observaciones = response['observaciones'];
+          this.editarConsulta();
+        }
+      });
+    }else{
+      this.openSnackBar("La consulta ya ha sido cerrada");
+    }
   }
 
   openDialogDiagnostico(): void {
-    const dialogRef = this.dialog.open(DialogoAnadirDiagnostico, {
-      width: '500px',
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(response => {
-      if(response != undefined){
-        this.consulta.diagnostico = response['diagnostico'];
-        this.editarConsulta();
-      }
-    });
+    if(!this.disabled){
+      const dialogRef = this.dialog.open(DialogoAnadirDiagnostico, {
+        width: '500px',
+        data: {}
+      });
+      dialogRef.afterClosed().subscribe(response => {
+        if(response != undefined){
+          this.consulta.diagnostico = response['diagnostico'];
+          this.editarConsulta();
+        }
+      });
+    }else{
+      this.openSnackBar("La consulta ya ha sido cerrada");
+    }
   }
 
   openDialogLugar(): void {
-    const dialogRef = this.dialog.open(DialogoAnadirLugar, {
-      width: '500px',
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(response => {
-      if(response != undefined){
-        this.consulta.lugar = response['lugar'];
-        this.editarConsulta();
-      }
-    });
+    if(!this.disabled){
+      const dialogRef = this.dialog.open(DialogoAnadirLugar, {
+        width: '500px',
+        data: {}
+      });
+      dialogRef.afterClosed().subscribe(response => {
+        if(response != undefined){
+          this.consulta.lugar = response['lugar'];
+          this.editarConsulta();
+        }
+      });
+    }else{
+      this.openSnackBar("La consulta ya ha sido cerrada");
+    }
   }
 
   editarConsulta(){
@@ -310,9 +359,16 @@ export class ConsultaComponent implements OnInit {
         },
         error => {
           console.log(error);
+          this.getDatosConsulta();
         }
       );
     }
+  }
+
+  openSnackBar(mensaje: String) {
+    this._snackBar.openFromComponent(notificacionComponentAplazarConsulta, {
+      duration: 4 * 1000, data: mensaje
+    });
   }
 
   openDialog(): void {
@@ -320,12 +376,101 @@ export class ConsultaComponent implements OnInit {
       width: '1000px',
       data: {}
     });
-
-
     dialogRef.afterClosed().subscribe(response => {
       if(response != undefined){
+        if(this.validarConsulta(response)){
+          this.crearConsulta(response);
+        }
+      }else{
+        this.getDatosConsulta();
       }
     });
+  }
+
+  validarConsulta(response): Boolean{
+    return (this.validarFecha(response) && this.validarLugar(response) && 
+    this.validarMotivo(response) && this.validarHora(response));
+  }
+
+  validarFecha(response): Boolean{
+    if(response.fecha != null){
+      return true;
+    }else{
+        this.openSnackBar("Es necesario introducir una fecha");
+        return false;
+    }
+  }
+
+  validarLugar(response): Boolean{
+    if(response.lugar != null){
+      return true;
+    }else{
+        this.openSnackBar("Es necesario introducir un lugar");
+        return false;
+    }
+  }
+
+  validarMotivo(response): Boolean{
+    if(response.motivo != null){
+      return true;
+    }else{
+        this.openSnackBar("Es necesario introducir un motivo");
+        return false;
+    }
+  }
+
+  validarHora(response): Boolean{
+    if(response.hora != null){
+      return true;
+    }else{
+        this.openSnackBar("Es necesario introducir una hora");
+        return false;
+    }
+  }
+
+  crearConsulta(respuesta){
+
+    respuesta['fecha'] =  respuesta['fecha']+" "+respuesta['hora']+":00";
+    respuesta['diagnostico'] = null;
+    respuesta['observaciones'] = null;
+    respuesta['medico'] = this.consulta.medico;
+    respuesta['paciente'] = this.consulta.paciente;
+    respuesta['ficha'] = this.consulta.ficha;
+    respuesta['estado'] = "en tiempo";
+    delete respuesta["hora"];
+    
+    if(this.loginService.isLogged){
+      this.consultaService.crearConsulta(respuesta)
+      .subscribe(
+        response =>{
+          this.editarConsulta();
+          this.openSnackBar("Se ha cambiado el estado de la consulta y se ha creado una nueva");
+          this.router.navigateByUrl("/consulta/"+response['id']);
+        },
+        error => {
+          console.log(error);
+          this.openSnackBar("No se ha podido cambiar el estado");
+        }
+      );
+    }
+  }
+
+  openDialogCambiarEstado(valor){
+    if(!this.disabled){
+      const dialogRef = this.dialog.open(DialogoCambiarEstado, {
+        width: '400px',
+        data: {respuesta : "Si"}
+      });
+      dialogRef.afterClosed().subscribe(response => {
+        if(response != undefined){
+          this.cambiarEstado(valor);
+        }else{
+          this.getDatosConsulta();
+        }
+      });
+    }else{
+      this.openSnackBar("Ya no se puede cambiar el estado de la consulta");
+    }
   }
 
 
