@@ -40,6 +40,22 @@
             </mat-card>
         </div>
 
+        <div *ngSwitchCase="'EnfermedadesPorSexo'">
+          <mat-card class="dashboard-card">
+            <mat-card-header>
+              <mat-card-title>
+                Enfermedades
+              </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content class="dashboard-card-content">
+              <div id="diagramaCircularEnfermedadesPorSexoMigranas" style="height: 200px; width: 30%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
+              <div id="diagramaCircularEnfermedadesPorSexoAsma" style="height: 200px; width: 30%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
+              <div id="diagramaCircularEnfermedadesPorSexoDiabetes" style="height: 200px; width: 30%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
+            </mat-card-content>
+          </mat-card>
+      </div>
+
       </div>
     </mat-grid-tile>
   </mat-grid-list>

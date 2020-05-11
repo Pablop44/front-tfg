@@ -21,6 +21,14 @@ export class StatisticsService {
     });
   }
 
+  estadisticasEnfermedadesPorSexo(){
+    return this.http.get(this.restUrl+"/estatistics/estadisticasEnfermedadesPorSexo.json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
+      })
+    });
+  }
+
   estadisticasEnfermedades(){
     return this.http.get(this.restUrl+"/estatistics/estadisticasEnfermedades.json", {
       headers: new HttpHeaders({

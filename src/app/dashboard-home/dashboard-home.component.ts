@@ -25,13 +25,15 @@ export class DashboardHomeComponent {
       if (matches) {
         return [
           { title: 'Fichas', cols: 1, rows: 2, cuerpo: "hola"},
-          { title: 'Consultas', cols: 1, rows: 2, cuerpo: "hola"}
+          { title: 'Consultas', cols: 1, rows: 2, cuerpo: "hola"},
+          { title: 'EnfermedadesPorSexo', cols: 2, rows: 2, cuerpo: "hola"}
         ];
       }
 
       return [
         { title: 'Fichas', cols: 1, rows: 2, cuerpo: "hola"},
-        { title: 'Consultas', cols: 1, rows: 2, cuerpo: "hola" }
+        { title: 'Consultas', cols: 1, rows: 2, cuerpo: "hola" },
+        { title: 'EnfermedadesPorSexo', cols: 2, rows: 2, cuerpo: "hola"}
       ];
     })
   );
@@ -51,6 +53,7 @@ export class DashboardHomeComponent {
       this.appComponent.peticionesAutorizar();
       this.estadisticasUsuarios();
       this.estadisticaEnfermedades();
+      this.estadisticaEnfermedadesPorSexo();
     }
   }
 
@@ -108,7 +111,6 @@ export class DashboardHomeComponent {
         ]
       }]
     });
-      
     chart.render();
   }
 
@@ -120,6 +122,22 @@ export class DashboardHomeComponent {
         response =>{
           this.crearDiagramaBarrasEnfermedades(response);
           this.crearDiagramaCircularEnfermedades(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  estadisticaEnfermedadesPorSexo(){
+    if(this.loginService.isLogged){
+      this.statisticsService.estadisticasEnfermedadesPorSexo()
+      .subscribe(
+        response =>{
+          this.crearDiagramaCircularEnfermedadesPorSexoMigranas(response);
+          this.crearDiagramaCircularEnfermedadesPorSexoDiabetes(response);
+          this.crearDiagramaCircularEnfermedadesPorSexoAsma(response);
         },
         error => {
           console.log(error);
@@ -164,6 +182,73 @@ export class DashboardHomeComponent {
           { y: response['migranas'], name: "Migrañas" },
           { y: response['diabetes'], name: "Diabetes" },
           { y: response['asma'], name: "asma" },
+        ]
+      }]
+    });
+    chart.render();
+  }
+
+  crearDiagramaCircularEnfermedadesPorSexoMigranas(response){
+    let chart = new CanvasJS.Chart("diagramaCircularEnfermedadesPorSexoMigranas", {
+      theme: "light2",
+      animationEnabled: true,
+      exportEnabled: true,
+      title:{
+        text:  "% Pacientes con Migranas por sexo"
+      },
+      data: [{
+        type: "pie",
+        showInLegend: true,
+        toolTipContent: "<b>{name}</b>: {y} (#percent%)",
+        indexLabel: "{name} - #percent%",
+        dataPoints: [
+          { y: response['masculinoMigranas'], name: "Masculino con Migrañas" },
+          { y: response['femeninoMigranas'], name: "Femenino con Migrañas" },
+        ]
+      }]
+    });
+    chart.render();
+  }
+
+  crearDiagramaCircularEnfermedadesPorSexoDiabetes(response){
+    let chart = new CanvasJS.Chart("diagramaCircularEnfermedadesPorSexoDiabetes", {
+      theme: "light2",
+      animationEnabled: true,
+      exportEnabled: true,
+      title:{
+        text: "% Pacientes con Diabetes por sexo"
+      },
+      data: [{
+        type: "pie",
+        showInLegend: true,
+        toolTipContent: "<b>{name}</b>: {y} (#percent%)",
+        indexLabel: "{name} - #percent%",
+        dataPoints: [
+          { y: response['masculinoDiabetes'], name: "Masculino con Diabetes" },
+          { y: response['femeninoDiabetes'], name: "Femenino con Diabetes" },
+        ]
+      }]
+    });
+      
+    chart.render();
+  }
+
+  crearDiagramaCircularEnfermedadesPorSexoAsma(response){
+    let chart = new CanvasJS.Chart("diagramaCircularEnfermedadesPorSexoAsma", {
+      theme: "light2",
+      animationEnabled: true,
+      exportEnabled: true,
+      title:{
+        text: "% Pacientes con Asma por sexo"
+      },
+      data: [{
+        type: "pie",
+        showInLegend: true,
+        toolTipContent: "<b>{name}</b>: {y} (#percent%)",
+        indexLabel: "{name} - #percent%",
+        dataPoints: [
+          { y: response['masculinoAsma'], name: "Masculino con Asma" },
+          { y: response['femeninoAsma'], name: "Femenino con Asma" },
         ]
       }]
     });
