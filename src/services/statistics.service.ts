@@ -29,6 +29,14 @@ export class StatisticsService {
     });
   }
 
+  estadisticaEnfermedadesPorEdad(){
+    return this.http.get(this.restUrl+"/estatistics/estadisticasEnfermedadesPorEdad.json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
+      })
+    });
+  }
+
   estadisticasEnfermedades(){
     return this.http.get(this.restUrl+"/estatistics/estadisticasEnfermedades.json", {
       headers: new HttpHeaders({

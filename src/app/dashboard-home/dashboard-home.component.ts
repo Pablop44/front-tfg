@@ -26,14 +26,16 @@ export class DashboardHomeComponent {
         return [
           { title: 'Fichas', cols: 1, rows: 2, cuerpo: "hola"},
           { title: 'Consultas', cols: 1, rows: 2, cuerpo: "hola"},
-          { title: 'EnfermedadesPorSexo', cols: 2, rows: 2, cuerpo: "hola"}
+          { title: 'EnfermedadesPorSexo', cols: 2, rows: 1, cuerpo: "hola"},
+          { title: 'EnfermedadesPorEdad', cols: 2, rows: 2, cuerpo: "hola"}
         ];
       }
 
       return [
         { title: 'Fichas', cols: 1, rows: 2, cuerpo: "hola"},
         { title: 'Consultas', cols: 1, rows: 2, cuerpo: "hola" },
-        { title: 'EnfermedadesPorSexo', cols: 2, rows: 2, cuerpo: "hola"}
+        { title: 'EnfermedadesPorSexo', cols: 2, rows: 1, cuerpo: "hola"},
+        { title: 'EnfermedadesPorEdad', cols: 2, rows: 2, cuerpo: "hola"}
       ];
     })
   );
@@ -54,6 +56,7 @@ export class DashboardHomeComponent {
       this.estadisticasUsuarios();
       this.estadisticaEnfermedades();
       this.estadisticaEnfermedadesPorSexo();
+      this.estadisticaEnfermedadesPorEdad();
     }
   }
 
@@ -122,6 +125,20 @@ export class DashboardHomeComponent {
         response =>{
           this.crearDiagramaBarrasEnfermedades(response);
           this.crearDiagramaCircularEnfermedades(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  estadisticaEnfermedadesPorEdad(){
+    if(this.loginService.isLogged){
+      this.statisticsService.estadisticaEnfermedadesPorEdad()
+      .subscribe(
+        response =>{
+          this.enfermedadPorEdad(response);
         },
         error => {
           console.log(error);
@@ -251,8 +268,60 @@ export class DashboardHomeComponent {
           { y: response['femeninoAsma'], name: "Femenino con Asma" },
         ]
       }]
-    });
-      
+    }); 
+    chart.render();
+  }
+
+  enfermedadPorEdad(response){
+    var chart = new CanvasJS.Chart("enfermedadPorEdad", {
+      animationEnabled: true,
+      exportEnabled: true,
+      title:{
+        text: "Incidencia de las enfermedades por edad"             
+      }, 
+      axisY:{
+        title: "Número de casos"
+      },
+      toolTip: {
+        shared: true
+      },
+      data: [{        
+        type: "spline",  
+        name: "Migrañas",        
+        showInLegend: true,
+        dataPoints: [
+          { label: "0-20 años" , y: response['menores20Migranas'] },     
+          { label: "20-40 años", y: response['menores40Migranas'] },     
+          { label: "40-60 años", y: response['menores60Migranas'] },     
+          { label: "60-80 años", y: response['menores80Migranas'] },     
+          { label: "+80 años", y: response['menores100Migranas'] }
+        ]
+      }, 
+      {        
+        type: "spline",
+        name: "Diabetes",        
+        showInLegend: true,
+        dataPoints: [
+          { label: "0-20 años" , y: response['menores20Diabetes'] },     
+          { label: "20-40 años", y: response['menores40Diabetes'] },     
+          { label: "40-60 años", y: response['menores60Diabetes'] },     
+          { label: "60-80 años", y: response['menores80Diabetes'] },     
+          { label: "+80 años", y: response['menores100Diabetes'] },
+        ]
+      },
+      {        
+        type: "spline",  
+        name: "Asma",        
+        showInLegend: true,
+        dataPoints: [
+          { label: "0-20 años" , y: response['menores20Asma'] },     
+          { label: "20-40 años", y: response['menores40Asma'] },     
+          { label: "40-60 años", y: response['menores60Asma'] },     
+          { label: "60-80 años", y: response['menores80Asma'] },     
+          { label: "+80 años", y: response['menores100Asma'] }
+        ]
+      }]
+    });    
     chart.render();
   }
 }

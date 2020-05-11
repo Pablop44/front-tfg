@@ -1,16 +1,11 @@
 <div class="grid-container">
   <h1 class="mat-h1">Pagina Príncipal</h1>
-  <mat-grid-list cols="2" rowHeight="350px">
+  <mat-grid-list cols="2" rowHeight="320px">
     <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
       <div [ngSwitch]="card.title">
 
         <div *ngSwitchCase="'Fichas'">
           <mat-card class="dashboard-card">
-            <mat-card-header>
-              <mat-card-title>
-                 Usuarios
-              </mat-card-title>
-            </mat-card-header>
 
             <mat-card-content>
               <div id="diagramaBarrasUsuarios" style="height: 260px; width: 100%;"></div>
@@ -24,11 +19,6 @@
 
           <div *ngSwitchCase="'Consultas'">
             <mat-card class="dashboard-card">
-              <mat-card-header>
-                <mat-card-title>
-                  Enfermedades
-                </mat-card-title>
-              </mat-card-header>
 
               <mat-card-content class="dashboard-card-content">
                 <div id="diagramaBarrasEnfermedades" style="height: 260px; width: 100%;"></div>
@@ -42,11 +32,6 @@
 
         <div *ngSwitchCase="'EnfermedadesPorSexo'">
           <mat-card class="dashboard-card">
-            <mat-card-header>
-              <mat-card-title>
-                Enfermedades
-              </mat-card-title>
-            </mat-card-header>
 
             <mat-card-content class="dashboard-card-content">
               <div id="diagramaCircularEnfermedadesPorSexoMigranas" style="height: 200px; width: 30%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
@@ -55,6 +40,15 @@
             </mat-card-content>
           </mat-card>
       </div>
+
+      <div *ngSwitchCase="'EnfermedadesPorEdad'">
+        <mat-card class="dashboard-card">
+
+          <mat-card-content class="dashboard-card-content">
+            <div id="enfermedadPorEdad" style="height: 550px; width: 100%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
+          </mat-card-content>
+        </mat-card>
+    </div>
 
       </div>
     </mat-grid-tile>
