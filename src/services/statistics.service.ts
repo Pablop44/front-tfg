@@ -21,6 +21,14 @@ export class StatisticsService {
     });
   }
 
+  estadisticasMedicamentosMasUtilizados(){
+    return this.http.get(this.restUrl+"/estatistics/estadisticasMedicamentosMasUtilizados.json", {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
+      })
+    });
+  }
+
   estadisticasEnfermedadesPorSexo(){
     return this.http.get(this.restUrl+"/estatistics/estadisticasEnfermedadesPorSexo.json", {
       headers: new HttpHeaders({

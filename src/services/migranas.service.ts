@@ -151,6 +151,14 @@ export class MigranasService {
     });
   }
 
+  public analisisDeSentimientos(id){
+    return this.httpClient.get(this.restUrl+'/analisisDeSentimientos/'+id+'.json', {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
+      })
+    });
+  }
+
   public eliminarInforme(id){
     return this.httpClient.get(this.restUrl+'/delete/'+id+'.json', {
       headers: new HttpHeaders({

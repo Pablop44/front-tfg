@@ -1,56 +1,66 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Pagina Príncipal</h1>
-  <mat-grid-list cols="2" rowHeight="320px">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows"> 
-      <div [ngSwitch]="card.title">
 
-        <div *ngSwitchCase="'Fichas'">
-          <mat-card class="dashboard-card">
-
-            <mat-card-content>
-              <div id="diagramaBarrasUsuarios" style="height: 260px; width: 100%;"></div>
-              <br>
-              <br>
-              <br>
-              <div id="diagramaCircularUsuarios" style="height: 260px; width: 100%; margin-left:auto;margin-right:auto;"></div>
-            </mat-card-content>
-          </mat-card>
-      </div>
-
-          <div *ngSwitchCase="'Consultas'">
+      <mat-grid-list cols="2" rowHeight="320px">
+        <mat-grid-tile *ngFor="let card of cardsEnfermedades | async" [colspan]="card.cols" [rowspan]="card.rows"> 
+          <div [ngSwitch]="card.title">
+    
+            <div *ngSwitchCase="'Fichas'">
+              <mat-card class="dashboard-card">
+    
+                <mat-card-content>
+                  <div id="diagramaBarrasUsuarios" style="height: 260px; width: 100%;"></div>
+                  <br>
+                  <br>
+                  <br>
+                  <div id="diagramaCircularUsuarios" style="height: 260px; width: 100%; margin-left:auto;margin-right:auto;"></div>
+                </mat-card-content>
+              </mat-card>
+          </div>
+    
+              <div *ngSwitchCase="'Consultas'">
+                <mat-card class="dashboard-card">
+    
+                  <mat-card-content class="dashboard-card-content">
+                    <div id="diagramaBarrasEnfermedades" style="height: 260px; width: 100%;"></div>
+                    <br>
+                    <br>
+                    <br>
+                    <div id="diagramaCircularEnfermedades" style="height: 260px; width: 100%; margin-left:auto;margin-right:auto;"></div>
+                  </mat-card-content>
+                </mat-card>
+            </div>
+    
+            <div *ngSwitchCase="'EnfermedadesPorSexo'">
+              <mat-card class="dashboard-card">
+    
+                <mat-card-content class="dashboard-card-content">
+                  <div id="diagramaCircularEnfermedadesPorSexoMigranas" style="height: 200px; width: 30%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
+                  <div id="diagramaCircularEnfermedadesPorSexoAsma" style="height: 200px; width: 30%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
+                  <div id="diagramaCircularEnfermedadesPorSexoDiabetes" style="height: 200px; width: 30%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
+                </mat-card-content>
+              </mat-card>
+          </div>
+    
+          <div *ngSwitchCase="'EnfermedadesPorEdad'">
             <mat-card class="dashboard-card">
-
+    
               <mat-card-content class="dashboard-card-content">
-                <div id="diagramaBarrasEnfermedades" style="height: 260px; width: 100%;"></div>
-                <br>
-                <br>
-                <br>
-                <div id="diagramaCircularEnfermedades" style="height: 260px; width: 100%; margin-left:auto;margin-right:auto;"></div>
+                <div id="enfermedadPorEdad" style="height: 260px; width: 100%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
               </mat-card-content>
             </mat-card>
+          </div>
+
+          <div *ngSwitchCase="'Medicamentos'">
+            <mat-card class="dashboard-card">
+    
+              <mat-card-content class="dashboard-card-content">
+                <div id="diagramaBarrasMedicamentosMasUtilizados" style="height: 260px; width: 100%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
         </div>
+      </mat-grid-tile>
+    </mat-grid-list> 
 
-        <div *ngSwitchCase="'EnfermedadesPorSexo'">
-          <mat-card class="dashboard-card">
-
-            <mat-card-content class="dashboard-card-content">
-              <div id="diagramaCircularEnfermedadesPorSexoMigranas" style="height: 200px; width: 30%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
-              <div id="diagramaCircularEnfermedadesPorSexoAsma" style="height: 200px; width: 30%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
-              <div id="diagramaCircularEnfermedadesPorSexoDiabetes" style="height: 200px; width: 30%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
-            </mat-card-content>
-          </mat-card>
-      </div>
-
-      <div *ngSwitchCase="'EnfermedadesPorEdad'">
-        <mat-card class="dashboard-card">
-
-          <mat-card-content class="dashboard-card-content">
-            <div id="enfermedadPorEdad" style="height: 550px; width: 100%; margin-left:auto;margin-right:auto; display: inline-block;"></div>
-          </mat-card-content>
-        </mat-card>
-    </div>
-
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
 </div>

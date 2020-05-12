@@ -19,26 +19,11 @@ export class DashboardHomeComponent {
   statisticsService: StatisticsService;
   appComponent: AppComponent;
 
-  /** Based on the screen size, switch from standard to one column per row */
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'Fichas', cols: 1, rows: 2, cuerpo: "hola"},
-          { title: 'Consultas', cols: 1, rows: 2, cuerpo: "hola"},
-          { title: 'EnfermedadesPorSexo', cols: 2, rows: 1, cuerpo: "hola"},
-          { title: 'EnfermedadesPorEdad', cols: 2, rows: 2, cuerpo: "hola"}
-        ];
-      }
+  cardsEnfermedades;
 
-      return [
-        { title: 'Fichas', cols: 1, rows: 2, cuerpo: "hola"},
-        { title: 'Consultas', cols: 1, rows: 2, cuerpo: "hola" },
-        { title: 'EnfermedadesPorSexo', cols: 2, rows: 1, cuerpo: "hola"},
-        { title: 'EnfermedadesPorEdad', cols: 2, rows: 2, cuerpo: "hola"}
-      ];
-    })
-  );
+  cardsUsuarios;
+
+  cardsMedicamentos;
 
   constructor(private breakpointObserver: BreakpointObserver,
     private router : Router,  statisticsService: StatisticsService,
@@ -52,6 +37,8 @@ export class DashboardHomeComponent {
     if(this.loginService.loggedUser.rol != "administrador"){
       this.router.navigateByUrl("/login");
     }else{
+      this.crearCartas();
+      this.estadisticasMedicamentosMasUtilizados();
       this.appComponent.peticionesAutorizar();
       this.estadisticasUsuarios();
       this.estadisticaEnfermedades();
@@ -59,6 +46,31 @@ export class DashboardHomeComponent {
       this.estadisticaEnfermedadesPorEdad();
     }
   }
+
+  crearCartas(){
+    this.cardsEnfermedades = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+      map(({ matches }) => {
+        if (matches) {
+          return [
+            { title: 'Fichas', cols: 1, rows: 2, cuerpo: "hola"},
+            { title: 'Consultas', cols: 1, rows: 2, cuerpo: "hola"},
+            { title: 'EnfermedadesPorSexo', cols: 2, rows: 1, cuerpo: "hola"},
+            { title: 'EnfermedadesPorEdad', cols: 2, rows: 2, cuerpo: "hola"},
+            { title: 'Medicamentos', cols: 2, rows: 2, cuerpo: "hola"}
+          ];
+        }
+  
+        return [
+          { title: 'Fichas', cols: 1, rows: 2, cuerpo: "hola"},
+          { title: 'Consultas', cols: 1, rows: 2, cuerpo: "hola" },
+          { title: 'EnfermedadesPorSexo', cols: 2, rows: 1, cuerpo: "hola"},
+          { title: 'EnfermedadesPorEdad', cols: 1, rows: 1, cuerpo: "hola"},
+          { title: 'Medicamentos', cols: 1, rows: 1, cuerpo: "hola"}
+        ];
+      })
+    );
+  }
+
 
   estadisticasUsuarios(){
     if(this.loginService.isLogged){
@@ -73,6 +85,45 @@ export class DashboardHomeComponent {
         }
       );
     }
+  }
+
+  estadisticasMedicamentosMasUtilizados(){
+    if(this.loginService.isLogged){
+      this.statisticsService.estadisticasMedicamentosMasUtilizados()
+      .subscribe(
+        response =>{
+            this.crearDiagramaBarrasMedicamentos(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  crearDiagramaBarrasMedicamentos(response){
+    var dataPoints = [];
+
+    Object.keys(response).forEach(item => {
+      var obj = {
+        y : response[item],
+        label : item
+      }
+      dataPoints.push(obj);
+    });
+
+    let chart = new CanvasJS.Chart("diagramaBarrasMedicamentosMasUtilizados", {
+      animationEnabled: true,
+      exportEnabled: true,
+      title: {
+        text: "5 Medicamentos más utilizados en tratamientos"
+      },
+      data: [{
+        type: "column",
+        dataPoints
+      }]
+    }); 
+    chart.render();
   }
 
   crearDiagramaBarrasUsuarios(response){

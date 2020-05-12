@@ -96,6 +96,24 @@
                     <h4 mat-line style="font-weight: bold;">Estado general del paciente</h4>
                     <p mat-line>{{datosInformeAsma.estadoGeneral}}</p>
                   </mat-list-item>
+                  <br>
+                  <mat-divider></mat-divider>
+                  <h3 mat-subheader>
+                    <mat-icon mat-list-icon style="margin-right: 10px;">
+                        <i class="material-icons">
+                          mood
+                            </i>
+                      </mat-icon>
+                        Análisis del estado general del paciente
+                  </h3>
+                  <mat-list-item >
+                    <h4 mat-line style="font-weight: bold;">Puntuación (-1, 1)</h4>
+                    <p mat-line>Puntuación: {{analisis}} </p>
+                  </mat-list-item>
+                  <mat-list-item >
+                    <h4 mat-line style="font-weight: bold;">Análisis textual</h4>
+                    <p mat-line>{{analisisString}} </p>
+                  </mat-list-item>
                 </div>
                 </mat-list>
 

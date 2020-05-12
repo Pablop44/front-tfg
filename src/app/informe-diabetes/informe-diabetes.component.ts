@@ -29,6 +29,8 @@ export class InformeDiabetesComponent implements OnInit {
   idFicha:string;
   idPaciente: String;
   idMedico: String;
+  analisis: number;
+  analisisString: string;
 
   cards;
 
@@ -44,6 +46,7 @@ export class InformeDiabetesComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       this.idInformeDiabetes = params['id'];
       this.informeDiabetes(this.idInformeDiabetes);
+      this.analisisDeSentimientos(this.idInformeDiabetes);
       });
   }
 
@@ -88,6 +91,32 @@ export class InformeDiabetesComponent implements OnInit {
             })
           );
           this.mirarPermiso();
+          },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+
+  analisisDeSentimientos(id){
+    if(this.loginService.isLogged){
+      this.diabetesService.analisisDeSentimientos(id)
+      .subscribe(
+        response =>{
+          this.analisis = response['sentimiento'];
+          if(this.analisis < -0.375){
+            this.analisisString = "Estado general muy negativo";
+          }else if(this.analisis < -0.25 && this.analisis > -0.375){
+            this.analisisString = "Estado general negativo";
+          }else if(this.analisis < 0.25 && this.analisis > -0.25){
+            this.analisisString = "Estado general neutro";
+          }else if(this.analisis < 0.625  && this.analisis > 0.25){
+            this.analisisString = "Estado general positivo";
+          }else{
+            this.analisisString = "Estado general muy positivo";
+          }
           },
         error => {
           console.log(error);

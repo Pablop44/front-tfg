@@ -30,6 +30,8 @@ export class InformeAsmaComponent implements OnInit {
   cards; 
   idPaciente: String;
   idMedico: String;
+  analisis: number;
+  analisisString: string;
 
   constructor(loginService: LoginService, asmaService: AsmaService, private breakpointObserver: BreakpointObserver,
      private route : ActivatedRoute, fichaService: FichaService, private router : Router, userService: UserService) {
@@ -43,6 +45,7 @@ export class InformeAsmaComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       this.idInformeAsma = params['id'];
       this.informeAsma(this.idInformeAsma);
+      this.analisisDeSentimientos(this.idInformeAsma);
       });
   }
 
@@ -72,6 +75,31 @@ export class InformeAsmaComponent implements OnInit {
             })
           );
           this.mirarPermiso();
+          },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  analisisDeSentimientos(id){
+    if(this.loginService.isLogged){
+      this.asmaService.analisisDeSentimientos(id)
+      .subscribe(
+        response =>{
+          this.analisis = response['sentimiento'];
+            if(this.analisis < -0.375){
+              this.analisisString = "Estado general muy negativo";
+            }else if(this.analisis < -0.25 && this.analisis > -0.375){
+              this.analisisString = "Estado general negativo";
+            }else if(this.analisis < 0.25 && this.analisis > -0.25){
+              this.analisisString = "Estado general neutro";
+            }else if(this.analisis < 0.625  && this.analisis > 0.25){
+              this.analisisString = "Estado general positivo";
+            }else{
+              this.analisisString = "Estado general muy positivo";
+            }
           },
         error => {
           console.log(error);
