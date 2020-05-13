@@ -227,39 +227,11 @@ export class HistorialComponent implements OnInit {
     }
    
   }
-
-  openDialog(data): void {
-    const dialogRef = this.dialog.open(DialogoEliminarHistorial, {
-      width: '300px',
-      data: {id: data.id}
-    });
-
-    dialogRef.afterClosed().subscribe(response => {
-      if(response != undefined){
-        this.eliminarHistorial(data.id);
-      }
-    });
-  }
-
+  
   openSnackBar(mensaje: String) {
     this._snackBar.openFromComponent(notificacionEliminarHistorial, {
       duration: 4 * 1000, data: mensaje
     });
-  }
-
-  eliminarHistorial(id){
-    this.fichaService.eliminarFicha(id)
-      .subscribe(
-        response =>{
-            this.fichas();
-            this.openSnackBar("Se ha eliminado correctamente el historial "+response['id']);
-          },
-        error => {
-          console.log(error);
-          this.fichas();
-          this.openSnackBar("No se ha eliminado correctamente el historial "+id);
-        }
-      );
   }
 
   ordenar(tipo){

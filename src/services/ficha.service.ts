@@ -242,14 +242,6 @@ export class FichaService {
     });
   }
 
-  eliminarFicha(id){
-    return this.http.delete(this.restUrl+"/ficha/delete/"+id+".json", {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.loginService.loggedUser.password
-      })
-    });
-  }
-
   public cambiarMedico(idMedico, idFicha){
 
     let array = [{
