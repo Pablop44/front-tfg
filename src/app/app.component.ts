@@ -22,7 +22,9 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.peticionesAutorizar();
+    if(this.loginService.loggedUser.rol == "administrador"){
+      this.peticionesAutorizar();
+    }
   }
 
   logout(){
@@ -49,8 +51,6 @@ export class AppComponent {
       );
     }
   }
-
-
 
   login(){
     this.router.navigateByUrl("/login");

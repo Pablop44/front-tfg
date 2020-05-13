@@ -229,7 +229,7 @@ export class MedicamentosComponent implements OnInit {
   }
 
 
-  displayedColumns: string[] = ['nombre', 'via', 'marca', 'dosis', 'acciones'];
+  displayedColumns: string[] = [];
 
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
@@ -254,6 +254,11 @@ export class MedicamentosComponent implements OnInit {
      }
 
   ngOnInit() {
+    if(this.loginService.loggedUser.rol == "medico"){
+      this.displayedColumns = ['nombre', 'via', 'marca', 'dosis'];
+    }else{
+      this.displayedColumns = ['nombre', 'via', 'marca', 'dosis', 'acciones'];
+    }
     this.todosMedicamentos();
     this.todasMarcas();
   }

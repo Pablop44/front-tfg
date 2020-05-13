@@ -357,6 +357,22 @@ export class VistaUsuarioComponent implements OnInit {
           this.asma = "";
           this.idMedico = response[0]['medico'];
           if(this.loginService.loggedUser.rol == "medico"){
+            this.idFicha = response[0]['id'];      
+            this.enfermedades = response[0]['enfermedad'];
+            for(const element in this.enfermedades){
+              if(this.enfermedades[element] == "diabetes"){
+                this.diabetes = "Diabetes";
+                this.tieneDiabetes = true;
+              }
+              else if(this.enfermedades[element] == "asma"){
+                this.asma = "Asma";
+                this.tieneAsma = true;
+              }
+              else{
+                this.migranas = "Migrañas";
+                this.tieneMigranas = true;
+              }
+            } 
             if(this.loginService.loggedUser.id != response[0]['medico']){
               this.router.navigateByUrl("/dashboardMedico");
             }
