@@ -227,7 +227,6 @@ export class TratamientoComponent implements OnInit {
       .subscribe(
         response =>{
           this.openSnackBar("Se ha añadido con éxito");
-          console.log(response);
           this.getDatosTratamiento();
         },
         error => {

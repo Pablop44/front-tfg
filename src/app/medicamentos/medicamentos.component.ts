@@ -485,11 +485,9 @@ export class MedicamentosComponent implements OnInit {
         error => {console.log(error)
           this.openSnackBar("No se ha podido eliminar el medicamento:" +medicamento);}
       );
-    
     }
 
     numeroMedicamento(){
-      
       this.medicamentoService.numeroMedicamento(this.filtroMedicamento)
         .subscribe(
           response =>{

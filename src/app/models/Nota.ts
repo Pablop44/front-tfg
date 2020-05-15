@@ -1,8 +1,8 @@
 export class Nota {
     id: string;
-    fecha:string
+    fecha:string;
     datos: string;
-    ficha:string
+    ficha:string;
     constructor(id, fecha, datos, ficha){
       this.id = id;
       this.fecha = fecha;
