@@ -160,23 +160,7 @@
                       <mat-menu #menuInformeAsma="matMenu" xPosition="before">
                         <a mat-menu-item (click)="generarCSVAsma()">Descargar Informes como CSV</a>
                       </mat-menu>
-                      
-                      <mat-card class="cartaFiltro">
-                        <mat-card-header>
-                          <mat-card-subtitle>
-                            Filtrar Informes Asma
-                          </mat-card-subtitle>
-                        </mat-card-header>
-
-                        <mat-card-content>
-
-                          <form class="formFiltrar" (ngSubmit)="aplicarFiltroAsma()" #loginForm="ngForm">
-                          </form>
-
-                        </mat-card-content>
-
-                      </mat-card>
-
+              
                       <div>
 
                         <table  mat-table matSort [dataSource]="dataSourceInformeAsma" >
@@ -226,22 +210,6 @@
                       <mat-menu #menuInformeDiabetes="matMenu" xPosition="before">
                         <a mat-menu-item (click)="generarCSVDiabetes()">Descargar Informes como CSV</a>
                       </mat-menu>
-
-                      <mat-card class="cartaFiltro">
-                        <mat-card-header>
-                          <mat-card-subtitle>
-                            Filtrar Informes Diabetes
-                          </mat-card-subtitle>
-                        </mat-card-header>
-
-                        <mat-card-content>
-
-                          <form class="formFiltrar" (ngSubmit)="aplicarFiltroDiabetes()" #loginForm="ngForm">
-                          </form>
-
-                        </mat-card-content>
-
-                      </mat-card>
 
                       <div>
 
@@ -297,22 +265,6 @@
                       <mat-menu #menuInformeMigranas="matMenu" xPosition="before">
                         <a mat-menu-item (click)="generarCSVMigranas()">Descargar Informes como CSV</a>
                       </mat-menu>
-
-                      <mat-card class="cartaFiltro">
-                        <mat-card-header>
-                          <mat-card-subtitle>
-                            Filtrar Informes Migrañas
-                          </mat-card-subtitle>
-                        </mat-card-header>
-
-                        <mat-card-content>
-
-                          <form class="formFiltrar" (ngSubmit)="aplicarFiltroMigranas()" #loginForm="ngForm">
-                          </form>
-
-                        </mat-card-content>
-
-                      </mat-card>
 
                       <div>
 
@@ -443,22 +395,6 @@
                         <a (click)="openDialogTratamiento()" mat-menu-item>Añadir Tratamiento</a>
                       </mat-menu>
 
-                      <mat-card class="cartaFiltro">
-                        <mat-card-header>
-                          <mat-card-subtitle>
-                            Filtrar Tratamientos
-                          </mat-card-subtitle>
-                        </mat-card-header>
-
-                        <mat-card-content>
-
-                          <form class="formFiltrar" (ngSubmit)="aplicarFiltroMigranas()" #loginForm="ngForm">
-                          </form>
-
-                        </mat-card-content>
-
-                      </mat-card>
-
                       <div>
 
                         <table  mat-table matSort [dataSource]="dataSourceTratamientos" >
@@ -505,44 +441,6 @@
                     </mat-tab>
 
                     <mat-tab label="Notas">
-
-                      <mat-card class="cartaFiltro">
-                        <mat-card-header>
-                          <mat-card-subtitle>
-                            Filtrar Notas
-                          </mat-card-subtitle>
-                        </mat-card-header>
-
-                        <mat-card-content>
-
-                          <form class="formFiltrar" (ngSubmit)="aplicarFiltroNotas()" #loginForm="ngForm">      
-              
-                              <mat-form-field style="width: 40%;">
-                                <mat-label>Fecha Inicio Periodo</mat-label>
-                                <input matInput [matDatepicker]="dpInicioNota"  name="fechaInicio" id="fechaInicio" [(ngModel)]="filtroNota.fechaInicio">
-                                <mat-datepicker-toggle matSuffix [for]="dpInicioNota"></mat-datepicker-toggle>
-                                <mat-datepicker #dpInicioNota></mat-datepicker>
-                              </mat-form-field>
-
-                              <mat-form-field style="width: 40%;">
-                                <mat-label>Fecha Fin Periodo</mat-label>
-                                <input matInput [matDatepicker]="dpFinNota"  name="fechaFin" id="fechaFin" [(ngModel)]="filtroNota.fechaFin">
-                                <mat-datepicker-toggle matSuffix [for]="dpFinNota"></mat-datepicker-toggle>
-                                <mat-datepicker #dpFinNota></mat-datepicker>
-                              </mat-form-field>
-
-                              <mat-form-field style="width: 100%;">
-                                <mat-label>Texto de la nota</mat-label>
-                                <textarea matInput placeholder="Texto de la nota" name="texto" [(ngModel)]="filtroNota.texto"></textarea>
-                              </mat-form-field>
-                  
-                                                                             
-                            <button mat-raised-button type="submit" color="primary">Filtrar</button>
-                          </form>
-
-                        </mat-card-content>
-
-                      </mat-card>
 
                       <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuNota" aria-label="Toggle menu">
                         <mat-icon>note_add</mat-icon>
