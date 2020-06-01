@@ -1400,6 +1400,7 @@ export class FichaIndividualComponent implements OnInit {
           const options = { 
             fieldSeparator: ';',
             quoteStrings: '"',
+            filename: 'informesAsma',
             decimalSeparator: '.',
             showLabels: true, 
             showTitle: true,
@@ -1428,12 +1429,14 @@ export class FichaIndividualComponent implements OnInit {
             const newDiabetesInforme = new InformeDiabetes(response[i]['id'],response[i]['fecha'],response[i]['numeroControles'], response[i]['nivelBajo'],
             response[i]['frecuenciaBajo'], response[i]['horarioBajo'], response[i]['perdidaConocimiento'], response[i]['nivelAlto'], response[i]['frecuenciaAlto'],
             response[i]['horarioAlto'], response[i]['actividadFisica'], response[i]['problemaDieta'], response[i]['estadoGeneral'], response[i]['momentos']);
+            delete newDiabetesInforme['momentos'];
             informeDiabetes.push(newDiabetesInforme);
           } 
           const options = { 
             fieldSeparator: ';',
             quoteStrings: '"',
             decimalSeparator: '.',
+            filename: 'informesDiabetes',
             showLabels: true, 
             showTitle: true,
             title: 'CSV Informes Diabetes',
@@ -1461,11 +1464,14 @@ export class FichaIndividualComponent implements OnInit {
             const newInformeMigranas = new InformeMigranas(response[i]['id'],response[i]['fecha'],response[i]['frecuencia'], response[i]['duracion'],
             response[i]['horario'], response[i]['finalizacion'], response[i]['tipoEpisodio'], response[i]['intensidad'], response[i]['limitaciones'],
             response[i]['despiertoNoche'], response[i]['estadoGeneral'], response[i]['sintomas'], response[i]['factores']);
+            delete newInformeMigranas['factores'];
+            delete newInformeMigranas['sintomas'];
             informeMigranas.push(newInformeMigranas);
           } 
           const options = { 
             fieldSeparator: ';',
             quoteStrings: '"',
+            filename: 'informesMigranas',
             decimalSeparator: '.',
             showLabels: true, 
             showTitle: true,
